@@ -1,0 +1,18 @@
+Number_of_boundary_segments:  1
+Combined_number_of_trig_patches_and_vertices:  3200   1661
+
+Fault_section_name: Boundary_Bottom
+Easting_of_fault_top_center(km):  -5.0000e+01
+Northing_of_fault_top_center(km): 0.0000e+00
+Depth_of_fault_top_center(km):    -2.0000e+01
+Length_of_fault_section(km):      2.0000e+02
+Width_of_fault_section(km):       1.0000e+02
+Strike_of_fault_section(deg):     0.0000e+00
+Dip_of_fault_section(deg):        0.0000e+00
+ApplyTo_TopBottom_or_LeftRight:   1
+Slip-rate_in_strike(mm/yr):              NaN          NaN
+Slip-rate_in_dip(mm/yr):                 NaN          NaN
+Slip-rate_in_normal(mm/yr):              NaN          NaN
+Triangle_patch_number_of_boundary:   3200
+Triangle_vertex_number_of_boundary:  1661
+
