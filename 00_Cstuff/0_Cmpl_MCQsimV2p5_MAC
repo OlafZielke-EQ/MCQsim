@@ -1,0 +1,3 @@
+mpicc MCQsim_Main_v2p5.c   MCQsim_StrainHS_v2.c   MCQsim_StrainFS_v2.c   -lm -lgslcblas -lmpich -Wall -O3 -o  MCQsimV2p5
+
+rm -r MCQsimV2p5.dSYM
