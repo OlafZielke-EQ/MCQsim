@@ -2352,7 +2352,7 @@ int main(int argc, char **argv)
         {   memset(iStartPosB, 0, iSIZE*sizeof(int) );           memset(iOffstPosB, 0, iSIZE*sizeof(int) );
             for (i = 0u; i < iBOFFSET[iRANK]; i++)
             {   uGlobPos = i +iBSTART[iRANK];
-                fTemp0   =  fB_temp[uGlobPos*16 +3];                      fTemp1 =  fB_temp[uGlobPos*16 +4];          fTemp2 =  fB_temp[uGlobPos*16 +5];
+                fTemp0   =  -fB_temp[uGlobPos*16 +3];                      fTemp1 =  -fB_temp[uGlobPos*16 +4];          fTemp2 =  -fB_temp[uGlobPos*16 +5];
                 if ((fabs(fTemp0) + fabs(fTemp1) + fabs(fTemp2)) > 0.0f)
                 {   fBslipL[uSlipElCnt[1]*4 +0] = (float)uGlobPos;      fBslipL[uSlipElCnt[1]*4 +1] = fTemp0;       fBslipL[uSlipElCnt[1]*4 +2] = fTemp1;           fBslipL[uSlipElCnt[1]*4 +3] = fTemp2;
                     uSlipElCnt[1] += 1u;
@@ -3853,6 +3853,8 @@ void GetGlobVertsForRectangle(float fP1[3], float fP2[3], float fP3[3], float fP
     fP4[1] = fRM_L2G[1][0]*fPt4L[0] + fRM_L2G[1][1]*fPt4L[1] + fRM_L2G[1][2]*fPt4L[2] + fNmid;
     fP4[2] = fRM_L2G[2][0]*fPt4L[0] + fRM_L2G[2][1]*fPt4L[1] + fRM_L2G[2][2]*fPt4L[2] + fZmid;
     //-------------------------------------------------
+    fP1[2] = (fP1[2] > 0.0f)*0.0f + (fP1[2] <= 0.0f)*fP1[2];        fP2[2] = (fP2[2] > 0.0f)*0.0f + (fP2[2] <= 0.0f)*fP2[2];
+    fP3[2] = (fP3[2] > 0.0f)*0.0f + (fP3[2] <= 0.0f)*fP3[2];        fP4[2] = (fP4[2] > 0.0f)*0.0f + (fP4[2] <= 0.0f)*fP4[2];
     return;
 }
 //----------------------------------------------------------------------------------------
