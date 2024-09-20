@@ -6,7 +6,7 @@
 #include <mpi.h>
 #include <time.h>
 #include <limits.h>
-//#include <cblas.h>
+
 #include <gsl/gsl_cblas.h>
 
 #define USEVPVSVELOCITY         1u
@@ -24,7 +24,7 @@
 
 #define MAXITERATION4BOUNDARY   200u 
 #define MAXMOMRATEFUNCLENGTH    5000u 
-#define NeighborFactor          3.0f 
+#define NeighborFactor          2.0f 
 
 #define IA 16807
 #define IM 2147483647
@@ -71,7 +71,7 @@ int main(int argc, char **argv)
     
     double dAddedTime = 0.0,   dRecordLength = 0.0,   dMeanRecurTime = 0.0; 
     long lSeed;
-    unsigned int uFPNum = 0u,   uFVNum = 0u,   uBPNum = 0u,   uBVNum = 0u,   uEQcntr = 0u,   uEQtickr = 0u;
+    unsigned int uFPNum = 0u,   uFVNum = 0u,   uBPNum = 0u,   uBVNum = 0u,   uEQcntr = 0u,   uEQtickr = 0u, uFSegN = 0u,   uBSegN = 0u,   uMaxPNum,   uMaxSNum;
     unsigned int uRunNum = 0u,   uCatType = 0u,   uUseTimeProp = 0u,   uChgBtwEQs = 0u,   uContPrevRun = 0u,   uLoadPrev_Khmat = 0u,   uPlotCatalog2Screen = 0u,   uMinElemNum4Cat = 0u,   uLoadStep_POW2 = 0u, uStoreSTF4LargeEQs = 0u;
     float fPreStressFract = 0.0f,   fOvershootFract = 0.0f,   fMinCoSeisSlipRate = 0.0f,   fIntSeisLoadStep = 0.0f,   fMinMag4STF = 0.0f,   fMinMag4Prop = 0.0f,   fAfterSlipTime = 0.0f,   fDeepRelaxTime = 0.0f,   fHealFact = 0.0f;
     float fPSeisTime = 0.0f;
@@ -139,6 +139,7 @@ int main(int argc, char **argv)
         }
     }
     
+    uMaxPNum = MAX(uFPNum, uBPNum);
     int  uFBASEelem = (int)(uFPNum/iSIZE); 
     int  uFADDelem  = (int)(uFPNum%iSIZE);
     int  uBBASEelem = (int)(uBPNum/iSIZE); 
@@ -183,6 +184,7 @@ int main(int argc, char **argv)
         float *fTempB        = calloc(uBPNum, sizeof *fTempB );
         float *fTempFv       = calloc(uFVNum, sizeof *fTempFv );
         float *fTempBv       = calloc(uBVNum, sizeof *fTempBv );
+        
         float  fTemp,   fMeanHeight = 0.0f;
         float  fP1[3],   fP2[3],   fP3[3],   fP1P2[3],   fP1P3[3],   fP2P3[3],   fArea,   fP1Pc[3],   fP2Pc[3],   fTempVect[3];
         float  fNrm[3],   fStk[3],   fDip[3];
@@ -309,6 +311,7 @@ int main(int argc, char **argv)
             memcpy(fP1, &fFV_temp[uF_temp[i*7 +0]*4 +0],  3u*sizeof(float));
             memcpy(fP2, &fFV_temp[uF_temp[i*7 +1]*4 +0],  3u*sizeof(float));
             memcpy(fP3, &fFV_temp[uF_temp[i*7 +2]*4 +0],  3u*sizeof(float));
+            uFSegN = MAX(uFSegN, uF_temp[i*7 +3]);
             
             SubtractVect3(fP1P2, fP2, fP1);                     SubtractVect3(fP1P3, fP3, fP1);                         SubtractVect3(fP2P3, fP3, fP2);
             SubtractVect3(fP1Pc, &fF_temp[i*16 +0], fP1);       SubtractVect3(fP2Pc, &fF_temp[i*16 +0], fP2);
@@ -330,6 +333,8 @@ int main(int argc, char **argv)
             memcpy(&fF_temp[i*16+12], fDip,  3u*sizeof(float));
             
         }
+        uFSegN   += 1u;
+        
         fFltSide    = (uFPNum > 0u) ? fFltSide/(float)uFPNum           : fFltSide;
         fElemArea   = (uFPNum > 0u) ? fElemArea/(float)uFPNum          : fElemArea;
         fMeanHeight = (uFPNum > 0u) ?(fMeanHeight/((float)uFPNum*3.0f)): fMeanHeight; 
@@ -338,6 +343,7 @@ int main(int argc, char **argv)
         {   memcpy(fP1, &fBV_temp[uB_temp[i*4 +0]*3 +0],  3u*sizeof(float));
             memcpy(fP2, &fBV_temp[uB_temp[i*4 +1]*3 +0],  3u*sizeof(float));
             memcpy(fP3, &fBV_temp[uB_temp[i*4 +2]*3 +0],  3u*sizeof(float));
+            uBSegN = MAX(uBSegN, uB_temp[i*4 +3]);
             
             SubtractVect3(fP1P2, fP2, fP1);                     SubtractVect3(fP1P3, fP3, fP1);                         SubtractVect3(fP2P3, fP3, fP2);
             
@@ -354,8 +360,12 @@ int main(int argc, char **argv)
             memcpy(&fB_temp[i*16+12], fDip,  3u*sizeof(float));
             
         }
+        uBSegN   += 1u;
+        
         fBndSide    = (uBPNum > 0u) ? fBndSide/(float)uBPNum   : fBndSide;
         fBoundArea  = (uBPNum > 0u) ? fBoundArea/(float)uBPNum : fBoundArea;
+        
+        uMaxSNum   = MAX(uFSegN, uBSegN);
         
         fUnitSlipF = fFltSide *1.0E-5f; 
         fUnitSlipB = (fBoundArea/fElemArea)*fUnitSlipF;
@@ -456,16 +466,6 @@ int main(int argc, char **argv)
     }   } 
     
     
-    unsigned int uF_BrCount  = 0u; 
-    unsigned int uB_BrCount  = 0u; 
-    unsigned int uF_MaxBrLvl = 20u; 
-    unsigned int uB_MaxBrLvl = 20u; 
-    unsigned int *uF_OTElem = NULL;
-    unsigned int *uB_OTElem = NULL;
-    unsigned int *uF_OTPrtChld   = calloc((uFPNum*9), sizeof  *uF_OTPrtChld );
-    unsigned int *uB_OTPrtChld   = calloc((uBPNum*9), sizeof  *uB_OTPrtChld );
-    
-    
     unsigned int *uKh_FFcnt  = calloc(iFOFFSET[iRANK], sizeof *uKh_FFcnt );
     unsigned int **uKh_FFps2 = NULL;
     float **fKh_FFvalstk = NULL;
@@ -507,341 +507,327 @@ int main(int argc, char **argv)
     
     if ((uLoadPrev_Khmat == 0) || (uLoadPrev_Khmat == 1)) 
     {   
+        unsigned int u_MaxBrLvl    = 20u; 
+        unsigned int uF_TotalOffs   = 0u; 
+        unsigned int uB_TotalOffs   = 0u; 
+        unsigned int *uF_OTElem    = calloc((uFPNum*u_MaxBrLvl), sizeof *uF_OTElem );
+        unsigned int *uB_OTElem    = calloc((uBPNum*u_MaxBrLvl), sizeof *uB_OTElem );
+        unsigned int *uF_OTPrtChld = calloc((4*uFPNum*5),       sizeof *uF_OTPrtChld ); 
+        unsigned int *uB_OTPrtChld = calloc((4*uBPNum*5),       sizeof *uB_OTPrtChld );
         
         {   timer0 = clock();
-            unsigned int *uF_OTElem_temp = calloc((uF_MaxBrLvl*uFPNum), sizeof *uF_OTElem_temp ); 
-            unsigned int *uF_BrIds  = calloc(uFPNum,  sizeof *uF_BrIds ); 
-            unsigned int *uF_nBrIds = calloc(uFPNum,  sizeof *uF_nBrIds ); 
-            unsigned int *uF_sElem  = calloc(uFPNum,  sizeof *uF_sElem ); 
-            unsigned int *u_newBr   = calloc((8*2), sizeof *u_newBr ); 
+            unsigned int *u_OTElem_temp = calloc((uMaxPNum*u_MaxBrLvl), sizeof *u_OTElem_temp ); 
+            unsigned int *u_BrIds        = calloc(uMaxPNum,             sizeof *u_BrIds  ); 
+            unsigned int *u_nBrIds       = calloc(uMaxPNum,             sizeof *u_nBrIds ); 
+            float *f_BrLims              = calloc(uMaxPNum*4,           sizeof *f_BrLims ); 
+            float *f_nBrLims             = calloc(uMaxPNum*4,           sizeof *f_nBrLims ); 
             
-            float *fF_BrLims  = calloc(6*uFPNum, sizeof *fF_BrLims ); 
-            float *fF_nBrLims = calloc(6*uFPNum, sizeof *fF_nBrLims ); 
-        
-            float fMinE = fF_temp[0*16 +0],         fMaxE = fF_temp[0*16 +0];
-            float fMinN = fF_temp[0*16 +1],         fMaxN = fF_temp[0*16 +1];
-            float fMinZ = fF_temp[0*16 +2],         fMaxZ = fF_temp[0*16 +2];
+            unsigned int *u_sElem        = calloc(uMaxPNum,             sizeof *u_sElem ); 
+            unsigned int *u_newBr        = calloc(4*2,                  sizeof *u_newBr ); 
             
-            unsigned int uBrNum   = 1u;
-            unsigned int uBrLevel = 0u; 
-            unsigned int unBrNum,   uElem;
-            float fExtend, fBrSize, fMidE, fMidN, fMidZ;
+            unsigned int *u_ElemCntr     = calloc(       1*uMaxSNum,    sizeof *u_ElemCntr);
+            unsigned int *u_ElSegIDs     = calloc(uMaxPNum*uMaxSNum,    sizeof *u_ElSegIDs);
+            float *f_SegVals             = calloc(       6*uMaxSNum,    sizeof *f_SegVals);
+            float *fCentRot              = calloc(uMaxPNum*3,           sizeof *fCentRot);
+            float fNrm[3],   fStk[3],   fDip[3],   fShftCent[3],   fMaxMinVals[6];
             
-            for (i = 1u; i < uFPNum; i++)
-            {   fMinE = MIN(fMinE, fF_temp[i*16 +0]);                       fMaxE = MAX(fMaxE, fF_temp[i*16 +0]);
-                fMinN = MIN(fMinN, fF_temp[i*16 +1]);                       fMaxN = MAX(fMaxN, fF_temp[i*16 +1]);
-                fMinZ = MIN(fMinZ, fF_temp[i*16 +2]);                       fMaxZ = MAX(fMaxZ, fF_temp[i*16 +2]);
-            }
-            fExtend = MAX((fMaxE - fMinE), (fMaxN - fMinN));                fExtend = MAX(fExtend, (fMaxZ - fMinZ));
-            fBrSize = fExtend + fFltSide;
-            
-            fF_BrLims[0*6 +0] = (fMaxE+fMinE)/2.0f - fBrSize/2.0f;          fF_BrLims[0*6 +1] = (fMaxE+fMinE)/2.0f + fBrSize/2.0f;
-            fF_BrLims[0*6 +2] = (fMaxN+fMinN)/2.0f - fBrSize/2.0f;          fF_BrLims[0*6 +3] = (fMaxN+fMinN)/2.0f + fBrSize/2.0f;
-            fF_BrLims[0*6 +4] = (fMaxZ+fMinZ)/2.0f - fBrSize/2.0f;          fF_BrLims[0*6 +5] = (fMaxZ+fMinZ)/2.0f + fBrSize/2.0f;
-            
-            while (fBrSize/2.0f >= MINBRANCHSZEFACT*fFltSide) 
-            {   uBrLevel += 1u; 
-                fBrSize  /= 2.0f; 
-                unBrNum   = 0u; 
-                
-                for (i = 0u; i < uBrNum; i++)
-                {   fMinE = fF_BrLims[i*6 +0];      fMaxE = fF_BrLims[i*6 +1];       fMidE = (fMaxE +fMinE)/2.0f;
-                    fMinN = fF_BrLims[i*6 +2];      fMaxN = fF_BrLims[i*6 +3];       fMidN = (fMaxN +fMinN)/2.0f;
-                    fMinZ = fF_BrLims[i*6 +4];      fMaxZ = fF_BrLims[i*6 +5];       fMidZ = (fMaxZ +fMinZ)/2.0f;
-                    
-                    uElem = 0u; 
-                    memset(uF_sElem, 0, uFPNum* sizeof(unsigned int) ); 
-                    memset(u_newBr, 0, 8*2* sizeof(unsigned int) ); 
-                    
-                    for (j = 0u; j < uFPNum; j++)
-                    {   if (uF_OTElem_temp[uF_MaxBrLvl*j +uBrLevel-1] == uF_BrIds[i])   {   uF_sElem[uElem] = j;        uElem += 1u;         }
-                    }
-                    
-                    for (j = 0u; j < uElem; j++)
-                    {   if ( (fF_temp[uF_sElem[j]*16 +0] >= fMidE)       &&  (fF_temp[uF_sElem[j]*16 +1] >= fMidN)  &&  (fF_temp[uF_sElem[j]*16 +2] >= fMidZ) )
-                        {   if (u_newBr[0*8 +0] == 0u)
-                            {   uF_BrCount += 1u;      u_newBr[0*8 +0] = 1u;      u_newBr[1*8 +0] = uF_BrCount;
-                                fF_nBrLims[unBrNum*6 +0] = fMidE;                 fF_nBrLims[unBrNum*6 +1] = fMaxE;
-                                fF_nBrLims[unBrNum*6 +2] = fMidN;                 fF_nBrLims[unBrNum*6 +3] = fMaxN;
-                                fF_nBrLims[unBrNum*6 +4] = fMidZ;                 fF_nBrLims[unBrNum*6 +5] = fMaxZ;
-                                uF_nBrIds[unBrNum] = uF_BrCount;                  unBrNum += 1u;
-                                uF_OTPrtChld[uF_BrIds[i]*9 +0] +=1u;              uF_OTPrtChld[uF_BrIds[i]*9 +uF_OTPrtChld[uF_BrIds[i]*9 +0]] = uF_BrCount;
-                            }
-                            uF_OTElem_temp[uF_MaxBrLvl*uF_sElem[j] +uBrLevel] = u_newBr[1*8 +0];
-                        }
-                        else if ( (fF_temp[uF_sElem[j]*16 +0] >= fMidE)  &&  (fF_temp[uF_sElem[j]*16 +1] >= fMidN)  &&  (fF_temp[uF_sElem[j]*16 +2] <  fMidZ) )
-                        {   if (u_newBr[0*8 +1] == 0u)
-                            {   uF_BrCount += 1u;      u_newBr[0*8 +1] = 1u;      u_newBr[1*8 +1] = uF_BrCount;
-                                fF_nBrLims[unBrNum*6 +0] = fMidE;                 fF_nBrLims[unBrNum*6 +1] = fMaxE;
-                                fF_nBrLims[unBrNum*6 +2] = fMidN;                 fF_nBrLims[unBrNum*6 +3] = fMaxN;
-                                fF_nBrLims[unBrNum*6 +4] = fMinZ;                 fF_nBrLims[unBrNum*6 +5] = fMidZ;
-                                uF_nBrIds[unBrNum] = uF_BrCount;                  unBrNum += 1u;
-                                uF_OTPrtChld[uF_BrIds[i]*9 +0] +=1u;              uF_OTPrtChld[uF_BrIds[i]*9 +uF_OTPrtChld[uF_BrIds[i]*9 +0]] = uF_BrCount;
-                            }
-                            uF_OTElem_temp[uF_MaxBrLvl*uF_sElem[j] +uBrLevel] = u_newBr[1*8 +1];
-                        }
-                        else if ( (fF_temp[uF_sElem[j]*16 +0] >= fMidE)  &&  (fF_temp[uF_sElem[j]*16 +1] <  fMidN)  &&  (fF_temp[uF_sElem[j]*16 +2] >= fMidZ) )
-                        {   if (u_newBr[0*8 +2] == 0u)
-                            {   uF_BrCount += 1u;      u_newBr[0*8 +2] = 1u;  u_newBr[1*8 +2] = uF_BrCount;
-                                fF_nBrLims[unBrNum*6 +0] = fMidE;                 fF_nBrLims[unBrNum*6 +1] = fMaxE;
-                                fF_nBrLims[unBrNum*6 +2] = fMinN;                 fF_nBrLims[unBrNum*6 +3] = fMidN;
-                                fF_nBrLims[unBrNum*6 +4] = fMidZ;                 fF_nBrLims[unBrNum*6 +5] = fMaxZ;
-                                uF_nBrIds[unBrNum] = uF_BrCount;                  unBrNum += 1u;
-                                uF_OTPrtChld[uF_BrIds[i]*9 +0] +=1u;              uF_OTPrtChld[uF_BrIds[i]*9 +uF_OTPrtChld[uF_BrIds[i]*9 +0]] = uF_BrCount;
-                            }
-                            uF_OTElem_temp[uF_MaxBrLvl*uF_sElem[j] +uBrLevel] = u_newBr[1*8 +2];
-                        }
-                        else if ( (fF_temp[uF_sElem[j]*16 +0] <  fMidE)  &&  (fF_temp[uF_sElem[j]*16 +1] >= fMidN)  &&  (fF_temp[uF_sElem[j]*16 +2] >= fMidZ) )
-                        {   if (u_newBr[0*8 +3] == 0u)
-                            {   uF_BrCount += 1u;      u_newBr[0*8 +3] = 1u;      u_newBr[1*8 +3] = uF_BrCount;
-                                fF_nBrLims[unBrNum*6 +0] = fMinE;                 fF_nBrLims[unBrNum*6 +1] = fMidE;
-                                fF_nBrLims[unBrNum*6 +2] = fMidN;                 fF_nBrLims[unBrNum*6 +3] = fMaxN;
-                                fF_nBrLims[unBrNum*6 +4] = fMidZ;                 fF_nBrLims[unBrNum*6 +5] = fMaxZ;
-                                uF_nBrIds[unBrNum] = uF_BrCount;                   unBrNum += 1u;
-                                uF_OTPrtChld[uF_BrIds[i]*9 +0] +=1u;              uF_OTPrtChld[uF_BrIds[i]*9 +uF_OTPrtChld[uF_BrIds[i]*9 +0]] = uF_BrCount;
-                            }
-                           uF_OTElem_temp[uF_MaxBrLvl*uF_sElem[j] +uBrLevel] = u_newBr[1*8 +3];
-                        }
-                        else if ( (fF_temp[uF_sElem[j]*16 +0] >= fMidE)  &&  (fF_temp[uF_sElem[j]*16 +1] <  fMidN)  &&  (fF_temp[uF_sElem[j]*16 +2] <  fMidZ) )
-                        {   if (u_newBr[0*8 +4] == 0u)
-                            {   uF_BrCount += 1u;      u_newBr[0*8 +4] = 1u;      u_newBr[1*8 +4] = uF_BrCount;
-                                fF_nBrLims[unBrNum*6 +0] = fMidE;                 fF_nBrLims[unBrNum*6 +1] = fMaxE;
-                                fF_nBrLims[unBrNum*6 +2] = fMinN;                 fF_nBrLims[unBrNum*6 +3] = fMidN;
-                                fF_nBrLims[unBrNum*6 +4] = fMinZ;                 fF_nBrLims[unBrNum*6 +5] = fMidZ;
-                                uF_nBrIds[unBrNum] = uF_BrCount;                  unBrNum += 1u;
-                                uF_OTPrtChld[uF_BrIds[i]*9 +0] +=1u;              uF_OTPrtChld[uF_BrIds[i]*9 +uF_OTPrtChld[uF_BrIds[i]*9 +0]] = uF_BrCount;
-                            }
-                            uF_OTElem_temp[uF_MaxBrLvl*uF_sElem[j] +uBrLevel] = u_newBr[1*8 +4];
-                        }
-                        else if ( (fF_temp[uF_sElem[j]*16 +0] <  fMidE)  &&  (fF_temp[uF_sElem[j]*16 +1] <  fMidN)  &&  (fF_temp[uF_sElem[j]*16 +2] >= fMidZ) )
-                        {   if (u_newBr[0*8 +5] == 0u)
-                            {   uF_BrCount += 1u;      u_newBr[0*8 +5] = 1u;      u_newBr[1*8 +5] = uF_BrCount;
-                                fF_nBrLims[unBrNum*6 +0] = fMinE;                 fF_nBrLims[unBrNum*6 +1] = fMidE;
-                                fF_nBrLims[unBrNum*6 +2] = fMinN;                 fF_nBrLims[unBrNum*6 +3] = fMidN;
-                                fF_nBrLims[unBrNum*6 +4] = fMidZ;                 fF_nBrLims[unBrNum*6 +5] = fMaxZ;
-                                uF_nBrIds[unBrNum] = uF_BrCount;                  unBrNum += 1u;
-                                uF_OTPrtChld[uF_BrIds[i]*9 +0] +=1u;              uF_OTPrtChld[uF_BrIds[i]*9 +uF_OTPrtChld[uF_BrIds[i]*9 +0]] = uF_BrCount;
-                            }
-                            uF_OTElem_temp[uF_MaxBrLvl*uF_sElem[j] +uBrLevel] = u_newBr[1*8 +5];
-                        }
-                        else if ( (fF_temp[uF_sElem[j]*16 +0] <  fMidE)  &&  (fF_temp[uF_sElem[j]*16 +1] >= fMidN)  &&  (fF_temp[uF_sElem[j]*16 +2] <  fMidZ) )
-                        {   if (u_newBr[0*8 +6] == 0u)
-                            {   uF_BrCount += 1u;      u_newBr[0*8 +6] = 1u;      u_newBr[1*8 +6] = uF_BrCount;
-                                fF_nBrLims[unBrNum*6 +0] = fMinE;                 fF_nBrLims[unBrNum*6 +1] = fMidE;
-                                fF_nBrLims[unBrNum*6 +2] = fMidN;                 fF_nBrLims[unBrNum*6 +3] = fMaxN;
-                                fF_nBrLims[unBrNum*6 +4] = fMinZ;                 fF_nBrLims[unBrNum*6 +5] = fMidZ;
-                                uF_nBrIds[unBrNum] = uF_BrCount;                  unBrNum += 1u;
-                                uF_OTPrtChld[uF_BrIds[i]*9 +0] +=1u;              uF_OTPrtChld[uF_BrIds[i]*9 +uF_OTPrtChld[uF_BrIds[i]*9 +0]] = uF_BrCount;
-                            }
-                            uF_OTElem_temp[uF_MaxBrLvl*uF_sElem[j] +uBrLevel] = u_newBr[1*8 +6];
-                        }
-                        else if ( (fF_temp[uF_sElem[j]*16 +0] <  fMidE)  &&  (fF_temp[uF_sElem[j]*16 +1] <  fMidN)  &&  (fF_temp[uF_sElem[j]*16 +2] <  fMidZ) )
-                        {   if (u_newBr[0*8 +7] == 0u)
-                            {   uF_BrCount += 1u;      u_newBr[0*8 +7] = 1u;      u_newBr[1*8 +7] = uF_BrCount;
-                                fF_nBrLims[unBrNum*6 +0] = fMinE;                 fF_nBrLims[unBrNum*6 +1] = fMidE;
-                                fF_nBrLims[unBrNum*6 +2] = fMinN;                 fF_nBrLims[unBrNum*6 +3] = fMidN;
-                                fF_nBrLims[unBrNum*6 +4] = fMinZ;                 fF_nBrLims[unBrNum*6 +5] = fMidZ;
-                                uF_nBrIds[unBrNum] = uF_BrCount;                  unBrNum += 1u;
-                                uF_OTPrtChld[uF_BrIds[i]*9 +0] +=1u;              uF_OTPrtChld[uF_BrIds[i]*9 +uF_OTPrtChld[uF_BrIds[i]*9 +0]] = uF_BrCount;
-                            }
-                           uF_OTElem_temp[uF_MaxBrLvl*uF_sElem[j] +uBrLevel] = u_newBr[1*8 +7];
-                        }
-                        else    {   fprintf(stdout,"this should not happen...\n");    }
-                    }
-                    
-                }
-                memcpy(uF_BrIds, uF_nBrIds,     uFPNum* sizeof(unsigned int) );
-                memcpy(fF_BrLims, fF_nBrLims, 6*uFPNum* sizeof(float) );
-                uBrNum = unBrNum;
-            }
-            
-            uF_BrCount  += 1u;
-            uBrLevel    += 2u;
-            uF_OTPrtChld = realloc(uF_OTPrtChld, uF_BrCount*9* sizeof *uF_OTPrtChld );
-            
-            uF_OTElem    = calloc((uBrLevel*uFPNum), sizeof *uF_OTElem ); 
+            unsigned int uBrNum,   uBrLevel,   unBrNum,   uElem,   uNxtSegID,   uTemp,   uBrCount;
+            float fTemp,   fBrSize;
             
             for (i = 0u; i < uFPNum; i++)
-            {   for (j = 1u; j < (uBrLevel-1); j++)
-                {   uF_OTElem[uBrLevel*i +j] = uF_OTElem_temp[uF_MaxBrLvl*i +j];    }
-                uF_OTElem[uBrLevel*i +(uBrLevel-1)] = i + uF_BrCount;
-            } 
-            uF_MaxBrLvl = uBrLevel; 
-            uF_BrCount += uFPNum; 
-            
-            
-            if (uBPNum > 0u)
-            {   unsigned int *uB_OTElem_temp = calloc((uB_MaxBrLvl*uBPNum), sizeof *uB_OTElem_temp ); 
-                unsigned int *uB_BrIds  = calloc(uBPNum,  sizeof *uB_BrIds ); 
-                unsigned int *uB_nBrIds = calloc(uBPNum,  sizeof *uB_nBrIds ); 
-                unsigned int *uB_sElem  = calloc(uBPNum,  sizeof *uB_sElem ); 
+            {   uNxtSegID = uF_temp[i*7 +3];
+                u_ElSegIDs[uNxtSegID*uMaxPNum + u_ElemCntr[uNxtSegID]] = i;
+                u_ElemCntr[uNxtSegID] += 1u;
                 
-                float *fB_BrLims  = calloc(6*uBPNum, sizeof *fB_BrLims ); 
-                float *fB_nBrLims = calloc(6*uBPNum, sizeof *fB_nBrLims ); 
+                f_SegVals[uNxtSegID*6 +0] += fF_temp[i*16 +0];
+                f_SegVals[uNxtSegID*6 +1] += fF_temp[i*16 +1];
+                f_SegVals[uNxtSegID*6 +2] += fF_temp[i*16 +2];
+                
+                fTemp = (fF_temp[i*16 +8] >= 0.0f)*1.0f + (fF_temp[i*16 +8] < 0.0f)*-1.0f;
+                f_SegVals[uNxtSegID*6 +3] += (fF_temp[i*16 +6]*fTemp);
+                f_SegVals[uNxtSegID*6 +4] += (fF_temp[i*16 +7]*fTemp);
+                f_SegVals[uNxtSegID*6 +5] += (fF_temp[i*16 +8]*fTemp);
+            }
             
-                fMinE = fB_temp[0*16 +0];          fMaxE = fB_temp[0*16 +0];
-                fMinN = fB_temp[0*16 +1];          fMaxN = fB_temp[0*16 +1];
-                fMinZ = fB_temp[0*16 +2];          fMaxZ = fB_temp[0*16 +2];
+            for (i = 0u; i < uFSegN; i++)
+            {   u_OTElem_temp = realloc(u_OTElem_temp,    u_ElemCntr[i]*u_MaxBrLvl* sizeof *u_OTElem_temp);
+                memset(u_OTElem_temp, 0, u_ElemCntr[i]*u_MaxBrLvl* sizeof(unsigned int) );
+                memset(u_BrIds,       0, u_ElemCntr[i]*            sizeof(unsigned int) );
                 
-                uBrNum   = 1u;
-                uBrLevel = 0u; 
+                f_SegVals[i*6 +0] /= (float)u_ElemCntr[i];        f_SegVals[i*6 +1] /= (float)u_ElemCntr[i];        f_SegVals[i*6 +2] /= (float)u_ElemCntr[i];
+                f_SegVals[i*6 +3] /= (float)u_ElemCntr[i];        f_SegVals[i*6 +4] /= (float)u_ElemCntr[i];        f_SegVals[i*6 +5] /= (float)u_ElemCntr[i];
+                memcpy(fNrm, &f_SegVals[i*6 +3], 3*sizeof(float));
+                GetStkAndDipVect(fNrm, fStk, fDip);
                 
-                for (i = 1u; i < uBPNum; i++)
-                {   fMinE = MIN(fMinE, fB_temp[i*16 +0]);           fMaxE = MAX(fMaxE, fB_temp[i*16 +0]);
-                    fMinN = MIN(fMinN, fB_temp[i*16 +1]);           fMaxN = MAX(fMaxN, fB_temp[i*16 +1]);
-                    fMinZ = MIN(fMinZ, fB_temp[i*16 +2]);           fMaxZ = MAX(fMaxZ, fB_temp[i*16 +2]);
+                fTemp = -FLT_MAX;
+                
+                for (j = 0; j < u_ElemCntr[i]; j++)
+                {   fShftCent[0] = fF_temp[ u_ElSegIDs[i*uMaxPNum +j]*16 +0] - f_SegVals[i*6 +0];
+                    fShftCent[1] = fF_temp[ u_ElSegIDs[i*uMaxPNum +j]*16 +1] - f_SegVals[i*6 +1];
+                    fShftCent[2] = fF_temp[ u_ElSegIDs[i*uMaxPNum +j]*16 +2] - f_SegVals[i*6 +2];
+                    
+                    fCentRot[j*3 +0] = fNrm[0]*fShftCent[0] + fNrm[1]*fShftCent[1] + fNrm[2]*fShftCent[2];
+                    fCentRot[j*3 +1] = fStk[0]*fShftCent[0] + fStk[1]*fShftCent[1] + fStk[2]*fShftCent[2];
+                    fCentRot[j*3 +2] = fDip[0]*fShftCent[0] + fDip[1]*fShftCent[1] + fDip[2]*fShftCent[2];
+                    fTemp = MAX(fTemp, fCentRot[j*3 +2]);
                 }
-                fExtend = fMaxE - fMinE;                fExtend = MAX(fExtend, (fMaxN - fMinN));        fExtend = MAX(fExtend, (fMaxZ - fMinZ));
-                fBrSize = fExtend + fBndSide;
+                for (j = 0; j < u_ElemCntr[i]; j++)     {   fCentRot[j*3 +2] -= fTemp;          }
+                fMaxMinVals[0] = fCentRot[0*3 +1];                                fMaxMinVals[2] = fCentRot[0*3 +1];
+                fMaxMinVals[3] = fCentRot[0*3 +2];                                fMaxMinVals[5] = fCentRot[0*3 +2];
                 
-                fB_BrLims[0*6 +0] = (fMaxE+fMinE)/2.0f - fBrSize/2.0f;                  fB_BrLims[0*6 +1] = (fMaxE+fMinE)/2.0f + fBrSize/2.0f;
-                fB_BrLims[0*6 +2] = (fMaxN+fMinN)/2.0f - fBrSize/2.0f;                  fB_BrLims[0*6 +3] = (fMaxN+fMinN)/2.0f + fBrSize/2.0f;
-                fB_BrLims[0*6 +4] = (fMaxZ+fMinZ)/2.0f - fBrSize/2.0f;                  fB_BrLims[0*6 +5] = (fMaxZ+fMinZ)/2.0f + fBrSize/2.0f;
+                for (j = 1; j < u_ElemCntr[i]; j++)
+                {   fMaxMinVals[0] = MIN(fMaxMinVals[0], fCentRot[j*3 +1]);       fMaxMinVals[2] = MAX(fMaxMinVals[2], fCentRot[j*3 +1]);
+                    fMaxMinVals[3] = MIN(fMaxMinVals[3], fCentRot[j*3 +2]);       fMaxMinVals[5] = MAX(fMaxMinVals[5], fCentRot[j*3 +2]);
+                }
                 
-                while (fBrSize/2.0f >= MINBRANCHSZEFACT*fBndSide) 
+                fMaxMinVals[0]  -= fFltSide;                    fMaxMinVals[2] += fFltSide;
+                fMaxMinVals[3]  -= fFltSide;                    fMaxMinVals[5] += fFltSide;
+                fBrSize          = MAX((fMaxMinVals[2] -fMaxMinVals[0]), (fMaxMinVals[5] -fMaxMinVals[3]));
+                f_BrLims[0*4 +0] = -0.5f*fBrSize;              f_BrLims[0*4 +1] = 0.5f*fBrSize;
+                f_BrLims[0*4 +2] = -1.0f*fBrSize;              f_BrLims[0*4 +3] = 0.0f*fBrSize;
+                
+                uBrLevel = 0u;
+                uBrCount = 0u;
+                uBrNum   = 1u;
+                
+                while (0.5f*fBrSize >= MINBRANCHSZEFACT*fFltSide) 
                 {   uBrLevel += 1u; 
-                    fBrSize  /= 2.0f; 
+                    fBrSize  *= 0.5f; 
                     unBrNum   = 0u; 
                     
-                    for (i = 0u; i < uBrNum; i++)
-                    {   fMinE = fB_BrLims[i*6 +0];      fMaxE = fB_BrLims[i*6 +1];       fMidE = (fMaxE +fMinE)/2.0f;
-                        fMinN = fB_BrLims[i*6 +2];      fMaxN = fB_BrLims[i*6 +3];       fMidN = (fMaxN +fMinN)/2.0f;
-                        fMinZ = fB_BrLims[i*6 +4];      fMaxZ = fB_BrLims[i*6 +5];       fMidZ = (fMaxZ +fMinZ)/2.0f;
+                    for (j = 0u; j < uBrNum; j++)
+                    {   fMaxMinVals[0] = f_BrLims[j*4 +0];      fMaxMinVals[2] = f_BrLims[j*4 +1];       fMaxMinVals[1] = 0.5f*(fMaxMinVals[0] +fMaxMinVals[2]);
+                        fMaxMinVals[3] = f_BrLims[j*4 +2];      fMaxMinVals[5] = f_BrLims[j*4 +3];       fMaxMinVals[4] = 0.5f*(fMaxMinVals[3] +fMaxMinVals[5]);
                         
                         uElem = 0u; 
-                        memset(uB_sElem, 0, uBPNum* sizeof(unsigned int) ); 
-                        memset(u_newBr, 0, (8*2)* sizeof(unsigned int) ); 
+                        memset(u_sElem, 0, u_ElemCntr[i]* sizeof(unsigned int) ); 
+                        memset(u_newBr, 0, 4*2* sizeof(unsigned int) ); 
                         
-                        for (j = 0u; j < uBPNum; j++)
-                        {   if (uB_OTElem_temp[uB_MaxBrLvl*j +uBrLevel-1] == uB_BrIds[i])   {   uB_sElem[uElem] = j;        uElem += 1u;         }
+                        for (k = 0u; k < u_ElemCntr[i]; k++)
+                        {   uTemp = (u_OTElem_temp[u_MaxBrLvl*k +uBrLevel-1] == u_BrIds[j])*1u + (u_OTElem_temp[u_MaxBrLvl*k +uBrLevel-1] != u_BrIds[j])*0u;
+                            u_sElem[uElem] = (uTemp == 1u)*k          + (uTemp != 1u)*u_sElem[uElem];
+                            uElem          = (uTemp == 1u)*(uElem+1u) + (uTemp != 1u)*uElem;
                         }
                         
-                        for (j = 0u; j < uElem; j++)
-                        {
-                            if ( (fB_temp[uB_sElem[j]*16 +0] >= fMidE)       &&  (fB_temp[uB_sElem[j]*16 +1] >= fMidN)  &&  (fB_temp[uB_sElem[j]*16 +2] >= fMidZ) )
-                            {   if (u_newBr[0*8 +0] == 0u)
-                                {   uB_BrCount += 1u;      u_newBr[0*8 +0] = 1u;      u_newBr[1*8 +0] = uB_BrCount;
-                                    fB_nBrLims[unBrNum*6 +0] = fMidE;                 fB_nBrLims[unBrNum*6 +1] = fMaxE;
-                                    fB_nBrLims[unBrNum*6 +2] = fMidN;                 fB_nBrLims[unBrNum*6 +3] = fMaxN;
-                                    fB_nBrLims[unBrNum*6 +4] = fMidZ;                 fB_nBrLims[unBrNum*6 +5] = fMaxZ;
-                                    uB_nBrIds[unBrNum] = uB_BrCount;                  unBrNum += 1u;
-                                    uB_OTPrtChld[uB_BrIds[i]*9 +0] +=1u;              uB_OTPrtChld[uB_BrIds[i]*9 +uB_OTPrtChld[uB_BrIds[i]*9 +0]] = uB_BrCount;
+                        for (k = 0u; k < uElem; k++)
+                        {   if ( (fCentRot[u_sElem[k]*3 +1] >= fMaxMinVals[1])       &&  (fCentRot[u_sElem[k]*3 +2] >= fMaxMinVals[4]) )
+                            {   if (u_newBr[0*4 +0] == 0u)
+                                {   uBrCount += 1u;      u_newBr[0*4 +0] = 1u;            u_newBr[1*4 +0] = uBrCount;
+                                    f_nBrLims[unBrNum*4 +0] = fMaxMinVals[1];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[2];
+                                    f_nBrLims[unBrNum*4 +2] = fMaxMinVals[4];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[5];
+                                    u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0] +=1u;    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0]] = (uBrCount +uF_TotalOffs);
                                 }
-                                uB_OTElem_temp[uB_MaxBrLvl*uB_sElem[j] +uBrLevel] = u_newBr[1*8 +0];
+                                u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +0];
                             }
-                            else if ( (fB_temp[uB_sElem[j]*16 +0] >= fMidE)  &&  (fB_temp[uB_sElem[j]*16 +1] >= fMidN)  &&  (fB_temp[uB_sElem[j]*16 +2] <  fMidZ) )
-                            {   if (u_newBr[0*8 +1] == 0u)
-                                {   uB_BrCount += 1u;      u_newBr[0*8 +1] = 1u;      u_newBr[1*8 +1] = uB_BrCount;
-                                    fB_nBrLims[unBrNum*6 +0] = fMidE;                 fB_nBrLims[unBrNum*6 +1] = fMaxE;
-                                    fB_nBrLims[unBrNum*6 +2] = fMidN;                 fB_nBrLims[unBrNum*6 +3] = fMaxN;
-                                    fB_nBrLims[unBrNum*6 +4] = fMinZ;                 fB_nBrLims[unBrNum*6 +5] = fMidZ;
-                                    uB_nBrIds[unBrNum] = uB_BrCount;                  unBrNum += 1u;
-                                    uB_OTPrtChld[uB_BrIds[i]*9 +0] +=1u;              uB_OTPrtChld[uB_BrIds[i]*9 +uB_OTPrtChld[uB_BrIds[i]*9 +0]] = uB_BrCount;
+                            else if ( (fCentRot[u_sElem[k]*3 +1] < fMaxMinVals[1])  &&  (fCentRot[u_sElem[k]*3 +2] >= fMaxMinVals[4]) )
+                            {   if (u_newBr[0*4 +1] == 0u)
+                                {   uBrCount += 1u;      u_newBr[0*4 +1] = 1u;            u_newBr[1*4 +1] = uBrCount;
+                                    f_nBrLims[unBrNum*4 +0] = fMaxMinVals[0];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[1];
+                                    f_nBrLims[unBrNum*4 +2] = fMaxMinVals[4];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[5];
+                                    u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0] +=1u;    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0]] = (uBrCount +uF_TotalOffs);
                                 }
-                                uB_OTElem_temp[uB_MaxBrLvl*uB_sElem[j] +uBrLevel] = u_newBr[1*8 +1];
+                                u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +1];
                             }
-                            else if ( (fB_temp[uB_sElem[j]*16 +0] >= fMidE)  &&  (fB_temp[uB_sElem[j]*16 +1] <  fMidN)  &&  (fB_temp[uB_sElem[j]*16 +2] >= fMidZ) )
-                            {   if (u_newBr[0*8 +2] == 0u)
-                                {   uB_BrCount += 1u;      u_newBr[0*8 +2] = 1u;      u_newBr[1*8 +2] = uB_BrCount;
-                                    fB_nBrLims[unBrNum*6 +0] = fMidE;                 fB_nBrLims[unBrNum*6 +1] = fMaxE;
-                                    fB_nBrLims[unBrNum*6 +2] = fMinN;                 fB_nBrLims[unBrNum*6 +3] = fMidN;
-                                    fB_nBrLims[unBrNum*6 +4] = fMidZ;                 fB_nBrLims[unBrNum*6 +5] = fMaxZ;
-                                    uB_nBrIds[unBrNum] = uB_BrCount;                  unBrNum += 1u;
-                                    uB_OTPrtChld[uB_BrIds[i]*9 +0] +=1u;              uB_OTPrtChld[uB_BrIds[i]*9 +uB_OTPrtChld[uB_BrIds[i]*9 +0]] = uB_BrCount;
+                            else if ( (fCentRot[u_sElem[k]*3 +1] < fMaxMinVals[1])  &&  (fCentRot[u_sElem[k]*3 +2] < fMaxMinVals[4]) )
+                            {   if (u_newBr[0*4 +2] == 0u)
+                                {   uBrCount += 1u;      u_newBr[0*4 +2] = 1u;            u_newBr[1*4 +2] = uBrCount;
+                                    f_nBrLims[unBrNum*4 +0] = fMaxMinVals[0];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[1];
+                                    f_nBrLims[unBrNum*4 +2] = fMaxMinVals[3];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[4];
+                                    u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0] +=1u;    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0]] = (uBrCount +uF_TotalOffs);
                                 }
-                                uB_OTElem_temp[uB_MaxBrLvl*uB_sElem[j] +uBrLevel] = u_newBr[1*8 +2];
+                                u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +2];
                             }
-                            else if ( (fB_temp[uB_sElem[j]*16 +0] <  fMidE)  &&  (fB_temp[uB_sElem[j]*16 +1] >= fMidN)  &&  (fB_temp[uB_sElem[j]*16 +2] >= fMidZ) )
-                            {   if (u_newBr[0*8 +3] == 0u)
-                                {   uB_BrCount += 1u;      u_newBr[0*8 +3] = 1u;      u_newBr[1*8 +3] = uB_BrCount;
-                                    fB_nBrLims[unBrNum*6 +0] = fMinE;                 fB_nBrLims[unBrNum*6 +1] = fMidE;
-                                    fB_nBrLims[unBrNum*6 +2] = fMidN;                 fB_nBrLims[unBrNum*6 +3] = fMaxN;
-                                    fB_nBrLims[unBrNum*6 +4] = fMidZ;                 fB_nBrLims[unBrNum*6 +5] = fMaxZ;
-                                    uB_nBrIds[unBrNum] = uB_BrCount;                  unBrNum += 1u;
-                                    uB_OTPrtChld[uB_BrIds[i]*9 +0] +=1u;              uB_OTPrtChld[uB_BrIds[i]*9 +uB_OTPrtChld[uB_BrIds[i]*9 +0]] = uB_BrCount;
+                            else if ( (fCentRot[u_sElem[k]*3 +1] >=  fMaxMinVals[1])  &&  (fCentRot[u_sElem[k]*3 +2] < fMaxMinVals[4]) )
+                            {   if (u_newBr[0*4 +3] == 0u)
+                                {   uBrCount += 1u;      u_newBr[0*4 +3] = 1u;            u_newBr[1*4 +3] = uBrCount;
+                                    f_nBrLims[unBrNum*4 +0] = fMaxMinVals[1];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[2];
+                                    f_nBrLims[unBrNum*4 +2] = fMaxMinVals[3];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[4];
+                                    u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0] +=1u;    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0]] = (uBrCount +uF_TotalOffs);
                                 }
-                                uB_OTElem_temp[uB_MaxBrLvl*uB_sElem[j] +uBrLevel] = u_newBr[1*8 +3];
-                            }
-                            else if ( (fB_temp[uB_sElem[j]*16 +0] >= fMidE)  &&  (fB_temp[uB_sElem[j]*16 +1] <  fMidN)  &&  (fB_temp[uB_sElem[j]*16 +2] <  fMidZ) )
-                            {   if (u_newBr[0*8 +4] == 0u)
-                                {   uB_BrCount += 1u;      u_newBr[0*8 +4] = 1u;      u_newBr[1*8 +4] = uB_BrCount;
-                                    fB_nBrLims[unBrNum*6 +0] = fMidE;                 fB_nBrLims[unBrNum*6 +1] = fMaxE;
-                                    fB_nBrLims[unBrNum*6 +2] = fMinN;                 fB_nBrLims[unBrNum*6 +3] = fMidN;
-                                    fB_nBrLims[unBrNum*6 +4] = fMinZ;                 fB_nBrLims[unBrNum*6 +5] = fMidZ;
-                                    uB_nBrIds[unBrNum] = uB_BrCount;                  unBrNum += 1u;
-                                    uB_OTPrtChld[uB_BrIds[i]*9 +0] +=1u;              uB_OTPrtChld[uB_BrIds[i]*9 +uB_OTPrtChld[uB_BrIds[i]*9 +0]] = uB_BrCount;
-                                }
-                                uB_OTElem_temp[uB_MaxBrLvl*uB_sElem[j] +uBrLevel] = u_newBr[1*8 +4];
-                            }
-                            else if ( (fB_temp[uB_sElem[j]*16 +0] <  fMidE)  &&  (fB_temp[uB_sElem[j]*16 +1] <  fMidN)  &&  (fB_temp[uB_sElem[j]*16 +2] >= fMidZ) )
-                            {   if (u_newBr[0*8 +5] == 0u)
-                                {   uB_BrCount += 1u;      u_newBr[0*8 +5] = 1u;      u_newBr[1*8 +5] = uB_BrCount;
-                                    fB_nBrLims[unBrNum*6 +0] = fMinE;                 fB_nBrLims[unBrNum*6 +1] = fMidE;
-                                    fB_nBrLims[unBrNum*6 +2] = fMinN;                 fB_nBrLims[unBrNum*6 +3] = fMidN;
-                                    fB_nBrLims[unBrNum*6 +4] = fMidZ;                 fB_nBrLims[unBrNum*6 +5] = fMaxZ;
-                                    uB_nBrIds[unBrNum] = uB_BrCount;                  unBrNum += 1u;
-                                    uB_OTPrtChld[uB_BrIds[i]*9 +0] +=1u;              uB_OTPrtChld[uB_BrIds[i]*9 +uB_OTPrtChld[uB_BrIds[i]*9 +0]] = uB_BrCount;
-                                }
-                                uB_OTElem_temp[uB_MaxBrLvl*uB_sElem[j] +uBrLevel] = u_newBr[1*8 +5];
-                            }
-                            else if ( (fB_temp[uB_sElem[j]*16 +0] <  fMidE)  &&  (fB_temp[uB_sElem[j]*16 +1] >= fMidN)  &&  (fB_temp[uB_sElem[j]*16 +2] <  fMidZ) )
-                            {   if (u_newBr[0*8 +6] == 0u)
-                                {   uB_BrCount += 1u;      u_newBr[0*8 +6] = 1u;      u_newBr[1*8 +6] = uB_BrCount;
-                                    fB_nBrLims[unBrNum*6 +0] = fMinE;                 fB_nBrLims[unBrNum*6 +1] = fMidE;
-                                    fB_nBrLims[unBrNum*6 +2] = fMidN;                 fB_nBrLims[unBrNum*6 +3] = fMaxN;
-                                    fB_nBrLims[unBrNum*6 +4] = fMinZ;                 fB_nBrLims[unBrNum*6 +5] = fMidZ;
-                                    uB_nBrIds[unBrNum] = uB_BrCount;                  unBrNum += 1u;
-                                    uB_OTPrtChld[uB_BrIds[i]*9 +0] +=1u;              uB_OTPrtChld[uB_BrIds[i]*9 +uB_OTPrtChld[uB_BrIds[i]*9 +0]] = uB_BrCount;
-                                }
-                                uB_OTElem_temp[uB_MaxBrLvl*uB_sElem[j] +uBrLevel] = u_newBr[1*8 +6];
-                            }
-                            else if ( (fB_temp[uB_sElem[j]*16 +0] <  fMidE)  &&  (fB_temp[uB_sElem[j]*16 +1] <  fMidN)  &&  (fB_temp[uB_sElem[j]*16 +2] <  fMidZ) )
-                            {   if (u_newBr[0*8 +7] == 0u)
-                                {   uB_BrCount += 1u;      u_newBr[0*8 +7] = 1u;      u_newBr[1*8 +7] = uB_BrCount;
-                                    fB_nBrLims[unBrNum*6 +0] = fMinE;                 fB_nBrLims[unBrNum*6 +1] = fMidE;
-                                    fB_nBrLims[unBrNum*6 +2] = fMinN;                 fB_nBrLims[unBrNum*6 +3] = fMidN;
-                                    fB_nBrLims[unBrNum*6 +4] = fMinZ;                 fB_nBrLims[unBrNum*6 +5] = fMidZ;
-                                    uB_nBrIds[unBrNum] = uB_BrCount;                  unBrNum += 1u;
-                                    uB_OTPrtChld[uB_BrIds[i]*9 +0] +=1u;              uB_OTPrtChld[uB_BrIds[i]*9 +uB_OTPrtChld[uB_BrIds[i]*9 +0]] = uB_BrCount;
-                                }
-                                uB_OTElem_temp[uB_MaxBrLvl*uB_sElem[j] +uBrLevel] = u_newBr[1*8 +7];
-                            }
-                            else    {   fprintf(stdout,"this should not happen...\n");    }
-                        }
-                        
-                    }
-                    memcpy(uB_BrIds, uB_nBrIds,     uBPNum* sizeof(unsigned int) );
-                    memcpy(fB_BrLims, fB_nBrLims, 6*uBPNum* sizeof(float) );
+                                u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +3];
+                    }   }   }
+                    memcpy(u_BrIds,  u_nBrIds,    uMaxPNum* sizeof(unsigned int) );
+                    memcpy(f_BrLims, f_nBrLims, 4*uMaxPNum* sizeof(float) );
                     uBrNum = unBrNum;
                 }
                 
-                uB_BrCount  += 1u;
-                uBrLevel    += 2u;
-                uB_OTPrtChld = realloc(uB_OTPrtChld, uB_BrCount*9* sizeof *uB_OTPrtChld );
+                uBrCount   += 1u;
+                uBrLevel   += 2u;
+                for (j = 0; j < u_ElemCntr[i]; j++ )
+                {   
+                    u_OTElem_temp[u_MaxBrLvl*j + uBrLevel -1] = (uBrCount+ j);
+                    
+                    uTemp = u_ElSegIDs[i*uMaxPNum +j]*u_MaxBrLvl;
+                    uF_OTElem[uTemp +0] = uBrLevel; 
+                    
+                    for (k = 0; k < uBrLevel; k++)
+                    {   uF_OTElem[uTemp +(u_MaxBrLvl -uBrLevel +k)] = u_OTElem_temp[u_MaxBrLvl*j +k] +uF_TotalOffs;
+                }   }
                 
-                uB_OTElem    = calloc((uBrLevel*uBPNum), sizeof *uB_OTElem ); 
-                
-                for (i = 0u; i < uBPNum; i++)
-                {   for (j = 1u; j < (uBrLevel-1); j++)
-                    {   uB_OTElem[uBrLevel*i +j] = uB_OTElem_temp[uB_MaxBrLvl*i +j];    }
-                    uB_OTElem[uBrLevel*i +(uBrLevel-1)] = i + uB_BrCount;
-                } 
-                uB_MaxBrLvl = uBrLevel; 
-                uB_BrCount += uBPNum; 
+                uF_TotalOffs += (uBrCount + u_ElemCntr[i] ); 
                 
             }
+            
+            if (uBPNum > 0u)
+            {   memset(f_SegVals,  0,        6*uMaxSNum* sizeof(float));
+                memset(u_ElemCntr, 0,        1*uMaxSNum* sizeof(unsigned int));
+                memset(u_ElSegIDs, 0, uMaxPNum*uMaxSNum* sizeof(unsigned int));
+                
+                for (i = 0u; i < uBPNum; i++)
+                {   uNxtSegID = uB_temp[i*4 +3];
+                    u_ElSegIDs[uNxtSegID*uMaxPNum + u_ElemCntr[uNxtSegID]] = i;
+                    u_ElemCntr[uNxtSegID] += 1u;
+                    
+                    f_SegVals[uNxtSegID*6 +0] += fB_temp[i*16 +0];
+                    f_SegVals[uNxtSegID*6 +1] += fB_temp[i*16 +1];
+                    f_SegVals[uNxtSegID*6 +2] += fB_temp[i*16 +2];
+                    
+                    fTemp = (fB_temp[i*16 +8] >= 0.0f)*1.0f + (fB_temp[i*16 +8] < 0.0f)*-1.0f;
+                    f_SegVals[uNxtSegID*6 +3] += (fB_temp[i*16 +6]*fTemp);
+                    f_SegVals[uNxtSegID*6 +4] += (fB_temp[i*16 +7]*fTemp);
+                    f_SegVals[uNxtSegID*6 +5] += (fB_temp[i*16 +8]*fTemp);
+                }
+                
+                for (i = 0u; i < uBSegN; i++)
+                {   
+                    u_OTElem_temp = realloc(u_OTElem_temp,    u_ElemCntr[i]*u_MaxBrLvl* sizeof *u_OTElem_temp);
+                    memset(u_OTElem_temp,    0, u_ElemCntr[i]*u_MaxBrLvl* sizeof(unsigned int) );
+                    memset(u_BrIds,          0, u_ElemCntr[i]*            sizeof(unsigned int) );
+                    
+                    f_SegVals[i*6 +0] /= (float)u_ElemCntr[i];        f_SegVals[i*6 +1] /= (float)u_ElemCntr[i];        f_SegVals[i*6 +2] /= (float)u_ElemCntr[i];
+                    f_SegVals[i*6 +3] /= (float)u_ElemCntr[i];        f_SegVals[i*6 +4] /= (float)u_ElemCntr[i];        f_SegVals[i*6 +5] /= (float)u_ElemCntr[i];
+                    memcpy(fNrm, &f_SegVals[i*6 +3], 3*sizeof(float));
+                    GetStkAndDipVect(fNrm, fStk, fDip);
+                    
+                    fTemp = -FLT_MAX;
+                    
+                    for (j = 0; j < u_ElemCntr[i]; j++)
+                    {   fShftCent[0] = fB_temp[ u_ElSegIDs[i*uMaxPNum +j]*16 +0] - f_SegVals[i*6 +0];
+                        fShftCent[1] = fB_temp[ u_ElSegIDs[i*uMaxPNum +j]*16 +1] - f_SegVals[i*6 +1];
+                        fShftCent[2] = fB_temp[ u_ElSegIDs[i*uMaxPNum +j]*16 +2] - f_SegVals[i*6 +2];
+                        
+                        fCentRot[j*3 +0] = fNrm[0]*fShftCent[0] + fNrm[1]*fShftCent[1] + fNrm[2]*fShftCent[2];
+                        fCentRot[j*3 +1] = fStk[0]*fShftCent[0] + fStk[1]*fShftCent[1] + fStk[2]*fShftCent[2];
+                        fCentRot[j*3 +2] = fDip[0]*fShftCent[0] + fDip[1]*fShftCent[1] + fDip[2]*fShftCent[2];
+                        
+                        fTemp = MAX(fTemp, fCentRot[j*3 +2]);
+                    }
+                    for (j = 0; j < u_ElemCntr[i]; j++)     {   fCentRot[j*3 +2] -= fTemp;      }
+                    fMaxMinVals[0] = fCentRot[0*3 +1];                                fMaxMinVals[2] = fCentRot[0*3 +1];
+                    fMaxMinVals[3] = fCentRot[0*3 +2];                                fMaxMinVals[5] = fCentRot[0*3 +2];
+                    
+                    for (j = 1; j < u_ElemCntr[i]; j++)
+                    {   fMaxMinVals[0] = MIN(fMaxMinVals[0], fCentRot[j*3 +1]);       fMaxMinVals[2] = MAX(fMaxMinVals[2], fCentRot[j*3 +1]);
+                        fMaxMinVals[3] = MIN(fMaxMinVals[3], fCentRot[j*3 +2]);       fMaxMinVals[5] = MAX(fMaxMinVals[5], fCentRot[j*3 +2]);
+                    }
+                    
+                    fMaxMinVals[0]  -= fBndSide;                    fMaxMinVals[2] += fBndSide;
+                    fMaxMinVals[3]  -= fBndSide;                    fMaxMinVals[5] += fBndSide;
+                    fBrSize          = MAX((fMaxMinVals[2] -fMaxMinVals[0]), (fMaxMinVals[5] -fMaxMinVals[3]));
+                    f_BrLims[0*4 +0] = -0.5f*fBrSize;              f_BrLims[0*4 +1] = 0.5f*fBrSize;
+                    f_BrLims[0*4 +2] = -1.0f*fBrSize;              f_BrLims[0*4 +3] = 0.0f*fBrSize;
+                    
+                    uBrLevel = 0u; 
+                    uBrCount = 0u;
+                    uBrNum   = 1u;
+                    
+                    while (0.5f*fBrSize >= MINBRANCHSZEFACT*fBndSide) 
+                    {   uBrLevel += 1u; 
+                        fBrSize  *= 0.5f; 
+                        unBrNum   = 0u; 
+                        
+                        for (j = 0u; j < uBrNum; j++)
+                        {   fMaxMinVals[0] = f_BrLims[j*4 +0];      fMaxMinVals[2] = f_BrLims[j*4 +1];       fMaxMinVals[1] = 0.5f*(fMaxMinVals[0] +fMaxMinVals[2]);
+                            fMaxMinVals[3] = f_BrLims[j*4 +2];      fMaxMinVals[5] = f_BrLims[j*4 +3];       fMaxMinVals[4] = 0.5f*(fMaxMinVals[3] +fMaxMinVals[5]);
+                            
+                            uElem = 0u; 
+                            memset(u_sElem, 0, u_ElemCntr[i]* sizeof(unsigned int) ); 
+                            memset(u_newBr, 0, 4*2* sizeof(unsigned int) ); 
+                            
+                            for (k = 0u; k < u_ElemCntr[i]; k++)
+                            {   uTemp = (u_OTElem_temp[u_MaxBrLvl*k +uBrLevel-1] == u_BrIds[j])*1u + (u_OTElem_temp[u_MaxBrLvl*k +uBrLevel-1] != u_BrIds[j])*0u;
+                                u_sElem[uElem] = (uTemp == 1u)*k          + (uTemp != 1u)*u_sElem[uElem];
+                                uElem          = (uTemp == 1u)*(uElem+1u) + (uTemp != 1u)*uElem;
+                            }
+                            
+                            for (k = 0u; k < uElem; k++)
+                            {   if ( (fCentRot[u_sElem[k]*3 +1] >= fMaxMinVals[1])       &&  (fCentRot[u_sElem[k]*3 +2] >= fMaxMinVals[4]) )
+                                {   if (u_newBr[0*4 +0] == 0u)
+                                    {   uBrCount += 1u;      u_newBr[0*4 +0] = 1u;            u_newBr[1*4 +0] = uBrCount;
+                                        f_nBrLims[unBrNum*4 +0] = fMaxMinVals[1];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[2];
+                                        f_nBrLims[unBrNum*4 +2] = fMaxMinVals[4];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[5];
+                                        u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                        uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0] +=1u;    uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0]] = (uBrCount +uB_TotalOffs);
+                                    }
+                                    u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +0];
+                                }
+                                else if ( (fCentRot[u_sElem[k]*3 +1] < fMaxMinVals[1])  &&  (fCentRot[u_sElem[k]*3 +2] >= fMaxMinVals[4]) )
+                                {   if (u_newBr[0*4 +1] == 0u)
+                                    {   uBrCount += 1u;      u_newBr[0*4 +1] = 1u;            u_newBr[1*4 +1] = uBrCount;
+                                        f_nBrLims[unBrNum*4 +0] = fMaxMinVals[0];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[1];
+                                        f_nBrLims[unBrNum*4 +2] = fMaxMinVals[4];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[5];
+                                        u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                        uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0] +=1u;    uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0]] = (uBrCount +uB_TotalOffs);
+                                    }
+                                    u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +1];
+                                }
+                                else if ( (fCentRot[u_sElem[k]*3 +1] < fMaxMinVals[1])  &&  (fCentRot[u_sElem[k]*3 +2] < fMaxMinVals[4]) )
+                                {   if (u_newBr[0*4 +2] == 0u)
+                                    {   uBrCount += 1u;      u_newBr[0*4 +2] = 1u;            u_newBr[1*4 +2] = uBrCount;
+                                        f_nBrLims[unBrNum*4 +0] = fMaxMinVals[0];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[1];
+                                        f_nBrLims[unBrNum*4 +2] = fMaxMinVals[3];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[4];
+                                        u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                        uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0] +=1u;    uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0]] = (uBrCount +uB_TotalOffs);
+                                    }
+                                    u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +2];
+                                }
+                                else if ( (fCentRot[u_sElem[k]*3 +1] >=  fMaxMinVals[1])  &&  (fCentRot[u_sElem[k]*3 +2] < fMaxMinVals[4]) )
+                                {   if (u_newBr[0*4 +3] == 0u)
+                                    {   uBrCount += 1u;      u_newBr[0*4 +3] = 1u;            u_newBr[1*4 +3] = uBrCount;
+                                        f_nBrLims[unBrNum*4 +0] = fMaxMinVals[1];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[2];
+                                        f_nBrLims[unBrNum*4 +2] = fMaxMinVals[3];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[4];
+                                        u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                        uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0] +=1u;    uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0]] = (uBrCount +uB_TotalOffs);
+                                    }
+                                    u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +3];
+                        }   }   }
+                        memcpy(u_BrIds, u_nBrIds,     uMaxPNum* sizeof(unsigned int) );
+                        memcpy(f_BrLims, f_nBrLims, 4*uMaxPNum* sizeof(float) );
+                        uBrNum = unBrNum;
+                    }
+                    
+                    uBrCount   += 1u;
+                    uBrLevel   += 2u;
+                    for (j = 0; j < u_ElemCntr[i]; j++ )
+                    {   
+                        u_OTElem_temp[u_MaxBrLvl*j + uBrLevel -1] = (uBrCount+ j);
+                        
+                        uTemp = u_ElSegIDs[i*uMaxPNum +j]*u_MaxBrLvl;
+                        uB_OTElem[uTemp +0] = uBrLevel; 
+                        
+                        for (k = 0; k < uBrLevel; k++)
+                        {   uB_OTElem[uTemp +(u_MaxBrLvl -uBrLevel +k)] = u_OTElem_temp[u_MaxBrLvl*j +k] +uB_TotalOffs;
+                    }   }
+                    
+                    uB_TotalOffs += (uBrCount + u_ElemCntr[i] ); 
+                    
+            }   }
             
             timer0 = clock() - timer0;        time_taken  = ((double)timer0)/CLOCKS_PER_SEC;
             MPI_Allreduce(MPI_IN_PLACE, &time_taken, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD); 
             time_taken /=(double)iSIZE;
             if (iRANK == 0) 
-            {   fprintf(stdout,"Total RunTime for OctTree (seconds): %6.4f   (min. branch size factor: %2.2f)\nBranchDepthB: %7u     BranchCountB: %7u\nBranchDepthF: %7u     BranchCountF:%7u\n",time_taken, MINBRANCHSZEFACT, uB_MaxBrLvl, uB_BrCount, uF_MaxBrLvl, uF_BrCount);   
+            {   fprintf(stdout,"Total RunTime for OctTree (seconds): %6.4f   (min. branch size factor: %2.2f)\nBranchCountF: %7u\nBranchCountB:%7u\n",time_taken, MINBRANCHSZEFACT, uF_TotalOffs, uB_TotalOffs);
             }
         } 
         
         
         {   timer0 = clock();
-            unsigned int uGlobPos,   uUsdNum,   uSrcElem,  uTemp0,   uTemp1,   uPrvBrLv,   uTstBrId,   uPrvBrId;
+            unsigned int uGlobPos,   uUsdNum,   uSrcElem,  uTemp0,   uTemp1,   uTemp2,   uPrvBrLv,   uTstBrId,   uPrvBrId;
             float fTemp0,   fTemp1,   fTemp2,   fTemp3,   fTemp4,   fTemp5,   fDist,  fDistF;
             float fRcv[3],   fSrc[3],   fP1[3],   fP2[3],   fP3[3],   fP4[3],   fStressStk[6],   fStressDip[6],   fStressNrm[6],   fStressStkT[6],   fStressDipT[6],   fStressNrmT[6],   fStrain[6];
             float fRotMat[9], fTempVect[3],   fPrvStress[9],   fTstStress[9];
@@ -850,47 +836,47 @@ int main(int argc, char **argv)
             unsigned int *uFUsdEl = calloc(  uFPNum, sizeof *uFUsdEl );
             unsigned int *uFPrvEl = calloc(  uFPNum, sizeof *uFPrvEl );
             unsigned int *uFTstEl = calloc(  uFPNum, sizeof *uFTstEl );
-
-            float *fKh_FFBrch     = calloc(21*uF_BrCount, sizeof *fKh_FFBrch );
-            unsigned int *uFUsdBrch = calloc( uF_BrCount, sizeof *uFUsdBrch );
-
+            float *fKh_FFBrch     = calloc(21*uF_TotalOffs, sizeof *fKh_FFBrch );
+            unsigned int *uFUsdBrch = calloc( uF_TotalOffs, sizeof *uFUsdBrch );
             unsigned int *uBUsdEl = calloc(  uBPNum, sizeof *uBUsdEl );
             unsigned int *uBPrvEl = calloc(  uBPNum, sizeof *uBPrvEl );
             unsigned int *uBTstEl = calloc(  uBPNum, sizeof *uBTstEl );
-            float *fKh_BBBrch     = calloc(21*uB_BrCount, sizeof *fKh_BBBrch );
-            unsigned int *uBUsdBrch = calloc( uB_BrCount, sizeof *uBUsdBrch );
+            float *fKh_BBBrch     = calloc(21*uB_TotalOffs, sizeof *fKh_BBBrch );
+            unsigned int *uBUsdBrch = calloc( uB_TotalOffs, sizeof *uBUsdBrch );
             
             
             for (j = 0u; j < uFPNum; j++)
-            {   for (k = 0u; k < uF_MaxBrLvl; k++)
-                {   uTemp0 = uF_OTElem[uF_MaxBrLvl*j + k]*21u;
-                    fKh_FFBrch[uTemp0 +15] = FLT_MAX;           fKh_FFBrch[uTemp0 +16] = -FLT_MAX;
-                    fKh_FFBrch[uTemp0 +17] = FLT_MAX;           fKh_FFBrch[uTemp0 +18] = -FLT_MAX;
-                    fKh_FFBrch[uTemp0 +19] = FLT_MAX;           fKh_FFBrch[uTemp0 +20] = -FLT_MAX;
+            {   uTemp0 = uF_OTElem[u_MaxBrLvl*j +0];
+                for (k = 0u; k < uTemp0; k++)
+                {   uTemp1 = uF_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +k)]*21u;
+                    fKh_FFBrch[uTemp1 +15] = FLT_MAX;           fKh_FFBrch[uTemp1 +16] = -FLT_MAX;
+                    fKh_FFBrch[uTemp1 +17] = FLT_MAX;           fKh_FFBrch[uTemp1 +18] = -FLT_MAX;
+                    fKh_FFBrch[uTemp1 +19] = FLT_MAX;           fKh_FFBrch[uTemp1 +20] = -FLT_MAX;
             }   }
             
             for (j = 0u; j < uFPNum; j++)
-            {   memcpy(fP1, &fFV_temp[uF_temp[j*7 +0]*4 +0],  3u*sizeof(float));
+            {   uTemp0 = uF_OTElem[u_MaxBrLvl*j +0];
+                memcpy(fP1, &fFV_temp[uF_temp[j*7 +0]*4 +0],  3u*sizeof(float));
                 memcpy(fP2, &fFV_temp[uF_temp[j*7 +1]*4 +0],  3u*sizeof(float));
                 memcpy(fP3, &fFV_temp[uF_temp[j*7 +2]*4 +0],  3u*sizeof(float));
                 fTemp0 = MIN(fP1[0], fP2[0]);       fTemp0 = MIN(fTemp0, fP3[0]);            fTemp1 = MAX(fP1[0], fP2[0]);       fTemp1 = MAX(fTemp1, fP3[0]);
                 fTemp2 = MIN(fP1[1], fP2[1]);       fTemp2 = MIN(fTemp2, fP3[1]);            fTemp3 = MAX(fP1[1], fP2[1]);       fTemp3 = MAX(fTemp3, fP3[1]);
                 fTemp4 = MIN(fP1[2], fP2[2]);       fTemp4 = MIN(fTemp4, fP3[2]);            fTemp5 = MAX(fP1[2], fP2[2]);       fTemp5 = MAX(fTemp5, fP3[2]);
-                for (k = 0u; k < uF_MaxBrLvl; k++)
-                {   uTemp0 = uF_OTElem[uF_MaxBrLvl*j + k]*21u;
+                for (k = 0u; k < uTemp0; k++)
+                {   uTemp1 = uF_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +k)]*21u;
                     
                     
                     
-                    fKh_FFBrch[uTemp0 +0] += fF_temp[j*16 +0];       fKh_FFBrch[uTemp0 +1] += fF_temp[j*16 +1];    fKh_FFBrch[uTemp0 +2] += fF_temp[j*16 +2];
-                    fKh_FFBrch[uTemp0 +3] += fF_temp[j*16 +15];
-                    fKh_FFBrch[uTemp0 +4] += fF_temp[j*16 +6];       fKh_FFBrch[uTemp0 +5] += fF_temp[j*16 +7];    fKh_FFBrch[uTemp0 +6] += fF_temp[j*16 +8];
-                    fKh_FFBrch[uTemp0 +13]+= 1.0f;
-                    fKh_FFBrch[uTemp0 +15] = MIN(fKh_FFBrch[uTemp0 +15], fTemp0);           fKh_FFBrch[uTemp0 +16] = MAX(fKh_FFBrch[uTemp0 +16], fTemp1);
-                    fKh_FFBrch[uTemp0 +17] = MIN(fKh_FFBrch[uTemp0 +17], fTemp2);           fKh_FFBrch[uTemp0 +18] = MAX(fKh_FFBrch[uTemp0 +18], fTemp3);
-                    fKh_FFBrch[uTemp0 +19] = MIN(fKh_FFBrch[uTemp0 +19], fTemp4);           fKh_FFBrch[uTemp0 +20] = MAX(fKh_FFBrch[uTemp0 +20], fTemp5);
+                    fKh_FFBrch[uTemp1 +0] += fF_temp[j*16 +0];       fKh_FFBrch[uTemp1 +1] += fF_temp[j*16 +1];    fKh_FFBrch[uTemp1 +2] += fF_temp[j*16 +2];
+                    fKh_FFBrch[uTemp1 +3] += fF_temp[j*16 +15];
+                    fKh_FFBrch[uTemp1 +4] += fF_temp[j*16 +6];       fKh_FFBrch[uTemp1 +5] += fF_temp[j*16 +7];    fKh_FFBrch[uTemp1 +6] += fF_temp[j*16 +8];
+                    fKh_FFBrch[uTemp1 +13]+= 1.0f;
+                    fKh_FFBrch[uTemp1 +15] = MIN(fKh_FFBrch[uTemp1 +15], fTemp0);           fKh_FFBrch[uTemp1 +16] = MAX(fKh_FFBrch[uTemp1 +16], fTemp1);
+                    fKh_FFBrch[uTemp1 +17] = MIN(fKh_FFBrch[uTemp1 +17], fTemp2);           fKh_FFBrch[uTemp1 +18] = MAX(fKh_FFBrch[uTemp1 +18], fTemp3);
+                    fKh_FFBrch[uTemp1 +19] = MIN(fKh_FFBrch[uTemp1 +19], fTemp4);           fKh_FFBrch[uTemp1 +20] = MAX(fKh_FFBrch[uTemp1 +20], fTemp5);
             }   }
-             
-            for (j = 0u; j < uF_BrCount; j++)
+            
+            for (j = 0u; j < uF_TotalOffs; j++)
             {   fKh_FFBrch[j*21 +0] /= fKh_FFBrch[j*21 +13];    fKh_FFBrch[j*21 +1] /= fKh_FFBrch[j*21 +13];        fKh_FFBrch[j*21 +2] /= fKh_FFBrch[j*21 +13];
                 memcpy(fNrm, &fKh_FFBrch[j*21 +4], 3u*sizeof(float));
                 NrmlzeVect(fNrm);
@@ -910,35 +896,37 @@ int main(int argc, char **argv)
             }
             
             for (j = 0u; j < uBPNum; j++)
-            {   for (k = 0u; k < uB_MaxBrLvl; k++)
-                {   uTemp0 = uB_OTElem[uB_MaxBrLvl*j + k]*21u;
-                    fKh_BBBrch[uTemp0 +15] = FLT_MAX;           fKh_BBBrch[uTemp0 +16] = -FLT_MAX;
-                    fKh_BBBrch[uTemp0 +17] = FLT_MAX;           fKh_BBBrch[uTemp0 +18] = -FLT_MAX;
-                    fKh_BBBrch[uTemp0 +19] = FLT_MAX;           fKh_BBBrch[uTemp0 +20] = -FLT_MAX;
+            {   uTemp0 = uB_OTElem[u_MaxBrLvl*j +0];
+                for (k = 0u; k < uTemp0; k++)
+                {   uTemp1 = uB_OTElem[u_MaxBrLvl*j +(u_MaxBrLvl -uTemp0 +k)]*21u;
+                    fKh_BBBrch[uTemp1 +15] = FLT_MAX;           fKh_BBBrch[uTemp1 +16] = -FLT_MAX;
+                    fKh_BBBrch[uTemp1 +17] = FLT_MAX;           fKh_BBBrch[uTemp1 +18] = -FLT_MAX;
+                    fKh_BBBrch[uTemp1 +19] = FLT_MAX;           fKh_BBBrch[uTemp1 +20] = -FLT_MAX;
             }   }
             
             for (j = 0u; j < uBPNum; j++)
-            {   memcpy(fP1, &fBV_temp[uB_temp[j*4 +0]*3 +0],  3u*sizeof(float));
+            {   uTemp0 = uB_OTElem[u_MaxBrLvl*j +0];
+                memcpy(fP1, &fBV_temp[uB_temp[j*4 +0]*3 +0],  3u*sizeof(float));
                 memcpy(fP2, &fBV_temp[uB_temp[j*4 +1]*3 +0],  3u*sizeof(float));
                 memcpy(fP3, &fBV_temp[uB_temp[j*4 +2]*3 +0],  3u*sizeof(float));
                 fTemp0 = MIN(fP1[0], fP2[0]);       fTemp0 = MIN(fTemp0, fP3[0]);            fTemp1 = MAX(fP1[0], fP2[0]);       fTemp1 = MAX(fTemp1, fP3[0]);
                 fTemp2 = MIN(fP1[1], fP2[1]);       fTemp2 = MIN(fTemp2, fP3[1]);            fTemp3 = MAX(fP1[1], fP2[1]);       fTemp3 = MAX(fTemp3, fP3[1]);
                 fTemp4 = MIN(fP1[2], fP2[2]);       fTemp4 = MIN(fTemp4, fP3[2]);            fTemp5 = MAX(fP1[2], fP2[2]);       fTemp5 = MAX(fTemp5, fP3[2]);
-                for (k = 0u; k < uB_MaxBrLvl; k++)
-                {   uTemp0 = uB_OTElem[uB_MaxBrLvl*j + k]*21u;
+                for (k = 0u; k < uTemp0; k++)
+                {   uTemp1 = uB_OTElem[u_MaxBrLvl*j +(u_MaxBrLvl -uTemp0 +k)]*21u;
                     
                     
                     
-                    fKh_BBBrch[uTemp0 +0] += fB_temp[j*16 +0];       fKh_BBBrch[uTemp0 +1] += fB_temp[j*16 +1];    fKh_BBBrch[uTemp0 +2] += fB_temp[j*16 +2];
-                    fKh_BBBrch[uTemp0 +3] += fB_temp[j*16 +15];
-                    fKh_BBBrch[uTemp0 +4] += fB_temp[j*16 +6];       fKh_BBBrch[uTemp0 +5] += fB_temp[j*16 +7];    fKh_BBBrch[uTemp0 +6] += fB_temp[j*16 +8];
-                    fKh_BBBrch[uTemp0 +13]+= 1.0f;
-                    fKh_BBBrch[uTemp0 +15] = MIN(fKh_BBBrch[uTemp0 +15], fTemp0);           fKh_BBBrch[uTemp0 +16] = MAX(fKh_BBBrch[uTemp0 +16], fTemp1);
-                    fKh_BBBrch[uTemp0 +17] = MIN(fKh_BBBrch[uTemp0 +17], fTemp2);           fKh_BBBrch[uTemp0 +18] = MAX(fKh_BBBrch[uTemp0 +18], fTemp3);
-                    fKh_BBBrch[uTemp0 +19] = MIN(fKh_BBBrch[uTemp0 +19], fTemp4);           fKh_BBBrch[uTemp0 +20] = MAX(fKh_BBBrch[uTemp0 +20], fTemp5);
+                    fKh_BBBrch[uTemp1 +0] += fB_temp[j*16 +0];       fKh_BBBrch[uTemp1 +1] += fB_temp[j*16 +1];    fKh_BBBrch[uTemp1 +2] += fB_temp[j*16 +2];
+                    fKh_BBBrch[uTemp1 +3] += fB_temp[j*16 +15];
+                    fKh_BBBrch[uTemp1 +4] += fB_temp[j*16 +6];       fKh_BBBrch[uTemp1 +5] += fB_temp[j*16 +7];    fKh_BBBrch[uTemp1 +6] += fB_temp[j*16 +8];
+                    fKh_BBBrch[uTemp1 +13]+= 1.0f;
+                    fKh_BBBrch[uTemp1 +15] = MIN(fKh_BBBrch[uTemp1 +15], fTemp0);           fKh_BBBrch[uTemp1 +16] = MAX(fKh_BBBrch[uTemp1 +16], fTemp1);
+                    fKh_BBBrch[uTemp1 +17] = MIN(fKh_BBBrch[uTemp1 +17], fTemp2);           fKh_BBBrch[uTemp1 +18] = MAX(fKh_BBBrch[uTemp1 +18], fTemp3);
+                    fKh_BBBrch[uTemp1 +19] = MIN(fKh_BBBrch[uTemp1 +19], fTemp4);           fKh_BBBrch[uTemp1 +20] = MAX(fKh_BBBrch[uTemp1 +20], fTemp5);
             }   }
              
-            for (j = 0u; j < uB_BrCount; j++)
+            for (j = 0u; j < uB_TotalOffs; j++)
             {   fKh_BBBrch[j*21 +0] /= fKh_BBBrch[j*21 +13];    fKh_BBBrch[j*21 +1] /= fKh_BBBrch[j*21 +13];        fKh_BBBrch[j*21 +2] /= fKh_BBBrch[j*21 +13];
                 memcpy(fNrm, &fKh_BBBrch[j*21 +4], 3u*sizeof(float));
                 NrmlzeVect(fNrm);
@@ -971,37 +959,41 @@ int main(int argc, char **argv)
                 
                 uKh_FFcnt[i]  = 0u;
                 uUsdNum       = 0u;
-                memset(uFUsdEl, 0,       uFPNum*sizeof(unsigned int));
-                memset(uFUsdBrch, 0, uF_BrCount*sizeof(unsigned int));
+                memset(uFUsdEl, 0,         uFPNum*sizeof(unsigned int));
+                memset(uFUsdBrch, 0, uF_TotalOffs*sizeof(unsigned int));
                 uTstBrId = 0u;      uSrcElem = 0u;
                 
                 while (uUsdNum < uFPNum) 
                 {   
                     for (j = 0u; j < uFPNum; j++)               {       if (uFUsdEl[j] == 0u)    {      uSrcElem = j;       break;          }           } 
                     
+
                     memcpy(fSrc, &fF_temp[uSrcElem*16 +0], 3u*sizeof(float));
                     
                     SubtractVect3(fTempVect, fRcv, fSrc);               fDist  = VectorLength(fTempVect);
                     
-                    fDistF = (fDist >= CUTDISTANCE*fFltSide)*1.0f + (fDist < CUTDISTANCE*fFltSide)*0.0f; 
+                    fDistF = (fDist >= CUTDISTANCE*fFltSide)*1.0f                    + (fDist < CUTDISTANCE*fFltSide)*0.0f; 
                     fDistF = (uF_temp[uGlobPos*7 +4] == uF_temp[uSrcElem*7 +4])*1.0f + (uF_temp[uGlobPos*7 +4] != uF_temp[uSrcElem*7 +4])*fDistF;
                     uF_temp[uGlobPos*7 +6] = (fDistF == 1.0f)*uF_temp[uGlobPos*7 +6] + (fDistF != 1.0f)*1u;
                     
-                    for (j = 1u; j < (uF_MaxBrLvl-1); j++)
+                    uTemp0 = uF_OTElem[uSrcElem*u_MaxBrLvl +0];
+                    uTemp1 = 0u;
+                    
+                    for (j = 1u; j < uTemp0; j++)
                     {   uPrvBrLv = j;
-                        uPrvBrId = uF_OTElem[uF_MaxBrLvl*uSrcElem +j];
+                        uPrvBrId = uF_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)];
                         
                         memcpy(fSrc, &fKh_FFBrch[uPrvBrId*21 +0], 3u*sizeof(float));
                         SubtractVect3(fTempVect, fRcv, fSrc);               fDist  = VectorLength(fTempVect);
                         
-                        uTemp0  = (uFUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uFUsdBrch[uPrvBrId]                                      != 0u)*0u;
-                        uTemp0  = (uF_OTPrtChld[uPrvBrId*9 +0]                            > 1u)*uTemp0 + (uF_OTPrtChld[uPrvBrId*9 +0]                              <= 1u)*0u;
-                        uTemp0  = (fDist > (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*uTemp0 + (fDist   <= (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*0u;
+                        uTemp1  = (uFUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uFUsdBrch[uPrvBrId]                                      != 0u)*0u;
+                        uTemp1  = (uF_OTPrtChld[uPrvBrId*5 +0]                            > 1u)*uTemp1 + (uF_OTPrtChld[uPrvBrId*5 +0]                              <= 1u)*0u;
+                        uTemp1  = (fDist > (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*uTemp1 + (fDist <= (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*0u;
                         
-                        if (uTemp0 == 1u)         {       break;      }
+                        if (uTemp1 == 1u)         {       break;      }
                     } 
                     
-                    if (uTemp0 == 0u) 
+                    if (uTemp1 == 0u) 
                     {   memcpy(fP1, &fFV_temp[uF_temp[uSrcElem*7 +0]*4 +0], 3u*sizeof(float));
                         memcpy(fP2, &fFV_temp[uF_temp[uSrcElem*7 +1]*4 +0], 3u*sizeof(float));
                         memcpy(fP3, &fFV_temp[uF_temp[uSrcElem*7 +2]*4 +0], 3u*sizeof(float));
@@ -1064,31 +1056,31 @@ int main(int argc, char **argv)
                         uUsdNum = 0u;
                         for (j = 0u; j < uFPNum;  j++)      {       uUsdNum +=  uFUsdEl[j];                                     }
                         
-                        for (j = 0u; j < uF_MaxBrLvl; j++)  {       uFUsdBrch[ uF_OTElem[uF_MaxBrLvl*uSrcElem +j] ] = 1u;       }
+                        for (j = 1u; j < uTemp0; j++)       {       uFUsdBrch[ uF_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +j)] ] = 1u;       }
                     }
                     else
                     {   uPrvBrLv -= 1u;
-                        uTemp1    = 1u;
-                        while (uTemp1 == 1u)
+                        uTemp2    = 1u;
+                        while (uTemp2 == 1u)
                         {   
-                            uTemp0    = 0;
-                            uPrvBrId  = uF_OTElem[uF_MaxBrLvl*uSrcElem +(uF_MaxBrLvl-1u)];
+                            uPrvBrId = uF_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)];
+                            uTemp1   = 0u;
                             
-                            while (uPrvBrLv < (uF_MaxBrLvl-2))
+                            while (uPrvBrLv < (uTemp0 -2))
                             {   uPrvBrLv += 1u;
-                                uPrvBrId  = uF_OTElem[uF_MaxBrLvl*uSrcElem +uPrvBrLv];
+                                uPrvBrId  = uF_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)];
                                 
                                 memcpy(fSrc, &fKh_FFBrch[uPrvBrId*21 +0], 3u*sizeof(float));
                                 SubtractVect3(fTempVect, fRcv, fSrc);               fDist  = VectorLength(fTempVect);
                                 
-                                uTemp0  = (uFUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uFUsdBrch[uPrvBrId]                                      != 0u)*0u;
-                                uTemp0  = (uF_OTPrtChld[uPrvBrId*9 +0]                            > 1u)*uTemp0 + (uF_OTPrtChld[uPrvBrId*9 +0]                              <= 1u)*0u;
-                                uTemp0  = (fDist > (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*uTemp0 + (fDist   <= (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*0u;
+                                uTemp1  = (uFUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uFUsdBrch[uPrvBrId]                                      != 0u)*0u;
+                                uTemp1  = (uF_OTPrtChld[uPrvBrId*5 +0]                            > 1u)*uTemp1 + (uF_OTPrtChld[uPrvBrId*5 +0]                              <= 1u)*0u;
+                                uTemp1  = (fDist > (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*uTemp1 + (fDist <= (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*0u;
                                 
-                                if (uTemp0 == 1u)         {       break;      }
+                                if (uTemp1 == 1u)         {       break;      }
                             }
                             
-                            if (uTemp0 == 0u)
+                            if (uTemp1 == 0u)
                             {   memcpy(fP1, &fFV_temp[uF_temp[uSrcElem*7 +0]*4 +0], 3u*sizeof(float));
                                 memcpy(fP2, &fFV_temp[uF_temp[uSrcElem*7 +1]*4 +0], 3u*sizeof(float));
                                 memcpy(fP3, &fFV_temp[uF_temp[uSrcElem*7 +2]*4 +0], 3u*sizeof(float));
@@ -1117,10 +1109,10 @@ int main(int argc, char **argv)
                                 uKh_FFcnt[i]           += 1u;
                                 
                                 uUsdNum = 0u;
-                                for (j = 0u; j < uFPNum;  j++)      {       uUsdNum +=  uFUsdEl[j];         }
+                                for (j = 0u; j < uFPNum;  j++)     {       uUsdNum +=  uFUsdEl[j];         }
                                 
-                                for (j = 0u; j < uF_MaxBrLvl; j++)  {       uFUsdBrch[ uF_OTElem[uF_MaxBrLvl*uSrcElem +j] ] = 1u;       }
-                                uTemp1 = 0u;
+                                for (j = 1u; j < uTemp0; j++)      {       uFUsdBrch[ uF_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +j)] ] = 1u;       }
+                                uTemp2 = 0u;
                             }
                             else
                             {   
@@ -1163,9 +1155,9 @@ int main(int argc, char **argv)
                                 ScaleStress6(fStressDip, (fDistF/fUnitSlipF));          ScaleStress6(fStressDip, (1.0f/fKh_FFBrch[uPrvBrId*21 +13]));       RotStressG2L(&fPrvStress[3], fRotMat, fStressDip);
                                 ScaleStress6(fStressNrm, (fDistF/fUnitSlipF));          ScaleStress6(fStressNrm, (1.0f/fKh_FFBrch[uPrvBrId*21 +13]));       RotStressG2L(&fPrvStress[6], fRotMat, fStressNrm);
                                 
-                                uTemp0 = 1u;
-                                for (j = 0; j < uF_OTPrtChld[uPrvBrId*9 +0]; j++)
-                                {   uTstBrId = uF_OTPrtChld[uPrvBrId*9 +(j+1)];
+                                uTemp1 = 1u;
+                                for (j = 0; j < uF_OTPrtChld[uPrvBrId*5 +0]; j++)
+                                {   uTstBrId = uF_OTPrtChld[uPrvBrId*5 +(j+1)];
                                     
                                     GetGlobVertsForRectangle(fP1, fP2, fP3, fP4, fKh_FFBrch, uTstBrId*21u);
                                     
@@ -1217,25 +1209,24 @@ int main(int argc, char **argv)
                                     fTemp0 = sqrtf( (fTstStress[0]-fPrvStress[0])*(fTstStress[0]-fPrvStress[0]) + (fTstStress[1]-fPrvStress[1])*(fTstStress[1]-fPrvStress[1]) + (fTstStress[2]-fPrvStress[2])*(fTstStress[2]-fPrvStress[2])  + (fTstStress[3]-fPrvStress[3])*(fTstStress[3]-fPrvStress[3]) + (fTstStress[4]-fPrvStress[4])*(fTstStress[4]-fPrvStress[4]) + (fTstStress[5]-fPrvStress[5])*(fTstStress[5]-fPrvStress[5])   + (fTstStress[6]-fPrvStress[6])*(fTstStress[6]-fPrvStress[6]) + (fTstStress[7]-fPrvStress[7])*(fTstStress[7]-fPrvStress[7]) + (fTstStress[8]-fPrvStress[8])*(fTstStress[8]-fPrvStress[8]));
                                     fTemp1 = sqrtf(                fPrvStress[0] *fPrvStress[0]                 +                fPrvStress[1] *fPrvStress[1]                 +                fPrvStress[2] *fPrvStress[2]                  +                fPrvStress[3] *fPrvStress[3]                 +                fPrvStress[4] *fPrvStress[4]                 +                fPrvStress[5] *fPrvStress[5]                   +                fPrvStress[6] *fPrvStress[6]                 +                fPrvStress[7] *fPrvStress[7]                 +                fPrvStress[8] *fPrvStress[8]);
                                     
-                                    uTemp0 = ((fTemp0/fTemp1) <= fTemp2)*uTemp0 + ((fTemp0/fTemp1) > fTemp2)*0u; 
+                                    uTemp1 = ((fTemp0/fTemp1) <= fTemp2)*uTemp1 + ((fTemp0/fTemp1) > fTemp2)*0u; 
                                 }
                                 
-                                if (uTemp0 == 1u)
+                                if (uTemp1 == 1u)
                                 {   fKh_FFvalstk[i][uKh_FFcnt[i]*2 +0] = fPrvStress[0];         fKh_FFvalstk[i][uKh_FFcnt[i]*2 +1] = fPrvStress[3];
                                     fKh_FFvaldip[i][uKh_FFcnt[i]*2 +0] = fPrvStress[1];         fKh_FFvaldip[i][uKh_FFcnt[i]*2 +1] = fPrvStress[4];
                                     fKh_FFvalnrm[i][uKh_FFcnt[i]*2 +0] = fPrvStress[2];         fKh_FFvalnrm[i][uKh_FFcnt[i]*2 +1] = fPrvStress[5];
                                     
                                     uUsdNum = 0u;
                                     for (j = 0u; j < uFPNum;  j++)
-                                    {   uFUsdEl[j]      = (uF_OTElem[uF_MaxBrLvl*j + uPrvBrLv] == uPrvBrId)*1u           + (uF_OTElem[uF_MaxBrLvl*j + uPrvBrLv] != uPrvBrId)*uFUsdEl[j];
-                                        uKh_FFps2[i][j] = (uF_OTElem[uF_MaxBrLvl*j + uPrvBrLv] == uPrvBrId)*uKh_FFcnt[i] + (uF_OTElem[uF_MaxBrLvl*j + uPrvBrLv] != uPrvBrId)*uKh_FFps2[i][j];
+                                    {   uFUsdEl[j]      = (uF_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] == uPrvBrId)*1u           + (uF_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] != uPrvBrId)*uFUsdEl[j];
+                                        uKh_FFps2[i][j] = (uF_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] == uPrvBrId)*uKh_FFcnt[i] + (uF_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] != uPrvBrId)*uKh_FFps2[i][j];
                                         uUsdNum        +=  uFUsdEl[j];
                                     }
                                     uKh_FFcnt[i] += 1u;
                                     
-                                    for (j = 0u; j < uF_MaxBrLvl; j++)  {       uFUsdBrch[ uF_OTElem[uF_MaxBrLvl*uSrcElem +j] ] = 1u;       }
-                                    
-                                    uTemp1 = 0u;
+                                    for (j = 1u; j < uTemp0; j++)       {       uFUsdBrch[ uF_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +j)] ] = 1u;       }
+                                    uTemp2 = 0u;
                 }   }   }   }   }
                 
                 fKh_FFvalstk[i] = realloc(fKh_FFvalstk[i], 2*uKh_FFcnt[i]* sizeof *fKh_FFvalstk[i] );
@@ -1251,8 +1242,8 @@ int main(int argc, char **argv)
                 
                 uKh_FBcnt[i]  = 0u;
                 uUsdNum       = 0u;
-                memset(uBUsdEl, 0,       uBPNum*sizeof(unsigned int));
-                memset(uBUsdBrch, 0, uB_BrCount*sizeof(unsigned int));
+                memset(uBUsdEl, 0,        uBPNum*sizeof(unsigned int));
+                memset(uBUsdBrch, 0,uB_TotalOffs*sizeof(unsigned int));
                 uTstBrId = 0u;      uSrcElem = 0u;
                 
                 while (uUsdNum < uBPNum) 
@@ -1266,21 +1257,24 @@ int main(int argc, char **argv)
                     fDistF = (fDist >= CUTDISTANCE*fBndSide)*1.0f + (fDist < CUTDISTANCE*fBndSide)*0.0f; 
                     uF_temp[uGlobPos*7 +6] = (fDistF == 1.0f)*uF_temp[uGlobPos*7 +6] + (fDistF != 1.0f)*1u;
                     
-                    for (j = 1u; j < (uB_MaxBrLvl-1); j++)
+                    uTemp0 = uB_OTElem[uSrcElem*u_MaxBrLvl +0];
+                    uTemp1 = 0u;
+                    
+                    for (j = 1u; j < uTemp0; j++)
                     {   uPrvBrLv = j;
-                        uPrvBrId = uB_OTElem[uB_MaxBrLvl*uSrcElem +j];
+                        uPrvBrId = uB_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)];
                         
                         memcpy(fSrc, &fKh_BBBrch[uPrvBrId*21 +0], 3u*sizeof(float));
                         SubtractVect3(fTempVect, fRcv, fSrc);               fDist  = VectorLength(fTempVect);
                         
-                        uTemp0  = (uBUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uBUsdBrch[uPrvBrId]                                      != 0u)*0u;
-                        uTemp0  = (uB_OTPrtChld[uPrvBrId*9 +0]                            > 1u)*uTemp0 + (uB_OTPrtChld[uPrvBrId*9 +0]                              <= 1u)*0u;
-                        uTemp0  = (fDist > (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*uTemp0 + (fDist   <= (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*0u;
+                        uTemp1  = (uBUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uBUsdBrch[uPrvBrId]                                      != 0u)*0u;
+                        uTemp1  = (uB_OTPrtChld[uPrvBrId*5 +0]                            > 1u)*uTemp1 + (uB_OTPrtChld[uPrvBrId*5 +0]                              <= 1u)*0u;
+                        uTemp1  = (fDist > (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*uTemp1 + (fDist <= (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*0u;
                         
-                        if (uTemp0 == 1u)         {       break;      }
+                        if (uTemp1 == 1u)         {       break;      }
                     } 
                     
-                    if (uTemp0 == 0u) 
+                    if (uTemp1 == 0u) 
                     {   memcpy(fP1, &fBV_temp[uB_temp[uSrcElem*4 +0]*3 +0], 3u*sizeof(float));
                         memcpy(fP2, &fBV_temp[uB_temp[uSrcElem*4 +1]*3 +0], 3u*sizeof(float));
                         memcpy(fP3, &fBV_temp[uB_temp[uSrcElem*4 +2]*3 +0], 3u*sizeof(float));
@@ -1308,33 +1302,33 @@ int main(int argc, char **argv)
                         uKh_FBcnt[i]           += 1u;
                         
                         uUsdNum = 0u;
-                        for (j = 0u; j < uBPNum;  j++)      {       uUsdNum +=  uBUsdEl[j];                                     }
+                        for (j = 0u; j < uBPNum;  j++)     {       uUsdNum +=  uBUsdEl[j];                                     }
                         
-                        for (j = 0u; j < uB_MaxBrLvl; j++)  {       uBUsdBrch[ uB_OTElem[uB_MaxBrLvl*uSrcElem +j] ] = 1u;       }
+                        for (j = 1u; j < uTemp0; j++)      {       uBUsdBrch[ uB_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +j)] ] = 1u;       }
                     }
                     else
                     {   uPrvBrLv -= 1u;
-                        uTemp1    = 1u;
-                        while (uTemp1 == 1u)
+                        uTemp2    = 1u;
+                        while (uTemp2 == 1u)
                         {   
-                            uTemp0    = 0;
-                            uPrvBrId  = uB_OTElem[uB_MaxBrLvl*uSrcElem +(uB_MaxBrLvl-1u)];
+                            uPrvBrId = uB_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)];
+                            uTemp1   = 0u;
                             
-                            while (uPrvBrLv < (uB_MaxBrLvl-2))
+                            while (uPrvBrLv < (uTemp0 -2))
                             {   uPrvBrLv += 1u;
-                                uPrvBrId  = uB_OTElem[uB_MaxBrLvl*uSrcElem +uPrvBrLv];
+                                uPrvBrId  = uB_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)];
                                 
                                 memcpy(fSrc, &fKh_BBBrch[uPrvBrId*21 +0], 3u*sizeof(float));
                                 SubtractVect3(fTempVect, fRcv, fSrc);               fDist  = VectorLength(fTempVect);
                                 
-                                uTemp0  = (uBUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uBUsdBrch[uPrvBrId]                                      != 0u)*0u;
-                                uTemp0  = (uB_OTPrtChld[uPrvBrId*9 +0]                            > 1u)*uTemp0 + (uB_OTPrtChld[uPrvBrId*9 +0]                              <= 1u)*0u;
-                                uTemp0  = (fDist > (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*uTemp0 + (fDist   <= (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*0u;
+                                uTemp1  = (uBUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uBUsdBrch[uPrvBrId]                                      != 0u)*0u;
+                                uTemp1  = (uB_OTPrtChld[uPrvBrId*5 +0]                            > 1u)*uTemp1 + (uB_OTPrtChld[uPrvBrId*5 +0]                              <= 1u)*0u;
+                                uTemp1  = (fDist > (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*uTemp1 + (fDist <= (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*0u;
                                 
-                                if (uTemp0 == 1u)         {       break;      }
+                                if (uTemp1 == 1u)         {       break;      }
                             }
                             
-                            if (uTemp0 == 0u)
+                            if (uTemp1 == 0u)
                             {   memcpy(fP1, &fBV_temp[uB_temp[uSrcElem*4 +0]*3 +0], 3u*sizeof(float));
                                 memcpy(fP2, &fBV_temp[uB_temp[uSrcElem*4 +1]*3 +0], 3u*sizeof(float));
                                 memcpy(fP3, &fBV_temp[uB_temp[uSrcElem*4 +2]*3 +0], 3u*sizeof(float));
@@ -1364,8 +1358,8 @@ int main(int argc, char **argv)
                                 uUsdNum = 0u;
                                 for (j = 0u; j < uBPNum;  j++)      {       uUsdNum +=  uBUsdEl[j];         }
                                 
-                                for (j = 0u; j < uB_MaxBrLvl; j++)  {       uBUsdBrch[ uB_OTElem[uB_MaxBrLvl*uSrcElem +j] ] = 1u;       }
-                                uTemp1 = 0u;
+                                for (j = 1u; j < uTemp0; j++)       {       uBUsdBrch[ uB_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +j)] ] = 1u;       }
+                                uTemp2 = 0u;
                             }
                             else
                             {  
@@ -1409,9 +1403,9 @@ int main(int argc, char **argv)
                                 ScaleStress6(fStressDip, (fDistF/fUnitSlipB));          ScaleStress6(fStressDip, (1.0f/fKh_BBBrch[uPrvBrId*21 +13]));           RotStressG2L(&fPrvStress[3], fRotMat, fStressDip);
                                 ScaleStress6(fStressNrm, (fDistF/fUnitSlipB));          ScaleStress6(fStressNrm, (1.0f/fKh_BBBrch[uPrvBrId*21 +13]));           RotStressG2L(&fPrvStress[6], fRotMat, fStressNrm);
                                 
-                                uTemp0 = 1u;
-                                for (j = 0; j < uB_OTPrtChld[uPrvBrId*9 +0]; j++)
-                                {   uTstBrId = uB_OTPrtChld[uPrvBrId*9 +(j+1)];
+                                uTemp1 = 1u;
+                                for (j = 0; j < uB_OTPrtChld[uPrvBrId*5 +0]; j++)
+                                {   uTstBrId = uB_OTPrtChld[uPrvBrId*5 +(j+1)];
                                     
                                     GetGlobVertsForRectangle(fP1, fP2, fP3, fP4, fKh_BBBrch, uTstBrId*21u);
                                     
@@ -1463,24 +1457,23 @@ int main(int argc, char **argv)
                                     fTemp0 = sqrtf( (fTstStress[0]-fPrvStress[0])*(fTstStress[0]-fPrvStress[0]) + (fTstStress[1]-fPrvStress[1])*(fTstStress[1]-fPrvStress[1]) + (fTstStress[2]-fPrvStress[2])*(fTstStress[2]-fPrvStress[2])  + (fTstStress[3]-fPrvStress[3])*(fTstStress[3]-fPrvStress[3]) + (fTstStress[4]-fPrvStress[4])*(fTstStress[4]-fPrvStress[4]) + (fTstStress[5]-fPrvStress[5])*(fTstStress[5]-fPrvStress[5])   + (fTstStress[6]-fPrvStress[6])*(fTstStress[6]-fPrvStress[6]) + (fTstStress[7]-fPrvStress[7])*(fTstStress[7]-fPrvStress[7]) + (fTstStress[8]-fPrvStress[8])*(fTstStress[8]-fPrvStress[8]));
                                     fTemp1 = sqrtf(                fPrvStress[0] *fPrvStress[0]                 +                fPrvStress[1] *fPrvStress[1]                 +                fPrvStress[2] *fPrvStress[2]                  +                fPrvStress[3] *fPrvStress[3]                 +                fPrvStress[4] *fPrvStress[4]                 +                fPrvStress[5] *fPrvStress[5]                   +                fPrvStress[6] *fPrvStress[6]                 +                fPrvStress[7] *fPrvStress[7]                 +                fPrvStress[8] *fPrvStress[8]);
                                     
-                                    uTemp0 = ((fTemp0/fTemp1) <= fTemp2)*uTemp0 + ((fTemp0/fTemp1) > fTemp2)*0u; 
+                                    uTemp1 = ((fTemp0/fTemp1) <= fTemp2)*uTemp1 + ((fTemp0/fTemp1) > fTemp2)*0u; 
                                 }
                                 
-                                if (uTemp0 == 1u)
+                                if (uTemp1 == 1u)
                                 {   fKh_FBvalstk[i][uKh_FBcnt[i]*3 +0] = fPrvStress[0];         fKh_FBvalstk[i][uKh_FBcnt[i]*3 +1] = fPrvStress[3];       fKh_FBvalstk[i][uKh_FBcnt[i]*3 +2] = fPrvStress[6];
                                     fKh_FBvaldip[i][uKh_FBcnt[i]*3 +0] = fPrvStress[1];         fKh_FBvaldip[i][uKh_FBcnt[i]*3 +1] = fPrvStress[4];       fKh_FBvaldip[i][uKh_FBcnt[i]*3 +2] = fPrvStress[7];
                                     
                                     uUsdNum = 0u;
                                     for (j = 0u; j < uBPNum;  j++)
-                                    {   uBUsdEl[j]      = (uB_OTElem[uB_MaxBrLvl*j + uPrvBrLv] == uPrvBrId)*1u           + (uB_OTElem[uB_MaxBrLvl*j + uPrvBrLv] != uPrvBrId)*uBUsdEl[j];
-                                        uKh_FBps2[i][j] = (uB_OTElem[uB_MaxBrLvl*j + uPrvBrLv] == uPrvBrId)*uKh_FBcnt[i] + (uB_OTElem[uB_MaxBrLvl*j + uPrvBrLv] != uPrvBrId)*uKh_FBps2[i][j];
+                                    {   uBUsdEl[j]      = (uB_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] == uPrvBrId)*1u           + (uB_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] != uPrvBrId)*uBUsdEl[j];
+                                        uKh_FBps2[i][j] = (uB_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] == uPrvBrId)*uKh_FBcnt[i] + (uB_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] != uPrvBrId)*uKh_FBps2[i][j];
                                         uUsdNum        +=  uBUsdEl[j];
                                     }
                                     uKh_FBcnt[i] += 1u;
                                     
-                                    for (j = 0u; j < uB_MaxBrLvl; j++)  {       uBUsdBrch[ uB_OTElem[uB_MaxBrLvl*uSrcElem +j] ] = 1u;       }
-                                    
-                                    uTemp1 = 0u;
+                                    for (j = 1u; j < uTemp0; j++)       {       uBUsdBrch[ uB_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +j)] ] = 1u;       }
+                                    uTemp2 = 0u;
                 }   }   }   }   }
                 
                 fKh_FBvalstk[i] = realloc(fKh_FBvalstk[i], 3*uKh_FBcnt[i]* sizeof *fKh_FBvalstk[i] );
@@ -1502,8 +1495,8 @@ int main(int argc, char **argv)
                 
                 uKh_BBcnt[i]  = 0u;
                 uUsdNum       = 0u;
-                memset(uBUsdEl, 0,       uBPNum*sizeof(unsigned int));
-                memset(uBUsdBrch, 0, uB_BrCount*sizeof(unsigned int));
+                memset(uBUsdEl, 0,         uBPNum*sizeof(unsigned int));
+                memset(uBUsdBrch, 0, uB_TotalOffs*sizeof(unsigned int));
                 uTstBrId = 0u;      uSrcElem = 0u;
                 
                 while (uUsdNum < uBPNum) 
@@ -1517,21 +1510,24 @@ int main(int argc, char **argv)
                     fDistF = (fDist >= CUTDISTANCE*fBndSide)*1.0f + (fDist < CUTDISTANCE*fBndSide)*0.0f; 
                     fDistF = (uB_temp[uGlobPos*4 +3] == uB_temp[uSrcElem*4 +3])*1.0f + (uB_temp[uGlobPos*4 +3] != uB_temp[uSrcElem*4 +3])*fDistF;
                     
-                    for (j = 1u; j < (uB_MaxBrLvl-1); j++)
+                    uTemp0 = uB_OTElem[uSrcElem*u_MaxBrLvl +0];
+                    uTemp1 = 0u;
+                    
+                    for (j = 1u; j < uTemp0; j++)
                     {   uPrvBrLv = j;
-                        uPrvBrId = uB_OTElem[uB_MaxBrLvl*uSrcElem +j];
+                        uPrvBrId = uB_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)];
                         
                         memcpy(fSrc, &fKh_BBBrch[uPrvBrId*21 +0], 3u*sizeof(float));
                         SubtractVect3(fTempVect, fRcv, fSrc);               fDist  = VectorLength(fTempVect);
                         
-                        uTemp0  = (uBUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uBUsdBrch[uPrvBrId]                                      != 0u)*0u;
-                        uTemp0  = (uB_OTPrtChld[uPrvBrId*9 +0]                            > 1u)*uTemp0 + (uB_OTPrtChld[uPrvBrId*9 +0]                              <= 1u)*0u;
-                        uTemp0  = (fDist > (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*uTemp0 + (fDist   <= (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*0u;
+                        uTemp1  = (uBUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uBUsdBrch[uPrvBrId]                                      != 0u)*0u;
+                        uTemp1  = (uB_OTPrtChld[uPrvBrId*5 +0]                            > 1u)*uTemp1 + (uB_OTPrtChld[uPrvBrId*5 +0]                              <= 1u)*0u;
+                        uTemp1  = (fDist > (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*uTemp1 + (fDist <= (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*0u;
                         
-                        if (uTemp0 == 1u)         {       break;      }
+                        if (uTemp1 == 1u)         {       break;      }
                     } 
                     
-                    if (uTemp0 == 0u) 
+                    if (uTemp1 == 0u) 
                     {   memcpy(fP1, &fBV_temp[uB_temp[uSrcElem*4 +0]*3 +0], 3u*sizeof(float));
                         memcpy(fP2, &fBV_temp[uB_temp[uSrcElem*4 +1]*3 +0], 3u*sizeof(float));
                         memcpy(fP3, &fBV_temp[uB_temp[uSrcElem*4 +2]*3 +0], 3u*sizeof(float));
@@ -1569,31 +1565,31 @@ int main(int argc, char **argv)
                         uUsdNum = 0u;
                         for (j = 0u; j < uBPNum;  j++)      {       uUsdNum +=  uBUsdEl[j];                                     }
                         
-                        for (j = 0u; j < uB_MaxBrLvl; j++)  {       uBUsdBrch[ uB_OTElem[uB_MaxBrLvl*uSrcElem +j] ] = 1u;       }
+                        for (j = 1u; j < uTemp0; j++)       {       uBUsdBrch[ uB_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +j)] ] = 1u;       }
                     }
                     else
                     {   uPrvBrLv -= 1u;
-                        uTemp1    = 1u;
-                        while (uTemp1 == 1u)
+                        uTemp2    = 1u;
+                        while (uTemp2 == 1u)
                         {   
-                            uTemp0    = 0;
-                            uPrvBrId  = uB_OTElem[uB_MaxBrLvl*uSrcElem +(uB_MaxBrLvl-1u)];
+                            uPrvBrId = uB_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)];
+                            uTemp1   = 0;
                             
-                            while (uPrvBrLv < (uB_MaxBrLvl-2))
+                            while (uPrvBrLv < (uTemp0 -2))
                             {   uPrvBrLv += 1u;
-                                uPrvBrId  = uB_OTElem[uB_MaxBrLvl*uSrcElem +uPrvBrLv];
+                                uPrvBrId = uB_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)];
                                 
                                 memcpy(fSrc, &fKh_BBBrch[uPrvBrId*21 +0], 3u*sizeof(float));
                                 SubtractVect3(fTempVect, fRcv, fSrc);               fDist  = VectorLength(fTempVect);
                                 
-                                uTemp0  = (uBUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uBUsdBrch[uPrvBrId]                                      != 0u)*0u;
-                                uTemp0  = (uB_OTPrtChld[uPrvBrId*9 +0]                            > 1u)*uTemp0 + (uB_OTPrtChld[uPrvBrId*9 +0]                              <= 1u)*0u;
-                                uTemp0  = (fDist > (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*uTemp0 + (fDist   <= (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*0u;
+                                uTemp1  = (uBUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uBUsdBrch[uPrvBrId]                                      != 0u)*0u;
+                                uTemp1  = (uB_OTPrtChld[uPrvBrId*5 +0]                            > 1u)*uTemp1 + (uB_OTPrtChld[uPrvBrId*5 +0]                              <= 1u)*0u;
+                                uTemp1  = (fDist > (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*uTemp1 + (fDist <= (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*0u;
                                 
-                                if (uTemp0 == 1u)         {       break;      }
+                                if (uTemp1 == 1u)         {       break;      }
                             }
                             
-                            if (uTemp0 == 0u)
+                            if (uTemp1 == 0u)
                             {   memcpy(fP1, &fBV_temp[uB_temp[uSrcElem*4 +0]*3 +0], 3u*sizeof(float));
                                 memcpy(fP2, &fBV_temp[uB_temp[uSrcElem*4 +1]*3 +0], 3u*sizeof(float));
                                 memcpy(fP3, &fBV_temp[uB_temp[uSrcElem*4 +2]*3 +0], 3u*sizeof(float));
@@ -1624,8 +1620,8 @@ int main(int argc, char **argv)
                                 uUsdNum = 0u;
                                 for (j = 0u; j < uBPNum;  j++)      {       uUsdNum +=  uBUsdEl[j];         }
                                 
-                                for (j = 0u; j < uB_MaxBrLvl; j++)  {       uBUsdBrch[ uB_OTElem[uB_MaxBrLvl*uSrcElem +j] ] = 1u;       }
-                                uTemp1 = 0u;
+                                for (j = 1u; j < uTemp0; j++)       {       uBUsdBrch[ uB_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +j)] ] = 1u;       }
+                                uTemp2 = 0u;
                             }
                             else
                             {   
@@ -1668,9 +1664,9 @@ int main(int argc, char **argv)
                                 ScaleStress6(fStressDip, (fDistF/fUnitSlipB));          ScaleStress6(fStressDip, (1.0f/fKh_BBBrch[uPrvBrId*21 +13]));           RotStressG2L(&fPrvStress[3], fRotMat, fStressDip);
                                 ScaleStress6(fStressNrm, (fDistF/fUnitSlipB));          ScaleStress6(fStressNrm, (1.0f/fKh_BBBrch[uPrvBrId*21 +13]));           RotStressG2L(&fPrvStress[6], fRotMat, fStressNrm);
                                 
-                                uTemp0 = 1u;
-                                for (j = 0; j < uB_OTPrtChld[uPrvBrId*9 +0]; j++)
-                                {   uTstBrId = uB_OTPrtChld[uPrvBrId*9 +(j+1)];
+                                uTemp1 = 1u;
+                                for (j = 0; j < uB_OTPrtChld[uPrvBrId*5 +0]; j++)
+                                {   uTstBrId = uB_OTPrtChld[uPrvBrId*5 +(j+1)];
                                     
                                     GetGlobVertsForRectangle(fP1, fP2, fP3, fP4, fKh_BBBrch, uTstBrId*21u);
                                     
@@ -1722,25 +1718,24 @@ int main(int argc, char **argv)
                                     fTemp0 = sqrtf( (fTstStress[0]-fPrvStress[0])*(fTstStress[0]-fPrvStress[0]) + (fTstStress[1]-fPrvStress[1])*(fTstStress[1]-fPrvStress[1]) + (fTstStress[2]-fPrvStress[2])*(fTstStress[2]-fPrvStress[2])  + (fTstStress[3]-fPrvStress[3])*(fTstStress[3]-fPrvStress[3]) + (fTstStress[4]-fPrvStress[4])*(fTstStress[4]-fPrvStress[4]) + (fTstStress[5]-fPrvStress[5])*(fTstStress[5]-fPrvStress[5])   + (fTstStress[6]-fPrvStress[6])*(fTstStress[6]-fPrvStress[6]) + (fTstStress[7]-fPrvStress[7])*(fTstStress[7]-fPrvStress[7]) + (fTstStress[8]-fPrvStress[8])*(fTstStress[8]-fPrvStress[8]));
                                     fTemp1 = sqrtf(                fPrvStress[0] *fPrvStress[0]                 +                fPrvStress[1] *fPrvStress[1]                 +                fPrvStress[2] *fPrvStress[2]                  +                fPrvStress[3] *fPrvStress[3]                 +                fPrvStress[4] *fPrvStress[4]                 +                fPrvStress[5] *fPrvStress[5]                   +                fPrvStress[6] *fPrvStress[6]                 +                fPrvStress[7] *fPrvStress[7]                 +                fPrvStress[8] *fPrvStress[8]);
                                     
-                                    uTemp0 = ((fTemp0/fTemp1) <= fTemp2)*uTemp0 + ((fTemp0/fTemp1) > fTemp2)*0u; 
+                                    uTemp1 = ((fTemp0/fTemp1) <= fTemp2)*uTemp1 + ((fTemp0/fTemp1) > fTemp2)*0u; 
                                 }
                                 
-                                if (uTemp0 == 1u)
+                                if (uTemp1 == 1u)
                                 {   fKh_BBvalstk[i][uKh_BBcnt[i]*3 +0] = fPrvStress[0];         fKh_BBvalstk[i][uKh_BBcnt[i]*3 +1] = fPrvStress[3];         fKh_BBvalstk[i][uKh_BBcnt[i]*3 +2] = fPrvStress[6];
                                     fKh_BBvaldip[i][uKh_BBcnt[i]*3 +0] = fPrvStress[1];         fKh_BBvaldip[i][uKh_BBcnt[i]*3 +1] = fPrvStress[4];         fKh_BBvaldip[i][uKh_BBcnt[i]*3 +2] = fPrvStress[7];
                                     fKh_BBvalnrm[i][uKh_BBcnt[i]*3 +0] = fPrvStress[2];         fKh_BBvalnrm[i][uKh_BBcnt[i]*3 +1] = fPrvStress[5];         fKh_BBvalnrm[i][uKh_BBcnt[i]*3 +2] = fPrvStress[8];
                                     
                                     uUsdNum = 0u;
                                     for (j = 0u; j < uBPNum;  j++)
-                                    {   uBUsdEl[j]      = (uB_OTElem[uB_MaxBrLvl*j + uPrvBrLv] == uPrvBrId)*1u           + (uB_OTElem[uB_MaxBrLvl*j + uPrvBrLv] != uPrvBrId)*uBUsdEl[j];
-                                        uKh_BBps2[i][j] = (uB_OTElem[uB_MaxBrLvl*j + uPrvBrLv] == uPrvBrId)*uKh_BBcnt[i] + (uB_OTElem[uB_MaxBrLvl*j + uPrvBrLv] != uPrvBrId)*uKh_BBps2[i][j];
+                                    {   uBUsdEl[j]      = (uB_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] == uPrvBrId)*1u           + (uB_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] != uPrvBrId)*uBUsdEl[j];
+                                        uKh_BBps2[i][j] = (uB_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] == uPrvBrId)*uKh_BBcnt[i] + (uB_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] != uPrvBrId)*uKh_BBps2[i][j];
                                         uUsdNum        +=  uBUsdEl[j];
                                     }
                                     uKh_BBcnt[i] += 1u;
                                     
-                                    for (j = 0u; j < uB_MaxBrLvl; j++)  {       uBUsdBrch[ uB_OTElem[uB_MaxBrLvl*uSrcElem +j] ] = 1u;       }
-                                    
-                                    uTemp1 = 0u;
+                                    for (j = 1u; j < uTemp0; j++)       {       uBUsdBrch[ uB_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +j)] ] = 1u;       }
+                                    uTemp2 = 0u;
                 }   }   }   }   }
                 
                 fKh_BBvalstk[i] = realloc(fKh_BBvalstk[i], 3*uKh_BBcnt[i]* sizeof *fKh_BBvalstk[i] );
@@ -1757,8 +1752,8 @@ int main(int argc, char **argv)
                 
                 uKh_BFcnt[i]  = 0u;
                 uUsdNum       = 0u;
-                memset(uFUsdEl, 0,       uFPNum*sizeof(unsigned int));
-                memset(uFUsdBrch, 0, uF_BrCount*sizeof(unsigned int));
+                memset(uFUsdEl, 0,         uFPNum*sizeof(unsigned int));
+                memset(uFUsdBrch, 0, uF_TotalOffs*sizeof(unsigned int));
                 uTstBrId = 0u;      uSrcElem = 0u;
                 
                 while (uUsdNum < uFPNum) 
@@ -1771,21 +1766,24 @@ int main(int argc, char **argv)
                     
                     fDistF = (fDist >= CUTDISTANCE*fFltSide)*1.0f + (fDist < CUTDISTANCE*fFltSide)*0.0f; 
                     
-                    for (j = 1u; j < (uF_MaxBrLvl-1); j++)
+                    uTemp0 = uF_OTElem[uSrcElem*u_MaxBrLvl +0];
+                    uTemp1 = 0u;
+                    
+                    for (j = 1u; j < uTemp0; j++)
                     {   uPrvBrLv = j;
-                        uPrvBrId = uF_OTElem[uF_MaxBrLvl*uSrcElem +j];
+                        uPrvBrId = uF_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)];
                         
                         memcpy(fSrc, &fKh_FFBrch[uPrvBrId*21 +0], 3u*sizeof(float));
                         SubtractVect3(fTempVect, fRcv, fSrc);               fDist  = VectorLength(fTempVect);
                         
-                        uTemp0  = (uFUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uFUsdBrch[uPrvBrId]                                      != 0u)*0u;
-                        uTemp0  = (uF_OTPrtChld[uPrvBrId*9 +0]                            > 1u)*uTemp0 + (uF_OTPrtChld[uPrvBrId*9 +0]                              <= 1u)*0u;
-                        uTemp0  = (fDist > (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*uTemp0 + (fDist   <= (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*0u;
+                        uTemp1  = (uFUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uFUsdBrch[uPrvBrId]                                      != 0u)*0u;
+                        uTemp1  = (uF_OTPrtChld[uPrvBrId*5 +0]                            > 1u)*uTemp1 + (uF_OTPrtChld[uPrvBrId*5 +0]                              <= 1u)*0u;
+                        uTemp1  = (fDist > (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*uTemp1 + (fDist <= (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*0u;
                         
-                        if (uTemp0 == 1u)         {       break;      }
+                        if (uTemp1 == 1u)         {       break;      }
                     } 
                     
-                    if (uTemp0 == 0u) 
+                    if (uTemp1 == 0u) 
                     {   memcpy(fP1, &fFV_temp[uF_temp[uSrcElem*7 +0]*4 +0], 3u*sizeof(float));
                         memcpy(fP2, &fFV_temp[uF_temp[uSrcElem*7 +1]*4 +0], 3u*sizeof(float));
                         memcpy(fP3, &fFV_temp[uF_temp[uSrcElem*7 +2]*4 +0], 3u*sizeof(float));
@@ -1816,31 +1814,31 @@ int main(int argc, char **argv)
                         uUsdNum = 0u;
                         for (j = 0u; j < uFPNum;  j++)      {       uUsdNum +=  uFUsdEl[j];                                     }
                         
-                        for (j = 0u; j < uF_MaxBrLvl; j++)  {       uFUsdBrch[ uF_OTElem[uF_MaxBrLvl*uSrcElem +j] ] = 1u;       }
+                        for (j = 1u; j < uTemp0; j++)       {       uFUsdBrch[ uF_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +j)] ] = 1u;       }
                     }
                     else
                     {   uPrvBrLv -= 1u;
-                        uTemp1    = 1u;
-                        while (uTemp1 == 1u)
+                        uTemp2    = 1u;
+                        while (uTemp2 == 1u)
                         {   
-                            uTemp0    = 0;
-                            uPrvBrId  = uF_OTElem[uF_MaxBrLvl*uSrcElem +(uF_MaxBrLvl-1u)];
+                            uPrvBrId = uF_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)];
+                            uTemp1   = 0u;
                             
-                            while (uPrvBrLv < (uF_MaxBrLvl-2))
+                            while (uPrvBrLv < (uTemp0 -2))
                             {   uPrvBrLv += 1u;
-                                uPrvBrId  = uF_OTElem[uF_MaxBrLvl*uSrcElem +uPrvBrLv];
+                                uPrvBrId = uF_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)];
                                 
                                 memcpy(fSrc, &fKh_FFBrch[uPrvBrId*21 +0], 3u*sizeof(float));
                                 SubtractVect3(fTempVect, fRcv, fSrc);               fDist  = VectorLength(fTempVect);
                                 
-                                uTemp0  = (uFUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uFUsdBrch[uPrvBrId]                                      != 0u)*0u;
-                                uTemp0  = (uF_OTPrtChld[uPrvBrId*9 +0]                            > 1u)*uTemp0 + (uF_OTPrtChld[uPrvBrId*9 +0]                              <= 1u)*0u;
-                                uTemp0  = (fDist > (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*uTemp0 + (fDist   <= (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*0u;
+                                uTemp1  = (uFUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uFUsdBrch[uPrvBrId]                                      != 0u)*0u;
+                                uTemp1  = (uF_OTPrtChld[uPrvBrId*5 +0]                            > 1u)*uTemp1 + (uF_OTPrtChld[uPrvBrId*5 +0]                              <= 1u)*0u;
+                                uTemp1  = (fDist > (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*uTemp1 + (fDist <= (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*0u;
                                 
-                                if (uTemp0 == 1u)         {       break;      }
+                                if (uTemp1 == 1u)         {       break;      }
                             }
                             
-                            if (uTemp0 == 0u)
+                            if (uTemp1 == 0u)
                             {   memcpy(fP1, &fFV_temp[uF_temp[uSrcElem*7 +0]*4 +0], 3u*sizeof(float));
                                 memcpy(fP2, &fFV_temp[uF_temp[uSrcElem*7 +1]*4 +0], 3u*sizeof(float));
                                 memcpy(fP3, &fFV_temp[uF_temp[uSrcElem*7 +2]*4 +0], 3u*sizeof(float));
@@ -1871,8 +1869,8 @@ int main(int argc, char **argv)
                                 uUsdNum = 0u;
                                 for (j = 0u; j < uFPNum;  j++)      {       uUsdNum +=  uFUsdEl[j];         }
                                 
-                                for (j = 0u; j < uF_MaxBrLvl; j++)  {       uFUsdBrch[ uF_OTElem[uF_MaxBrLvl*uSrcElem +j] ] = 1u;       }
-                                uTemp1 = 0u;
+                                for (j = 1u; j < uTemp0; j++)       {       uFUsdBrch[ uF_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +j)] ] = 1u;       }
+                                uTemp2 = 0u;
                             }
                             else
                             {   
@@ -1915,9 +1913,9 @@ int main(int argc, char **argv)
                                 ScaleStress6(fStressDip, (fDistF/fUnitSlipF));          ScaleStress6(fStressDip, (1.0f/fKh_FFBrch[uPrvBrId*21 +13]));           RotStressG2L(&fPrvStress[3], fRotMat, fStressDip);
                                 ScaleStress6(fStressNrm, (fDistF/fUnitSlipF));          ScaleStress6(fStressNrm, (1.0f/fKh_FFBrch[uPrvBrId*21 +13]));           RotStressG2L(&fPrvStress[6], fRotMat, fStressNrm);
                                 
-                                uTemp0 = 1u;
-                                for (j = 0; j < uF_OTPrtChld[uPrvBrId*9 +0]; j++)
-                                {   uTstBrId = uF_OTPrtChld[uPrvBrId*9 +(j+1)];
+                                uTemp1 = 1u;
+                                for (j = 0; j < uF_OTPrtChld[uPrvBrId*5 +0]; j++)
+                                {   uTstBrId = uF_OTPrtChld[uPrvBrId*5 +(j+1)];
                                     
                                     GetGlobVertsForRectangle(fP1, fP2, fP3, fP4, fKh_FFBrch, uTstBrId*21u);
                                     
@@ -1969,25 +1967,24 @@ int main(int argc, char **argv)
                                     fTemp0 = sqrtf( (fTstStress[0]-fPrvStress[0])*(fTstStress[0]-fPrvStress[0]) + (fTstStress[1]-fPrvStress[1])*(fTstStress[1]-fPrvStress[1]) + (fTstStress[2]-fPrvStress[2])*(fTstStress[2]-fPrvStress[2])  + (fTstStress[3]-fPrvStress[3])*(fTstStress[3]-fPrvStress[3]) + (fTstStress[4]-fPrvStress[4])*(fTstStress[4]-fPrvStress[4]) + (fTstStress[5]-fPrvStress[5])*(fTstStress[5]-fPrvStress[5])   + (fTstStress[6]-fPrvStress[6])*(fTstStress[6]-fPrvStress[6]) + (fTstStress[7]-fPrvStress[7])*(fTstStress[7]-fPrvStress[7]) + (fTstStress[8]-fPrvStress[8])*(fTstStress[8]-fPrvStress[8]));
                                     fTemp1 = sqrtf(                fPrvStress[0] *fPrvStress[0]                 +                fPrvStress[1] *fPrvStress[1]                 +                fPrvStress[2] *fPrvStress[2]                  +                fPrvStress[3] *fPrvStress[3]                 +                fPrvStress[4] *fPrvStress[4]                 +                fPrvStress[5] *fPrvStress[5]                   +                fPrvStress[6] *fPrvStress[6]                 +                fPrvStress[7] *fPrvStress[7]                 +                fPrvStress[8] *fPrvStress[8]);
                                     
-                                    uTemp0 = ((fTemp0/fTemp1) <= fTemp2)*uTemp0 + ((fTemp0/fTemp1) > fTemp2)*0u; 
+                                    uTemp1 = ((fTemp0/fTemp1) <= fTemp2)*uTemp1 + ((fTemp0/fTemp1) > fTemp2)*0u; 
                                 }
                                 
-                                if (uTemp0 == 1u)
+                                if (uTemp1 == 1u)
                                 {   fKh_BFvalstk[i][uKh_BFcnt[i]*2 +0] = fPrvStress[0];         fKh_BFvalstk[i][uKh_BFcnt[i]*2 +1] = fPrvStress[3];
                                     fKh_BFvaldip[i][uKh_BFcnt[i]*2 +0] = fPrvStress[1];         fKh_BFvaldip[i][uKh_BFcnt[i]*2 +1] = fPrvStress[4];
                                     fKh_BFvalnrm[i][uKh_BFcnt[i]*2 +0] = fPrvStress[2];         fKh_BFvalnrm[i][uKh_BFcnt[i]*2 +1] = fPrvStress[5];
                                     
                                     uUsdNum = 0u;
                                     for (j = 0u; j < uFPNum;  j++)
-                                    {   uFUsdEl[j]      = (uF_OTElem[uF_MaxBrLvl*j + uPrvBrLv] == uPrvBrId)*1u           + (uF_OTElem[uF_MaxBrLvl*j + uPrvBrLv] != uPrvBrId)*uFUsdEl[j];
-                                        uKh_BFps2[i][j] = (uF_OTElem[uF_MaxBrLvl*j + uPrvBrLv] == uPrvBrId)*uKh_BFcnt[i] + (uF_OTElem[uF_MaxBrLvl*j + uPrvBrLv] != uPrvBrId)*uKh_BFps2[i][j];
+                                    {   uFUsdEl[j]      = (uF_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] == uPrvBrId)*1u           + (uF_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] != uPrvBrId)*uFUsdEl[j];
+                                        uKh_BFps2[i][j] = (uF_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] == uPrvBrId)*uKh_BFcnt[i] + (uF_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] != uPrvBrId)*uKh_BFps2[i][j];
                                         uUsdNum        +=  uFUsdEl[j];
                                     }
                                     uKh_BFcnt[i] += 1u;
                                     
-                                    for (j = 0u; j < uF_MaxBrLvl; j++)  {       uFUsdBrch[ uF_OTElem[uF_MaxBrLvl*uSrcElem +j] ] = 1u;       }
-                                    
-                                    uTemp1 = 0u;
+                                    for (j = 1u; j < uTemp0; j++)       {       uFUsdBrch[ uF_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +j)] ] = 1u;       }
+                                    uTemp2 = 0u;
                 }   }   }   }   }
                 
                 fKh_BFvalstk[i] = realloc(fKh_BFvalstk[i], 2*uKh_BFcnt[i]* sizeof *fKh_BFvalstk[i] );
@@ -1998,6 +1995,7 @@ int main(int argc, char **argv)
                 
                 
             }
+            
             
             MPI_Allreduce(MPI_IN_PLACE, uF_temp, 7*uFPNum, MPI_UNSIGNED, MPI_MAX, MPI_COMM_WORLD);
             
@@ -2363,7 +2361,7 @@ int main(int argc, char **argv)
         
         for (i = 0u; i < iFOFFSET[iRANK]; i++)
         {   fFTempVal[i*5 +0] = fFEvent[i*17 +8];          fFTempVal[i*5 +1] = fFEvent[i*17 +9];
-            fFTempVal[i*5 +2] = 0.0f;                       fFTempVal[i*5 +3] = 0.0f;
+            fFTempVal[i*5 +2] = 0.0f;                      fFTempVal[i*5 +3] = 0.0f;
         }
         
         for (k = 0u; k < MAXITERATION4BOUNDARY; k++)
@@ -3399,7 +3397,7 @@ int main(int argc, char **argv)
     if (iRANK == 0)
     {   
         dMeanRecurTime /= (double)uEQcntr;
-        fprintf(stdout,"\nTotal RunTime for EQcycle (minutes): %6.4f       and mean inter-event time (days): %3.2lf earthquakes per hour: %3.2lf\n",time_taken/60.0f, dMeanRecurTime*365.25, (double)dMeanRecurTime/((double)(time_taken/3600.0f)) );
+        fprintf(stdout,"\nTotal RunTime for EQcycle (minutes): %6.4f       and mean inter-event time (days): %3.2lf\n",time_taken/60.0f, dMeanRecurTime*365.25 );
         fprintf(stdout,"Time spent in interseismic: %4.2lf   Time spent in coseismic: %4.2lf\n",time_InterSeis/60.0f, time_CoSeis/60.0f);
         fprintf(stdout,"PostSeis iterations per event %u\n", (uPSeisSteps/uEQtickr) );
         
@@ -3640,7 +3638,7 @@ int main(int argc, char **argv)
     
     
     
-    MPI_Finalize();
+    MPI_Finalize( );
     return 0;
  }
 
