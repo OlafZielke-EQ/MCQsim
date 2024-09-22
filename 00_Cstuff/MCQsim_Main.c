@@ -429,31 +429,10 @@ int main(int argc, char **argv)
     lSeed += (long)iRANK;
     
     {   unsigned int uGlobPos;
-        float fGlbStrss[6], fOutTens[6];
+        float fGlbStrss[6], fOutTens[6],   fNrm[3];
         
         for (i = 0u; i < iFOFFSET[iRANK]; i++) 
         {   uGlobPos   = i + iFSTART[iRANK];
-            if (uF_temp[uGlobPos*7 +5] == 1u)
-            {   fFEvent[i*17 +8]  = 0.0f;
-                fFEvent[i*17 +9]  = 0.0f;
-                fFEvent[i*17 +13] = 1.0E-3f*fF_temp[uGlobPos*16 +4] *cosf(fF_temp[uGlobPos*16 +5]*(M_PI/180.0f));
-                fFEvent[i*17 +14] = 1.0E-3f*fF_temp[uGlobPos*16 +4] *sinf(fF_temp[uGlobPos*16 +5]*(M_PI/180.0f));
-            } 
-            else
-            {   fGlbStrss[0] = 1.0E+6f*fF_temp[uGlobPos*16 +4] *sinf(fF_temp[uGlobPos*16 +5]*(M_PI/180.0f)); 
-                fGlbStrss[1] = 1.0E+6f*fF_temp[uGlobPos*16 +4] *cosf(fF_temp[uGlobPos*16 +5]*(M_PI/180.0f)); 
-                fGlbStrss[2] = 0.0f;
-                fGlbStrss[3] = 0.0f;
-                fGlbStrss[4] = 0.0f;
-                fGlbStrss[5] = 0.0f;
-                
-                RotStressG2L(fOutTens, &fF_temp[uGlobPos*16 +6], fGlbStrss);
-                
-                fFEvent[i*17 +8]  = fOutTens[0]; 
-                fFEvent[i*17 +9]  = fOutTens[1]; 
-                fFEvent[i*17 +13] = 0.0f;
-                fFEvent[i*17 +14] = 0.0f;
-            } 
             
             fFRef[i*14 +0]    = fF_temp[i*16 +15];
             fFRef[i*14 +1]    = fModPara[0] * 9.81f * fF_temp[uGlobPos*16 +2] +(fModPara[1]*1.0E+6f); 
@@ -463,7 +442,33 @@ int main(int argc, char **argv)
             fFRef[i*14 +11]   = fF_temp[uGlobPos*16 +2];
             fFEvent[i*17 +16] = (fF_temp[uGlobPos*16 +8] >= 0.0f)*1.0f +  (fF_temp[uGlobPos*16 +8] < 0.0f)*-1.0f;
             
-    }   } 
+            if (uF_temp[uGlobPos*7 +5] == 1u)
+            {   fFEvent[i*17 +8]  = 0.0f;
+                fFEvent[i*17 +9]  = 0.0f;
+                fFEvent[i*17 +13] = 1.0E-3f*fF_temp[uGlobPos*16 +4] *cosf(fF_temp[uGlobPos*16 +5]*(M_PI/180.0f));
+                fFEvent[i*17 +14] = 1.0E-3f*fF_temp[uGlobPos*16 +4] *sinf(fF_temp[uGlobPos*16 +5]*(M_PI/180.0f));
+                
+                fFEvent[i*17 +14] *= fFEvent[i*17 +16];
+                
+            } 
+            else
+            {   fNrm[0]      = sinf(fF_temp[uGlobPos*16 +5]*(M_PI/180.0f));
+                fNrm[1]      = cosf(fF_temp[uGlobPos*16 +5]*(M_PI/180.0f));
+                fNrm[2]      = 0.0f;
+                fGlbStrss[0] = 1.0E+6f*fF_temp[uGlobPos*16 +4] *fNrm[0]*fNrm[0]; 
+                fGlbStrss[1] = 1.0E+6f*fF_temp[uGlobPos*16 +4] *fNrm[0]*fNrm[1]; 
+                fGlbStrss[2] = 1.0E+6f*fF_temp[uGlobPos*16 +4] *fNrm[0]*fNrm[2]; 
+                fGlbStrss[3] = 1.0E+6f*fF_temp[uGlobPos*16 +4] *fNrm[1]*fNrm[1]; 
+                fGlbStrss[4] = 1.0E+6f*fF_temp[uGlobPos*16 +4] *fNrm[1]*fNrm[2]; 
+                fGlbStrss[5] = 1.0E+6f*fF_temp[uGlobPos*16 +4] *fNrm[2]*fNrm[2]; 
+                
+                RotStressG2L(fOutTens, &fF_temp[uGlobPos*16 +6], fGlbStrss);
+                
+                fFEvent[i*17 +8]  = fOutTens[0]; 
+                fFEvent[i*17 +9]  = fOutTens[1]; 
+                fFEvent[i*17 +13] = 0.0f;
+                fFEvent[i*17 +14] = 0.0f;
+    }   }   }
     
     
     unsigned int *uKh_FFcnt  = calloc(iFOFFSET[iRANK], sizeof *uKh_FFcnt );
@@ -2446,7 +2451,7 @@ int main(int argc, char **argv)
         
         
         for (i = 0u; i < iFOFFSET[iRANK]; i++)      
-        {   fTempFL1[i] = fFTempVal[i*5 +2];                         fTempFL2[i] = fFTempVal[i*5 +3]*fFEvent[i*17 +16]; 
+        {   fTempFL1[i] = fFTempVal[i*5 +2];                         fTempFL2[i] = fFTempVal[i*5 +3];
             fTempFL3[i] = fFFric[i*6 +0] * -1.0*fFRef[i*14 +1];      fTempFL4[i] =(fFFric[i*6 +0] - fFFric[i*6 +1])* -1.0*fFRef[i*14 +1];
             fTempFL5[i] = fFEvent[i*17 +7];
             uTempFL1[i] = uFEvent[i*5 +0];
@@ -3128,7 +3133,7 @@ int main(int argc, char **argv)
                     
                     fPtchDTau[i] = sqrtf(fFTempVal[uTemp1*5 +0]*fFTempVal[uTemp1*5 +0] + fFTempVal[uTemp1*5 +1]*fFTempVal[uTemp1*5 +1]) - sqrtf(fFEvent[uTemp1*17 +0]*fFEvent[uTemp1*17 +0] + fFEvent[uTemp1*17 +1]*fFEvent[uTemp1*17 +1]); 
                     fPtchSlpH[i] = fFEvent[uTemp1*17 +13];
-                    fPtchSlpV[i] = fFEvent[uTemp1*17 +14]*fFEvent[uTemp1*17 +16];
+                    fPtchSlpV[i] = fFEvent[uTemp1*17 +14];
                 }
                 iOffstPosF[iRANK] = (int)uActElmL;
                 
