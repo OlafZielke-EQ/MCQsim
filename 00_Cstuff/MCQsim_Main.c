@@ -48,6 +48,7 @@ void    SubtractVect3(float fDiff[3], float fMinu[3], float fSubt[3]);
 void     CrossProduct(float fXProd[3], float fVect1[3], float fVect2[3]);
 float    VectorLength(float fTempVect[3]);
 void       NrmlzeVect(float fTempVect[3]);
+void FindMainStressDir(float fSMaxVect[3], float fStrIn[6]);
 void GetStkAndDipVect(float fNrm[3], float fStk[3], float fDip[3]);
 void GetGlobVertsForRectangle(float fP1[3], float fP2[3], float fP3[3], float fP4[3], float *fKh_Brch, unsigned int uStart);
 
@@ -185,6 +186,7 @@ int main(int argc, char **argv)
         float *fTempFv       = calloc(uFVNum, sizeof *fTempFv );
         float *fTempBv       = calloc(uBVNum, sizeof *fTempBv );
         
+        unsigned int uTemp0,   uTemp1;
         float  fTemp,   fMeanHeight = 0.0f;
         float  fP1[3],   fP2[3],   fP3[3],   fP1P2[3],   fP1P3[3],   fP2P3[3],   fArea,   fP1Pc[3],   fP2Pc[3],   fTempVect[3];
         float  fNrm[3],   fStk[3],   fDip[3];
@@ -326,6 +328,12 @@ int main(int argc, char **argv)
             fFltSide  += (VectorLength(fP1P2) + VectorLength(fP1P3) +VectorLength(fP2P3))/3.0f;
             
             NrmlzeVect(fNrm);
+            
+            uTemp0 = (fNrm[2] < 0.0f)*1u + (fNrm[2] >= 0.0f)*0u;
+            uTemp1 = uF_temp[i*7 +1];
+            uF_temp[i*7 +1] = (uTemp0 == 0u)*uF_temp[i*7 +1] + (uTemp0 != 0u)*uF_temp[i*7 +2];
+            uF_temp[i*7 +2] = (uTemp0 == 0u)*uF_temp[i*7 +2] + (uTemp0 != 0u)*uTemp1;
+            
             GetStkAndDipVect(fNrm, fStk, fDip);
             
             memcpy(&fF_temp[i*16 +6], fNrm,  3u*sizeof(float));
@@ -353,6 +361,12 @@ int main(int argc, char **argv)
             fBndSide    += (VectorLength(fP1P2) + VectorLength(fP1P3) +VectorLength(fP2P3))/3.0f;
             
             NrmlzeVect(fNrm);
+            
+            uTemp0 = (fNrm[2] < 0.0f)*1u + (fNrm[2] >= 0.0f)*0u;
+            uTemp1 = uB_temp[i*4 +1];
+            uB_temp[i*4 +1] = (uTemp0 == 0u)*uB_temp[i*4 +1] + (uTemp0 != 0u)*uF_temp[i*4 +2];
+            uB_temp[i*4 +2] = (uTemp0 == 0u)*uB_temp[i*4 +2] + (uTemp0 != 0u)*uTemp1;
+            
             GetStkAndDipVect(fNrm, fStk, fDip);
             
             memcpy(&fB_temp[i*16 +6], fNrm,  3u*sizeof(float));
@@ -434,21 +448,18 @@ int main(int argc, char **argv)
         for (i = 0u; i < iFOFFSET[iRANK]; i++) 
         {   uGlobPos   = i + iFSTART[iRANK];
             
-            fFRef[i*14 +0]    = fF_temp[i*16 +15];
-            fFRef[i*14 +1]    = fModPara[0] * 9.81f * fF_temp[uGlobPos*16 +2] +(fModPara[1]*1.0E+6f); 
-            fFEvent[i*17 +2]  = fFRef[i*14 +1];
-            fFRef[i*14 +9]    = fF_temp[uGlobPos*16 +0];
-            fFRef[i*14 +10]   = fF_temp[uGlobPos*16 +1];
-            fFRef[i*14 +11]   = fF_temp[uGlobPos*16 +2];
-            fFEvent[i*17 +16] = (fF_temp[uGlobPos*16 +8] >= 0.0f)*1.0f +  (fF_temp[uGlobPos*16 +8] < 0.0f)*-1.0f;
+            fFRef[i*14 +0]   = fF_temp[uGlobPos*16 +15];
+            fFRef[i*14 +1]   = fModPara[0] * 9.81f * fF_temp[uGlobPos*16 +2] +(fModPara[1]*1.0E+6f); 
+            fFEvent[i*17 +2] = fFRef[i*14 +1];
+            fFRef[i*14 +9]   = fF_temp[uGlobPos*16 +0];
+            fFRef[i*14 +10]  = fF_temp[uGlobPos*16 +1];
+            fFRef[i*14 +11]  = fF_temp[uGlobPos*16 +2];
             
             if (uF_temp[uGlobPos*7 +5] == 1u)
             {   fFEvent[i*17 +8]  = 0.0f;
                 fFEvent[i*17 +9]  = 0.0f;
                 fFEvent[i*17 +13] = 1.0E-3f*fF_temp[uGlobPos*16 +4] *cosf(fF_temp[uGlobPos*16 +5]*(M_PI/180.0f));
                 fFEvent[i*17 +14] = 1.0E-3f*fF_temp[uGlobPos*16 +4] *sinf(fF_temp[uGlobPos*16 +5]*(M_PI/180.0f));
-                
-                fFEvent[i*17 +14] *= fFEvent[i*17 +16];
                 
             } 
             else
@@ -2370,6 +2381,7 @@ int main(int argc, char **argv)
         }
         
         for (k = 0u; k < MAXITERATION4BOUNDARY; k++)
+ 
         {   memset(uSlipElCnt, 0,  2*sizeof(unsigned int));
             memset(iStartPosF, 0, iSIZE*sizeof(int) );           memset(iOffstPosF, 0, iSIZE*sizeof(int) ); 
             for (i = 0u; i < iFOFFSET[iRANK]; i++)
@@ -3715,6 +3727,105 @@ void    NrmlzeVect(float fTempVect[3])
 {   float fVectLgth = 0.0f;
     fVectLgth = sqrtf(fTempVect[0]*fTempVect[0] + fTempVect[1]*fTempVect[1] + fTempVect[2]*fTempVect[2]);
     fTempVect[0] /= fVectLgth;              fTempVect[1] /= fVectLgth;              fTempVect[2] /= fVectLgth; 
+    return;
+}
+
+
+void FindMainStressDir(float fSMaxVect[3], float fStrIn[6])
+{   
+    int i, j, ip, iq, maxIndx;
+    float sm, theta, thres, g, h, t, c, tau, s, maxEig;
+    float b[3], z[3];
+    float fStress[9],   fEigVect[9],   fEigVal[3];
+    fStress[0] = fStrIn[0];         fStress[1] = fStrIn[1];         fStress[2] = fStrIn[2];
+    fStress[3] = fStrIn[1];         fStress[4] = fStrIn[3];         fStress[5] = fStrIn[4];
+    fStress[6] = fStrIn[2];         fStress[7] = fStrIn[4];         fStress[8] = fStrIn[5];
+    
+    for (i = 0; i < 3; i++)
+    {   for (j = 0; j < 3; j++)             {        fEigVect[i*3 +j] = 0.0f;           }
+        fEigVect[i*3 +i] = 1.0f;
+        fEigVal[i]       = fStress[i*3 +i];
+        b[i]             = fStress[i*3 +i];
+        z[i]             = 0.0f;  
+    }
+    
+    for (i = 0; i < 50; i++)
+    {   sm = 0.0f;
+        for (ip = 0; ip < 2; ip++)
+        {   for (iq = (ip+1); iq < 3; iq++)
+            {   sm += fabs(fStress[ip*3 +iq]);
+        }   }
+        if (sm <= FLT_EPSILON)
+        {  
+            
+            maxIndx = 0;
+            maxEig  = fabs(fEigVal[0]);
+            for (j = 1; j < 3; j++)
+            { if (fabs(fEigVal[j]) > maxEig)    {       maxEig = fabs(fEigVal[j]);      maxIndx = j;        }
+            }
+            for (j = 0; j < 3; j++)
+            {   fSMaxVect[j] = fEigVect[j*3 +maxIndx] *fEigVal[maxIndx];
+            }
+            
+            return;
+        }
+        
+        if (i < 4)              {   thres = 0.2f*sm/9.0f;       }
+        else                    {   thres = 0.0f;               }
+        
+        for (ip = 0; ip < 2; ip++)
+        {   for (iq = (ip+1); iq < 3; iq++)
+            {   g = 100.0f*fabs(fStress[ip*3 +iq]);
+        
+                if ( (i > 4) && ( fabs(fEigVal[ip]) +g == fabs(fEigVal[ip]) ) &&  ( fabs(fEigVal[iq]) +g == fabs(fEigVal[iq]) ) )
+                {   fStress[ip*3 +iq] = 0.0f;   
+                }
+                else if (fabs(fStress[ip*3 +iq]) > thres  )
+                {   h = fEigVal[iq] - fEigVal[ip];
+                    if (fabs(h) +g == fabs(h))
+                    {   t = fStress[ip*3 +iq]/h;
+                    }
+                    else
+                    {   theta = 0.5f*h/fStress[ip*3 +iq];
+                        t     = 1.0f/(fabs(theta) +sqrtf(1.0f +theta*theta) );
+                        if (theta < 0.0f)   {   t *= -1.0f;       }
+                    }
+                    c   = 1.0f/sqrtf(1.0f +t*t);
+                    s   = t*c;
+                    tau = s/(1.0f+c);
+                    h   = t*fStress[ip*3 +iq];
+                    z[ip      ] -= h;
+                    z[iq]       += h;
+                    fEigVal[ip] -= h;
+                    fEigVal[iq] += h;
+                    
+                    fStress[ip*3 +iq] = 0.0f;
+                    
+                    for (j = 0; j < ip; j++)
+                    {   g = fStress[j*3 +ip];                   h = fStress[j*3 +iq];
+                        fStress[j*3 +ip] = g -s*(h+g*tau);      fStress[j*3 +iq] = h +s*(g-h*tau);
+                    }
+                    for (j = (ip+1); j < iq; j++)
+                    {   g = fStress[ip*3 +j];                   h = fStress[j*3 +iq];
+                        fStress[ip*3 +j] = g -s*(h+g*tau);      fStress[j*3 +iq] = h +s*(g-h*tau);
+                    }
+                    for (j = (iq+1); j < 3; j++)
+                    {   g = fStress[ip*3 +j];                   h = fStress[iq*3 +j];
+                        fStress[ip*3 +j] = g -s*(h+g*tau);      fStress[iq*3 +j] = h +s*(g-h*tau);
+                    }
+                    
+                    for (j = 0; j < 3; j++)
+                    {   g = fEigVect[j*3 +ip];                  h = fEigVect[j*3 +iq];
+                        fEigVect[j*3 +ip] = g -s*(h+g*tau);     fEigVect[j*3 +iq] = h +s*(g-h*tau);
+        }   }   }   }
+        
+        for (ip = 0; ip < 2; ip++)
+        {   b[ip]      += z[ip];
+            fEigVal[ip] = b[ip];
+            z[ip]       = 0.0f;
+        }
+        
+    }
     return;
 }
 
