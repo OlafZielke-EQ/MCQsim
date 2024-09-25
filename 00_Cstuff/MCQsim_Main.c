@@ -364,7 +364,7 @@ int main(int argc, char **argv)
             
             uTemp0 = (fNrm[2] < 0.0f)*1u + (fNrm[2] >= 0.0f)*0u;
             uTemp1 = uB_temp[i*4 +1];
-            uB_temp[i*4 +1] = (uTemp0 == 0u)*uB_temp[i*4 +1] + (uTemp0 != 0u)*uF_temp[i*4 +2];
+            uB_temp[i*4 +1] = (uTemp0 == 0u)*uB_temp[i*4 +1] + (uTemp0 != 0u)*uB_temp[i*4 +2];
             uB_temp[i*4 +2] = (uTemp0 == 0u)*uB_temp[i*4 +2] + (uTemp0 != 0u)*uTemp1;
             
             GetStkAndDipVect(fNrm, fStk, fDip);
@@ -1249,6 +1249,7 @@ int main(int argc, char **argv)
                 fKh_FFvaldip[i] = realloc(fKh_FFvaldip[i], 2*uKh_FFcnt[i]* sizeof *fKh_FFvaldip[i] );
                 fKh_FFvalnrm[i] = realloc(fKh_FFvalnrm[i], 2*uKh_FFcnt[i]* sizeof *fKh_FFvalnrm[i] );
                 
+ 
                 if ((uPlotCatalog2Screen == 1)&&(iRANK == 0)) {    fprintf(stdout,"\nfault receiver:  %u/%u   with Flt/Flt:  %u of %u",i, iFOFFSET[iRANK], uKh_FFcnt[i], uFPNum);                  }
                 
                 
@@ -2363,7 +2364,7 @@ int main(int argc, char **argv)
             MPI_Allgatherv(fBslipL, iOffstPosB[iRANK], MPI_FLOAT, fBslipG, iOffstPosB, iStartPosB, MPI_FLOAT, MPI_COMM_WORLD);
             
             for (i = 0u; i < iFOFFSET[iRANK]; i++)
-            {   memset(fBslip, 0, 3*uBPNum*sizeof(float) );
+            {   memset(fBslip, 0, 3*uKh_FBcnt[i]*sizeof(float) );
                 for (j = 0u; j < uSlipElCnt[1]; j++) 
                 {   uTemp0 = (unsigned int)fBslipG[j*4 +0]; 
                     uTemp1 = uKh_FBps2[i][uTemp0]; 
@@ -2381,7 +2382,6 @@ int main(int argc, char **argv)
         }
         
         for (k = 0u; k < MAXITERATION4BOUNDARY; k++)
- 
         {   memset(uSlipElCnt, 0,  2*sizeof(unsigned int));
             memset(iStartPosF, 0, iSIZE*sizeof(int) );           memset(iOffstPosF, 0, iSIZE*sizeof(int) ); 
             for (i = 0u; i < iFOFFSET[iRANK]; i++)
@@ -2400,7 +2400,7 @@ int main(int argc, char **argv)
             MPI_Allgatherv(fFslipL, iOffstPosF[iRANK], MPI_FLOAT, fFslipG, iOffstPosF, iStartPosF, MPI_FLOAT, MPI_COMM_WORLD);
             
             for (i = 0u; i < iFOFFSET[iRANK]; i++)
-            {   memset(fFslip, 0, 2*uFPNum*sizeof(float) );
+            {   memset(fFslip, 0, 2*uKh_FFcnt[i]*sizeof(float) );
                 for (j = 0u; j < uSlipElCnt[0]; j++) 
                 {   uTemp0 = (unsigned int)fFslipG[j*3 +0]; 
                     uTemp1 = uKh_FFps2[i][uTemp0]; 
@@ -2798,7 +2798,7 @@ int main(int argc, char **argv)
                         fFTempVal[i*5 +1] += (fTemp0*fKh_FBvaldip[i][uTemp1*3 +0] + fTemp1*fKh_FBvaldip[i][uTemp1*3 +1] + fTemp2*fKh_FBvaldip[i][uTemp1*3 +2]);
                 }   }
                 else
-                {   memset(fBslip, 0, 3*uBPNum*sizeof(float) );
+                {   memset(fBslip, 0, 3*uKh_FBcnt[i]*sizeof(float) );
                     for (j = 0u; j < uSlipElCnt[1]; j++) 
                     {   uTemp0 = (unsigned int)fBslipG[j*4 +0]; 
                         uTemp1 = uKh_FBps2[i][uTemp0]; 
@@ -2821,7 +2821,7 @@ int main(int argc, char **argv)
                         fFTempVal[i*5 +1] += (fTemp0*fKh_FFvaldip[i][uTemp1*2 +0] + fTemp1*fKh_FFvaldip[i][uTemp1*2 +1]);
                 }   }
                 else
-                {   memset(fFslip, 0, 2*uFPNum*sizeof(float) );
+                {   memset(fFslip, 0, 2*uKh_FFcnt[i]*sizeof(float) );
                     for (j = 0u; j < uSlipElCnt[0]; j++) 
                     {   uTemp0 = (unsigned int)fFslipG[j*3 +0]; 
                         uTemp1 = uKh_FFps2[i][uTemp0]; 
@@ -2878,7 +2878,7 @@ int main(int argc, char **argv)
                     fBTempVal[i*3 +2] += (fTemp0*fKh_BBvalnrm[i][uTemp1*3 +0] + fTemp1*fKh_BBvalnrm[i][uTemp1*3 +1] + fTemp2*fKh_BBvalnrm[i][uTemp1*3 +2]);
             }   }
             else
-            {   memset(fBslip, 0, 3*uBPNum*sizeof(float) );
+            {   memset(fBslip, 0, 3*uKh_BBcnt[i]*sizeof(float) );
                 for (j = 0u; j < uSlipElCnt[1]; j++) 
                 {   uTemp0 = (unsigned int)fBslipG[j*4 +0]; 
                     uTemp1 = uKh_BBps2[i][uTemp0]; 
@@ -2903,7 +2903,7 @@ int main(int argc, char **argv)
                     fBTempVal[i*3 +2] += (fTemp0*fKh_BFvalnrm[i][uTemp1*2 +0] + fTemp1*fKh_BFvalnrm[i][uTemp1*2 +1]);
             }   }
             else
-            {   memset(fFslip, 0, 2*uFPNum*sizeof(float) );
+            {   memset(fFslip, 0, 2*uKh_BFcnt[i]*sizeof(float) );
                 for (j = 0u; j < uSlipElCnt[0]; j++) 
                 {   uTemp0 = (unsigned int)fFslipG[j*3 +0]; 
                     uTemp1 = uKh_BFps2[i][uTemp0]; 
@@ -3052,7 +3052,7 @@ int main(int argc, char **argv)
                             fFEvent[i*17 +2] += (fTemp0*fKh_FFvalnrm[i][uTemp1*2 +0] + fTemp1*fKh_FFvalnrm[i][uTemp1*2 +1]);
                     }   }
                     else
-                    {   memset(fFslip, 0, 2*uFPNum*sizeof(float) );
+                    {   memset(fFslip, 0, 2*uKh_FFcnt[i]*sizeof(float) );
                         for (j = 0u; j < uEQstillOn; j++) 
                         {   uTemp0 = (unsigned int)fFslipG[j*3 +0]; 
                             uTemp1 = uKh_FFps2[i][uTemp0]; 
@@ -3106,7 +3106,7 @@ int main(int argc, char **argv)
                             fBEvent[i*9 +2] += (fTemp0*fKh_BFvalnrm[i][uTemp1*2 +0] + fTemp1*fKh_BFvalnrm[i][uTemp1*2 +1]);
                     }   }
                     else
-                    {   memset(fFslip, 0, 2*uFPNum*sizeof(float) );
+                    {   memset(fFslip, 0, 2*uKh_BFcnt[i]*sizeof(float) );
                         for (j = 0u; j < uSlipElCnt[0]; j++) 
                         {   uTemp0 = (unsigned int)fFslipG[j*3 +0]; 
                             uTemp1 = uKh_BFps2[i][uTemp0]; 
@@ -3908,6 +3908,12 @@ void GetGlobVertsForRectangle(float fP1[3], float fP2[3], float fP3[3], float fP
     fPt8L[1] = fRM_G2L[1][0]*fPt8[0] + fRM_G2L[1][1]*fPt8[1] +  fRM_G2L[1][2]*fPt8[2];
     fPt8L[2] = fRM_G2L[2][0]*fPt8[0] + fRM_G2L[2][1]*fPt8[1] +  fRM_G2L[2][2]*fPt8[2];
     
+
+
+
+
+
+
     fMinSL = fPt1L[0];       fMaxSL = fPt1L[0];       fMinDL = fPt1L[1];       fMaxDL = fPt1L[1];
     
     fMinSL = MIN(fMinSL, fPt2L[0]);   fMinSL = MIN(fMinSL, fPt3L[0]);   fMinSL = MIN(fMinSL, fPt4L[0]);   fMinSL = MIN(fMinSL, fPt5L[0]);   fMinSL = MIN(fMinSL, fPt6L[0]);   fMinSL = MIN(fMinSL, fPt7L[0]);   fMinSL = MIN(fMinSL, fPt8L[0]);
