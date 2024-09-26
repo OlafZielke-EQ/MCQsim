@@ -17,7 +17,7 @@
 #define KH_TOL2                 0.5f 
 #define KH_FULL_DIST            15.0f
 #define KH_TOL_DIST             30.0f
-#define MININTSEISSTRESSCHANGE  50000.0f 
+#define MININTSEISSTRESSCHANGE  0.0f 
 
 #define INTERNALFRICTION        0.75f 
 #define INTERNALCOHESION        5.0E+6f 
@@ -75,7 +75,6 @@ int main(int argc, char **argv)
     unsigned int uFPNum = 0u,   uFVNum = 0u,   uBPNum = 0u,   uBVNum = 0u,   uEQcntr = 0u,   uEQtickr = 0u, uFSegN = 0u,   uBSegN = 0u,   uMaxPNum,   uMaxSNum;
     unsigned int uRunNum = 0u,   uCatType = 0u,   uUseTimeProp = 0u,   uChgBtwEQs = 0u,   uContPrevRun = 0u,   uLoadPrev_Khmat = 0u,   uPlotCatalog2Screen = 0u,   uMinElemNum4Cat = 0u,   uLoadStep_POW2 = 0u, uStoreSTF4LargeEQs = 0u;
     float fPreStressFract = 0.0f,   fOvershootFract = 0.0f,   fMinCoSeisSlipRate = 0.0f,   fIntSeisLoadStep = 0.0f,   fMinMag4STF = 0.0f,   fMinMag4Prop = 0.0f,   fAfterSlipTime = 0.0f,   fDeepRelaxTime = 0.0f,   fHealFact = 0.0f;
-    float fPSeisTime = 0.0f;
     float fFltSide,   fBndSide,   fElemArea,   fBoundArea,  fUnitSlipF,   fUnitSlipB;
     
     float fModPara[11];
@@ -2546,6 +2545,7 @@ int main(int argc, char **argv)
     if (uContPrevRun == 1u)
     {   
         unsigned int uDummy;
+        float        fDummy;
         unsigned int *uFvTemp   = calloc( iFOFFSET[iRANK],  sizeof *uFvTemp ); 
         float        *fFvTemp   = calloc( iFOFFSET[iRANK],  sizeof *fFvTemp ); 
         float        *fBvTemp   = calloc( iBOFFSET[iRANK],  sizeof *fBvTemp ); 
@@ -2555,7 +2555,7 @@ int main(int argc, char **argv)
         MPI_File_read(fp_PREVRUN, &dAddedTime, 1, MPI_DOUBLE,             &STATUS);
         MPI_File_read(fp_PREVRUN, &uEQcntr,    1, MPI_UNSIGNED,           &STATUS);
         MPI_File_read(fp_PREVRUN, &uDummy,     1, MPI_UNSIGNED,           &STATUS);
-        MPI_File_read(fp_PREVRUN, &fPSeisTime, 1, MPI_FLOAT,              &STATUS);
+        MPI_File_read(fp_PREVRUN, &fDummy,     1, MPI_FLOAT,              &STATUS);
         
         OFFSETall = sizeof(double) +2*sizeof(unsigned int) +sizeof(float);
         
@@ -2667,7 +2667,7 @@ int main(int argc, char **argv)
     
     
     
-    unsigned int uTemp0,   uTemp1,   uGlobPos,   uEQstillOn,   uTotlRuptT,   uActElmG,   uActElmL,   uMRFlgth;
+    unsigned int uTemp0,   uTemp1,   uGlobPos,   uEQstillOn,   uTotlRuptT,   uActElmG,   uActElmL,   uMRFlgth,   uUsedLoadStep;
     float fNxtLoadStep, fNxtHalfStep,   fTemp0,   fTemp1,   fTemp2,   fTemp3,    fTemp4,   fTemp5,   fTemp6,   fTemp7;
     float fMaxLoadStep      = FloatPow(2.0f, uLoadStep_POW2);
     float fLoadingStepInYrs = fIntSeisLoadStep/365.25f;
@@ -2707,10 +2707,12 @@ int main(int argc, char **argv)
     
     while (dCurrTime <= dRecordLength)
     {   
-        fNxtLoadStep = fMaxLoadStep;
+
+        uUsedLoadStep= uLoadStep_POW2;
+        fNxtLoadStep = fMaxLoadStep; 
         fNxtHalfStep = fNxtLoadStep;
         
-        for (k = 0u; k <= (uLoadStep_POW2+1); k++)
+        for (k = 0u; k <= (uUsedLoadStep+1); k++) 
         {   uPSeisSteps += (uEQcntr > 0u)*1u + (uEQcntr <= 0u)*0u;
             fHypoSlip  = 0.0f;      fHypoLoc[0] = 0.0f;       fHypoLoc[1] = 0.0f;      fHypoLoc[2] = 0.0f;
             
@@ -2718,7 +2720,7 @@ int main(int argc, char **argv)
             memset(iStartPosF, 0, iSIZE*sizeof(int) );           memset(iOffstPosF, 0, iSIZE*sizeof(int) );
             memset(iStartPosB, 0, iSIZE*sizeof(int) );           memset(iOffstPosB, 0, iSIZE*sizeof(int) );
             
-            fTemp0 = MAX(0.0f, expf(-1.0f*(fPSeisTime + fNxtLoadStep)/fAfterSlipTime));
+            fTemp0 = MAX(0.0f, expf(-1.0f*(fNxtLoadStep)/fAfterSlipTime)); 
             
             for (i = 0u; i < iFOFFSET[iRANK]; i++)
             {   dTemp0 = (dCurrTime + (double)fNxtLoadStep)*(double)fFRef[i*14 +12]; 
@@ -2732,7 +2734,7 @@ int main(int argc, char **argv)
                 fTemp1 = (uFEvent[i*5 +0] == 1u)*0.0f + (uFEvent[i*5 +0] != 1u)*fTemp1; 
                 fTemp3 = fFTempVal[i*5 +3] *-1.0f*fFTempVal[i*5 +2]; 
                 
-                fTemp5 = MAX(0.0f, (fTemp1 -fTemp3));
+                fTemp5 = MAX(0.0f, (fTemp1 -fTemp3)); 
                 
                 if (fTemp5 > MININTSEISSTRESSCHANGE)
                 {   fTemp3 = -1.0f*(((fTemp5/fTemp1)*fFTempVal[i*5 +0])/fFEvent[i*17 +4]);
@@ -2747,7 +2749,7 @@ int main(int argc, char **argv)
             
             iOffstPosF[iRANK] = uSlipElCnt[0]*3;
             
-            fTemp0 = MAX(0.0f, expf(-1.0f*(fPSeisTime +fNxtLoadStep)/fDeepRelaxTime));
+            fTemp0 = MAX(0.0f, expf(-1.0f*(fNxtLoadStep)/fDeepRelaxTime));
             for (i = 0u; i < iBOFFSET[iRANK]; i++)
             {   fBTempVal[i*3 +0] = fBEvent[i*9 +0];         fBTempVal[i*3 +1] = fBEvent[i*9 +1];         fBTempVal[i*3 +2] = fBEvent[i*9 +2];
                 fTemp1 = sqrtf( fBTempVal[i*3 +0]*fBTempVal[i*3 +0] + fBTempVal[i*3 +1]*fBTempVal[i*3 +1] ); 
@@ -2852,13 +2854,13 @@ int main(int argc, char **argv)
             
             fNxtHalfStep /= 2.0f;
             if (uEQstillOn == 0u)
-            {   if (k == 0u)                                    {                                               break;   }
-                else if ((k > 0u) && (k < uLoadStep_POW2))      {   fNxtLoadStep += fNxtHalfStep;                        }
-                else if (k == uLoadStep_POW2)                   {   fNxtLoadStep +=(2.0f*fNxtHalfStep);                  }
+            {   if (k == 0u)                                   {   k = 0u;          uUsedLoadStep += 1u;            fNxtLoadStep *= 2.0f;            fNxtHalfStep = fNxtLoadStep;           }
+                else if ((k > 0u) && (k < uUsedLoadStep))      {   fNxtLoadStep += fNxtHalfStep;                        }
+                else if (k == uUsedLoadStep)                   {   fNxtLoadStep +=(2.0f*fNxtHalfStep);                  }
             }
             else
-            {   if      (k < uLoadStep_POW2)                    {   fNxtLoadStep -= fNxtHalfStep;                        }
-                else if (k == uLoadStep_POW2)                   {                                               break;   }
+            {   if      (k < uUsedLoadStep)                    {   fNxtLoadStep -= fNxtHalfStep;                        }
+                else if (k >= uUsedLoadStep)                   {                                               break;   }
             }
             
         } 
@@ -2915,7 +2917,6 @@ int main(int argc, char **argv)
                fBTempVal[i*3 +2] += cblas_sdot(2*uKh_BFcnt[i], fFslip, 1, fKh_BFvalnrm[i], 1);
         }   }
         
-        fPSeisTime += fNxtLoadStep;
         dCurrTime  += (double)fNxtLoadStep;
         
         for (i = 0u; i < iFOFFSET[iRANK]; i++)
@@ -3241,9 +3242,6 @@ int main(int argc, char **argv)
             }   }   } 
             
             
-            fPSeisTime      = 0.0f;
-            
-            
             {   if (uChgBtwEQs == 1u)
                 {   for (i = 0u; i < uActElmL; i++)  
                     {   
@@ -3378,13 +3376,14 @@ int main(int argc, char **argv)
     
     if (iRANK == 0)
     {   unsigned int uDummy = 3u;
+        float        fDummy = 0.0f;
         
         if ((fpPrePost = fopen(cPrevStateName,"wb")) == NULL)   {   printf("Error -cant open %s  PrevStressFile...\n",cPrevStateName);      exit(10);     }
         
         fwrite(&dCurrTime,  sizeof(double),       1,    fpPrePost);
         fwrite(&uEQcntr,    sizeof(unsigned int), 1,    fpPrePost);
         fwrite(&uDummy,     sizeof(unsigned int), 1,    fpPrePost);
-        fwrite(&fPSeisTime, sizeof(float),        1,    fpPrePost);
+        fwrite(&fDummy,     sizeof(float),        1,    fpPrePost);
 
         fwrite(uFvTemp,  sizeof(unsigned int), uFPNum, fpPrePost);              fwrite(fFvTemp0, sizeof(float),        uFPNum, fpPrePost);
         fwrite(fFvTemp1, sizeof(float),        uFPNum, fpPrePost);              fwrite(fFvTemp2, sizeof(float),        uFPNum, fpPrePost);
