@@ -38,6 +38,7 @@ MCQSIM INPUT/OUTPUT
   for standalone GUIs:
   Install by double-clicking the *.app file (e.g., Ainput_MCQsim.app) and then follow the instructions. 
   IMPORTANT: The installation process includes downloading MATLAB resources that are needed to run the GUIs (automatically done during installation, accessing the mathworks.com page).
+  IMPORTANT: It appears that sudo rights are necessary to install the standalones on Ubuntu.
 
 
 
