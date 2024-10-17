@@ -26,6 +26,8 @@ The most recent version of _MCQsim_, provided here, employs _QuadTree_ and _H-ma
 > into the corresponding field and the download will start automatically.
 
 # MCQSIM SIMULATION
+The _MCQsim_ worklflow can be broken down into three components, namely pre-simulation, simulation, and post-simulation. The first and third component rely heavily on MATLAB-based GUIs that we developed for this purpose. The actual simulation is "terminal" based.
+
 ## MCQSIM INPUT FILES
 _MCQsim_ simulations require a number of files to be located in the same folder as the executable. They are created with the _MATLAB_ input GUIs.
 
