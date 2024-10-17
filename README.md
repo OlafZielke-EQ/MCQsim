@@ -26,15 +26,15 @@ The most recent version of _MCQsim_, provided here, employs _QuadTree_ and _H-ma
 
 # MCQSIM SIMULATION
 ## MCQSIM INPUT FILES
-_MCQsim_ simulations require a number of files to be located in the same folder as the executable.
+_MCQsim_ simulations require a number of files to be located in the same folder as the executable. They are created with the _MATLAB_ input GUIs.
 
-|   File name   (input)      | File content  |
-| ------------------- | ------------- |
-| FaultModel.txt              | Parameter file. Contains details about how to run the simulation e.g., catalog length. ASCII format.  |
-| FaultModel_FLT.txt          | Summary file. Contains information about fault geometry. ASCII format.  |
-| FaultModel_FLTtrig.dat      | Data file. Contains the 3-D fault geometry, including the list of all triangular fault elements. Binary format.  |
-| FaultModel_Rough.dat        | Data file. Contains the 3-D fault geometry. This file is equivalent to _FLTtrig.dat except that fault roughness might be added. Binary format.  | 
-| FaultModel_Strgth.dat       | Data file. Contains friction and strength parameter for each fault element. Binary format.  |
+|   File name   (input)                 | File content  |
+| ------------------------------------- | ------------- |
+| FaultModel.txt                        | Parameter file. Contains details about how to run the simulation e.g., catalog length. ASCII format.  |
+| FaultModel_FLT.txt                    | Summary file. Contains information about fault geometry. ASCII format.  |
+| FaultModel_FLTtrig.dat                | Data file. Contains the 3-D fault geometry, including the list of all triangular fault elements. Binary format.  |
+| FaultModel_Rough.dat                  | Data file. Contains the 3-D fault geometry. This file is equivalent to _FLTtrig.dat except that fault roughness might be added. Binary format.  | 
+| FaultModel_Strgth.dat                 | Data file. Contains friction and strength parameter for each fault element. Binary format.  |
 | FaultModel_BND.txt      _(optional)_  | Summary file. Contains information about of boundary surface geometry. ASCII format.  | 
 | FaultModel_BNDtrig.dat  _(optional)_  | Data file. Contains the 3-D geometry of boundary surface triangular elements. Binary format. | 
 
@@ -46,12 +46,12 @@ Assuming all files are present, a simulation can be started via:
 This command will start MCQsim as an MPI run, using n = 6 CPUs. The parameter file contains relevant information to start/control the simulation.
 
 ## MCQSIM OUTPUT FILES
-|   File name   (output)      | File content  |
-| ------------------- | ------------- |
-| FaultModel_BrchInfo.dat        | Data file. Contains information about the QuadTree structure. Useful for _OpenQuake_ pipeline. Binary format.  | 
-| FaultModel_PreRunData.dat      | Data file. Friction properties, fault strength, long-term slip-rate of fault elements at start of simulation. Binary format.  |
-| FaultModel_PostRunState.dat    | Data file. Stress state after simulation is over. Allows continuing/extending an existing catalog. Binary format.  |
-| FaultModel_RAWCatalog.dat      | Data file. Earthquake catalog. Binary format.  |
+|   File name   (output)               | File content  |
+| ------------------------------------ | ------------- |
+| FaultModel_BrchInfo.dat              | Data file. Contains information about the QuadTree structure. Useful for _OpenQuake_ pipeline. Binary format.  | 
+| FaultModel_PreRunData.dat            | Data file. Friction properties, fault strength, long-term slip-rate of fault elements at start of simulation. Binary format.  |
+| FaultModel_PostRunState.dat          | Data file. Stress state after simulation is over. Allows continuing/extending an existing catalog. Binary format.  |
+| FaultModel_RAWCatalog.dat            | Data file. Earthquake catalog. Binary format.  |
 | FaultModel_M7.38472_t3845.8374.srfb  | Data file. Quasi-dynamic earthquake rupture for selected large event. Name provides event magnitude and time. Tthis is a binary version of a *.srf file (standard ruputre format; Graves, 2002). Binary format.  | 
 
 ### PARAMETER FILE  
