@@ -13,6 +13,7 @@ in the MATLAB command window and then press enter.
   
   Install by double-clicking the installation file (e.g., _A_Geometry_MCQsim_TREADinstall.app_ or _A_Geometry_MCQsim_TREAD_install.exe_) and then follow the instructions. 
   
-  **_IMPORTANT:_** This installation process includes downloading MATLAB resources from mathworks.com that are needed to run the GUIs. This should happen automatically during the installation process but can be a bit slow.
+  > [!IMPORTANT]
+This installation process includes downloading MATLAB resources from mathworks.com that are needed to run the GUIs. This should happen automatically during the installation process but can be a bit slow.
   
   **_IMPORTANT:_** It appears that sudo rights are necessary to install the standalones on Ubuntu.
