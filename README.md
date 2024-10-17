@@ -83,20 +83,16 @@ in the MATLAB command window and then press enter.
 
 ![this is an example parameter file](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/ParameterFileScreenShot.png)
 
-
-### PARAMETER FILE EXPLANATION
 here a brief explanation for selected entries:
 
-08ContinueCatalog      - a switch ( 0 / 1) telling if an existing catalog is meant to be extended (1 == continue catalog)
+_08ContinueCatalog_      - a switch ( 0 / 1) telling if an existing catalog is meant to be extended (1 == continue catalog)
 
-09LoadPrevious_Kh_mat  - a switch ( 0 / 1 / 2) telling if a new Kh_matrix is computed or not and whether it is stored to file or not; 0 == new Kh_mat without saving; 1 == new Kh_mat with saving; 2 = use existing Kh_mat
+_09LoadPrevious_Kh_mat_  - a switch ( 0 / 1 / 2) telling if a new Kh_matrix is computed or not and whether it is stored to file or not; 0 == new Kh_mat without saving; 1 == new Kh_mat with saving; 2 = use existing Kh_mat. A typical combination of entries in line 8 and 9 woudl be (a) line 8 is 0 and line 9 is 1; or (b) line 8 is 1 and line 9 is 2.
 
-A typical combination of entries in line 8 and 9 woudl be (a) line 8 is 0 and line 9 is 1; or (b) line 8 is 1 and line 9 is 2.
+_10Kh_mat_file_2_load_   - name of the _Kh_mat file_ that is either written or re-used (depending on choice in line 9)
 
-10Kh_mat_file_2_load   - name of the Kh_mat file that is either written or re-used (depending on choice in line 9)
+_12StoreSTF4LargeEQs_    - a switch (0 / 1) telling if the detailed quasi-dynamic rupture model of selected earthquqakes should be written to file or not (1 == write to file)
 
-12StoreSTF4LargeEQs    - a switch (0 / 1) telling if the detailed quasi-dynamic rupture model of selected earthquqakes should be written to file or not (1 == write to file)
+_13MinMagnitude4ST_      - threshold magnitude to store the quasi-dynamic rupture model; this is included to save disk space and because smaller events might be less interesting in that regard. IMPORTANT: "smaller" in this context mainly relates to number of elements that failed in the event. The connection between number of failed elements and this minimum magnitude is therefore the mesh (i.e. fault element) size.
 
-13MinMagnitude4ST      - threshold magnitude to store the quasi-dynamic rupture model; this is included to save disk space and because smaller events might be less interesting in that regard. IMPORTANT: "smaller" in this context mainly relates to number of elements that failed in the event. The connection between number of failed elements and this minimum magnitude is therefore the mesh (i.e. fault element) size.
-
-14/15                  - currently not implemented
+_14/15_                 - currently not implemented
