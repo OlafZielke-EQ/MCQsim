@@ -81,65 +81,8 @@ in the MATLAB command window and then press enter.
 ### PARAMETER FILE  
   The parameter file has a specific structure that must not be changed (e.g., by adding/shifting lines etc.). Values can be changed however. Here an example of what "ParameterFile.txt" contains. Line numbers to the left are added for reference only and not part of the file.
 
-![this isss]
+![this is an example parameter file](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/ParameterFileScreenShot.png)
 
-01--------------------------
-
-02InputName:                     MyFault
-
-03Realization_Number:            1
-
-04CatalogTypeNr:                 3
-
-05PlotCatalog2Screen:            1
-
-06RandSeedValue:                 1001
-
-07MinElementNum4Catalog:         1
-
-08ContinueCatalog:               0
-
-09LoadPrevious_Kh_mat:           1
-
-10Kh_mat_file_2_load:            MyFault_Khmat.dat
-
-11--------------------------
-
-12StoreSTF4LargeEQs(0/1):        1
-
-13MinMagnitude4STF:              7.3f
-
-14UseRuptPropag(0/1):            0
-
-15MinMagnitude4RupProp:          6.0f
-
-16--------------------------
-
-17IntSeisLoadStep(days):         1.0f
-
-18pow2forInterSeisSteps:         9
-
-19--------------------------
-
-20Visco_AfterSlip(years):        3.0f
-
-21Visco_DeepRelax(years):        20.0f
-
-22--------------------------
-
-23HealingDuringCoseis:           0.025f
-
-24OvershootFraction:             1.2f
-
-25PreStressFraction:             0.85f
-
-26MinCoSeisSlipRate(m/s):        5.0E-3
-
-27--------------------------
-
-28EQrecordLength(years):         30000.0f
-
-29--------------------------
 
 ### PARAMETER FILE EXPLANATION
 here a brief explanation for selected entries:
