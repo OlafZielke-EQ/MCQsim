@@ -17,14 +17,14 @@
 #define KH_TOL2                 0.5f 
 #define KH_FULL_DIST            15.0f
 #define KH_TOL_DIST             30.0f
-#define MININTSEISSTRESSCHANGE  0.0f 
+#define MININTSEISSTRESSCHANGE  25000.0f 
 
 #define INTERNALFRICTION        0.75f 
 #define INTERNALCOHESION        5.0E+6f 
 
 #define MAXITERATION4BOUNDARY   200u 
 #define MAXMOMRATEFUNCLENGTH    5000u 
-#define NeighborFactor          2.0f 
+#define NeighborFactor          2.5f 
 
 #define IA 16807
 #define IM 2147483647
@@ -32,6 +32,14 @@
 #define IQ 127773
 #define IR 2836
 #define MASK 123459876
+
+
+
+
+
+
+
+
 
 #define MAX(A,B) ( ((A) >   (B))  *(A)   +  ((A) <= (B))  *(B)    )
 #define MIN(A,B) ( ((A) <   (B))  *(A)   +  ((A) >= (B))  *(B)    )
@@ -78,7 +86,7 @@ int main(int argc, char **argv)
     float fFltSide,   fBndSide,   fElemArea,   fBoundArea,  fUnitSlipF,   fUnitSlipB;
     
     float fModPara[11];
-    char cInputName[512],   cOutputName[512],   cKhmatFileName[512],   cPrevStateName[512],   cNameAppend[512],   cSTFName[512],   cOutputNameCUT[512];
+    char cInputName[512],   cOutputName[512],   cKhmatFileName[512],   cBrchInfoName[512],   cPrevStateName[512],   cNameAppend[512],   cSTFName[512];
     
     {   FILE        *fp1,                   *fp2,                       *fp3; 
         char        cFileName1[512],        cFileName2[512],            cFileName3[512];
@@ -122,6 +130,7 @@ int main(int argc, char **argv)
         fclose(fp1);
         strcpy(cFileName2, cInputName);     sprintf(cNameAppend, "_%u_Roughn.dat",uRunNum);   strcat(cFileName2,cNameAppend);
         strcpy(cFileName3, cInputName);     strcat(cFileName3,"_BNDtrig.dat"); 
+        strcpy(cBrchInfoName,cInputName);   strcat(cBrchInfoName,"_BrchInfo.dat");
         
         if ((fp2 = fopen(cFileName2,"rb"))     == NULL)     {    printf("Error -cant open *_Roughn.dat file.  in Initialize variables...   %s\n", cFileName2);      exit(10);     }
         if (fread(&uFPNum,     sizeof(unsigned int),   1, fp2) != 1)       {   exit(10);   }
@@ -185,10 +194,9 @@ int main(int argc, char **argv)
         float *fTempFv       = calloc(uFVNum, sizeof *fTempFv );
         float *fTempBv       = calloc(uBVNum, sizeof *fTempBv );
         
-        unsigned int uTemp0,   uTemp1;
         float  fTemp,   fMeanHeight = 0.0f;
         float  fP1[3],   fP2[3],   fP3[3],   fP1P2[3],   fP1P3[3],   fP2P3[3],   fArea,   fP1Pc[3],   fP2Pc[3],   fTempVect[3];
-        float  fNrm[3],   fStk[3],   fDip[3];
+        float  fNrm[3];
         char   cAppend[512];
         char   cFileName1[512],   cFileName2[512],   cFileName3[512];
         FILE   *fp1,   *fp2,   *fp3;
@@ -326,19 +334,6 @@ int main(int argc, char **argv)
             fElemArea += fF_temp[i*16 +15];
             fFltSide  += (VectorLength(fP1P2) + VectorLength(fP1P3) +VectorLength(fP2P3))/3.0f;
             
-            NrmlzeVect(fNrm);
-            
-            uTemp0 = (fNrm[2] < 0.0f)*1u + (fNrm[2] >= 0.0f)*0u;
-            uTemp1 = uF_temp[i*7 +1];
-            uF_temp[i*7 +1] = (uTemp0 == 0u)*uF_temp[i*7 +1] + (uTemp0 != 0u)*uF_temp[i*7 +2];
-            uF_temp[i*7 +2] = (uTemp0 == 0u)*uF_temp[i*7 +2] + (uTemp0 != 0u)*uTemp1;
-            
-            GetStkAndDipVect(fNrm, fStk, fDip);
-            
-            memcpy(&fF_temp[i*16 +6], fNrm,  3u*sizeof(float));
-            memcpy(&fF_temp[i*16 +9], fStk,  3u*sizeof(float));
-            memcpy(&fF_temp[i*16+12], fDip,  3u*sizeof(float));
-            
         }
         uFSegN   += 1u;
         
@@ -358,19 +353,6 @@ int main(int argc, char **argv)
             
             fBoundArea  += fB_temp[i*16 +15];
             fBndSide    += (VectorLength(fP1P2) + VectorLength(fP1P3) +VectorLength(fP2P3))/3.0f;
-            
-            NrmlzeVect(fNrm);
-            
-            uTemp0 = (fNrm[2] < 0.0f)*1u + (fNrm[2] >= 0.0f)*0u;
-            uTemp1 = uB_temp[i*4 +1];
-            uB_temp[i*4 +1] = (uTemp0 == 0u)*uB_temp[i*4 +1] + (uTemp0 != 0u)*uB_temp[i*4 +2];
-            uB_temp[i*4 +2] = (uTemp0 == 0u)*uB_temp[i*4 +2] + (uTemp0 != 0u)*uTemp1;
-            
-            GetStkAndDipVect(fNrm, fStk, fDip);
-            
-            memcpy(&fB_temp[i*16 +6], fNrm,  3u*sizeof(float));
-            memcpy(&fB_temp[i*16 +9], fStk,  3u*sizeof(float));
-            memcpy(&fB_temp[i*16+12], fDip,  3u*sizeof(float));
             
         }
         uBSegN   += 1u;
@@ -544,24 +526,149 @@ int main(int argc, char **argv)
             unsigned int *u_ElSegIDs     = calloc(uMaxPNum*uMaxSNum,    sizeof *u_ElSegIDs);
             float *f_SegVals             = calloc(       6*uMaxSNum,    sizeof *f_SegVals);
             float *fCentRot              = calloc(uMaxPNum*3,           sizeof *fCentRot);
-            float fNrm[3],   fStk[3],   fDip[3],   fShftCent[3],   fMaxMinVals[6];
+            float fNrm[3],   fStk[3],   fDip[3],   fShftCent[3],   fMaxMinVals[6],   fDiff[3];
             
-            unsigned int uBrNum,   uBrLevel,   unBrNum,   uElem,   uNxtSegID,   uTemp,   uBrCount;
-            float fTemp,   fBrSize;
+            unsigned int uBrNum,   uBrLevel,   unBrNum,   uElem,   uNxtSegID,   uBrCount,   uTemp0,   uTemp1;
+            int iPnt0,   iPntA,    iPntB,   iPntC,   iPntD,   iGlobPos;
+            float fPA[3],   fPB[3],   fPC[3],   fPD[3],   fvt1[3],   fvt2[3],   fvt3[3],   fvt4[3],   fvt5[3];
+            float fTemp,   fBrSize,   fDist;
             
-            for (i = 0u; i < uFPNum; i++)
-            {   uNxtSegID = uF_temp[i*7 +3];
-                u_ElSegIDs[uNxtSegID*uMaxPNum + u_ElemCntr[uNxtSegID]] = i;
-                u_ElemCntr[uNxtSegID] += 1u;
+            struct { float fMaxDist;  int iGlobPos;  } in[1], out[1];
+            
+            for (k = 0u; k < uFSegN; k++)
+            {   uNxtSegID = k;
                 
-                f_SegVals[uNxtSegID*6 +0] += fF_temp[i*16 +0];
-                f_SegVals[uNxtSegID*6 +1] += fF_temp[i*16 +1];
-                f_SegVals[uNxtSegID*6 +2] += fF_temp[i*16 +2];
+                iPnt0     = 0u;
+                i         = 0u;
+                while (i < uFPNum)
+                {   if (uF_temp[i*7 +3] == uNxtSegID)       {   iPnt0 = i;        break;          }
+                    i++;
+                } 
                 
-                fTemp = (fF_temp[i*16 +8] >= 0.0f)*1.0f + (fF_temp[i*16 +8] < 0.0f)*-1.0f;
-                f_SegVals[uNxtSegID*6 +3] += (fF_temp[i*16 +6]*fTemp);
-                f_SegVals[uNxtSegID*6 +4] += (fF_temp[i*16 +7]*fTemp);
-                f_SegVals[uNxtSegID*6 +5] += (fF_temp[i*16 +8]*fTemp);
+                in[0].iGlobPos = 0;
+                in[0].fMaxDist = 0.0f;
+                for (i = 0u; i < iFOFFSET[iRANK]; i++)
+                {   iGlobPos = i+ iFSTART[iRANK];  
+                    if (uF_temp[iGlobPos*7 +3] == uNxtSegID)
+                    {   SubtractVect3(fDiff, &fF_temp[iPnt0*16 +0], &fF_temp[iGlobPos*16 +0]);
+                        fDist          = VectorLength(fDiff);
+                        in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*iGlobPos;
+                        in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                }   }
+                
+                MPI_Allreduce(in, out, 1, MPI_FLOAT_INT, MPI_MAXLOC, MPI_COMM_WORLD);
+                
+                iPntA = out[0].iGlobPos;
+                
+                in[0].iGlobPos = 0;
+                in[0].fMaxDist = 0.0f;
+                for (i = 0u; i < iFOFFSET[iRANK]; i++)
+                {   iGlobPos = i+ iFSTART[iRANK];  
+                    if (uF_temp[iGlobPos*7 +3] == uNxtSegID)
+                    {   SubtractVect3(fDiff, &fF_temp[iPntA*16 +0], &fF_temp[iGlobPos*16 +0]);
+                        fDist          = VectorLength(fDiff);
+                        in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*iGlobPos;
+                        in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                }   }
+                
+                MPI_Allreduce(in, out, 1, MPI_FLOAT_INT, MPI_MAXLOC, MPI_COMM_WORLD);
+                
+                iPntB = out[0].iGlobPos;
+                
+                in[0].iGlobPos = 0;
+                in[0].fMaxDist = 0.0f;
+                for (i = 0u; i < iFOFFSET[iRANK]; i++)
+                {   iGlobPos = i+ iFSTART[iRANK];  
+                    if (uF_temp[iGlobPos*7 +3] == uNxtSegID)
+                    {   SubtractVect3(fDiff, &fF_temp[iPntA*16 +0], &fF_temp[iGlobPos*16 +0]);
+                        fDist          = VectorLength(fDiff);
+                        SubtractVect3(fDiff, &fF_temp[iPntB*16 +0], &fF_temp[iGlobPos*16 +0]);
+                        fDist         += VectorLength(fDiff);
+                        in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*iGlobPos;
+                        in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                }   }
+                
+                MPI_Allreduce(in, out, 1, MPI_FLOAT_INT, MPI_MAXLOC, MPI_COMM_WORLD);
+                
+                iPntC = out[0].iGlobPos;
+                
+                in[0].iGlobPos = 0;
+                in[0].fMaxDist = 0.0f;
+                for (i = 0u; i < iFOFFSET[iRANK]; i++)
+                {   iGlobPos = i+ iFSTART[iRANK];  
+                    if (uF_temp[iGlobPos*7 +3] == uNxtSegID)
+                    {   SubtractVect3(fDiff, &fF_temp[iPntC*16 +0], &fF_temp[iGlobPos*16 +0]);
+                        fDist          = VectorLength(fDiff);
+                        in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*iGlobPos;
+                        in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                }   }
+                
+                MPI_Allreduce(in, out, 1, MPI_FLOAT_INT, MPI_MAXLOC, MPI_COMM_WORLD);
+                
+                iPntD = out[0].iGlobPos;
+                
+                memcpy(fPA, &fF_temp[iPntA*16 +0], 3u*sizeof(float));
+                memcpy(fPB, &fF_temp[iPntB*16 +0], 3u*sizeof(float));
+                memcpy(fPC, &fF_temp[iPntC*16 +0], 3u*sizeof(float));
+                memcpy(fPD, &fF_temp[iPntD*16 +0], 3u*sizeof(float));
+                SubtractVect3(fvt1, fPB, fPA);              NrmlzeVect(fvt1);
+                SubtractVect3(fvt2, fPC, fPA);              NrmlzeVect(fvt2);
+                CrossProduct(fNrm, fvt1, fvt2);             NrmlzeVect(fNrm);
+                if (fNrm[2] < 0.0f)  {           fNrm[0] *= -1.0f;       fNrm[1] *= -1.0f;       fNrm[2] *= -1.0f;}
+                
+                SubtractVect3(fvt1, fPA, fPB);              NrmlzeVect(fvt1);
+                SubtractVect3(fvt2, fPD, fPB);              NrmlzeVect(fvt2);
+                CrossProduct(fvt3, fvt1, fvt2);             NrmlzeVect(fvt3);
+                fTemp = acosf(fNrm[0]*fvt3[0] + fNrm[1]*fvt3[1] + fNrm[2]*fvt3[2])*(180.0f/M_PI);
+                if (fTemp >= 90.0f)  {           fvt3[0] *= -1.0f;       fvt3[1] *= -1.0f;       fvt3[2] *= -1.0f;}
+                
+                SubtractVect3(fvt1, fPA, fPC);              NrmlzeVect(fvt1);
+                SubtractVect3(fvt2, fPD, fPC);              NrmlzeVect(fvt2);
+                CrossProduct(fvt4, fvt1, fvt2);             NrmlzeVect(fvt4);
+                fTemp = acosf(fNrm[0]*fvt4[0] + fNrm[1]*fvt4[1] + fNrm[2]*fvt4[2])*(180.0f/M_PI);
+                if (fTemp >= 90.0f)  {           fvt4[0] *= -1.0f;       fvt4[1] *= -1.0f;       fvt4[2] *= -1.0f;}
+                
+                SubtractVect3(fvt1, fPB, fPD);              NrmlzeVect(fvt1);
+                SubtractVect3(fvt2, fPC, fPD);              NrmlzeVect(fvt2);
+                CrossProduct(fvt5, fvt1, fvt2);             NrmlzeVect(fvt5);
+                fTemp = acosf(fNrm[0]*fvt5[0] + fNrm[1]*fvt5[1] + fNrm[2]*fvt5[2])*(180.0f/M_PI);
+                if (fTemp >= 90.0f)  {           fvt5[0] *= -1.0f;       fvt5[1] *= -1.0f;       fvt5[2] *= -1.0f;}
+                
+                f_SegVals[uNxtSegID*6 +3] = (fNrm[0] +fvt3[0] +fvt4[0] +fvt5[0])/4.0f;
+                f_SegVals[uNxtSegID*6 +4] = (fNrm[1] +fvt3[1] +fvt4[1] +fvt5[1])/4.0f;
+                f_SegVals[uNxtSegID*6 +5] = (fNrm[2] +fvt3[2] +fvt4[2] +fvt5[2])/4.0f;
+                
+                for (i = 0u; i < uFPNum; i++)
+                {   if (uF_temp[i*7 +3] == uNxtSegID)
+                    {   u_ElSegIDs[uNxtSegID*uMaxPNum + u_ElemCntr[uNxtSegID]] = i;
+                        u_ElemCntr[uNxtSegID] += 1u;
+                        
+                        f_SegVals[uNxtSegID*6 +0] += fF_temp[i*16 +0];
+                        f_SegVals[uNxtSegID*6 +1] += fF_temp[i*16 +1];
+                        f_SegVals[uNxtSegID*6 +2] += fF_temp[i*16 +2];
+                        
+                        memcpy(fPA, &fFV_temp[uF_temp[i*7 +0]*4 +0], 3u*sizeof(float));
+                        memcpy(fPB, &fFV_temp[uF_temp[i*7 +1]*4 +0], 3u*sizeof(float));
+                        memcpy(fPC, &fFV_temp[uF_temp[i*7 +2]*4 +0], 3u*sizeof(float));
+                        SubtractVect3(fvt1, fPB, fPA);              NrmlzeVect(fvt1);
+                        SubtractVect3(fvt2, fPC, fPA);              NrmlzeVect(fvt2);
+                        CrossProduct(fNrm, fvt1, fvt2);             NrmlzeVect(fNrm);
+                        fTemp = acosf(f_SegVals[uNxtSegID*6 +3]*fNrm[0] + f_SegVals[uNxtSegID*6 +4]*fNrm[1] + f_SegVals[uNxtSegID*6 +5]*fNrm[2])*(180.0f/M_PI);
+                        
+                        uTemp0          = (fTemp >= 90.0f)*1u + (fTemp >= 90.0f)*0u;
+                        uTemp1          = uF_temp[i*7 +1];
+                        uF_temp[i*7 +1] = (uTemp0 == 0u)*uF_temp[i*7 +1] + (uTemp0 != 0u)*uF_temp[i*7 +2];
+                        uF_temp[i*7 +2] = (uTemp0 == 0u)*uF_temp[i*7 +2] + (uTemp0 != 0u)*uTemp1;
+                        
+                        fNrm[0]         = (uTemp0 == 0u)*fNrm[0] + (uTemp0 != 0u)*-fNrm[0];
+                        fNrm[1]         = (uTemp0 == 0u)*fNrm[1] + (uTemp0 != 0u)*-fNrm[1];
+                        fNrm[2]         = (uTemp0 == 0u)*fNrm[2] + (uTemp0 != 0u)*-fNrm[2];
+                        GetStkAndDipVect(fNrm, fStk, fDip);
+                        
+                        memcpy(&fF_temp[i*16 +6], fNrm, 3u*sizeof(float));
+                        memcpy(&fF_temp[i*16 +9], fStk, 3u*sizeof(float));
+                        memcpy(&fF_temp[i*16+12], fDip, 3u*sizeof(float));
+                }   }
             }
             
             for (i = 0u; i < uFSegN; i++)
@@ -570,9 +677,7 @@ int main(int argc, char **argv)
                 memset(u_BrIds,       0, u_ElemCntr[i]*            sizeof(unsigned int) );
                 
                 f_SegVals[i*6 +0] /= (float)u_ElemCntr[i];        f_SegVals[i*6 +1] /= (float)u_ElemCntr[i];        f_SegVals[i*6 +2] /= (float)u_ElemCntr[i];
-                f_SegVals[i*6 +3] /= (float)u_ElemCntr[i];        f_SegVals[i*6 +4] /= (float)u_ElemCntr[i];        f_SegVals[i*6 +5] /= (float)u_ElemCntr[i];
-                memcpy(fNrm, &f_SegVals[i*6 +3], 3*sizeof(float));
-                GetStkAndDipVect(fNrm, fStk, fDip);
+                GetStkAndDipVect(&f_SegVals[i*6 +3], fStk, fDip);
                 
                 fTemp = -FLT_MAX;
                 
@@ -619,9 +724,9 @@ int main(int argc, char **argv)
                         memset(u_newBr, 0, 4*2* sizeof(unsigned int) ); 
                         
                         for (k = 0u; k < u_ElemCntr[i]; k++)
-                        {   uTemp = (u_OTElem_temp[u_MaxBrLvl*k +uBrLevel-1] == u_BrIds[j])*1u + (u_OTElem_temp[u_MaxBrLvl*k +uBrLevel-1] != u_BrIds[j])*0u;
-                            u_sElem[uElem] = (uTemp == 1u)*k          + (uTemp != 1u)*u_sElem[uElem];
-                            uElem          = (uTemp == 1u)*(uElem+1u) + (uTemp != 1u)*uElem;
+                        {   uTemp0 = (u_OTElem_temp[u_MaxBrLvl*k +uBrLevel-1] == u_BrIds[j])*1u + (u_OTElem_temp[u_MaxBrLvl*k +uBrLevel-1] != u_BrIds[j])*0u;
+                            u_sElem[uElem] = (uTemp0 == 1u)*k          + (uTemp0 != 1u)*u_sElem[uElem];
+                            uElem          = (uTemp0 == 1u)*(uElem+1u) + (uTemp0 != 1u)*uElem;
                         }
                         
                         for (k = 0u; k < uElem; k++)
@@ -676,11 +781,11 @@ int main(int argc, char **argv)
                 {   
                     u_OTElem_temp[u_MaxBrLvl*j + uBrLevel -1] = (uBrCount+ j);
                     
-                    uTemp = u_ElSegIDs[i*uMaxPNum +j]*u_MaxBrLvl;
-                    uF_OTElem[uTemp +0] = uBrLevel; 
+                    uTemp0 = u_ElSegIDs[i*uMaxPNum +j]*u_MaxBrLvl;
+                    uF_OTElem[uTemp0 +0] = uBrLevel; 
                     
                     for (k = 0; k < uBrLevel; k++)
-                    {   uF_OTElem[uTemp +(u_MaxBrLvl -uBrLevel +k)] = u_OTElem_temp[u_MaxBrLvl*j +k] +uF_TotalOffs;
+                    {   uF_OTElem[uTemp0 +(u_MaxBrLvl -uBrLevel +k)] = u_OTElem_temp[u_MaxBrLvl*j +k] +uF_TotalOffs;
                 }   }
                 
                 uF_TotalOffs += (uBrCount + u_ElemCntr[i] ); 
@@ -691,20 +796,140 @@ int main(int argc, char **argv)
             {   memset(f_SegVals,  0,        6*uMaxSNum* sizeof(float));
                 memset(u_ElemCntr, 0,        1*uMaxSNum* sizeof(unsigned int));
                 memset(u_ElSegIDs, 0, uMaxPNum*uMaxSNum* sizeof(unsigned int));
-                
-                for (i = 0u; i < uBPNum; i++)
-                {   uNxtSegID = uB_temp[i*4 +3];
-                    u_ElSegIDs[uNxtSegID*uMaxPNum + u_ElemCntr[uNxtSegID]] = i;
-                    u_ElemCntr[uNxtSegID] += 1u;
+                for (k = 0u; k < uBSegN; k++)
+                {   uNxtSegID = k;
                     
-                    f_SegVals[uNxtSegID*6 +0] += fB_temp[i*16 +0];
-                    f_SegVals[uNxtSegID*6 +1] += fB_temp[i*16 +1];
-                    f_SegVals[uNxtSegID*6 +2] += fB_temp[i*16 +2];
+                    iPnt0     = 0u;
+                    i         = 0u;
+                    while (i < uBPNum)
+                    {   if (uB_temp[i*4 +3] == uNxtSegID)       {   iPnt0 = i;        break;          }
+                        i++;
+                    } 
                     
-                    fTemp = (fB_temp[i*16 +8] >= 0.0f)*1.0f + (fB_temp[i*16 +8] < 0.0f)*-1.0f;
-                    f_SegVals[uNxtSegID*6 +3] += (fB_temp[i*16 +6]*fTemp);
-                    f_SegVals[uNxtSegID*6 +4] += (fB_temp[i*16 +7]*fTemp);
-                    f_SegVals[uNxtSegID*6 +5] += (fB_temp[i*16 +8]*fTemp);
+                    in[0].iGlobPos = 0;
+                    in[0].fMaxDist = 0.0f;
+                    for (i = 0u; i < iBOFFSET[iRANK]; i++)
+                    {   iGlobPos = i+ iBSTART[iRANK];  
+                        if (uB_temp[iGlobPos*4 +3] == uNxtSegID)
+                        {   SubtractVect3(fDiff, &fB_temp[iPnt0*16 +0], &fB_temp[iGlobPos*16 +0]);
+                            fDist          = VectorLength(fDiff);
+                            in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*iGlobPos;
+                            in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                    }   }
+                    
+                    MPI_Allreduce(in, out, 1, MPI_FLOAT_INT, MPI_MAXLOC, MPI_COMM_WORLD);
+                    
+                    iPntA = out[0].iGlobPos;
+                    
+                    in[0].iGlobPos = 0;
+                    in[0].fMaxDist = 0.0f;
+                    for (i = 0u; i < iBOFFSET[iRANK]; i++)
+                    {   iGlobPos = i+ iBSTART[iRANK];  
+                        if (uB_temp[iGlobPos*4 +3] == uNxtSegID)
+                        {   SubtractVect3(fDiff, &fB_temp[iPntA*16 +0], &fB_temp[iGlobPos*16 +0]);
+                            fDist          = VectorLength(fDiff);
+                            in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*iGlobPos;
+                            in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                    }   }
+                    
+                    MPI_Allreduce(in, out, 1, MPI_FLOAT_INT, MPI_MAXLOC, MPI_COMM_WORLD);
+                    
+                    iPntB = out[0].iGlobPos;
+                    
+                    in[0].iGlobPos = 0;
+                    in[0].fMaxDist = 0.0f;
+                    for (i = 0u; i < iBOFFSET[iRANK]; i++)
+                    {   iGlobPos = i+ iBSTART[iRANK];  
+                        if (uB_temp[iGlobPos*4 +3] == uNxtSegID)
+                        {   SubtractVect3(fDiff, &fB_temp[iPntA*16 +0], &fB_temp[iGlobPos*16 +0]);
+                            fDist          = VectorLength(fDiff);
+                            SubtractVect3(fDiff, &fB_temp[iPntB*16 +0], &fB_temp[iGlobPos*16 +0]);
+                            fDist         += VectorLength(fDiff);
+                            in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*iGlobPos;
+                            in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                    }   }
+                    
+                    MPI_Allreduce(in, out, 1, MPI_FLOAT_INT, MPI_MAXLOC, MPI_COMM_WORLD);
+                    
+                    iPntC = out[0].iGlobPos;
+                    
+                    in[0].iGlobPos = 0;
+                    in[0].fMaxDist = 0.0f;
+                    for (i = 0u; i < iBOFFSET[iRANK]; i++)
+                    {   iGlobPos = i+ iBSTART[iRANK];  
+                        if (uB_temp[iGlobPos*4 +3] == uNxtSegID)
+                        {   SubtractVect3(fDiff, &fB_temp[iPntC*16 +0], &fB_temp[iGlobPos*16 +0]);
+                            fDist          = VectorLength(fDiff);
+                            in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*iGlobPos;
+                            in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                    }   }
+                    
+                    MPI_Allreduce(in, out, 1, MPI_FLOAT_INT, MPI_MAXLOC, MPI_COMM_WORLD);
+                    
+                    iPntD = out[0].iGlobPos;
+                    
+                    memcpy(fPA, &fB_temp[iPntA*16 +0], 3u*sizeof(float));
+                    memcpy(fPB, &fB_temp[iPntB*16 +0], 3u*sizeof(float));
+                    memcpy(fPC, &fB_temp[iPntC*16 +0], 3u*sizeof(float));
+                    memcpy(fPD, &fB_temp[iPntD*16 +0], 3u*sizeof(float));
+                    SubtractVect3(fvt1, fPB, fPA);              NrmlzeVect(fvt1);
+                    SubtractVect3(fvt2, fPC, fPA);              NrmlzeVect(fvt2);
+                    CrossProduct(fNrm, fvt1, fvt2);             NrmlzeVect(fNrm);
+                    if (fNrm[2] < 0.0f)  {           fNrm[0] *= -1.0f;       fNrm[1] *= -1.0f;       fNrm[2] *= -1.0f;}
+                    
+                    SubtractVect3(fvt1, fPA, fPB);              NrmlzeVect(fvt1);
+                    SubtractVect3(fvt2, fPD, fPB);              NrmlzeVect(fvt2);
+                    CrossProduct(fvt3, fvt1, fvt2);             NrmlzeVect(fvt3);
+                    fTemp = acosf(fNrm[0]*fvt3[0] + fNrm[1]*fvt3[1] + fNrm[2]*fvt3[2])*(180.0f/M_PI);
+                    if (fTemp >= 90.0f)  {           fvt3[0] *= -1.0f;       fvt3[1] *= -1.0f;       fvt3[2] *= -1.0f;}
+                    
+                    SubtractVect3(fvt1, fPA, fPC);              NrmlzeVect(fvt1);
+                    SubtractVect3(fvt2, fPD, fPC);              NrmlzeVect(fvt2);
+                    CrossProduct(fvt4, fvt1, fvt2);             NrmlzeVect(fvt4);
+                    fTemp = acosf(fNrm[0]*fvt4[0] + fNrm[1]*fvt4[1] + fNrm[2]*fvt4[2])*(180.0f/M_PI);
+                    if (fTemp >= 90.0f)  {           fvt4[0] *= -1.0f;       fvt4[1] *= -1.0f;       fvt4[2] *= -1.0f;}
+                    
+                    SubtractVect3(fvt1, fPB, fPD);              NrmlzeVect(fvt1);
+                    SubtractVect3(fvt2, fPC, fPD);              NrmlzeVect(fvt2);
+                    CrossProduct(fvt5, fvt1, fvt2);             NrmlzeVect(fvt5);
+                    fTemp = acosf(fNrm[0]*fvt5[0] + fNrm[1]*fvt5[1] + fNrm[2]*fvt5[2])*(180.0f/M_PI);
+                    if (fTemp >= 90.0f)  {           fvt5[0] *= -1.0f;       fvt5[1] *= -1.0f;       fvt5[2] *= -1.0f;}
+                    
+                    f_SegVals[uNxtSegID*6 +3] = (fNrm[0] +fvt3[0] +fvt4[0] +fvt5[0])/4.0f;
+                    f_SegVals[uNxtSegID*6 +4] = (fNrm[1] +fvt3[1] +fvt4[1] +fvt5[1])/4.0f;
+                    f_SegVals[uNxtSegID*6 +5] = (fNrm[2] +fvt3[2] +fvt4[2] +fvt5[2])/4.0f;
+                    
+                    for (i = 0u; i < uBPNum; i++)
+                    {   if (uB_temp[i*4 +3] == uNxtSegID)
+                        {   u_ElSegIDs[uNxtSegID*uMaxPNum + u_ElemCntr[uNxtSegID]] = i;
+                            u_ElemCntr[uNxtSegID] += 1u;
+                            
+                            f_SegVals[uNxtSegID*6 +0] += fB_temp[i*16 +0];
+                            f_SegVals[uNxtSegID*6 +1] += fB_temp[i*16 +1];
+                            f_SegVals[uNxtSegID*6 +2] += fB_temp[i*16 +2];
+                            
+                            memcpy(fPA, &fBV_temp[uB_temp[i*4 +0]*3 +0], 3u*sizeof(float));
+                            memcpy(fPB, &fBV_temp[uB_temp[i*4 +1]*3 +0], 3u*sizeof(float));
+                            memcpy(fPC, &fBV_temp[uB_temp[i*4 +2]*3 +0], 3u*sizeof(float));
+                            SubtractVect3(fvt1, fPB, fPA);              NrmlzeVect(fvt1);
+                            SubtractVect3(fvt2, fPC, fPA);              NrmlzeVect(fvt2);
+                            CrossProduct(fNrm, fvt1, fvt2);             NrmlzeVect(fNrm);
+                            fTemp = acosf(f_SegVals[uNxtSegID*6 +3]*fNrm[0] + f_SegVals[uNxtSegID*6 +4]*fNrm[1] + f_SegVals[uNxtSegID*6 +5]*fNrm[2])*(180.0f/M_PI);
+                            
+                            uTemp0          = (fTemp >= 90.0f)*1u + (fTemp >= 90.0f)*0u;
+                            uTemp1          = uB_temp[i*4 +1];
+                            uB_temp[i*4 +1] = (uTemp0 == 0u)*uB_temp[i*4 +1] + (uTemp0 != 0u)*uB_temp[i*4 +2];
+                            uB_temp[i*4 +2] = (uTemp0 == 0u)*uB_temp[i*4 +2] + (uTemp0 != 0u)*uTemp1;
+                            
+                            fNrm[0]         = (uTemp0 == 0u)*fNrm[0] + (uTemp0 != 0u)*-fNrm[0];
+                            fNrm[1]         = (uTemp0 == 0u)*fNrm[1] + (uTemp0 != 0u)*-fNrm[1];
+                            fNrm[2]         = (uTemp0 == 0u)*fNrm[2] + (uTemp0 != 0u)*-fNrm[2];
+                            GetStkAndDipVect(fNrm, fStk, fDip);
+                            
+                            memcpy(&fB_temp[i*16 +6], fNrm, 3u*sizeof(float));
+                            memcpy(&fB_temp[i*16 +9], fStk, 3u*sizeof(float));
+                            memcpy(&fB_temp[i*16+12], fDip, 3u*sizeof(float));
+                    }   }
                 }
                 
                 for (i = 0u; i < uBSegN; i++)
@@ -714,9 +939,7 @@ int main(int argc, char **argv)
                     memset(u_BrIds,          0, u_ElemCntr[i]*            sizeof(unsigned int) );
                     
                     f_SegVals[i*6 +0] /= (float)u_ElemCntr[i];        f_SegVals[i*6 +1] /= (float)u_ElemCntr[i];        f_SegVals[i*6 +2] /= (float)u_ElemCntr[i];
-                    f_SegVals[i*6 +3] /= (float)u_ElemCntr[i];        f_SegVals[i*6 +4] /= (float)u_ElemCntr[i];        f_SegVals[i*6 +5] /= (float)u_ElemCntr[i];
-                    memcpy(fNrm, &f_SegVals[i*6 +3], 3*sizeof(float));
-                    GetStkAndDipVect(fNrm, fStk, fDip);
+                    GetStkAndDipVect(&f_SegVals[i*6 +3], fStk, fDip);
                     
                     fTemp = -FLT_MAX;
                     
@@ -764,9 +987,9 @@ int main(int argc, char **argv)
                             memset(u_newBr, 0, 4*2* sizeof(unsigned int) ); 
                             
                             for (k = 0u; k < u_ElemCntr[i]; k++)
-                            {   uTemp = (u_OTElem_temp[u_MaxBrLvl*k +uBrLevel-1] == u_BrIds[j])*1u + (u_OTElem_temp[u_MaxBrLvl*k +uBrLevel-1] != u_BrIds[j])*0u;
-                                u_sElem[uElem] = (uTemp == 1u)*k          + (uTemp != 1u)*u_sElem[uElem];
-                                uElem          = (uTemp == 1u)*(uElem+1u) + (uTemp != 1u)*uElem;
+                            {   uTemp0 = (u_OTElem_temp[u_MaxBrLvl*k +uBrLevel-1] == u_BrIds[j])*1u + (u_OTElem_temp[u_MaxBrLvl*k +uBrLevel-1] != u_BrIds[j])*0u;
+                                u_sElem[uElem] = (uTemp0 == 1u)*k          + (uTemp0 != 1u)*u_sElem[uElem];
+                                uElem          = (uTemp0 == 1u)*(uElem+1u) + (uTemp0 != 1u)*uElem;
                             }
                             
                             for (k = 0u; k < uElem; k++)
@@ -821,11 +1044,11 @@ int main(int argc, char **argv)
                     {   
                         u_OTElem_temp[u_MaxBrLvl*j + uBrLevel -1] = (uBrCount+ j);
                         
-                        uTemp = u_ElSegIDs[i*uMaxPNum +j]*u_MaxBrLvl;
-                        uB_OTElem[uTemp +0] = uBrLevel; 
+                        uTemp0 = u_ElSegIDs[i*uMaxPNum +j]*u_MaxBrLvl;
+                        uB_OTElem[uTemp0 +0] = uBrLevel; 
                         
                         for (k = 0; k < uBrLevel; k++)
-                        {   uB_OTElem[uTemp +(u_MaxBrLvl -uBrLevel +k)] = u_OTElem_temp[u_MaxBrLvl*j +k] +uB_TotalOffs;
+                        {   uB_OTElem[uTemp0 +(u_MaxBrLvl -uBrLevel +k)] = u_OTElem_temp[u_MaxBrLvl*j +k] +uB_TotalOffs;
                     }   }
                     
                     uB_TotalOffs += (uBrCount + u_ElemCntr[i] ); 
@@ -2019,6 +2242,21 @@ int main(int argc, char **argv)
             MPI_Allreduce(MPI_IN_PLACE, &time_taken, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD); 
             time_taken /= (double)iSIZE;
             if (iRANK == 0)    {   fprintf(stdout,"\nTotal RunTime in seconds:    %6.4f\n",time_taken);     }
+            
+            if (iRANK == 0)
+            {   float *fGlobVert = calloc(3*uFPNum, sizeof *fGlobVert);
+                for (i = 0; i < uFPNum; i++)        {   fGlobVert[i*3 +0] = fF_temp[i*16 +0];           fGlobVert[i*3 +1] = fF_temp[i*16 +1];           fGlobVert[i*3 +2] = fF_temp[i*16 +2];}
+            
+                FILE *fp2;
+                if ((fp2 = fopen(cBrchInfoName,"wb"))     == NULL)     {    printf("Error -cant open BranchInfo file for writing   %s\n", cBrchInfoName);      exit(10);     }
+                fwrite( &uFPNum,       sizeof(unsigned int), 1, fp2); 
+                fwrite( &uF_TotalOffs, sizeof(unsigned int), 1, fp2); 
+                fwrite(uF_OTElem,      sizeof(unsigned int), (uFPNum*u_MaxBrLvl), fp2);
+                fwrite(fKh_FFBrch,     sizeof(float),        (21*uF_TotalOffs),   fp2);
+                fwrite(fGlobVert,      sizeof(float),        (3*uFPNum),          fp2);
+                fclose(fp2);
+            }
+            
         } 
         MPI_Barrier( MPI_COMM_WORLD );
         
@@ -2310,7 +2548,7 @@ int main(int argc, char **argv)
     }
     
     
-    FILE *fpPrePost,   *fp_CATALOG,   *fp_CATALOGCUT;
+    FILE *fpPrePost,   *fp_CATALOG;
     float *fFslip    = calloc(2*uFPNum, sizeof *fFslip); 
     float *fBslip    = calloc(3*uBPNum, sizeof *fBslip); 
     
@@ -2534,13 +2772,13 @@ int main(int argc, char **argv)
     
     
     MPI_Barrier( MPI_COMM_WORLD );
-    strcpy(cOutputName,    cInputName);      sprintf(cNameAppend, "_%u_RAWL3Catalog.dat",uRunNum);        strcat(cOutputName,    cNameAppend);
+    strcpy(cOutputName,    cInputName);      sprintf(cNameAppend, "_%u_RAWCatalog.dat",uRunNum);          strcat(cOutputName,    cNameAppend);
     strcpy(cPrevStateName, cInputName);      sprintf(cNameAppend, "_%u_PostRunState.dat",uRunNum);        strcat(cPrevStateName, cNameAppend);
-    if      (uCatType == 1)     {   sprintf(cNameAppend, "_%u_L1Catalog.dat",uRunNum);                      }
-    else if (uCatType == 2)     {   sprintf(cNameAppend, "_%u_L2Catalog.dat",uRunNum);                      }
-    else if (uCatType == 3)     {   sprintf(cNameAppend, "_%u_L3Catalog.dat",uRunNum);                      }
-    else                        {   fprintf(stdout,"Catalog level incorrect -make it 1/2/3");   exit(111);  }
-    strcpy(cOutputNameCUT, cInputName); strcat(cOutputNameCUT, cNameAppend);
+
+
+
+
+
     
     if (uContPrevRun == 1u)
     {   
@@ -2707,7 +2945,6 @@ int main(int argc, char **argv)
     
     while (dCurrTime <= dRecordLength)
     {   
-
         uUsedLoadStep= uLoadStep_POW2;
         fNxtLoadStep = fMaxLoadStep; 
         fNxtHalfStep = fNxtLoadStep;
@@ -3169,7 +3406,8 @@ int main(int argc, char **argv)
                 
                 if (iRANK == 0)
                 {   fMaxMagnitude = (fEQMagn > fMaxMagnitude)*fEQMagn + (fEQMagn <= fMaxMagnitude)*fMaxMagnitude;
-                    if (uPlotCatalog2Screen == 1u) { fprintf(stdout,"%5u  Time: %6.4lf  (%6.4lf since last)   RA: %8.2f   mSlip: %2.3f   mDtau: %3.3f   MRF %4u   Elem#: %6u   M: %3.2f; #broken: %6u   M_max: %3.2f\n", uEQcntr, dCurrTime, (dCurrTime-dLastEQtime), (fEQMeanVals[3]*1.0E-6f), fEQMeanVals[4], (fEQMeanVals[5]*1.0E-6f), uMRFlgth, uActElmG, fEQMagn,(unsigned int)(fEQMeanVals[6]), fMaxMagnitude);       }
+                    
+                    if (uPlotCatalog2Screen == 1u) { fprintf(stdout,"%5u  Time: %6.4lf  (%6.4lf since last)   RA: %8.2f   mSlip: %2.3f   mDtau: %3.3f   MRF %4u    M: %3.2f     M_max: %3.2f\n", uEQcntr, dCurrTime, (dCurrTime-dLastEQtime), (fEQMeanVals[3]*1.0E-6f), fEQMeanVals[4], (fEQMeanVals[5]*1.0E-6f), uMRFlgth, fEQMagn, fMaxMagnitude);       }
                     
                     fseek(fp_CATALOG, 0, SEEK_END);
                     fwrite(&dCurrTime,  sizeof(double),       1, fp_CATALOG);
@@ -3417,7 +3655,11 @@ int main(int argc, char **argv)
         fprintf(stdout,"Time spent in interseismic: %4.2lf   Time spent in coseismic: %4.2lf\n",time_InterSeis/60.0f, time_CoSeis/60.0f);
         fprintf(stdout,"PostSeis iterations per event %u\n", (uPSeisSteps/uEQtickr) );
         
-        float fSecsPerYear = 31622400.0f,   fNeighborDist = 0.0f,   fP2P1[3],   fP1P3[3];
+         fclose(fp_CATALOG);
+
+    }
+/*    if (iRANK == 0)
+    {   float fSecsPerYear = 31622400.0f,   fNeighborDist = 0.0f,   fP2P1[3],   fP1P3[3];
         
         unsigned int *uTempF  = calloc(uFPNum,   sizeof *uTempF  );
         unsigned int *uFtemp  = calloc(5*uFPNum, sizeof *uFtemp  );
@@ -3651,10 +3893,11 @@ int main(int argc, char **argv)
         fclose(fp_CATALOGCUT);
         
     }
+*/  
     
     
-    
-    MPI_Finalize( );
+    MPI_Barrier( MPI_COMM_WORLD );
+ 
     return 0;
  }
 
@@ -3907,12 +4150,6 @@ void GetGlobVertsForRectangle(float fP1[3], float fP2[3], float fP3[3], float fP
     fPt8L[1] = fRM_G2L[1][0]*fPt8[0] + fRM_G2L[1][1]*fPt8[1] +  fRM_G2L[1][2]*fPt8[2];
     fPt8L[2] = fRM_G2L[2][0]*fPt8[0] + fRM_G2L[2][1]*fPt8[1] +  fRM_G2L[2][2]*fPt8[2];
     
-
-
-
-
-
-
     fMinSL = fPt1L[0];       fMaxSL = fPt1L[0];       fMinDL = fPt1L[1];       fMaxDL = fPt1L[1];
     
     fMinSL = MIN(fMinSL, fPt2L[0]);   fMinSL = MIN(fMinSL, fPt3L[0]);   fMinSL = MIN(fMinSL, fPt4L[0]);   fMinSL = MIN(fMinSL, fPt5L[0]);   fMinSL = MIN(fMinSL, fPt6L[0]);   fMinSL = MIN(fMinSL, fPt7L[0]);   fMinSL = MIN(fMinSL, fPt8L[0]);
