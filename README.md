@@ -12,15 +12,19 @@ The most recent version of _MCQsim_, provided here, employs _QuadTree_ and _H-ma
 
 
 ## DOWNLOAD
-  Here is a simple way to download entire folders from GitHub:
+  Here is a simple way to download specific folders from GitHub, as opposed to downloading the entire project:
 
 > open a browser tab and go to
 > 
 >  https://download-directory.github.io
 
-> copy and paste the GitHub folder you want to download into the corresponding field and the download will start automatically
+> then copy and paste the GitHub folder you want to download 
 > 
 > https://github.com/OlafZielke-EQ/MCQsim/tree/main/TREAD/
+>
+> into the corresponding field and the download will start automatically.
+> 
+![screenshot of website for easy download of GitHub folders](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/ParameterFileScreenShot.png)
 
 
 
