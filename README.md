@@ -1,8 +1,9 @@
 # MCQsim
 
-This repository hosts MCQsim, a multi-cycle earthquake rupture simulator for generation the of earthquake sequences along predefined faults or fault systems of arbitrary geometric complexity. The updated version of this code includes QuadTree and H-matrix approximation of the stiffness kernel to improve code efficiency and scalability.
+This repository hosts _MCQsim_, a multi-cycle earthquake rupture simulator for generation the of earthquake sequences along predefined faults or fault systems of arbitrary geometric complexity. _MCQsim_ uses graphical user interfaces (GUIs) for most of data input and output. These GUIs were developed in _MATLAB_. Stand-alone versions of these GUIs, along with the _MATLAB_ GUIs can be found here, e.g., under _"01_Mstuff"_. _MCQsim_ itself is written in **_C_** and parallelized via **_MPI_**. It works on large-scale computational infrastructure as well as personal computers.
+The most recent version of _MCQsim_, provided here, employs _QuadTree_ and _H-matrix_ to decrease the size of the stiffness kernel. This update dramatically increased code efficiency and scalability, especially for larger-scale simulations with 100k+ fault elements. Future releases are planned to include pore-pressure changes as well as surface topography, further guided by the specific needs by our fellow users (i.e., you).
 
-**Please check out the following publication for further details:**
+**Please check the following publication for details on MCQsim model formulation:**
 
 > Zielke, O., and P.M. Mai (2023). MCQsim: A Multicycle Earthquake Simulator. Bull. Seismol. Soc. Am. 113(3), 889-908. doi: 10.1785/0120220248
 
@@ -11,17 +12,15 @@ This repository hosts MCQsim, a multi-cycle earthquake rupture simulator for gen
 
 
 ## DOWNLOAD
-  MCQsim main code and graphical user interfaces for input and ouput I/O can be found here. A simple way to download entire folders from GitHub is as follows:
+  Here is a simple way to download entire folders from GitHub:
 
-  open a browser tab and go to
-  
- > https://download-directory.github.io
+> open a browser tab and go to
+> 
+>  https://download-directory.github.io
 
-  copy and paste the GitHub folder you want to download, such as
-  
- > https://github.com/OlafZielke-EQ/MCQsim/tree/main/TREAD/
-  
-  the download will then start automatically
+> copy and paste the GitHub folder you want to download into the corresponding field and the download will start automatically
+> 
+> https://github.com/OlafZielke-EQ/MCQsim/tree/main/TREAD/
 
 
 
