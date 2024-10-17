@@ -6,7 +6,8 @@ The updated version of this code includes QuadTree and H-matrix approximation of
 **Please check out the following publication for further details:**
 
 > Zielke, O., and P.M. Mai (2023). MCQsim: A Multicycle Earthquake Simulator. Bull. Seismol. Soc. Am. 113(3), 889-908. doi: 10.1785/0120220248
-Contact: olaf.zielke@kaust.edu.sa
+
+**Contact:** olaf.zielke@kaust.edu.sa
 
 
 
