@@ -1,3 +1,5 @@
+**MCQsim**
+
 This repository hosts MCQsim, a multi-cycle earthquake rupture simulator for generation of earthquake sequences along predefined faults or fault systems of arbitrary geometric complexity.
 The updated code version includes QuadTree and H-matrix approximation of the stiffness kernel to improve code efficiency and scalability.
 
