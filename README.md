@@ -11,7 +11,7 @@ The updated version of this code includes QuadTree and H-matrix approximation of
 
 
 
-DOWNLOADING MCQsim
+## DOWNLOADING MCQsim
   To download individual folders:
 
   Open a browser tab and go to
@@ -29,8 +29,8 @@ DOWNLOADING MCQsim
 
 
 
-INSTALLATION
-MCQSIM INPUT/OUTPUT
+## INSTALLATION
+### MCQSIM INPUT/OUTPUT
   I/O includes model and parameter setup (input) and various ways to visualize simulations results (output, e.g., individual earthquakes and earthquake catalogs).
   Input/output for MCQsim is done through MATLAB-based GUIs i.e., standalone versions thereof (i.e., no MATLAB licence required). The latter are currently for OSX/MAC and Ubuntu.
  
@@ -45,16 +45,16 @@ MCQSIM INPUT/OUTPUT
 
 
 
-MCQSIM CODE COMPILATION
+### MCQSIM CODE COMPILATION
   MCQsim is written in C, parallelized with MPI. It further uses BLAS (provided via GSL or else). These libraries must be accessible during compilation/run-time.
   MCQsim compilation/installation is done in the command window i.e., terminal.
 
-Compilation on OSX/MAC
+### Compilation on OSX/MAC
   mpicc   MCQsim_Main.c   MCQsim_StrainHS.c   MCQsim_StrainFS.c   -lm  -lgslcblas  -lmpich  -Wall  -O3  -o  MCQsim
 
   this compiliation assumes use of BLAS provided by GSL (hence, GSL needs to be accessible as well).
 
-Compilation on OSX/MAC
+### Compilation on OSX/MAC
   mpicc   MCQsim_Main.c   MCQsim_StrainHS.c   MCQsim_StrainFS.c   -lm  -lgslcblas  -lmpich  -Wall  -O3  -o  MCQsim
 
   It might be necessary to check if the required modules are available/accessible. Check via:
@@ -68,14 +68,14 @@ Compilation on OSX/MAC
 
 
 
-MCQSIM SIMULATION
+### MCQSIM SIMULATION
   Assuming you have all required input and parameter files defined, you can start the simulation via:
 
   mpirun -n 6 ./MCQsim ParameterFile.txt
 
   This command will start MCQsim as an MPI run, using n = 6 CPUs. The parameter file contains relevant information to start/control the simulation.
 
-PARAMETER FILE  
+###PARAMETER FILE  
   The parameter file has a specific structure that must not be changed (e.g., by adding/shifting lines etc.). Values can be changed however. Here an example of what "ParameterFile.txt" contains. Line numbers to the left are added for reference only and not part of the file.
 
 01--------------------------
