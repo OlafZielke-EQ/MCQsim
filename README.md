@@ -59,20 +59,66 @@ This command will start MCQsim as an MPI run, using n = 6 CPUs. The parameter fi
 | FaultModel_M7.38472_t3845.8374.srfb  | Data file. Quasi-dynamic earthquake rupture for selected large event. Name provides event magnitude and time. Tthis is a binary version of a *.srf file (standard ruputre format; Graves, 2002). Binary format.  | 
 
 ### PARAMETER FILE  
-  The parameter file has a specific structure that must not be changed (e.g., by adding/shifting lines etc.). Values can be changed however. Here an example of what "ParameterFile.txt" contains. Line numbers to the left are added for reference only and not part of the file.
+The parameter file has a specific structure that **_must not_** be changed. **_Do not include or remove lines and do not enter spaces in the descriptions_**. Following is an example parameter file _"FaultModel.txt"_.
 
-![this is an example parameter file](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/ParameterFileScreenShot.png)
+```
+Run_Parameter_Information
+--------------------------
+InputName:                     FaultModel
+Realization_Number:            1
+CatalogTypeNr(1/2/3):          3
+PlotCatalog2Screen(0/1):       1
+RandSeedValue:                 1001
+MinElementNum4Catalog:         1
+ContinueCatalog(0/1):          0
+LoadPrevious_Kh_mat(0/1/2):    1
+Kh_mat_file_2_load:            FaultModel_Khmat.dat
+--------------------------
+StoreSTF4LargeEQs(0/1):        1
+MinMagnitude4STF:              7.0f
+UseRuptPropag(0/1):            0
+MinMagnitude4RupProp:          6.5f
+--------------------------
+IntSeisLoadStep(days):         1.0f
+pow2forInterSeisSteps:         8
+--------------------------
+Visco_AfterSlip(years):        3.0f
+Visco_DeepRelax(years):        20.0f
+--------------------------
+HealingDuringCoseisFraction:   0.05f
+OvershootFraction:             1.2f
+PreStressFraction:             0.90f
+MinCoSeisSlipRate(m/s):        5.0E-3
+--------------------------
+EQrecordLength(years):         5000.0f
+--------------------------
+```
 
-here a brief explanation for selected entries:
+A brief explanation of the parameter file entries
+|   Parameter information              | Description  |
+| ------------------------------------ | ------------- |
+| InputName:                    |   The "root" part of file name e.g., _"FaultModel"_ of file _"FaultModel_FLT.txt"_. All input files of the simulation need to share this input (see input files example above). |
+| Realization_Number:           |   1   |
+| CatalogTypeNr(1/2/3):         |    2  |
+| PlotCatalog2Screen(0/1):      |    3  |
+| RandSeedValue:                |    4  |
+| MinElementNum4Catalog:        |    5  | 
+| ContinueCatalog(0/1):         |    6  |
+| LoadPrevious_Kh_mat(0/1/2):   |    7  |
+| Kh_mat_file_2_load:           |    8  |
+| StoreSTF4LargeEQs(0/1):       |    9  |
+| MinMagnitude4STF:             |    0  |
+| UseRuptPropag(0/1):           |   1   |
+| MinMagnitude4RupProp:         |   2   | 
+| IntSeisLoadStep(days):        |   3   |
+| pow2forInterSeisSteps:        |   4   |
+| Visco_AfterSlip(years):       |   5   | 
+| Visco_DeepRelax(years):       |   6   | 
+| HealingDuringCoseisFraction:  |   7   | 
+| OvershootFraction:            |   8   |
+| PreStressFraction:            |   9   |
+| MinCoSeisSlipRate(m/s):       |   10   |
+| EQrecordLength(years):        |   11   |
 
-_08ContinueCatalog_      - a switch ( 0 / 1) telling if an existing catalog is meant to be extended (1 == continue catalog)
 
-_09LoadPrevious_Kh_mat_  - a switch ( 0 / 1 / 2) telling if a new Kh_matrix is computed or not and whether it is stored to file or not; 0 == new Kh_mat without saving; 1 == new Kh_mat with saving; 2 = use existing Kh_mat. A typical combination of entries in line 8 and 9 woudl be (a) line 8 is 0 and line 9 is 1; or (b) line 8 is 1 and line 9 is 2.
 
-_10Kh_mat_file_2_load_   - name of the _Kh_mat file_ that is either written or re-used (depending on choice in line 9)
-
-_12StoreSTF4LargeEQs_    - a switch (0 / 1) telling if the detailed quasi-dynamic rupture model of selected earthquqakes should be written to file or not (1 == write to file)
-
-_13MinMagnitude4ST_      - threshold magnitude to store the quasi-dynamic rupture model; this is included to save disk space and because smaller events might be less interesting in that regard. IMPORTANT: "smaller" in this context mainly relates to number of elements that failed in the event. The connection between number of failed elements and this minimum magnitude is therefore the mesh (i.e. fault element) size.
-
-_14/15_                 - currently not implemented
