@@ -1,0 +1,45 @@
+Number_of_fault_sections:  2
+Combined_number_of_trig_elements_and_vertices:  11200   5782
+
+Fault_ID_number:   1
+Fault_section_name: Fault_1
+Easting_of_fault_top_center(km):     -5.0000e+00
+Northing_of_fault_top_center(km):    0.0000e+00
+Depth_of_fault_top_center(km):       0.0000e+00
+Length_of_fault_section(km):         7.0000e+01
+Width_of_fault_section(km):          2.0000e+01
+Strike_of_fault_section(deg):        3.4000e+02
+Dip_of_fault_section(deg):           6.0000e+01
+UseSlipRate_or_RegStress_(1/0):      0
+SlipRate_of_fault_section(mm/yr):    5.0000e+00
+Rake_of_fault_section(deg):          1.8000e+02
+StressRate_of_fault_section(MPa/yr): -1.0000e-02
+StressDir_of_fault_section(deg):     0.0000e+00
+Shift_of_lowerleft_vertex_(E/N/Z)(km):    0.0000e+00   0.0000e+00   0.0000e+00
+Shift_of_lowerright_vertex_(E/N/Z)(km):   0.0000e+00   0.0000e+00   0.0000e+00
+Shift_of_upperright_vertex_(E/N/Z)(km):   0.0000e+00   0.0000e+00   0.0000e+00
+Shift_of_upperleft_vertex_(E/N/Z)(km):    0.0000e+00   0.0000e+00   0.0000e+00
+Triangle_patch_number_of_section:   5600
+Triangle_vertex_number_of_section:  2891
+
+Fault_ID_number:   2
+Fault_section_name: Fault_2
+Easting_of_fault_top_center(km):     1.0000e+01
+Northing_of_fault_top_center(km):    0.0000e+00
+Depth_of_fault_top_center(km):       0.0000e+00
+Length_of_fault_section(km):         7.0000e+01
+Width_of_fault_section(km):          2.0000e+01
+Strike_of_fault_section(deg):        2.2000e+02
+Dip_of_fault_section(deg):           5.0000e+01
+UseSlipRate_or_RegStress_(1/0):      0
+SlipRate_of_fault_section(mm/yr):    5.0000e+00
+Rake_of_fault_section(deg):          0.0000e+00
+StressRate_of_fault_section(MPa/yr): -1.0000e-02
+StressDir_of_fault_section(deg):     0.0000e+00
+Shift_of_lowerleft_vertex_(E/N/Z)(km):    0.0000e+00   0.0000e+00   0.0000e+00
+Shift_of_lowerright_vertex_(E/N/Z)(km):   0.0000e+00   0.0000e+00   0.0000e+00
+Shift_of_upperright_vertex_(E/N/Z)(km):   0.0000e+00   0.0000e+00   0.0000e+00
+Shift_of_upperleft_vertex_(E/N/Z)(km):    0.0000e+00   0.0000e+00   0.0000e+00
+Triangle_patch_number_of_section:   5600
+Triangle_vertex_number_of_section:  2891
+
