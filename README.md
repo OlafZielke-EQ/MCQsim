@@ -52,7 +52,7 @@ This command will start MCQsim as an MPI run, using n = 6 CPUs. The parameter fi
 |   File name   (output)               | File content  |
 | ------------------------------------ | ------------- |
 | FaultModel_BrchInfo.dat              | Data file. Contains information about the QuadTree structure. Useful for _OpenQuake_ pipeline. Binary format.  |
-| FaultModel_Kh.dat _(optional)_| Data file. Contains stiffness kernel for elastic Interaktion. Allows continuing an existing simulation/catalog without re-calculsting. Binary format.**_large file size_**   |
+| FaultModel_Kh.dat _(optional)_ | Data file. Contains stiffness matrix for elastic interaction. Allows continuing an existing simulation/catalog without re-calculating. Binary format. !**_large file size_**!  |
 | FaultModel_PreRunData.dat            | Data file. Friction properties, fault strength, long-term slip-rate of fault elements at start of simulation. Binary format.  |
 | FaultModel_PostRunState.dat          | Data file. Stress state after simulation is over. Allows continuing/extending an existing catalog. Binary format.  |
 | FaultModel_RAWCatalog.dat            | Data file. Earthquake catalog. Binary format.  |
