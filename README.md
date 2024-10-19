@@ -41,23 +41,6 @@ _MCQsim_ simulations require a number of files to be located in the same folder 
 | FaultModel_BND.txt      _(optional)_  | Summary file. Contains information about of boundary surface geometry. ASCII format.  | 
 | FaultModel_BNDtrig.dat  _(optional)_  | Data file. Contains the 3-D geometry of boundary surface triangular elements. Binary format. | 
 
-## RUNNING MCQSIM
-Assuming all files are present, a simulation can be started via:
->
->  _mpirun -n 6 ./MCQsim FaultModel.txt_
-
-This command will start MCQsim as an MPI run, using n = 6 CPUs. The parameter file _"FaultModel.txt"_ contains relevant information to start/control the simulation. _MCQsim_ then runs and produces a number of output files. Most importantly the _" *Catalog.dat"_ file and a number of _" *.srfb"_ files.
-
-## MCQSIM OUTPUT FILES
-|   File name   (output)               | File content  |
-| ------------------------------------ | ------------- |
-| FaultModel_BrchInfo.dat              | Data file. Contains information about the QuadTree structure. Useful for _OpenQuake_ pipeline. Binary format.  |
-| FaultModel_Khmat.dat _(optional)_ | Data file. Contains stiffness matrix for elastic interaction. Allows continuing an existing simulation/catalog without re-calculating Kh. Binary format. !**_large file size_**!  |
-| FaultModel_PreRunData.dat            | Data file. Friction properties, fault strength, long-term slip-rate of fault elements at start of simulation. Binary format.  |
-| FaultModel_PostRunState.dat          | Data file. Stress state after simulation is over. Allows continuing/extending an existing catalog. Binary format.  |
-| FaultModel_RAWCatalog.dat            | Data file. Earthquake catalog. Binary format.  |
-| FaultModel_M7.38472_t3845.8374.srfb  | Data file. Quasi-dynamic earthquake rupture for selected large event. Name provides event magnitude and time. Tthis is a binary version of a *.srf file (standard ruputre format; Graves, 2002). Binary format.  | 
-
 ### PARAMETER FILE  
 The parameter file has a specific structure that **_must not_** be changed. **_Do not include or remove lines and do not enter spaces in the descriptions_**. Following is an example parameter file _"FaultModel.txt"_.
 
@@ -121,4 +104,20 @@ A brief explanation of the parameter file entries
 | EQrecordLength(years):        |   Record length in years. If a catalog is continued, this value refers to the added length and not to the total length.  |
 
 
+## RUNNING MCQSIM
+Assuming all files are present, a simulation can be started via:
+>
+>  _mpirun -n 6 ./MCQsim FaultModel.txt_
+
+This command will start MCQsim as an MPI run, using n = 6 CPUs. The parameter file _"FaultModel.txt"_ contains relevant information to start/control the simulation. _MCQsim_ then runs and produces a number of output files. Most importantly the _" *Catalog.dat"_ file and a number of _" *.srfb"_ files.
+
+## MCQSIM OUTPUT FILES
+|   File name   (output)               | File content  |
+| ------------------------------------ | ------------- |
+| FaultModel_BrchInfo.dat              | Data file. Contains information about the QuadTree structure. Useful for _OpenQuake_ pipeline. Binary format.  |
+| FaultModel_Khmat.dat _(optional)_ | Data file. Contains stiffness matrix for elastic interaction. Allows continuing an existing simulation/catalog without re-calculating Kh. Binary format. !**_large file size_**!  |
+| FaultModel_PreRunData.dat            | Data file. Friction properties, fault strength, long-term slip-rate of fault elements at start of simulation. Binary format.  |
+| FaultModel_PostRunState.dat          | Data file. Stress state after simulation is over. Allows continuing/extending an existing catalog. Binary format.  |
+| FaultModel_RAWCatalog.dat            | Data file. Earthquake catalog. Binary format.  |
+| FaultModel_M7.38472_t3845.8374.srfb  | Data file. Quasi-dynamic earthquake rupture for selected large event. Name provides event magnitude and time. Tthis is a binary version of a *.srf file (standard ruputre format; Graves, 2002). Binary format.  | 
 
