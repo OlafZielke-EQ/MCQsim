@@ -97,28 +97,28 @@ EQrecordLength(years):         5000.0f
 A brief explanation of the parameter file entries
 |   Parameter information              | Description  |
 | ------------------------------------ | ------------- |
-| InputName:                    |   The "root" part of file name e.g., _"FaultModel"_ of file _"FaultModel_FLT.txt"_. All input files of the simulation need to share this input (see input files example above). |
-| Realization_Number:           |   1   |
-| CatalogTypeNr(1/2/3):         |    2  |
-| PlotCatalog2Screen(0/1):      |    3  |
-| RandSeedValue:                |    4  |
-| MinElementNum4Catalog:        |    5  | 
-| ContinueCatalog(0/1):         |    6  |
-| LoadPrevious_Kh_mat(0/1/2):   |    7  |
-| Kh_mat_file_2_load:           |    8  |
-| StoreSTF4LargeEQs(0/1):       |    9  |
-| MinMagnitude4STF:             |    0  |
-| UseRuptPropag(0/1):           |   1   |
-| MinMagnitude4RupProp:         |   2   | 
-| IntSeisLoadStep(days):        |   3   |
-| pow2forInterSeisSteps:        |   4   |
-| Visco_AfterSlip(years):       |   5   | 
-| Visco_DeepRelax(years):       |   6   | 
-| HealingDuringCoseisFraction:  |   7   | 
-| OvershootFraction:            |   8   |
-| PreStressFraction:            |   9   |
-| MinCoSeisSlipRate(m/s):       |   10   |
-| EQrecordLength(years):        |   11   |
+| InputName:                    |   This is the "root" part of file name e.g., _"FaultModel"_ of file _"FaultModel_FLT.txt"_. All input files of the simulation need to share this input (see input files example above). |
+| Realization_Number:           |   _MCQsim_ was built to facilitate parameter space investigations, where multiple realizations can be generated with input GUI "_B_MCQsim_RoughStrgth_" (while only changing selected parameter). The realization number refers to an index in the file name of the _"*Roughn.dat"_ and _"*Strgth.dat"_ file. For example. For example, for realization 1 would, these files would be named _"FaultModel_1_Roughn.dat"_ and _"FaultModel_1_Strgth.dat"_; for realization 42, this would be _"FaultModel_45_Roughn.dat"_ and _"FaultModel_45_Strgth.dat"_|
+| CatalogTypeNr(1/2/3):         |    Catalog type refers to the amount of information that is provided in the catalogs. **_Type 1_** contains only general event characteristics such as time, magnitude, hypo-center, moment-centroid, rupture area, mean slip, and mean stress drop. **_Type 2_** further contains the event's moment rate function. **_Type 3_** further contains information for each fault element that was active (slipping) during the event. This includes the element's rupture start time, slip in strike- and dip-direction, coseismic (static) stress change, and stability type. _MCQsim_ first generates a "RAW" catalog that corrresponds to _Type 3_. This "RAW"catalog can be processed as part of the post-simulation workflow to generate other catalog types that are smaller in size (not every investigation may have the need to consider element-based information).  |
+| PlotCatalog2Screen(0/1):      |    This switch (0 = no, 1 = yes) indicates if catalog information should be printed to screen during the simulation.  It is typically left at 1. |
+| RandSeedValue:                |    If desired, some parameters can be randomized during simulation. For example, friction parameters of activated fault elements may be permitted to vary (within specified range) at the end of the coseismic phase. Reusing the same seed value allows to create the exact earthquake sequence. **_IMPORTANT_** each process/CPU gets its own seed value (the process' MPIrank is added to _"RandSeedValue"_). Hence, in order to create the exact same catalog, it is important to not only use the same seed value, but also the same number of processes. |
+| MinElementNum4Catalog:        |    Minimum number of fault elements that need to be activated in an event to add the event to the catalog. If set to 1, all events are included in the catalog; if set to 10, only events with 10+ active elements are included in the catalog.  **_IMPORTANT_** The element number refers **_only_** to the writing part (the smaller events still exist in the simulation, they are just not written to file).  | 
+| ContinueCatalog(0/1):         |   This switch (0 = no, 1 = yes) indicates if an existing catalog should be extended.  |
+| LoadPrevious_Kh_mat(0/1/2):   |   This switch indicates if a new stiffness matrix _"*Khmat.dat"_ should be created or not, and whether it should be saved to file (e.g., to be used when continuing an existing catalog). **_switch = 0_** means to create a new stiffness matrix but **_NOT_** storing it to file. **_switch = 2_** means to create a new stiffness matrix and storing it to file. **_switch = 2_** means to load an existing stiffness matrix. A typical setup for this and the previous entry would be _ContinueCatalog 0_ and LoadPrevious_Khmat 1_ or _ContinueCatalog 1_ and LoadPrevious_Khmat 2_ |
+| Kh_mat_file_2_load:           |    The file name used to either read (if _LoadPrevious_Kh_mat  2_) or write (if _LoadPrevious_Kh_mat  1_) the stiffness matrix _"*Khmat.dat"_  |
+| StoreSTF4LargeEQs(0/1):       |   This switch (0 = no, 1 = yes) indicates whether the quasi-dynamic rupture evolution of individual events should be saved to file.  |
+| MinMagnitude4STF:             |   The minimum magnitude an event must have in order to write its quasi-dynamic rupture evolution to file.  |
+| UseRuptPropag(0/1):           |   Not used in current code version.   |
+| MinMagnitude4RupProp:         |   Not used in current code version.   | 
+| IntSeisLoadStep(days):        |   The minimum time step (in days) used for post-seismic i.e., interseismic loading and stress redistribution.   |
+| pow2forInterSeisSteps:        |   _MCQsim_ uses the minimum time step (previous row) and a binary search to determine the loading step to the next event. The value of _pow2forInterSeisSteps_ refers to just that. For example with a value of 8, _MCQsim_ first jumps 2^8 days ahead in time to identify if the combination of inter-seismic loading and post-seismic stress redistribuiton caused at least one element to fail. If not, loading proceeds. If yes, then the loading step is halfed, etc.    |
+| Visco_AfterSlip(years):       |   Postseismic response ALONG THE FAULT, employing a simple Maxwell spring-dashpot model. This is the time it takes to decrease a postseismic signal to 1/e (approx. 35%) of its original value. Providing this measure in years (rather than using viscosity) seems more intuitive. For example the postseismic signal/effect (here after slip) decreased by ~65% within the first 3 years. Higher value corresponds to higher viscosity. | 
+| Visco_DeepRelax(years):       |   Postseismic response ALONG THE BOUNDARY (if used), employing a simple Maxwell spring-dashpot model. This is the time it takes to decrease a postseismic signal to 1/e (approx. 35%) of its original value. Providing this measure in years (rather than using viscosity) seems more intuitive. For example the postseismic signal/effect (here visco-elastic relaxation) decreased by ~65% within the first 20 years. Higher value corresponds to higher viscosity.  | 
+| HealingDuringCoseisFraction:  |   Fraction by which the friction coefficient of activated (unstable or conditionally stable) fault elements increases coseismically (during each coseismic iteration step) once these elements stopped to slip in the event (while the rupture itself is still ongoing).   | 
+| OvershootFraction:            |   Describes the ratio of dyanamic and arrest friction coefficient.   |
+| PreStressFraction:            |   Faults are pre-stressed at the beginning of a simulation to this fraction of their frictional strength (unless an existing catalog is continued). This is done to speed up the intial "burn in" phase i.e., decreasing the computational time for the modeled fault system to reach its dynamic equilibrium.  |
+| MinCoSeisSlipRate(m/s):       |   Minimum slip rate to be considered coseismic slip.   |
+| EQrecordLength(years):        |   Record length in years. If a catalog is continued, this value refers to the added length and not to the total length.  |
 
 
 
