@@ -112,6 +112,8 @@ Assuming all files are present, a simulation can be started via:
 This command will start MCQsim as an MPI run, using n = 6 CPUs. The parameter file _"FaultModel.txt"_ contains relevant information to start/control the simulation. _MCQsim_ then runs and produces a number of output files. Most importantly the _" *Catalog.dat"_ file and a number of _" *.srfb"_ files.
 
 ## MCQSIM OUTPUT FILES
+_MCQsim_ creates a number of output files, as listed below. They can be visualized using our MATLAB-based GUIs. Catalog files can be opened with GUIs starting with a _"Z"_ such as _"Z_Catalog_MCQsim_TREAD"_ or _"Z_MCQsim_LoadCatalog"_. They also allow you to export the catalog to either _*.mat_ or _*.txt_ file. The PreRun file as well as the quasi-dynamic rupture models of individual events can be opened with GUIs starting with _"Y"_ such as _"Y"_PreRunAndSRF_MCQsim_Tread_.
+
 |   File name   (output)               | File content  |
 | ------------------------------------ | ------------- |
 | FaultModel_BrchInfo.dat              | Data file. Contains information about the QuadTree structure. Useful for _OpenQuake_ pipeline. Binary format.  |
