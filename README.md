@@ -127,5 +127,5 @@ _MCQsim_ creates a number of output files, as listed below. They can be visualiz
 
 
 here a small animation of a single event
->![screenshot of website for easy download of GitHub folders](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/GitHubDownload.png)
+>![screenshot of website for easy download of GitHub folders](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/M754_slip.gif)
 
