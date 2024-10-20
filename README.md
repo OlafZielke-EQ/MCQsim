@@ -11,14 +11,14 @@ The most recent version of _MCQsim_, provided here, employs _QuadTree_ and _H-ma
 **Contact:** olaf.zielke@kaust.edu.sa
 
 ## SAMPLE OUTPUTS
-Following are a few example outputs, generated with MCQsim for a "toy example" listric normal fault that features geometric roughness and heterogeneous strength distribution. We present the single-event quasi-dynamic evolution of a **M**7.54 event (slip and slip-rate). We further present the earthquake catalog and catalog derivates for the same fault.
-
-![screenshot of toy example catalog and derivatives](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/GitHubDownload.png)
+Following are a few example outputs, generated with MCQsim for a "toy example" listric normal fault that features geometric roughness and heterogeneous strength distribution. We present animated GIFs of the single-event quasi-dynamic evolution of a **M**7.54 event (slip and slip-rate). We further present the earthquake catalog and catalog derivates for the same fault.
 
 |   M7.54 normal faulting EQ (slip)      | M7.54 normal faulting EQ (rate)  |
 | -------------------------------------  | ------------- |
 | ![animated GIF of toy example rupture](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/M754_slip.gif) | ![screenshot of website for easy download of GitHub folders](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/M754_rate.gif) |
 
+
+![screenshot of toy example catalog and derivatives](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/ExampleCatalogOutput.png)
 
 ## DOWNLOAD
   Here is a simple way to download specific folders from GitHub, as opposed to downloading the entire project:
