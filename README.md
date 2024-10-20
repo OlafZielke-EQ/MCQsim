@@ -124,3 +124,8 @@ _MCQsim_ creates a number of output files, as listed below. They can be visualiz
 | FaultModel_RAWCatalog.dat            | Data file. Earthquake catalog. Binary format.  |
 | FaultModel_M7.38472_t3845.8374.srfb  | Data file. Quasi-dynamic earthquake rupture for selected large event. Name provides event magnitude and time. Tthis is a binary version of a *.srf file (standard ruputre format; Graves, 2002). Binary format.  | 
 
+
+
+here a small animation of a single event
+>![screenshot of website for easy download of GitHub folders](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/GitHubDownload.png)
+
