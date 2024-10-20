@@ -31,15 +31,16 @@ The _MCQsim_ worklflow can be broken down into three components, namely pre-simu
 ## MCQSIM INPUT FILES
 _MCQsim_ simulations require a number of files to be located in the same folder as the executable. They are created with the _MATLAB_ input GUIs.
 
-|   File name   (input)                 | File content  |
-| ------------------------------------- | ------------- |
-| FaultModel.txt                        | Parameter file. Contains details about how to run the simulation e.g., catalog length. ASCII format.  |
-| FaultModel_FLT.txt                    | Summary file. Contains information about fault geometry. ASCII format.  |
-| FaultModel_FLTtrig.dat                | Data file. Contains the 3-D fault geometry, including the list of all triangular fault elements. Binary format.  |
-| FaultModel_Rough.dat                  | Data file. Contains the 3-D fault geometry. This file is equivalent to _FLTtrig.dat except that fault roughness might be added. Binary format.  | 
-| FaultModel_Strgth.dat                 | Data file. Contains friction and strength parameter for each fault element. Binary format.  |
-| FaultModel_BND.txt      _(optional)_  | Summary file. Contains information about of boundary surface geometry. ASCII format.  | 
-| FaultModel_BNDtrig.dat  _(optional)_  | Data file. Contains the 3-D geometry of boundary surface triangular elements. Binary format. | 
+|   File name   (input)                  | File content  |
+| -------------------------------------  | ------------- |
+| FaultModel.txt                         | Parameter file. Contains details about how to run the simulation e.g., catalog length. ASCII format.  |
+| FaultModel_FLT.txt                     | Summary file. Contains information about fault geometry. ASCII format.  |
+| FaultModel_FLTtrig.dat                 | Data file. Contains the 3-D fault geometry, including the list of all triangular fault elements. Binary format.  |
+| FaultModel_Summary_RoughStrength.txt   | Summary file. Contains information about used fault roughness, strength, and friction configuration. ASCII format.  |
+| FaultModel_1_Rough.dat                 | Data file. Contains the 3-D fault geometry. This file is equivalent to _FLTtrig.dat except that fault roughness might be added. Binary format.  | 
+| FaultModel_1_Strgth.dat                | Data file. Contains friction and strength parameter for each fault element. Binary format.  |
+| FaultModel_BND.txt      _(optional)_   | Summary file. Contains information about of boundary surface geometry. ASCII format.  | 
+| FaultModel_BNDtrig.dat  _(optional)_   | Data file. Contains the 3-D geometry of boundary surface triangular elements. Binary format. | 
 
 ### PARAMETER FILE  
 The parameter file has a specific structure that **_must not_** be changed. **_Do not include or remove lines and do not enter spaces in the descriptions_**. Following is an example parameter file _"FaultModel.txt"_.
