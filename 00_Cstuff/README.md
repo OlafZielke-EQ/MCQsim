@@ -1,22 +1,31 @@
 # MCQSIM COMPILATION
-  MCQsim is written in C and parallelized with MPI. It further uses BLAS (provided via GSL or else). These libraries must be accessible during compilation/run-time. MCQsim compilation/installation is done in the command window i.e., terminal.
+_MCQsim_ is written in _C_ and parallelized with _MPI_. It further uses _CBLAS_ (provided via _GSL_ or otherwise). These libraries must be accessible during compilation/run-time. _MCQsim_ compilation/installation is done in the command window i.e., terminal.
 
-**Compilation on OSX/MAC**
+***IMPORTANT:*** You need to make a small change the file _MCQsim_Main.c_ depending on whether you access _CBLAS_ trough _GSL_ or not. Change the _#include_ libary accordingly to:
+```
+//#include <gsl/gsl_cblas.h>
+#include <cblas.h>
+```
+and compile with:
+> _mpicc   MCQsim_Main.c   MCQsim_StrainHS.c   MCQsim_StrainFS.c   -lm  ***-lcblas***  ~~-lgslcblas~~ -lmpich  -Wall  -O3  -o  MCQsim_
 
-> _mpicc   MCQsim_Main.c   MCQsim_StrainHS.c   MCQsim_StrainFS.c   -lm  -lgslcblas  -lmpich  -Wall  -O3  -o  MCQsim_
+if _CBLAS_ is accessed trough machine installation or:
+```
+#include <gsl/gsl_cblas.h>
+//#include <cblas.h>
+```
+and compile with:
+> _mpicc   MCQsim_Main.c   MCQsim_StrainHS.c   MCQsim_StrainFS.c   -lm  ~~-lcblas~~ ***-lgslcblas***  -lmpich  -Wall  -O3  -o  MCQsim_
 
-  this compiliation assumes use of BLAS provided by GSL (hence, GSL needs to be accessible as well).
+if _CBLAS_ is accessed trough _GSL_.
 
-**Compilation on Ubuntu**
 
- > _mpicc   MCQsim_Main.c   MCQsim_StrainHS.c   MCQsim_StrainFS.c   -lm  -lgslcblas  -lmpich  -Wall  -O3  -o  MCQsim_
-
-  It might be necessary to check if the required modules are available/accessible. Check via:
+***IMPORTANT:*** For LINUX, it might be necessary to check if the required modules/libraries are available and accessible. You can check via:
 
 > _module avail_
 
-  and then load the required modules (such as GSL and/or MPI) for example
+and then load the required modules (such as GSL and/or MPI) for example with:
 
 > _module load mpich_
-  
- > _module load gsl_
+>  
+> _module load gsl_
