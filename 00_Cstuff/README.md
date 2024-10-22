@@ -25,6 +25,20 @@ _MCQsim_ is written in _C_ and parallelized with _MPI_. It further uses _CBLAS_ 
 
 For example, I compile using the first option (without _GSL_) when compiling on our HPC facilities, _Shaheen3/KAUST_. I compile using the second option (with _GSL_) when compiling on OSX or Ubuntu. Compilation creates an executable file called _"MCQsim"_.
 
+
+
+Whether simulations are done within half-space of full space is controlled by the following statement in _MCQsim_Main.c_.
+
+use half-space:
+```
+#define USEHALFSPACE            1u
+```
+use full space:
+```
+#define USEHALFSPACE            0u
+```
+
+
 > [!IMPORTANT]
 > For LINUX, it might be necessary to check if the required modules/libraries are available and accessible. You can check via:
 > 
