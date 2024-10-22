@@ -6,7 +6,8 @@ The most recent version of _MCQsim_, provided here, employs _QuadTree_ and _H-ma
 
 **Please check the following publication for details on _MCQsim_ model formulation and cite when using the code**
 
-> Zielke, O., and P.M. Mai (2023). MCQsim: A Multicycle Earthquake Simulator. Bull. Seismol. Soc. Am. 113(3), 889-908. [doi: 10.1785/0120220248](https://pubs.geoscienceworld.org/ssa/bssa/article/113/3/889/622487/MCQsim-A-Multicycle-Earthquake-Simulator)
+> Zielke, O., and P.M. Mai (2023). MCQsim: A Multicycle Earthquake Simulator. Bull. Seismol. Soc. Am. 113(3), 889-908.
+> [doi: 10.1785/0120220248](https://pubs.geoscienceworld.org/ssa/bssa/article/113/3/889/622487/MCQsim-A-Multicycle-Earthquake-Simulator)
 
 **Contact:** olaf.zielke@kaust.edu.sa
 
