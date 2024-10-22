@@ -1,5 +1,5 @@
 # MCQSIM I/O
-  This includes model and parameter setup (input) and various ways to visualize simulations results (output, e.g., individual earthquakes and earthquake catalogs). Input/output for MCQsim is done through MATLAB-based graphical user interfaces GUIs i.e., standalone versions thereof (i.e., no MATLAB licence required). Standalone versions for OSX, Windows, and Linux are currently provided within the "TREAD" folder only.
+_MCQsim_ GUIs are used for creating simulation input files (input GUIs) and for various ways to visualize simulations results (output GUIs, e.g., individual earthquakes and earthquake catalogs). Here, we provide _*.pcode_ files for these _MATLAB_-based GUIs. That is, you will need a _MATLAB_ licence to run these GUIs. We also provide ***standalone GUI versions*** of input and output GUIs that ***require no _MATLAB_ licence***. Instead, these standalone versions will -as part of the installation process- download/install a "_MATLAB_ runtime" which is free of charge. Currently, we provide standalone versions for OSX, Windows, and Linux within the _"TREAD"_ folder only of this repository.
   
   **for MATLAB:** 
   
