@@ -1,1 +1,0 @@
-mpicc   MCQsim_Main.c   MCQsim_StrainHS.c   MCQsim_StrainFS.c     -lm -lgslcblas -lmpich -Wall -O3 -o    MCQsim
