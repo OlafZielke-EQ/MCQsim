@@ -19,6 +19,7 @@ and compile with:
 
 if _CBLAS_ is accessed trough _GSL_.
 
+Compilation creates an executable file called _"MCQsim"_.
 
 ***IMPORTANT:*** For LINUX, it might be necessary to check if the required modules/libraries are available and accessible. You can check via:
 
