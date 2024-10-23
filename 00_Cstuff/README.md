@@ -12,7 +12,7 @@ _MCQsim_ is written in _C_ and parallelized with _MPI_. It further uses _CBLAS_ 
 > ```
 > compile with:
 > 
-> _mpicc   MCQsim_Main.c   MCQsim_StrainHS.c   MCQsim_StrainFS.c   -lm  ***-lcblas***  ~~-lgslcblas~~ -lmpich  -Wall  -O3  -o  MCQsim_
+> _mpicc   MCQsim_Main.c   MCQsim_StrainHS.c   MCQsim_StrainFS.c   -lm ~~-lgslcblas~~ -lmpich  -Wall  -O3  -o  MCQsim_
 >
 > _CBLAS_ is accessed trough _GSL_:
 > ```
@@ -21,7 +21,7 @@ _MCQsim_ is written in _C_ and parallelized with _MPI_. It further uses _CBLAS_ 
 > ```
 > compile with:
 > 
-> _mpicc   MCQsim_Main.c   MCQsim_StrainHS.c   MCQsim_StrainFS.c   -lm  ~~-lcblas~~ ***-lgslcblas***  -lmpich  -Wall  -O3  -o  MCQsim_
+> _mpicc   MCQsim_Main.c   MCQsim_StrainHS.c   MCQsim_StrainFS.c   -lm  ***-lgslcblas***  -lmpich  -Wall  -O3  -o  MCQsim_
 
 For example, I compile using the first option (without _GSL_) when compiling on our HPC facilities, _Shaheen3/KAUST_. I compile using the second option (with _GSL_) when compiling on OSX or Ubuntu. Compilation creates an executable file called _"MCQsim"_.
 
