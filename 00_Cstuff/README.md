@@ -12,7 +12,7 @@ _MCQsim_ is written in _C_ and parallelized with _MPI_. It further uses _CBLAS_ 
 > ```
 > compile with:
 > 
-> _mpicc   MCQsim_Main.c   MCQsim_StrainHS.c   MCQsim_StrainFS.c   -lm ~~-lgslcblas~~ ~~-lmpich~~  -Wall  -O3  -o  MCQsim_
+> _cc   MCQsim_Main.c   MCQsim_StrainHS.c   MCQsim_StrainFS.c   -lm ~~-lgslcblas~~ ~~-lmpich~~  -Wall  -O3  -o  MCQsim_
 >
 > _CBLAS_ is accessed trough _GSL_:
 > ```
