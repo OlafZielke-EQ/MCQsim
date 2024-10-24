@@ -34,7 +34,7 @@ Scaling tests (weak and strong) are currently running on [Shaheen3@KAUST](https:
 
 |   Memory scaling      |  CPU time scaling  |
 | --------------------- | ------------------ |
-
+|  screenshot of memory scaling  |  screenshot of CPU time scaling  |
 
 ## DOWNLOAD
   Here is a simple way to download specific folders from GitHub, as opposed to downloading the entire project:
