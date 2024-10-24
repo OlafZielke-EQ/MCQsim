@@ -24,7 +24,7 @@ Following are a few example outputs, generated with MCQsim for a "toy example" l
 
  ### EQ catalogs to PSHA/OpenQuake
 
-Earthquake catalogs, created with _MCQsim_, can serve as an input for PSHA, providing an earthquake rupture forecast for a modeled fault (system). As such, they provide internally consistent, physics-based branches of the PSHA logic tree. We recently streamlined the post-processing workflow to feed _MCQsim_ earthquake catalogs into the [_OpenQuake_](https://www.globalquakemodel.org) PSHA engine. Below is an example seismic hazard map for toy model listric fault, using [_QGIS_](https://www.qgis.org) and [_OpenQuake's_]((https://www.globalquakemodel.org)) [IRM toolkit](https://docs.openquake.org/oq-irmt-qgis/v3.1.0/).
+Earthquake catalogs, created with _MCQsim_, can serve as an input for PSHA, providing an earthquake rupture forecast for a modeled fault (system). As such, they provide internally consistent, physics-based branches of the PSHA logic tree. We recently streamlined the post-processing workflow to feed _MCQsim_ earthquake catalogs into the [_OpenQuake_](https://www.globalquakemodel.org) PSHA engine. Below is an example seismic hazard map for toy model listric fault, using [_QGIS_](https://www.qgis.org) and [_OpenQuake's_]((https://www.globalquakemodel.org) [IRM toolkit](https://docs.openquake.org/oq-irmt-qgis/v3.1.0/).
 
 ![screenshot of toy example PSHA analysis](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/MCQsim2PSHA.png)
 
