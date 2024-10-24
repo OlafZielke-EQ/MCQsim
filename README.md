@@ -22,12 +22,18 @@ Following are a few example outputs, generated with MCQsim for a "toy example" l
 
 ![screenshot of toy example catalog and derivatives](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/ExampleCatalogOutput.png)
 
- ### EQ catalogs to PSHA/OpenQuake
+ ### Earthquake catalogs for PSHA/OpenQuake
 
 Earthquake catalogs, created with _MCQsim_, can serve as an input for PSHA, providing an earthquake rupture forecast for a modeled fault (system). As such, they provide internally consistent, physics-based branches of the PSHA logic tree. We recently streamlined the post-processing workflow to feed _MCQsim_ earthquake catalogs into the [_OpenQuake_](https://www.globalquakemodel.org) PSHA engine. Below is an example seismic hazard map for toy model listric fault, using [_QGIS_](https://www.qgis.org) and [_OpenQuake's_](https://www.globalquakemodel.org) [_IRM toolkit_](https://docs.openquake.org/oq-irmt-qgis/v3.1.0/).
 
 ![screenshot of toy example PSHA analysis](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/MCQsim2PSHA.png)
 
+### Scaling tests
+
+Scaling tests (weak and strong) are currently running on [Shaheen3@KAUST](https://www.hpc.kaust.edu.sa). We show them here a) to showcase _MCQsim_ performance on our HPC facilities, and b) to provide users with first-order guidence on simulation preparation (e.g., CPU number as a function of fault element number i.e., fault system size). Below, we show scaling in terms of memory usage (stiffness kernel "_Kh_" serving as proxy) and compuation time for a two-fault simulation using 10k, 50k, 100k, and 200k fault elements. ***Important:*** The results of this scaling test are specific to the model setup and _Shaheen3_. It is best-practice to perform these tests yourself on the HPC facilities you are going to use.
+
+|   Memory scaling      |  CPU time scaling  |
+| --------------------- | ------------------ |
 
 
 ## DOWNLOAD
