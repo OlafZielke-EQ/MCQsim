@@ -40,7 +40,7 @@ use full space:
 
 
 > [!IMPORTANT]
-> For LINUX, it might be necessary to check if the required modules/libraries are available and accessible. You can check via:
+> For LINUX, it might be necessary to check if the required modules/libraries are available and accessible. You might be able to check via:
 > 
 > _module avail_
 >
@@ -49,3 +49,5 @@ use full space:
 > _module load mpich_
 >  
 > _module load gsl_
+> 
+> Additionally: Some people reported issues/conficts between _MPICH_ and _OPENMPI_ installations. Either of these MPI libaries can be used, but compilation might give you errors if both are installed and incorrectly linked.
