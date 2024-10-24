@@ -11,6 +11,8 @@ The most recent version of _MCQsim_, provided here, employs _QuadTree_ and _H-ma
 **Contact:** olaf.zielke@kaust.edu.sa
 
 ## SAMPLE OUTPUTS
+### Single event and earthquake catalogs
+
 Following are a few example outputs, generated with MCQsim for a "toy example" listric normal fault that features geometric roughness and heterogeneous strength distribution. We present animated GIFs of the single-event quasi-dynamic evolution of a **M**7.54 event (slip and slip-rate). We further present the earthquake catalog and catalog derivates for the same fault.
 
 |   M7.54 normal faulting EQ (slip)      | M7.54 normal faulting EQ (rate)  |
@@ -20,9 +22,9 @@ Following are a few example outputs, generated with MCQsim for a "toy example" l
 
 ![screenshot of toy example catalog and derivatives](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/ExampleCatalogOutput.png)
 
-***IMPORTANT***
+ ### EQ catalogs to PSHA/OpenQuake
 
-Earthquake catalogs, created with _MCQsim_, can serve as an input for PSHA, providing an earthquake rupture forecast for a modeled fault (system). As such, they provide internally consistent, physics-based branches of the PSHA logic tree. We recently streamlined the post-processing workflow to feed _MCQsim_ earthquake catalogs into the [_OpenQuake_](https://www.globalquakemodel.org) PSHA engine. Below is an example seismic hazard map for toy model listric fault.
+Earthquake catalogs, created with _MCQsim_, can serve as an input for PSHA, providing an earthquake rupture forecast for a modeled fault (system). As such, they provide internally consistent, physics-based branches of the PSHA logic tree. We recently streamlined the post-processing workflow to feed _MCQsim_ earthquake catalogs into the [_OpenQuake_](https://www.globalquakemodel.org) PSHA engine. Below is an example seismic hazard map for toy model listric fault, using [_QGIS_](https://www.qgis.org) and [_OpenQuake's_]((https://www.globalquakemodel.org)) [IRM toolkit](https://docs.openquake.org/oq-irmt-qgis/v3.1.0/).
 
 ![screenshot of toy example PSHA analysis](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/MCQsim2PSHA.png)
 
