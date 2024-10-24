@@ -28,7 +28,7 @@ Earthquake catalogs, created with _MCQsim_, can serve as an input for PSHA, prov
 
 ![screenshot of toy example PSHA analysis](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/MCQsim2PSHA.png)
 
-### Scaling tests
+## Scaling tests
 
 Scaling tests (weak and strong) are currently running on [Shaheen3@KAUST](https://www.hpc.kaust.edu.sa). We show them here a) to showcase _MCQsim_ performance on our HPC facilities, and b) to provide users with first-order guidence on simulation preparation (e.g., CPU number as a function of fault element number i.e., fault system size). Below, we show scaling in terms of memory usage (stiffness kernel "_Kh_" serving as proxy) and compuation time for a two-fault simulation using 10k, 50k, 100k, and 200k fault elements. ***Important:*** The results of this scaling test are specific to the model setup and _Shaheen3_. It is best-practice to perform these tests yourself on the HPC facilities you are going to use.
 
