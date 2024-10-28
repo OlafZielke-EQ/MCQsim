@@ -30,11 +30,21 @@ Earthquake catalogs, created with _MCQsim_, can serve as an input for PSHA, prov
 
 ## SCALING TESTS
 
-Scaling tests (weak and strong) are currently running on [Shaheen3@KAUST](https://www.hpc.kaust.edu.sa). We show them here a) to showcase _MCQsim_ performance on our HPC facilities, and b) to provide users with first-order guidence on simulation preparation (e.g., CPU number as a function of fault element number i.e., fault system size). Below, we show scaling in terms of memory usage (stiffness kernel "_Kh_" serving as proxy) and compuation time for a two-fault simulation using 10k, 50k, 100k, and 200k fault elements. ***Important:*** The results of this scaling test are specific to the model setup and _Shaheen3_. It is best-practice to perform these tests yourself on the HPC facilities you are going to use.
+Following the results of strong scaling tests that were done on [Shaheen3@KAUST](https://www.hpc.kaust.edu.sa). We show them here a) to showcase _MCQsim_ performance on our HPC facilities, and b) to provide users with first-order guidence on simulation preparation (e.g., CPU number as a function of fault element number i.e., fault system size). Below, we show scaling in terms of speed up factor (relative to single-CPU simulation) and effciency for a two-fault simulation using 10k, 50k, 100k, and 200k fault elements. The simulations indicate that the speed up factor closely follows the ideal case, before scaling begins to come less efficient. The "odd" shapes in effciency curves for the 10k and 50k element simulations reflect the internal CPU organization within a single node (each node consisting of 192 cores).
 
-|   Memory scaling      |  CPU time scaling  |
-| --------------------- | ------------------ |
-|  screenshot of memory scaling  |  screenshot of CPU time scaling  |
+
+***Important:*** The results of this scaling test are specific to the model setup and _Shaheen3_. It is best-practice to perform these tests yourself on the HPC facilities you are going to use.
+
+![Strong scaling plot for 4 different grid resolutions](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/ScalingPlot.png)
+
+|   Element number      |  Resolved Elements | Stiffness matrix (H-mat)  |  Stiffness matrix (classical, N^2)  |
+| --------------------- | ------------------ | ------------------------- | ----------------------------------- |
+|  10,000               |    2,770           | 1.1Gb                     | 3.6Gb                               |
+|  50,000               |    3,656           | 14.1Gb                    | 90Gb                                |
+|  100,000              |    3,248           | 45.5Gb                    | 360Gb                               |
+|  200,000              |    3,775           | 182.1Gb                   | 1,440Gb                             |
+
+Our H-matrix implementation drastically reduces the number of "resolved elements" and therefore the number of individual fault interactions that need to be computed.
 
 ## DOWNLOAD
   Here is a simple way to download specific folders from GitHub, as opposed to downloading the entire project:
