@@ -30,7 +30,7 @@ Earthquake catalogs, created with _MCQsim_, can serve as an input for PSHA, prov
 
 ## SCALING TESTS
 
-Following are the results of strong scaling tests that were done on [Shaheen3@KAUST](https://www.hpc.kaust.edu.sa). We show them here a) to showcase _MCQsim_ performance on our HPC facilities, and b) to provide users with first-order guidence on simulation preparation (e.g., CPU number as a function of fault element number i.e., fault system size). Below, we show scaling in terms of speed up factor (relative to single-CPU simulation) and effciency for a two-fault simulation using 10k, 50k, 100k, and 200k fault elements. The simulations indicate that the speed up factor closely follows the ideal case, before scaling begins to come less efficient. The "odd" shapes in effciency curves for the 10k and 50k element simulations reflect the internal CPU organization within a single node (each node consisting of 192 CPUs). Given these scaling tests we suggest to use: 6-12 CPUs for 10k elements, 24-48 CPUs for 50k elements, 384-768 CPUs for 100k elements, and 768 to 1536 CPUs for 200k elements.
+Following are the results of strong scaling tests that were done on [Shaheen3@KAUST](https://www.hpc.kaust.edu.sa). We show them here a) to showcase _MCQsim_ performance on our HPC facilities, and b) to provide users with first-order guidence on simulation preparation (e.g., CPU number as a function of fault element number i.e., fault system size). Below, we show scaling in terms of speed up factor (relative to single-CPU simulation) and effciency for a two-fault simulation using 10k, 50k, 100k, and 200k fault elements. The simulations indicate that the speed up factor closely follows the ideal case, before scaling begins to come less efficient (at different CPU numbers for the different fault element numbers). The "odd" shapes in effciency curves for the 10k and 50k element simulations reflect the internal CPU organization within a single node (each node consisting of 192 CPUs, single-node indicated by gray area). Given these scaling tests we suggest to use: 6-12 CPUs for 10k elements, 24-48 CPUs for 50k elements, 384-768 CPUs for 100k elements, and 768 to 1536 CPUs for 200k elements.
 
 ***IMPORTANT:*** Keep in mind that the results of this scaling test are specific to the model setup and _Shaheen3_. It is best-practice to perform these tests yourself on the HPC facilities you are going to use.
 
@@ -38,10 +38,10 @@ Following are the results of strong scaling tests that were done on [Shaheen3@KA
 
 |   Element number      |  Resolved Elements | Stiffness matrix (H-mat)  |  Stiffness matrix (classical, N^2)  |
 | --------------------- | ------------------ | ------------------------- | ----------------------------------- |
-|  10,000               |    2,770           | 1.1Gb                     | 3.6Gb                               |
-|  50,000               |    3,656           | 14.1Gb                    | 90Gb                                |
-|  100,000              |    3,248           | 45.5Gb                    | 360Gb                               |
-|  200,000              |    3,775           | 182.1Gb                   | 1,440Gb                             |
+|  10,000               |    2,770           | 1.1 Gb                    | 3.6 Gb                              |
+|  50,000               |    3,656           | 14.1 Gb                   | 90 Gb                               |
+|  100,000              |    3,248           | 45.5 Gb                   | 360 Gb                              |
+|  200,000              |    3,775           | 182.1 Gb                  | 1,440 Gb                            |
 
 Our H-matrix implementation drastically reduces the number of "resolved elements" and therefore the number of individual fault interactions that need to be computed.
 
