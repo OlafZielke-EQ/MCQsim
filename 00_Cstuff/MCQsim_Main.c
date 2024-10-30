@@ -7,6 +7,7 @@
 #include <time.h>
 #include <limits.h>
 
+//#include <cblas.h>
 #include <gsl/gsl_cblas.h>
 
 #define USEVPVSVELOCITY         1u
@@ -17,7 +18,7 @@
 #define KH_TOL2                 0.5f 
 #define KH_FULL_DIST            15.0f
 #define KH_TOL_DIST             30.0f
-#define MININTSEISSTRESSCHANGE  25000.0f 
+#define MININTSEISSTRESSCHANGE  100000.0f 
 
 #define INTERNALFRICTION        0.75f 
 #define INTERNALCOHESION        5.0E+6f 
@@ -2563,29 +2564,34 @@ int main(int argc, char **argv)
     {   if (iRANK  == 0)    {   fprintf(stdout,"now determining tectonic loading function\n");       }
         unsigned int uAnyLoad;
         unsigned int uGlobPos,   uTemp0,   uTemp1;
-        float fTemp0,   fTemp1,   fTemp2,   fCmbSlp1,   fCmbSlp2;
+        float fTemp0,   fTemp1,   fTemp2,   fCmbSlp1,   fCmbSlp2, fMinPS_f = 0.0f,   fMinPS_b = 0.0f;
         uAnyLoad = 0u;
         uTemp0   = 0u;
         fCmbSlp1 = 0.0f;
         for (i = 0u; i < iFOFFSET[iRANK]; i++)
-        {   fTemp0   = fFEvent[i*17 +13];       fTemp1   = fFEvent[i*17 +14];
-            fTemp2   = sqrtf(fTemp0*fTemp0 +fTemp1*fTemp1);
-            fCmbSlp1+= fTemp2;
-            uTemp0   = (fTemp2 <= 0.0f)*uTemp0 + (fTemp2 > 0.0f)*(uTemp0 +1u);
+        {   fMinPS_f += ((fFEvent[i*17 +4] + fFEvent[i*17 +5])/2.0f);
+            fTemp0    = fFEvent[i*17 +13];       fTemp1   = fFEvent[i*17 +14];
+            fTemp2    = sqrtf(fTemp0*fTemp0 +fTemp1*fTemp1);
+            fCmbSlp1 += fTemp2;
+            uTemp0    = (fTemp2 <= 0.0f)*uTemp0 + (fTemp2 > 0.0f)*(uTemp0 +1u);
             
             fFEvent[i*17 +8] += (-1.0f*fTemp0 *fFEvent[i*17 +4]);
             fFEvent[i*17 +9] += (-1.0f*fTemp1 *fFEvent[i*17 +5]);
         } 
         
+        MPI_Allreduce(MPI_IN_PLACE, &fMinPS_f,  1, MPI_FLOAT,    MPI_SUM, MPI_COMM_WORLD); 
         MPI_Allreduce(MPI_IN_PLACE, &fCmbSlp1, 1, MPI_FLOAT, MPI_SUM, MPI_COMM_WORLD);
         MPI_Allreduce(MPI_IN_PLACE, &uTemp0,   1, MPI_UNSIGNED, MPI_SUM, MPI_COMM_WORLD);
-        fCmbSlp1 = (uTemp0 > 0u) ? (fCmbSlp1/(float)uTemp0)  : 0.0f;
+        fMinPS_f = fabs(1000.0f *MININTSEISSTRESSCHANGE / (fMinPS_f/(float)uFPNum));
+        fTemp0   = (uTemp0 <= 0u)*-1.0f + (uTemp0 > 0u)*(float)uTemp0;
+        fCmbSlp1 = (uTemp0 <= 0u)*0.0f  + (uTemp0 > 0u)* (fCmbSlp1/fTemp0);
         
         
         if (uBPNum > 0u)
         {   memset(iStartPosB, 0, iSIZE*sizeof(int) );           memset(iOffstPosB, 0, iSIZE*sizeof(int) );
             for (i = 0u; i < iBOFFSET[iRANK]; i++)
-            {   uGlobPos = i +iBSTART[iRANK];
+            {   fMinPS_b += ((fBEvent[i*9 +4] + fBEvent[i*9 +5] + fBEvent[i*9 +6])/3.0f);
+                uGlobPos = i +iBSTART[iRANK];
                 fTemp0   =  -fB_temp[uGlobPos*16 +3];                      fTemp1 =  -fB_temp[uGlobPos*16 +4];          fTemp2 =  -fB_temp[uGlobPos*16 +5];
                 if ((fabs(fTemp0) + fabs(fTemp1) + fabs(fTemp2)) > 0.0f)
                 {   fBslipL[uSlipElCnt[1]*4 +0] = (float)uGlobPos;      fBslipL[uSlipElCnt[1]*4 +1] = fTemp0;       fBslipL[uSlipElCnt[1]*4 +2] = fTemp1;           fBslipL[uSlipElCnt[1]*4 +3] = fTemp2;
@@ -2593,10 +2599,12 @@ int main(int argc, char **argv)
             }   }
             iOffstPosB[iRANK] =uSlipElCnt[1]*4;
             
+            MPI_Allreduce(MPI_IN_PLACE, &fMinPS_b,  1, MPI_FLOAT,    MPI_SUM, MPI_COMM_WORLD); 
             MPI_Allreduce(MPI_IN_PLACE, uSlipElCnt, 2, MPI_UNSIGNED, MPI_SUM, MPI_COMM_WORLD); 
-            MPI_Allreduce(MPI_IN_PLACE, iOffstPosB, iSIZE, MPI_INT, MPI_SUM, MPI_COMM_WORLD);
+            MPI_Allreduce(MPI_IN_PLACE, iOffstPosB, iSIZE, MPI_INT,  MPI_SUM, MPI_COMM_WORLD);
             for (i = 1; i < iSIZE; i++)        {    iStartPosB[i]  = iStartPosB[i-1] +iOffstPosB[i-1];    } 
             MPI_Allgatherv(fBslipL, iOffstPosB[iRANK], MPI_FLOAT, fBslipG, iOffstPosB, iStartPosB, MPI_FLOAT, MPI_COMM_WORLD);
+            fMinPS_b = fabs(1000.0f *MININTSEISSTRESSCHANGE / (fMinPS_b/(float)uBPNum));
             
             for (i = 0u; i < iFOFFSET[iRANK]; i++)
             {   memset(fBslip, 0, 3*uKh_FBcnt[i]*sizeof(float) );
@@ -2667,7 +2675,8 @@ int main(int argc, char **argv)
         
         MPI_Allreduce(MPI_IN_PLACE, &fCmbSlp2, 1, MPI_FLOAT, MPI_SUM, MPI_COMM_WORLD);
         MPI_Allreduce(MPI_IN_PLACE, &uTemp0,   1, MPI_UNSIGNED, MPI_SUM, MPI_COMM_WORLD);
-        fCmbSlp2 = (uTemp0 > 0u) ? (fCmbSlp2/(float)uTemp0) : 0.0f;
+        fTemp0   = (uTemp0 <= 0u)*-1.0f + (uTemp0 > 0u)*(float)uTemp0;
+        fCmbSlp2 = (uTemp0 <= 0u)*0.0f  + (uTemp0 > 0u)* (fCmbSlp2/fTemp0);
         
         if ((fCmbSlp1 > FLT_EPSILON) && (fCmbSlp2 > FLT_EPSILON))     {   fTemp0 = fCmbSlp1/fCmbSlp2;     }
         else                                                          {   fTemp0 = 1.0f;                  }
@@ -2677,7 +2686,10 @@ int main(int argc, char **argv)
             fFTempVal[i*5 +2] *= fTemp0;        fFTempVal[i*5 +3] *= fTemp0;
             fFRef[i*14 +12]   *= fTemp0;
         }
-        if (iRANK == 0)     {   fprintf(stdout,"\nResulting average stressing rate on faults (mm/yr): %5.5f   and  %5.5f,   scalefactor: %5.5f\n",fCmbSlp1*1000.0f, fCmbSlp2*1000.0f, fTemp0);      }
+        if (iRANK == 0)     
+        {   fprintf(stdout,"Minimum AfterSlip (mm): %3.3f \nMinimum DeepRelaxationSlip (mm): %3.3f\n", fMinPS_f, fMinPS_b);
+            fprintf(stdout,"\nResulting average stressing rate on faults (mm/yr): %5.5f   and  %5.5f,   scalefactor: %5.5f\n",fCmbSlp1*1000.0f, fCmbSlp2*1000.0f, fTemp0);      
+        }
         
         unsigned int *uTempF0= calloc(uFPNum, sizeof *uTempF0);
         unsigned int *uTempF1= calloc(uFPNum, sizeof *uTempF1);
@@ -2952,8 +2964,10 @@ int main(int argc, char **argv)
         fNxtLoadStep = fMaxLoadStep; 
         fNxtHalfStep = fNxtLoadStep;
         
-        for (k = 0u; k <= (uUsedLoadStep+1); k++) 
-        {   uPSeisSteps += (uEQcntr > 0u)*1u + (uEQcntr <= 0u)*0u;
+        k = 0u;
+        while (k <= uUsedLoadStep)
+        {   
+            uPSeisSteps += (uEQcntr > 0u)*1u + (uEQcntr <= 0u)*0u;
             fHypoSlip  = 0.0f;      fHypoLoc[0] = 0.0f;       fHypoLoc[1] = 0.0f;      fHypoLoc[2] = 0.0f;
             
             memset(uSlipElCnt, 0,  2*sizeof(unsigned int));
@@ -3028,7 +3042,7 @@ int main(int argc, char **argv)
             uEQstillOn = 0u;
             for (i = 0u; i < iFOFFSET[iRANK]; i++)
             {   
-                if ( uSlipElCnt[1] < uKh_FBcnt[i])
+                if ( uSlipElCnt[1] <= uKh_FBcnt[i])
                 {   for (j = 0u; j < uSlipElCnt[1]; j++) 
                     {   uTemp0 = (unsigned int)fBslipG[j*4 +0]; 
                         uTemp1 = uKh_FBps2[i][uTemp0]; 
@@ -3052,7 +3066,7 @@ int main(int argc, char **argv)
                     fFTempVal[i*5 +1] += cblas_sdot(3*uKh_FBcnt[i], fBslip, 1, fKh_FBvaldip[i], 1);
                 }
                 
-                if  (uSlipElCnt[0] < uKh_FFcnt[i])
+                if  (uSlipElCnt[0] <= uKh_FFcnt[i])
                 {   for (j = 0u; j < uSlipElCnt[0]; j++) 
                     {   uTemp0 = (unsigned int)fFslipG[j*3 +0]; 
                         uTemp1 = uKh_FFps2[i][uTemp0]; 
@@ -3094,20 +3108,24 @@ int main(int argc, char **argv)
             
             fNxtHalfStep /= 2.0f;
             if (uEQstillOn == 0u)
-            {   if (k == 0u)                                   {   k = 0u;          uUsedLoadStep += 1u;            fNxtLoadStep *= 2.0f;            fNxtHalfStep = fNxtLoadStep;           }
-                else if ((k > 0u) && (k < uUsedLoadStep))      {   fNxtLoadStep += fNxtHalfStep;                        }
-                else if (k == uUsedLoadStep)                   {   fNxtLoadStep +=(2.0f*fNxtHalfStep);                  }
+            {   if (k == 0u)
+                {   uUsedLoadStep += 1u;            fNxtLoadStep *= 2.0f;        fNxtHalfStep   = fNxtLoadStep;
+                }
+                else
+                {   if      (k <  (uUsedLoadStep-1))        {   k +=1u;          fNxtLoadStep  += fNxtHalfStep;                        }
+                    else if (k == (uUsedLoadStep-1))        {   k +=1u;          fNxtLoadStep  +=(2.0f*fNxtHalfStep);                  }
+                }
             }
             else
-            {   if      (k < uUsedLoadStep)                    {   fNxtLoadStep -= fNxtHalfStep;                        }
-                else if (k >= uUsedLoadStep)                   {                                               break;   }
+            {   if          (k <  (uUsedLoadStep-1))        {   k +=1u;          fNxtLoadStep -= fNxtHalfStep;                         }
+                else if     (k >= (uUsedLoadStep-1))        {   break;          }
             }
             
         } 
         
         for (i = 0u; i < iBOFFSET[iRANK]; i++)
         {   
-            if (uSlipElCnt[1] < uKh_BBcnt[i])
+            if (uSlipElCnt[1] <= uKh_BBcnt[i])
             {   for (j = 0u; j < uSlipElCnt[1]; j++) 
                 {   uTemp0 = (unsigned int)fBslipG[j*4 +0]; 
                     uTemp1 = uKh_BBps2[i][uTemp0]; 
@@ -3133,7 +3151,7 @@ int main(int argc, char **argv)
                 fBTempVal[i*3 +2] += cblas_sdot(3*uKh_BBcnt[i], fBslip, 1, fKh_BBvalnrm[i], 1);
             }
             
-            if (uSlipElCnt[0] < uKh_BFcnt[i])
+            if (uSlipElCnt[0] <= uKh_BFcnt[i])
             {   for (j = 0u; j < uSlipElCnt[0]; j++) 
                 {   uTemp0 = (unsigned int)fFslipG[j*3 +0]; 
                     uTemp1 = uKh_BFps2[i][uTemp0]; 
@@ -3281,7 +3299,7 @@ int main(int argc, char **argv)
                 MPI_Allgatherv(fFslipL, iOffstPosF[iRANK], MPI_FLOAT, fFslipG, iOffstPosF, iStartPosF, MPI_FLOAT, MPI_COMM_WORLD);
                 
                 for (i = 0u; i < iFOFFSET[iRANK]; i++)
-                {   if (uEQstillOn < uKh_FFcnt[i])
+                {   if (uEQstillOn <= uKh_FFcnt[i])
                     {   for (j = 0u; j < uEQstillOn; j++)
                         {   uTemp0 = (unsigned int)fFslipG[j*3 +0]; 
                             uTemp1 = uKh_FFps2[i][uTemp0]; 
@@ -3335,7 +3353,7 @@ int main(int argc, char **argv)
                 MPI_Allgatherv(fFslipL, iOffstPosF[iRANK], MPI_FLOAT, fFslipG, iOffstPosF, iStartPosF, MPI_FLOAT, MPI_COMM_WORLD);
                 
                 for (i = 0u; i < iBOFFSET[iRANK]; i++)
-                {   if (uSlipElCnt[0] < uKh_BFcnt[i])
+                {   if (uSlipElCnt[0] <= uKh_BFcnt[i])
                     {   for (j = 0u; j < uSlipElCnt[0]; j++)
                         {   uTemp0 = (unsigned int)fFslipG[j*3 +0]; 
                             uTemp1 = uKh_BFps2[i][uTemp0]; 
