@@ -13,7 +13,7 @@
 #define USEVPVSVELOCITY         1u
 #define USEHALFSPACE            1u 
 #define MINBRANCHSZEFACT        1.0f 
-#define CUTDISTANCE             0.66f  
+#define CUTDISTANCE             0.1f  
 #define KH_TOL1                 0.0f 
 #define KH_TOL2                 0.5f 
 #define KH_FULL_DIST            15.0f
