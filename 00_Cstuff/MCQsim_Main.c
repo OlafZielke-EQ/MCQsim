@@ -6,8 +6,8 @@
 #include <mpi.h>
 #include <time.h>
 #include <limits.h>
-//#include <cblas.h>
-#include <gsl/gsl_cblas.h>
+#include <cblas.h>
+//#include <gsl/gsl_cblas.h>
 
 #define USEHALFSPACE            1u // use halfspace == 1; otherwise fullspace is used
 #define MINBRANCHSZEFACT        1.0f //helps determining how detailed the OctBranch should be, making it too large means poor performance
