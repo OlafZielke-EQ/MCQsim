@@ -6,14 +6,14 @@
 #include <mpi.h>
 #include <time.h>
 #include <limits.h>
-//#include <cblas.h>
+
 #include <gsl/gsl_cblas.h>
 
 #define USEHALFSPACE            1u 
 #define MINBRANCHSZEFACT        1.0f 
 #define KH_TOL1                 0.0f 
 #define KH_TOL2                 0.5f 
-#define KH_FULL_DIST            15.0f
+#define KH_FULL_DIST            10.0f
 #define KH_TOL_DIST             30.0f
 #define MININTSEISSTRESSCHANGE  100000.0f 
 
@@ -2925,7 +2925,7 @@ int main(int argc, char **argv)
     
     
     
-    unsigned int uTemp0,   uTemp1,   uEQstillOn,   uTotlRuptT,   uActElmG,   uActElmL,   uMRFlgth,   uUsedLoadStep;
+    unsigned int uTemp0,   uTemp1,   uTemp2,   uEQstillOn,   uTotlRuptT,   uActElmG,   uActElmL,   uMRFlgth,   uUsedLoadStep;
     float fNxtLoadStep, fNxtHalfStep,   fTemp0,   fTemp1,   fTemp2,   fTemp3,    fTemp4,   fTemp5,   fTemp6,   fTemp7;
     float fMaxLoadStep      = FloatPow(2.0f, uLoadStep_POW2);
     float fLoadingStepInYrs = fIntSeisLoadStep/365.25f;
@@ -3046,19 +3046,20 @@ int main(int argc, char **argv)
                 
                 if ( uTemp0 == 1)
                 {   for (j = 0u; j < iOffstPosB[iSIZE]; j++) 
-                    {   uTemp0 = (unsigned int)fBslipG[j*4 +0]; 
-                        uTemp1 = uKh_FBps2[i][uTemp0]; 
+                    {   uTemp2 = (unsigned int)fBslipG[j*4 +0]; 
+                        uTemp1 = uKh_FBps2[i][uTemp2]; 
                         fTemp0 = fBslipG[j*4 +1];
                         fTemp1 = fBslipG[j*4 +2];
                         fTemp2 = fBslipG[j*4 +3];
+                        
                         fFTempVal[i*5 +0] += (fTemp0*fKh_FBvalstk[i][uTemp1*3 +0] + fTemp1*fKh_FBvalstk[i][uTemp1*3 +1] + fTemp2*fKh_FBvalstk[i][uTemp1*3 +2]);
                         fFTempVal[i*5 +1] += (fTemp0*fKh_FBvaldip[i][uTemp1*3 +0] + fTemp1*fKh_FBvaldip[i][uTemp1*3 +1] + fTemp2*fKh_FBvaldip[i][uTemp1*3 +2]);
                 }   }
                 else if (uTemp0 == 2)
                 {   memset(fBslip, 0, 3*uKh_FBcnt[i]*sizeof(float) );
                     for (j = 0u; j < iOffstPosB[iSIZE]; j++) 
-                    {   uTemp0 = (unsigned int)fBslipG[j*4 +0]; 
-                        uTemp1 = uKh_FBps2[i][uTemp0]; 
+                    {   uTemp2 = (unsigned int)fBslipG[j*4 +0]; 
+                        uTemp1 = uKh_FBps2[i][uTemp2]; 
                         fBslip[uTemp1*3 +0] += fBslipG[j*4 +1];
                         fBslip[uTemp1*3 +1] += fBslipG[j*4 +2];
                         fBslip[uTemp1*3 +2] += fBslipG[j*4 +3];
@@ -3072,8 +3073,8 @@ int main(int argc, char **argv)
                 
                 if ( uTemp0 == 1)
                 {   for (j = 0u; j < iOffstPosF[iSIZE]; j++) 
-                    {   uTemp0 = (unsigned int)fFslipG[j*3 +0]; 
-                        uTemp1 = uKh_FFps2[i][uTemp0]; 
+                    {   uTemp2 = (unsigned int)fFslipG[j*3 +0]; 
+                        uTemp1 = uKh_FFps2[i][uTemp2]; 
                         fTemp0 = fFslipG[j*3 +1];
                         fTemp1 = fFslipG[j*3 +2];
                         fFTempVal[i*5 +0] += (fTemp0*fKh_FFvalstk[i][uTemp1*2 +0] + fTemp1*fKh_FFvalstk[i][uTemp1*2 +1]);
@@ -3082,8 +3083,8 @@ int main(int argc, char **argv)
                 else if (uTemp0 == 2)
                 {   memset(fFslip, 0, 2*uKh_FFcnt[i]*sizeof(float) );
                     for (j = 0u; j < iOffstPosF[iSIZE]; j++) 
-                    {   uTemp0 = (unsigned int)fFslipG[j*3 +0]; 
-                        uTemp1 = uKh_FFps2[i][uTemp0]; 
+                    {   uTemp2 = (unsigned int)fFslipG[j*3 +0]; 
+                        uTemp1 = uKh_FFps2[i][uTemp2]; 
                         fFslip[uTemp1*2 +0] += fFslipG[j*3 +1];
                         fFslip[uTemp1*2 +1] += fFslipG[j*3 +2];
                     }
@@ -3135,8 +3136,8 @@ int main(int argc, char **argv)
             
             if ( uTemp0 == 1)
             {   for (j = 0u; j < iOffstPosB[iSIZE]; j++) 
-                {   uTemp0 = (unsigned int)fBslipG[j*4 +0]; 
-                    uTemp1 = uKh_BBps2[i][uTemp0]; 
+                {   uTemp2 = (unsigned int)fBslipG[j*4 +0]; 
+                    uTemp1 = uKh_BBps2[i][uTemp2]; 
                     fTemp0 = fBslipG[j*4 +1];
                     fTemp1 = fBslipG[j*4 +2];
                     fTemp2 = fBslipG[j*4 +3];
@@ -3148,8 +3149,8 @@ int main(int argc, char **argv)
             else if ( uTemp0 == 2)
             {   memset(fBslip, 0, 3*uKh_BBcnt[i]*sizeof(float) );
                 for (j = 0u; j < iOffstPosB[iSIZE]; j++) 
-                {   uTemp0 = (unsigned int)fBslipG[j*4 +0]; 
-                    uTemp1 = uKh_BBps2[i][uTemp0]; 
+                {   uTemp2 = (unsigned int)fBslipG[j*4 +0]; 
+                    uTemp1 = uKh_BBps2[i][uTemp2]; 
                     fBslip[uTemp1*3 +0] += fBslipG[j*4 +1];
                     fBslip[uTemp1*3 +1] += fBslipG[j*4 +2];
                     fBslip[uTemp1*3 +2] += fBslipG[j*4 +3];
@@ -3164,8 +3165,8 @@ int main(int argc, char **argv)
             
             if ( uTemp0 == 1)
             {   for (j = 0u; j < iOffstPosF[iSIZE]; j++) 
-                {   uTemp0 = (unsigned int)fFslipG[j*3 +0]; 
-                    uTemp1 = uKh_BFps2[i][uTemp0]; 
+                {   uTemp2 = (unsigned int)fFslipG[j*3 +0]; 
+                    uTemp1 = uKh_BFps2[i][uTemp2]; 
                     fTemp0 = fFslipG[j*3 +1];
                     fTemp1 = fFslipG[j*3 +2];
                     
@@ -3176,8 +3177,8 @@ int main(int argc, char **argv)
             else if ( uTemp0 == 2)
             {   memset(fFslip, 0, 2*uKh_BFcnt[i]*sizeof(float) );
                 for (j = 0u; j < iOffstPosF[iSIZE]; j++) 
-                {   uTemp0 = (unsigned int)fFslipG[j*3 +0]; 
-                    uTemp1 = uKh_BFps2[i][uTemp0]; 
+                {   uTemp2 = (unsigned int)fFslipG[j*3 +0]; 
+                    uTemp1 = uKh_BFps2[i][uTemp2]; 
                     fFslip[uTemp1*2 +0] += fFslipG[j*3 +1];
                     fFslip[uTemp1*2 +1] += fFslipG[j*3 +2];
                 }
@@ -3314,8 +3315,8 @@ int main(int argc, char **argv)
                     
                     if (uTemp0 == 1)
                     {   for (j = 0u; j < iOffstPosF[iSIZE]; j++)
-                        {   uTemp0 = (unsigned int)fFslipG[j*3 +0]; 
-                            uTemp1 = uKh_FFps2[i][uTemp0]; 
+                        {   uTemp2 = (unsigned int)fFslipG[j*3 +0]; 
+                            uTemp1 = uKh_FFps2[i][uTemp2]; 
                             fTemp0 = fFslipG[j*3 +1]; 
                             fTemp1 = fFslipG[j*3 +2]; 
                             
@@ -3326,8 +3327,8 @@ int main(int argc, char **argv)
                     else if (uTemp0 == 2)
                     {   memset(fFslip, 0, 2*uKh_FFcnt[i]*sizeof(float) );
                         for (j = 0u; j < iOffstPosF[iSIZE]; j++) 
-                        {   uTemp0 = (unsigned int)fFslipG[j*3 +0]; 
-                            uTemp1 = uKh_FFps2[i][uTemp0]; 
+                        {   uTemp2 = (unsigned int)fFslipG[j*3 +0]; 
+                            uTemp1 = uKh_FFps2[i][uTemp2]; 
                             fFslip[uTemp1*2 +0] += fFslipG[j*3 +1];
                             fFslip[uTemp1*2 +1] += fFslipG[j*3 +2];
                         }
@@ -3367,8 +3368,8 @@ int main(int argc, char **argv)
                     uTemp0 = (iOffstPosF[iSIZE] <= 0)*0            + (iOffstPosF[iSIZE] > 0)*uTemp0;
                     if (uTemp0 == 1)
                     {   for (j = 0u; j < iOffstPosF[iSIZE]; j++)
-                        {   uTemp0 = (unsigned int)fFslipG[j*3 +0]; 
-                            uTemp1 = uKh_BFps2[i][uTemp0]; 
+                        {   uTemp2 = (unsigned int)fFslipG[j*3 +0]; 
+                            uTemp1 = uKh_BFps2[i][uTemp2]; 
                             fTemp0 = fFslipG[j*3 +1]; 
                             fTemp1 = fFslipG[j*3 +2]; 
                             
@@ -3379,8 +3380,8 @@ int main(int argc, char **argv)
                     else if (uTemp0 == 2)
                     {   memset(fFslip, 0, 2*uKh_BFcnt[i]*sizeof(float) );
                         for (j = 0u; j < iOffstPosF[iSIZE]; j++) 
-                        {   uTemp0 = (unsigned int)fFslipG[j*3 +0]; 
-                            uTemp1 = uKh_BFps2[i][uTemp0]; 
+                        {   uTemp2 = (unsigned int)fFslipG[j*3 +0]; 
+                            uTemp1 = uKh_BFps2[i][uTemp2]; 
                             fFslip[uTemp1*2 +0] += fFslipG[j*3 +1];
                             fFslip[uTemp1*2 +1] += fFslipG[j*3 +2];
                         }
@@ -3390,7 +3391,8 @@ int main(int argc, char **argv)
                     }
                     fBEvent[i*9 +7] = sqrtf(fBEvent[i*9 +0]*fBEvent[i*9 +0] + fBEvent[i*9 +1]*fBEvent[i*9 +1]);
                     fBEvent[i*9 +8] = fabs(fBEvent[i*9 +2]);
-            }   }
+                }
+            }
             
             
             if (uActElmG >= uMinElemNum4Cat)
