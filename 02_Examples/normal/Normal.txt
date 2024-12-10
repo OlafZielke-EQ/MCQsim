@@ -1,0 +1,30 @@
+Run_Parameter_Information
+--------------------------
+InputName:                     Normal
+Realization_Number:            1
+CatalogTypeNr:                 3
+PlotCatalog2Screen:            1
+RandSeedValue:                 1001
+MinElementNum4Catalog:         1
+ContinueCatalog:               0
+LoadPrevious_Kh_mat:           1
+Kh_mat_file_2_load:            Normal_Khmat.dat
+--------------------------
+StoreSTF4LargeEQs(0/1):        1
+MinMagnitude4STF:              7.0f
+UseRuptPropag(0/1):            0
+MinMagnitude4RupProp:          6.5f
+--------------------------
+IntSeisLoadStep(days):         1.0f
+pow2forInterSeisSteps:         8
+--------------------------
+Visco_AfterSlip(years):        3.0f
+Visco_DeepRelax(years):        20.0f
+--------------------------
+HealingDuringCoseis:           0.05f
+OvershootFraction:             1.2f
+PreStressFraction:             0.90f
+MinCoSeisSlipRate(m/s):        5.0E-3
+--------------------------
+EQrecordLength(years):         1500.0f
+--------------------------
