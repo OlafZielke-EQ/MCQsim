@@ -8,6 +8,8 @@ The most recent version of _MCQsim_, provided here, employs _QuadTree_ and _H-ma
 
 > Zielke, O., and P.M. Mai (2023). MCQsim: A Multicycle Earthquake Simulator. Bull. Seismol. Soc. Am. 113(3), 889-908, doi:10.1785/0120220248. [*.pdf (open access)](https://pubs.geoscienceworld.org/ssa/bssa/article/113/3/889/622487/MCQsim-A-Multicycle-Earthquake-Simulator)
 
+> Zielke, O., and P.M. Mai (2025). Does Subsurface Fault Geometry Affect Aleatory Variability in Modeled Strike-Slip Fault Behavior?. Bull. Seismol. Soc. Am. XX(Y), 1-17, doi:10.1785/0120240152.
+
 **Contact:** olaf.zielke@kaust.edu.sa
 
 ## SAMPLE OUTPUTS
