@@ -6,16 +6,16 @@
 #include <mpi.h>
 #include <time.h>
 #include <limits.h>
-
-#include <gsl/gsl_cblas.h>
+#include <cblas.h>
+//#include <gsl/gsl_cblas.h>
 
 #define USEHALFSPACE            1u 
-#define MINBRANCHSZEFACT        1.0f 
+#define MINBRANCHSZEFACT        1.5f 
 #define KH_TOL1                 0.0f 
-#define KH_TOL2                 0.5f 
-#define KH_FULL_DIST            10.0f
-#define KH_TOL_DIST             30.0f
-#define MININTSEISSTRESSCHANGE  100000.0f 
+#define KH_TOL2                 0.3f 
+#define KH_FULL_DIST            6.0f
+#define KH_TOL_DIST             12.0f
+#define MININTSEISSTRESSCHANGE  50000.0f 
 
 #define INTERNALFRICTION        0.75f 
 #define INTERNALCOHESION        5.0E+6f 
@@ -23,19 +23,12 @@
 #define MAXITERATION4BOUNDARY   200u 
 #define MAXMOMRATEFUNCLENGTH    5000u 
 
-
 #define IA 16807
 #define IM 2147483647
 #define AM (1.0/IM)
 #define IQ 127773
 #define IR 2836
 #define MASK 123459876
-
-
-
-
-
-
 
 #define MAX(A,B) ( ((A) >   (B))  *(A)   +  ((A) <= (B))  *(B)    )
 #define MIN(A,B) ( ((A) <   (B))  *(A)   +  ((A) >= (B))  *(B)    )
@@ -54,7 +47,6 @@ float    VectorLength(float fTempVect[3]);
 void       NrmlzeVect(float fTempVect[3]);
 void FindMainStressDir(float fSMaxVect[3], float fStrIn[6]);
 void GetStkAndDipVect(float fNrm[3], float fStk[3], float fDip[3]);
-void GetGlobVertsForRectangle(float fP1[3], float fP2[3], float fP3[3], float fP4[3], float *fKh_Brch, unsigned int uStart);
 
 
 int main(int argc, char **argv)
@@ -76,7 +68,7 @@ int main(int argc, char **argv)
     
     double dAddedTime = 0.0,   dRecordLength = 0.0,   dMeanRecurTime = 0.0; 
     long lSeed;
-    unsigned int uFPNum = 0u,   uFVNum = 0u,   uBPNum = 0u,   uBVNum = 0u,   uEQcntr = 0u,   uEQtickr = 0u, uFSegN = 0u,   uBSegN = 0u,   uMaxPNum,   uMaxSNum;
+    unsigned int uFPNum = 0u,   uFVNum = 0u,   uBPNum = 0u,   uBVNum = 0u,   uEQcntr = 0u,   uEQtickr = 0u, uFSegN = 0u,   uBSegN = 0u;
     unsigned int uRunNum = 0u,   uCatType = 0u,   uUseTimeProp = 0u,   uChgBtwEQs = 0u,   uContPrevRun = 0u,   uLoadPrev_Khmat = 0u,   uPlotCatalog2Screen = 0u,   uMinElemNum4Cat = 0u,   uLoadStep_POW2 = 0u, uStoreSTF4LargeEQs = 0u;
     float fPreStressFract = 0.0f,   fOvershootFract = 0.0f,   fMinCoSeisSlipRate = 0.0f,   fIntSeisLoadStep = 0.0f,   fMinMag4STF = 0.0f,   fMinMag4Prop = 0.0f,   fAfterSlipTime = 0.0f,   fDeepRelaxTime = 0.0f,   fHealFact = 0.0f;
     float fFltSide,   fBndSide,   fElemArea,   fBoundArea,  fUnitSlipF,   fUnitSlipB;
@@ -144,7 +136,6 @@ int main(int argc, char **argv)
         }
     }
     
-    uMaxPNum = MAX(uFPNum, uBPNum);
     int  uFBASEelem = (int)(uFPNum/iSIZE); 
     int  uFADDelem  = (int)(uFPNum%iSIZE);
     int  uBBASEelem = (int)(uBPNum/iSIZE); 
@@ -356,8 +347,6 @@ int main(int argc, char **argv)
         fBndSide    = (uBPNum > 0u) ? fBndSide/(float)uBPNum   : fBndSide;
         fBoundArea  = (uBPNum > 0u) ? fBoundArea/(float)uBPNum : fBoundArea;
         
-        uMaxSNum   = MAX(uFSegN, uBSegN);
-        
         fUnitSlipF = fFltSide *1.0E-5f; 
         fUnitSlipB = (fBoundArea/fElemArea)*fUnitSlipF;
         
@@ -440,10 +429,12 @@ int main(int argc, char **argv)
             for (i = 0u; i < iFOFFSET[iRANK]; i++)
             {   iGlobPos = i+ iFSTART[iRANK];  
                 if (uF_temp[iGlobPos*7 +3] == uNxtSegID)
-                {   SubtractVect3(fDiff, &fF_temp[iPnt0*16 +0], &fF_temp[iGlobPos*16 +0]);
-                    fDist          = VectorLength(fDiff);
-                    in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*iGlobPos;
-                    in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                {   for (j = 0; j < 3; j++)
+                    {   SubtractVect3(fDiff, &fF_temp[iPnt0*16 +0], &fFV_temp[uF_temp[iGlobPos*7 +j]*4 +0]);
+                        fDist          = VectorLength(fDiff);
+                        in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*uF_temp[iGlobPos*7 +j];
+                        in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                    }
             }   }
             
             MPI_Allreduce(in, out, 1, MPI_FLOAT_INT, MPI_MAXLOC, MPI_COMM_WORLD);
@@ -454,10 +445,12 @@ int main(int argc, char **argv)
             for (i = 0u; i < iFOFFSET[iRANK]; i++)
             {   iGlobPos = i+ iFSTART[iRANK];  
                 if (uF_temp[iGlobPos*7 +3] == uNxtSegID)
-                {   SubtractVect3(fDiff, &fF_temp[iPntA*16 +0], &fF_temp[iGlobPos*16 +0]);
-                     fDist          = VectorLength(fDiff);
-                    in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*iGlobPos;
-                    in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                {   for (j = 0; j < 3; j++)
+                    {   SubtractVect3(fDiff, &fFV_temp[iPntA*4 +0], &fFV_temp[uF_temp[iGlobPos*7 +j]*4 +0]);
+                        fDist          = VectorLength(fDiff);
+                        in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*uF_temp[iGlobPos*7 +j];
+                        in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                    }
             }   }
             
             MPI_Allreduce(in, out, 1, MPI_FLOAT_INT, MPI_MAXLOC, MPI_COMM_WORLD);
@@ -468,12 +461,14 @@ int main(int argc, char **argv)
             for (i = 0u; i < iFOFFSET[iRANK]; i++)
             {   iGlobPos = i+ iFSTART[iRANK];  
                 if (uF_temp[iGlobPos*7 +3] == uNxtSegID)
-                {   SubtractVect3(fDiff, &fF_temp[iPntA*16 +0], &fF_temp[iGlobPos*16 +0]);
-                    fDist          = VectorLength(fDiff);
-                    SubtractVect3(fDiff, &fF_temp[iPntB*16 +0], &fF_temp[iGlobPos*16 +0]);
-                    fDist         += VectorLength(fDiff);
-                    in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*iGlobPos;
-                    in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                {   for (j = 0; j < 3; j++)
+                    {   SubtractVect3(fDiff, &fFV_temp[iPntA*4 +0], &fFV_temp[uF_temp[iGlobPos*7 +j]*4 +0]);
+                        fDist          = VectorLength(fDiff);
+                        SubtractVect3(fDiff, &fFV_temp[iPntB*4 +0], &fFV_temp[uF_temp[iGlobPos*7 +j]*4 +0]);
+                        fDist         += VectorLength(fDiff);
+                        in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*uF_temp[iGlobPos*7 +j];
+                        in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                    }
             }   }
             
             MPI_Allreduce(in, out, 1, MPI_FLOAT_INT, MPI_MAXLOC, MPI_COMM_WORLD);
@@ -484,20 +479,26 @@ int main(int argc, char **argv)
             for (i = 0u; i < iFOFFSET[iRANK]; i++)
             {   iGlobPos = i+ iFSTART[iRANK];  
                 if (uF_temp[iGlobPos*7 +3] == uNxtSegID)
-                {   SubtractVect3(fDiff, &fF_temp[iPntC*16 +0], &fF_temp[iGlobPos*16 +0]);
-                    fDist          = VectorLength(fDiff);
-                    in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*iGlobPos;
-                    in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                {   for (j = 0; j < 3; j++)
+                    {   SubtractVect3(fDiff, &fFV_temp[iPntA*4 +0], &fFV_temp[uF_temp[iGlobPos*7 +j]*4 +0]);
+                        fDist          = VectorLength(fDiff);
+                        SubtractVect3(fDiff, &fFV_temp[iPntB*4 +0], &fFV_temp[uF_temp[iGlobPos*7 +j]*4 +0]);
+                        fDist         += VectorLength(fDiff);
+                        SubtractVect3(fDiff, &fFV_temp[iPntC*4 +0], &fFV_temp[uF_temp[iGlobPos*7 +j]*4 +0]);
+                        fDist         += VectorLength(fDiff);
+                        in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*uF_temp[iGlobPos*7 +j];
+                        in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                    }
             }   }
             
             MPI_Allreduce(in, out, 1, MPI_FLOAT_INT, MPI_MAXLOC, MPI_COMM_WORLD);
             
             iPntD = out[0].iGlobPos;
             
-            memcpy(fPA, &fF_temp[iPntA*16 +0], 3u*sizeof(float));
-            memcpy(fPB, &fF_temp[iPntB*16 +0], 3u*sizeof(float));
-            memcpy(fPC, &fF_temp[iPntC*16 +0], 3u*sizeof(float));
-            memcpy(fPD, &fF_temp[iPntD*16 +0], 3u*sizeof(float));
+            memcpy(fPA, &fFV_temp[iPntA*4 +0], 3u*sizeof(float));
+            memcpy(fPB, &fFV_temp[iPntB*4 +0], 3u*sizeof(float));
+            memcpy(fPC, &fFV_temp[iPntC*4 +0], 3u*sizeof(float));
+            memcpy(fPD, &fFV_temp[iPntD*4 +0], 3u*sizeof(float));
             SubtractVect3(fvt1, fPB, fPA);              NrmlzeVect(fvt1);
             SubtractVect3(fvt2, fPC, fPA);              NrmlzeVect(fvt2);
             CrossProduct(fNrm, fvt1, fvt2);             NrmlzeVect(fNrm);
@@ -506,24 +507,25 @@ int main(int argc, char **argv)
             SubtractVect3(fvt1, fPA, fPB);              NrmlzeVect(fvt1);
             SubtractVect3(fvt2, fPD, fPB);              NrmlzeVect(fvt2);
             CrossProduct(fvt3, fvt1, fvt2);             NrmlzeVect(fvt3);
-            fTemp = acosf(fNrm[0]*fvt3[0] + fNrm[1]*fvt3[1] + fNrm[2]*fvt3[2])*(180.0f/M_PI);
+            fTemp = fabs(acosf(fNrm[0]*fvt3[0] + fNrm[1]*fvt3[1] + fNrm[2]*fvt3[2]))*(180.0f/M_PI);
             if (fTemp >= 90.0f)  {           fvt3[0] *= -1.0f;       fvt3[1] *= -1.0f;       fvt3[2] *= -1.0f;}
             
             SubtractVect3(fvt1, fPA, fPC);              NrmlzeVect(fvt1);
             SubtractVect3(fvt2, fPD, fPC);              NrmlzeVect(fvt2);
             CrossProduct(fvt4, fvt1, fvt2);             NrmlzeVect(fvt4);
-            fTemp = acosf(fNrm[0]*fvt4[0] + fNrm[1]*fvt4[1] + fNrm[2]*fvt4[2])*(180.0f/M_PI);
+            fTemp = fabs(acosf(fNrm[0]*fvt4[0] + fNrm[1]*fvt4[1] + fNrm[2]*fvt4[2]))*(180.0f/M_PI);
             if (fTemp >= 90.0f)  {           fvt4[0] *= -1.0f;       fvt4[1] *= -1.0f;       fvt4[2] *= -1.0f;}
             
             SubtractVect3(fvt1, fPB, fPD);              NrmlzeVect(fvt1);
             SubtractVect3(fvt2, fPC, fPD);              NrmlzeVect(fvt2);
             CrossProduct(fvt5, fvt1, fvt2);             NrmlzeVect(fvt5);
-            fTemp = acosf(fNrm[0]*fvt5[0] + fNrm[1]*fvt5[1] + fNrm[2]*fvt5[2])*(180.0f/M_PI);
+            fTemp = fabs(acosf(fNrm[0]*fvt5[0] + fNrm[1]*fvt5[1] + fNrm[2]*fvt5[2]))*(180.0f/M_PI);
             if (fTemp >= 90.0f)  {           fvt5[0] *= -1.0f;       fvt5[1] *= -1.0f;       fvt5[2] *= -1.0f;}
             
-            fF_SegVals[uNxtSegID*6 +3] = (fNrm[0] +fvt3[0] +fvt4[0] +fvt5[0])/4.0f;
-            fF_SegVals[uNxtSegID*6 +4] = (fNrm[1] +fvt3[1] +fvt4[1] +fvt5[1])/4.0f;
-            fF_SegVals[uNxtSegID*6 +5] = (fNrm[2] +fvt3[2] +fvt4[2] +fvt5[2])/4.0f;
+            fF_SegVals[uNxtSegID*6 +3] = (fNrm[0] +fvt3[0] +fvt4[0] +fvt5[0]);
+            fF_SegVals[uNxtSegID*6 +4] = (fNrm[1] +fvt3[1] +fvt4[1] +fvt5[1]);
+            fF_SegVals[uNxtSegID*6 +5] = (fNrm[2] +fvt3[2] +fvt4[2] +fvt5[2]);
+            NrmlzeVect(&fF_SegVals[uNxtSegID*6 +3]);
             
             fTemp1 = 0.0f;
             for (i = 0u; i < uFPNum; i++)
@@ -539,7 +541,7 @@ int main(int argc, char **argv)
                     SubtractVect3(fvt1, fPB, fPA);              NrmlzeVect(fvt1);
                     SubtractVect3(fvt2, fPC, fPA);              NrmlzeVect(fvt2);
                     CrossProduct(fNrm, fvt1, fvt2);             NrmlzeVect(fNrm);
-                    fTemp = acosf(fF_SegVals[uNxtSegID*6 +3]*fNrm[0] + fF_SegVals[uNxtSegID*6 +4]*fNrm[1] + fF_SegVals[uNxtSegID*6 +5]*fNrm[2])*(180.0f/M_PI);
+                    fTemp = fabs(acosf(fF_SegVals[uNxtSegID*6 +3]*fNrm[0] + fF_SegVals[uNxtSegID*6 +4]*fNrm[1] + fF_SegVals[uNxtSegID*6 +5]*fNrm[2]))*(180.0f/M_PI);
                     
                     uTemp0          = (fTemp >= 90.0f)*1u + (fTemp < 90.0f)*0u;
                     uTemp1          = uF_temp[i*7 +1];
@@ -570,10 +572,12 @@ int main(int argc, char **argv)
             for (i = 0u; i < iBOFFSET[iRANK]; i++)
             {   iGlobPos = i+ iBSTART[iRANK];
                 if (uB_temp[iGlobPos*4 +3] == uNxtSegID)
-                {   SubtractVect3(fDiff, &fB_temp[iPnt0*16 +0], &fB_temp[iGlobPos*16 +0]);
-                    fDist          = VectorLength(fDiff);
-                    in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*iGlobPos;
-                    in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                {   for (j = 0; j < 3; j++)
+                    {   SubtractVect3(fDiff, &fB_temp[iPnt0*16 +0], &fBV_temp[uB_temp[iGlobPos*4 +j]*3 +0]);
+                        fDist          = VectorLength(fDiff);
+                        in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*uB_temp[iGlobPos*4 +j];
+                        in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                    }
             }   }
             
             MPI_Allreduce(in, out, 1, MPI_FLOAT_INT, MPI_MAXLOC, MPI_COMM_WORLD);
@@ -584,10 +588,12 @@ int main(int argc, char **argv)
             for (i = 0u; i < iBOFFSET[iRANK]; i++)
             {   iGlobPos = i+ iBSTART[iRANK];
                 if (uB_temp[iGlobPos*4 +3] == uNxtSegID)
-                {   SubtractVect3(fDiff, &fB_temp[iPntA*16 +0], &fB_temp[iGlobPos*16 +0]);
-                     fDist          = VectorLength(fDiff);
-                    in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*iGlobPos;
-                    in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                {   for (j = 0; j < 3; j++)
+                    {   SubtractVect3(fDiff, &fBV_temp[iPntA*3 +0], &fBV_temp[uB_temp[iGlobPos*4 +j]*3 +0]);
+                        fDist          = VectorLength(fDiff);
+                        in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*uB_temp[iGlobPos*4 +j];
+                        in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                    }
             }   }
             
             MPI_Allreduce(in, out, 1, MPI_FLOAT_INT, MPI_MAXLOC, MPI_COMM_WORLD);
@@ -598,12 +604,14 @@ int main(int argc, char **argv)
             for (i = 0u; i < iBOFFSET[iRANK]; i++)
             {   iGlobPos = i+ iBSTART[iRANK];  
                 if (uB_temp[iGlobPos*4 +3] == uNxtSegID)
-                {   SubtractVect3(fDiff, &fB_temp[iPntA*16 +0], &fB_temp[iGlobPos*16 +0]);
-                    fDist          = VectorLength(fDiff);
-                    SubtractVect3(fDiff, &fB_temp[iPntB*16 +0], &fB_temp[iGlobPos*16 +0]);
-                    fDist         += VectorLength(fDiff);
-                    in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*iGlobPos;
-                    in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                {   for (j = 0; j < 3; j++)
+                    {   SubtractVect3(fDiff, &fBV_temp[iPntA*3 +0], &fBV_temp[uB_temp[iGlobPos*4 +j]*3 +0]);
+                        fDist          = VectorLength(fDiff);
+                        SubtractVect3(fDiff, &fBV_temp[iPntB*3 +0], &fBV_temp[uB_temp[iGlobPos*4 +j]*3 +0]);
+                        fDist         += VectorLength(fDiff);
+                        in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*uB_temp[iGlobPos*4 +j];
+                        in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                    }
             }   }
             
             MPI_Allreduce(in, out, 1, MPI_FLOAT_INT, MPI_MAXLOC, MPI_COMM_WORLD);
@@ -614,20 +622,22 @@ int main(int argc, char **argv)
             for (i = 0u; i < iBOFFSET[iRANK]; i++)
             {   iGlobPos = i+ iBSTART[iRANK];  
                 if (uB_temp[iGlobPos*4 +3] == uNxtSegID)
-                {   SubtractVect3(fDiff, &fB_temp[iPntC*16 +0], &fB_temp[iGlobPos*16 +0]);
-                    fDist          = VectorLength(fDiff);
-                    in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*iGlobPos;
-                    in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                {   for (j = 0; j < 3; j++)
+                    {   SubtractVect3(fDiff, &fBV_temp[iPntC*3 +0], &fBV_temp[uB_temp[iGlobPos*4 +j]*3 +0]);
+                        fDist          = VectorLength(fDiff);
+                        in[0].iGlobPos = (fDist < in[0].fMaxDist)*in[0].iGlobPos  +  (fDist >= in[0].fMaxDist)*uB_temp[iGlobPos*4 +j];
+                        in[0].fMaxDist = (fDist < in[0].fMaxDist)*in[0].fMaxDist  +  (fDist >= in[0].fMaxDist)*fDist;
+                    }
             }   }
             
             MPI_Allreduce(in, out, 1, MPI_FLOAT_INT, MPI_MAXLOC, MPI_COMM_WORLD);
             
             iPntD = out[0].iGlobPos;
             
-            memcpy(fPA, &fB_temp[iPntA*16 +0], 3u*sizeof(float));
-            memcpy(fPB, &fB_temp[iPntB*16 +0], 3u*sizeof(float));
-            memcpy(fPC, &fB_temp[iPntC*16 +0], 3u*sizeof(float));
-            memcpy(fPD, &fB_temp[iPntD*16 +0], 3u*sizeof(float));
+            memcpy(fPA, &fBV_temp[iPntA*3 +0], 3u*sizeof(float));
+            memcpy(fPB, &fBV_temp[iPntB*3 +0], 3u*sizeof(float));
+            memcpy(fPC, &fBV_temp[iPntC*3 +0], 3u*sizeof(float));
+            memcpy(fPD, &fBV_temp[iPntD*3 +0], 3u*sizeof(float));
             SubtractVect3(fvt1, fPB, fPA);              NrmlzeVect(fvt1);
             SubtractVect3(fvt2, fPC, fPA);              NrmlzeVect(fvt2);
             CrossProduct(fNrm, fvt1, fvt2);             NrmlzeVect(fNrm);
@@ -636,19 +646,19 @@ int main(int argc, char **argv)
             SubtractVect3(fvt1, fPA, fPB);              NrmlzeVect(fvt1);
             SubtractVect3(fvt2, fPD, fPB);              NrmlzeVect(fvt2);
             CrossProduct(fvt3, fvt1, fvt2);             NrmlzeVect(fvt3);
-            fTemp = acosf(fNrm[0]*fvt3[0] + fNrm[1]*fvt3[1] + fNrm[2]*fvt3[2])*(180.0f/M_PI);
+            fTemp = fabs(acosf(fNrm[0]*fvt3[0] + fNrm[1]*fvt3[1] + fNrm[2]*fvt3[2]))*(180.0f/M_PI);
             if (fTemp >= 90.0f)  {           fvt3[0] *= -1.0f;       fvt3[1] *= -1.0f;       fvt3[2] *= -1.0f;}
             
             SubtractVect3(fvt1, fPA, fPC);              NrmlzeVect(fvt1);
             SubtractVect3(fvt2, fPD, fPC);              NrmlzeVect(fvt2);
             CrossProduct(fvt4, fvt1, fvt2);             NrmlzeVect(fvt4);
-            fTemp = acosf(fNrm[0]*fvt4[0] + fNrm[1]*fvt4[1] + fNrm[2]*fvt4[2])*(180.0f/M_PI);
+            fTemp = fabs(acosf(fNrm[0]*fvt4[0] + fNrm[1]*fvt4[1] + fNrm[2]*fvt4[2]))*(180.0f/M_PI);
             if (fTemp >= 90.0f)  {           fvt4[0] *= -1.0f;       fvt4[1] *= -1.0f;       fvt4[2] *= -1.0f;}
             
             SubtractVect3(fvt1, fPB, fPD);              NrmlzeVect(fvt1);
             SubtractVect3(fvt2, fPC, fPD);              NrmlzeVect(fvt2);
             CrossProduct(fvt5, fvt1, fvt2);             NrmlzeVect(fvt5);
-            fTemp = acosf(fNrm[0]*fvt5[0] + fNrm[1]*fvt5[1] + fNrm[2]*fvt5[2])*(180.0f/M_PI);
+            fTemp = fabs(acosf(fNrm[0]*fvt5[0] + fNrm[1]*fvt5[1] + fNrm[2]*fvt5[2]))*(180.0f/M_PI);
             if (fTemp >= 90.0f)  {           fvt5[0] *= -1.0f;       fvt5[1] *= -1.0f;       fvt5[2] *= -1.0f;}
             
             fB_SegVals[uNxtSegID*6 +3] = (fNrm[0] +fvt3[0] +fvt4[0] +fvt5[0])/4.0f;
@@ -669,7 +679,7 @@ int main(int argc, char **argv)
                     SubtractVect3(fvt1, fPB, fPA);              NrmlzeVect(fvt1);
                     SubtractVect3(fvt2, fPC, fPA);              NrmlzeVect(fvt2);
                     CrossProduct(fNrm, fvt1, fvt2);             NrmlzeVect(fNrm);
-                    fTemp = acosf(fB_SegVals[uNxtSegID*6 +3]*fNrm[0] + fB_SegVals[uNxtSegID*6 +4]*fNrm[1] + fB_SegVals[uNxtSegID*6 +5]*fNrm[2])*(180.0f/M_PI);
+                    fTemp = fabs(acosf(fB_SegVals[uNxtSegID*6 +3]*fNrm[0] + fB_SegVals[uNxtSegID*6 +4]*fNrm[1] + fB_SegVals[uNxtSegID*6 +5]*fNrm[2]))*(180.0f/M_PI);
                     
                     uTemp0          = (fTemp >= 90.0f)*1u + (fTemp < 90.0f)*0u;
                     uTemp1          = uB_temp[i*4 +1];
@@ -701,8 +711,8 @@ int main(int argc, char **argv)
             if (uF_temp[iGlobPos*7 +5] == 1u)
             {   fFEvent[i*17 +8]  = 0.0f;
                 fFEvent[i*17 +9]  = 0.0f;
-                fFEvent[i*17 +13] = 1.0E-3f*fF_temp[iGlobPos*16 +4] *cosf(fF_temp[iGlobPos*16 +5]*(M_PI/180.0f));
-                fFEvent[i*17 +14] = 1.0E-3f*fF_temp[iGlobPos*16 +4] *sinf(fF_temp[iGlobPos*16 +5]*(M_PI/180.0f));
+                fFEvent[i*17 +13] = 0.001f*fF_temp[iGlobPos*16 +4] *cosf(fF_temp[iGlobPos*16 +5]*(M_PI/180.0f));
+                fFEvent[i*17 +14] = 0.001f*fF_temp[iGlobPos*16 +4] *sinf(fF_temp[iGlobPos*16 +5]*(M_PI/180.0f));
                 
             } 
             else
@@ -768,58 +778,66 @@ int main(int argc, char **argv)
     
     if ((uLoadPrev_Khmat == 0) || (uLoadPrev_Khmat == 1)) 
     {   
-        unsigned int u_MaxBrLvl    = 20u; 
-        unsigned int uF_TotalOffs   = 0u; 
-        unsigned int uB_TotalOffs   = 0u; 
-        unsigned int *uF_OTElem    = calloc((uFPNum*u_MaxBrLvl), sizeof *uF_OTElem );
-        unsigned int *uB_OTElem    = calloc((uBPNum*u_MaxBrLvl), sizeof *uB_OTElem );
-        unsigned int *uF_OTPrtChld = calloc((4*uFPNum*5),       sizeof *uF_OTPrtChld ); 
-        unsigned int *uB_OTPrtChld = calloc((4*uBPNum*5),       sizeof *uB_OTPrtChld );
+        unsigned int u_MaxBrLvl    = 12u; 
+        unsigned int uF_TotalOffs  = 0u; 
+        unsigned int uB_TotalOffs  = 0u; 
+        unsigned int *uF_OTElem    = calloc(uFPNum*u_MaxBrLvl, sizeof *uF_OTElem );
+        unsigned int *uB_OTElem    = calloc(uBPNum*u_MaxBrLvl, sizeof *uB_OTElem );
+        unsigned int *uF_OTPrtChld = calloc(3*uFPNum*5,        sizeof *uF_OTPrtChld ); 
+        unsigned int *uB_OTPrtChld = calloc(3*uBPNum*5,        sizeof *uB_OTPrtChld );
         
         {   timer0 = clock();
-            unsigned int *u_OTElem_temp = calloc((uMaxPNum*u_MaxBrLvl), sizeof *u_OTElem_temp ); 
-            unsigned int *u_BrIds        = calloc(uMaxPNum,             sizeof *u_BrIds  ); 
-            unsigned int *u_nBrIds       = calloc(uMaxPNum,             sizeof *u_nBrIds ); 
-            float *f_BrLims              = calloc(uMaxPNum*4,           sizeof *f_BrLims ); 
-            float *f_nBrLims             = calloc(uMaxPNum*4,           sizeof *f_nBrLims ); 
-            
-            unsigned int *u_sElem        = calloc(uMaxPNum,             sizeof *u_sElem ); 
-            unsigned int *u_newBr        = calloc(4*2,                  sizeof *u_newBr ); 
-            
-            unsigned int *u_ElemCntr     = calloc(       1*uMaxSNum,    sizeof *u_ElemCntr);
-            unsigned int *u_ElSegIDs     = calloc(uMaxPNum*uMaxSNum,    sizeof *u_ElSegIDs);
-            float *fCentRot              = calloc(uMaxPNum*3,           sizeof *fCentRot);
+            unsigned int uBrNum,   uBrLevel,   unBrNum,   uElem,   uBrCount,   uTemp0;
             float fNrm[3],   fStk[3],   fDip[3],   fShftCent[3],   fMaxMinVals[6];
+            float fBrSize, fAspRatio;
             
-            unsigned int uBrNum,   uBrLevel,   unBrNum,   uElem,   uNxtSegID,   uBrCount,   uTemp0;
-            float fTemp,   fBrSize;
+            unsigned int *u_OTElem_temp  = NULL;
+            unsigned int *u_BrIds        = NULL;
+            unsigned int *u_nBrIds       = NULL;
+            float *f_BrLims              = NULL;
+            float *f_nBrLims             = NULL;
+            float *fCentRot              = NULL;
+            unsigned int *u_sElem        = NULL;
+            
+            unsigned int *u_newBr        = calloc(4*2,              sizeof *u_newBr ); 
+            
+            unsigned int *u_ElemCntr     = calloc(uFSegN,           sizeof *u_ElemCntr );
+            unsigned int *u_ElemCntr2    = calloc(uFSegN,           sizeof *u_ElemCntr2 );
+            unsigned int **u_ElSegIDs    = NULL;
+            u_ElSegIDs                   = calloc(uFSegN,           sizeof *u_ElSegIDs );
+            
+            for (i = 0u; i < uFPNum; i++)   {   u_ElemCntr[uF_temp[i*7 +3]] += 1u;                                                  }
+            for (i = 0u; i < uFSegN; i++)   {   u_ElSegIDs[i]                = calloc(  u_ElemCntr[i], sizeof *u_ElSegIDs[i] );     }
             
             for (i = 0u; i < uFPNum; i++)
-            {   uNxtSegID = uF_temp[i*7 +3];
-                u_ElSegIDs[uNxtSegID*uMaxPNum + u_ElemCntr[uNxtSegID]] = i;
-                u_ElemCntr[uNxtSegID] += 1u;
+            {   u_ElSegIDs[uF_temp[i*7 +3]][u_ElemCntr2[uF_temp[i*7 +3]]] = i;
+                u_ElemCntr2[uF_temp[i*7 +3]]                             += 1u;
             }
             
             for (i = 0u; i < uFSegN; i++)
-            {   u_OTElem_temp = realloc(u_OTElem_temp,    u_ElemCntr[i]*u_MaxBrLvl* sizeof *u_OTElem_temp);
+            {   u_OTElem_temp = realloc(u_OTElem_temp, u_ElemCntr[i]*u_MaxBrLvl* sizeof *u_OTElem_temp);
+                u_BrIds       = realloc(u_BrIds,       u_ElemCntr[i]*            sizeof *u_BrIds  ); 
+                u_nBrIds      = realloc(u_nBrIds,      u_ElemCntr[i]*            sizeof *u_nBrIds ); 
+                f_BrLims      = realloc(f_BrLims,      u_ElemCntr[i]*4*          sizeof *f_BrLims ); 
+                f_nBrLims     = realloc(f_nBrLims,     u_ElemCntr[i]*4*          sizeof *f_nBrLims ); 
+                fCentRot      = realloc(fCentRot,      u_ElemCntr[i]*3*          sizeof *fCentRot );
+                u_sElem       = realloc(u_sElem,       u_ElemCntr[i]*            sizeof *u_sElem ); 
+
                 memset(u_OTElem_temp, 0, u_ElemCntr[i]*u_MaxBrLvl* sizeof(unsigned int) );
                 memset(u_BrIds,       0, u_ElemCntr[i]*            sizeof(unsigned int) );
+                memcpy(fNrm, &fF_SegVals[i*6 +3], 3u*sizeof(float));
                 
-                GetStkAndDipVect(&fF_SegVals[i*6 +3], fStk, fDip);
-                
-                fTemp = -FLT_MAX;
+                GetStkAndDipVect(fNrm, fStk, fDip);
                 
                 for (j = 0; j < u_ElemCntr[i]; j++)
-                {   fShftCent[0] = fF_temp[ u_ElSegIDs[i*uMaxPNum +j]*16 +0] - fF_SegVals[i*6 +0];
-                    fShftCent[1] = fF_temp[ u_ElSegIDs[i*uMaxPNum +j]*16 +1] - fF_SegVals[i*6 +1];
-                    fShftCent[2] = fF_temp[ u_ElSegIDs[i*uMaxPNum +j]*16 +2] - fF_SegVals[i*6 +2];
+                {   fShftCent[0] = fF_temp[ u_ElSegIDs[i][j]*16 +0] - fF_SegVals[i*6 +0];
+                    fShftCent[1] = fF_temp[ u_ElSegIDs[i][j]*16 +1] - fF_SegVals[i*6 +1];
+                    fShftCent[2] = fF_temp[ u_ElSegIDs[i][j]*16 +2] - fF_SegVals[i*6 +2];
                     
                     fCentRot[j*3 +0] = fNrm[0]*fShftCent[0] + fNrm[1]*fShftCent[1] + fNrm[2]*fShftCent[2];
                     fCentRot[j*3 +1] = fStk[0]*fShftCent[0] + fStk[1]*fShftCent[1] + fStk[2]*fShftCent[2];
                     fCentRot[j*3 +2] = fDip[0]*fShftCent[0] + fDip[1]*fShftCent[1] + fDip[2]*fShftCent[2];
-                    fTemp = MAX(fTemp, fCentRot[j*3 +2]);
                 }
-                for (j = 0; j < u_ElemCntr[i]; j++)     {   fCentRot[j*3 +2] -= fTemp;          }
                 fMaxMinVals[0] = fCentRot[0*3 +1];                                fMaxMinVals[2] = fCentRot[0*3 +1];
                 fMaxMinVals[3] = fCentRot[0*3 +2];                                fMaxMinVals[5] = fCentRot[0*3 +2];
                 
@@ -828,11 +846,9 @@ int main(int argc, char **argv)
                     fMaxMinVals[3] = MIN(fMaxMinVals[3], fCentRot[j*3 +2]);       fMaxMinVals[5] = MAX(fMaxMinVals[5], fCentRot[j*3 +2]);
                 }
                 
-                fMaxMinVals[0]  -= fFltSide;                    fMaxMinVals[2] += fFltSide;
-                fMaxMinVals[3]  -= fFltSide;                    fMaxMinVals[5] += fFltSide;
                 fBrSize          = MAX((fMaxMinVals[2] -fMaxMinVals[0]), (fMaxMinVals[5] -fMaxMinVals[3]));
-                f_BrLims[0*4 +0] = -0.5f*fBrSize;              f_BrLims[0*4 +1] = 0.5f*fBrSize;
-                f_BrLims[0*4 +2] = -1.0f*fBrSize;              f_BrLims[0*4 +3] = 0.0f*fBrSize;
+                f_BrLims[0*4 +0] = fMaxMinVals[0];              f_BrLims[0*4 +1] = fMaxMinVals[2];
+                f_BrLims[0*4 +2] = fMaxMinVals[3];              f_BrLims[0*4 +3] = fMaxMinVals[5];
                 
                 uBrLevel = 0u;
                 uBrCount = 0u;
@@ -849,7 +865,7 @@ int main(int argc, char **argv)
                         
                         uElem = 0u; 
                         memset(u_sElem, 0, u_ElemCntr[i]* sizeof(unsigned int) ); 
-                        memset(u_newBr, 0, 4*2* sizeof(unsigned int) ); 
+                        memset(u_newBr, 0,           4*2* sizeof(unsigned int) ); 
                         
                         for (k = 0u; k < u_ElemCntr[i]; k++)
                         {   uTemp0 = (u_OTElem_temp[u_MaxBrLvl*k +uBrLevel-1] == u_BrIds[j])*1u + (u_OTElem_temp[u_MaxBrLvl*k +uBrLevel-1] != u_BrIds[j])*0u;
@@ -857,49 +873,98 @@ int main(int argc, char **argv)
                             uElem          = (uTemp0 == 1u)*(uElem+1u) + (uTemp0 != 1u)*uElem;
                         }
                         
-                        for (k = 0u; k < uElem; k++)
-                        {   if ( (fCentRot[u_sElem[k]*3 +1] >= fMaxMinVals[1])       &&  (fCentRot[u_sElem[k]*3 +2] >= fMaxMinVals[4]) )
-                            {   if (u_newBr[0*4 +0] == 0u)
-                                {   uBrCount += 1u;      u_newBr[0*4 +0] = 1u;            u_newBr[1*4 +0] = uBrCount;
-                                    f_nBrLims[unBrNum*4 +0] = fMaxMinVals[1];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[2];
-                                    f_nBrLims[unBrNum*4 +2] = fMaxMinVals[4];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[5];
-                                    u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
-                                    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0] +=1u;    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0]] = (uBrCount +uF_TotalOffs);
+                        fAspRatio = (fMaxMinVals[2]-fMaxMinVals[0]+fFltSide)/(fMaxMinVals[5]-fMaxMinVals[3]+fFltSide);
+                        
+                        if      (fAspRatio >= 2.0f)
+                        {   for (k = 0u; k < uElem; k++)
+                            {   if      (fCentRot[u_sElem[k]*3 +1] < fMaxMinVals[1])
+                                {   if (u_newBr[0*4 +0] == 0u)
+                                    {   uBrCount += 1u;      u_newBr[0*4 +0] = 1u;            u_newBr[1*4 +0] = uBrCount;
+                                        f_nBrLims[unBrNum*4 +0] = fMaxMinVals[0];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[1];
+                                        f_nBrLims[unBrNum*4 +2] = fMaxMinVals[3];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[5];
+                                        u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                        uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0] +=1u;    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0]] = (uBrCount +uF_TotalOffs);
+                                    }
+                                    u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +0];
                                 }
-                                u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +0];
-                            }
-                            else if ( (fCentRot[u_sElem[k]*3 +1] < fMaxMinVals[1])  &&  (fCentRot[u_sElem[k]*3 +2] >= fMaxMinVals[4]) )
-                            {   if (u_newBr[0*4 +1] == 0u)
-                                {   uBrCount += 1u;      u_newBr[0*4 +1] = 1u;            u_newBr[1*4 +1] = uBrCount;
-                                    f_nBrLims[unBrNum*4 +0] = fMaxMinVals[0];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[1];
-                                    f_nBrLims[unBrNum*4 +2] = fMaxMinVals[4];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[5];
-                                    u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
-                                    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0] +=1u;    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0]] = (uBrCount +uF_TotalOffs);
+                                else if (fCentRot[u_sElem[k]*3 +1] >= fMaxMinVals[1])
+                                {   if (u_newBr[0*4 +1] == 0u)
+                                    {   uBrCount += 1u;      u_newBr[0*4 +1] = 1u;            u_newBr[1*4 +1] = uBrCount;
+                                        f_nBrLims[unBrNum*4 +0] = fMaxMinVals[1];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[2];
+                                        f_nBrLims[unBrNum*4 +2] = fMaxMinVals[3];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[5];
+                                        u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                        uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0] +=1u;    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0]] = (uBrCount +uF_TotalOffs);
+                                    }
+                                    u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +1];
+                        }   }   }
+                        else if (fAspRatio <= 0.5f)
+                        {   for (k = 0u; k < uElem; k++)
+                            {   if      (fCentRot[u_sElem[k]*3 +2] < fMaxMinVals[4])
+                                {   if (u_newBr[0*4 +0] == 0u)
+                                    {   uBrCount += 1u;      u_newBr[0*4 +0] = 1u;            u_newBr[1*4 +0] = uBrCount;
+                                        f_nBrLims[unBrNum*4 +0] = fMaxMinVals[0];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[2];
+                                        f_nBrLims[unBrNum*4 +2] = fMaxMinVals[3];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[4];
+                                        u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                        uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0] +=1u;    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0]] = (uBrCount +uF_TotalOffs);
+                                    }
+                                    u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +0];
                                 }
-                                u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +1];
-                            }
-                            else if ( (fCentRot[u_sElem[k]*3 +1] < fMaxMinVals[1])  &&  (fCentRot[u_sElem[k]*3 +2] < fMaxMinVals[4]) )
-                            {   if (u_newBr[0*4 +2] == 0u)
-                                {   uBrCount += 1u;      u_newBr[0*4 +2] = 1u;            u_newBr[1*4 +2] = uBrCount;
-                                    f_nBrLims[unBrNum*4 +0] = fMaxMinVals[0];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[1];
-                                    f_nBrLims[unBrNum*4 +2] = fMaxMinVals[3];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[4];
-                                    u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
-                                    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0] +=1u;    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0]] = (uBrCount +uF_TotalOffs);
+                                else if (fCentRot[u_sElem[k]*3 +2] >= fMaxMinVals[4])
+                                {   if (u_newBr[0*4 +1] == 0u)
+                                    {   uBrCount += 1u;      u_newBr[0*4 +1] = 1u;            u_newBr[1*4 +1] = uBrCount;
+                                        f_nBrLims[unBrNum*4 +0] = fMaxMinVals[0];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[2];
+                                        f_nBrLims[unBrNum*4 +2] = fMaxMinVals[4];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[5];
+                                        u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                        uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0] +=1u;    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0]] = (uBrCount +uF_TotalOffs);
+                                    }
+                                    u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +1];
+                        }   }   }
+                        else
+                        {   for (k = 0u; k < uElem; k++)
+                            {   if      ( (fCentRot[u_sElem[k]*3 +1] >= fMaxMinVals[1])  &&  (fCentRot[u_sElem[k]*3 +2] >= fMaxMinVals[4]) )
+                                {   if (u_newBr[0*4 +0] == 0u)
+                                    {   uBrCount += 1u;      u_newBr[0*4 +0] = 1u;            u_newBr[1*4 +0] = uBrCount;
+                                        f_nBrLims[unBrNum*4 +0] = fMaxMinVals[1];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[2];
+                                        f_nBrLims[unBrNum*4 +2] = fMaxMinVals[4];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[5];
+                                        u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                        uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0] +=1u;    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0]] = (uBrCount +uF_TotalOffs);
+                                    }
+                                    u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +0];
                                 }
-                                u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +2];
-                            }
-                            else if ( (fCentRot[u_sElem[k]*3 +1] >=  fMaxMinVals[1])  &&  (fCentRot[u_sElem[k]*3 +2] < fMaxMinVals[4]) )
-                            {   if (u_newBr[0*4 +3] == 0u)
-                                {   uBrCount += 1u;      u_newBr[0*4 +3] = 1u;            u_newBr[1*4 +3] = uBrCount;
-                                    f_nBrLims[unBrNum*4 +0] = fMaxMinVals[1];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[2];
-                                    f_nBrLims[unBrNum*4 +2] = fMaxMinVals[3];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[4];
-                                    u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
-                                    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0] +=1u;    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0]] = (uBrCount +uF_TotalOffs);
+                                else if ( (fCentRot[u_sElem[k]*3 +1] <  fMaxMinVals[1])  &&  (fCentRot[u_sElem[k]*3 +2] >= fMaxMinVals[4]) )
+                                {   if (u_newBr[0*4 +1] == 0u)
+                                    {   uBrCount += 1u;      u_newBr[0*4 +1] = 1u;            u_newBr[1*4 +1] = uBrCount;
+                                        f_nBrLims[unBrNum*4 +0] = fMaxMinVals[0];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[1];
+                                        f_nBrLims[unBrNum*4 +2] = fMaxMinVals[4];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[5];
+                                        u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                        uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0] +=1u;    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0]] = (uBrCount +uF_TotalOffs);
+                                    }
+                                    u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +1];
                                 }
-                                u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +3];
-                    }   }   }
-                    memcpy(u_BrIds,  u_nBrIds,    uMaxPNum* sizeof(unsigned int) );
-                    memcpy(f_BrLims, f_nBrLims, 4*uMaxPNum* sizeof(float) );
+                                else if ( (fCentRot[u_sElem[k]*3 +1] <  fMaxMinVals[1])  &&  (fCentRot[u_sElem[k]*3 +2] <  fMaxMinVals[4]) )
+                                {   if (u_newBr[0*4 +2] == 0u)
+                                    {   uBrCount += 1u;      u_newBr[0*4 +2] = 1u;            u_newBr[1*4 +2] = uBrCount;
+                                        f_nBrLims[unBrNum*4 +0] = fMaxMinVals[0];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[1];
+                                        f_nBrLims[unBrNum*4 +2] = fMaxMinVals[3];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[4];
+                                        u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                        uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0] +=1u;    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0]] = (uBrCount +uF_TotalOffs);
+                                    }
+                                    u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +2];
+                                }
+                                else if ( (fCentRot[u_sElem[k]*3 +1] >= fMaxMinVals[1])  &&  (fCentRot[u_sElem[k]*3 +2] <  fMaxMinVals[4]) )
+                                {   if (u_newBr[0*4 +3] == 0u)
+                                    {   uBrCount += 1u;      u_newBr[0*4 +3] = 1u;            u_newBr[1*4 +3] = uBrCount;
+                                        f_nBrLims[unBrNum*4 +0] = fMaxMinVals[1];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[2];
+                                        f_nBrLims[unBrNum*4 +2] = fMaxMinVals[3];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[4];
+                                        u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                        uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0] +=1u;    uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +uF_OTPrtChld[(u_BrIds[j]+uF_TotalOffs)*5 +0]] = (uBrCount +uF_TotalOffs);
+                                    }
+                                    u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +3];
+                        }   }   }
+                        
+                    }
+                    memcpy(u_BrIds,  u_nBrIds,    unBrNum* sizeof(unsigned int) );
+                    memcpy(f_BrLims, f_nBrLims, 4*unBrNum* sizeof(float) );
                     uBrNum = unBrNum;
                 }
                 
@@ -909,10 +974,10 @@ int main(int argc, char **argv)
                 {   
                     u_OTElem_temp[u_MaxBrLvl*j + uBrLevel -1] = (uBrCount+ j);
                     
-                    uTemp0 = u_ElSegIDs[i*uMaxPNum +j]*u_MaxBrLvl;
+                    uTemp0 = u_ElSegIDs[i][j]*u_MaxBrLvl;
                     uF_OTElem[uTemp0 +0] = uBrLevel; 
                     
-                    for (k = 0; k < uBrLevel; k++)
+                    for (k = 1; k < uBrLevel; k++)
                     {   uF_OTElem[uTemp0 +(u_MaxBrLvl -uBrLevel +k)] = u_OTElem_temp[u_MaxBrLvl*j +k] +uF_TotalOffs;
                 }   }
                 
@@ -920,36 +985,45 @@ int main(int argc, char **argv)
                 
             }
             
-            memset(u_ElemCntr, 0,        1*uMaxSNum* sizeof(unsigned int));
-            memset(u_ElSegIDs, 0, uMaxPNum*uMaxSNum* sizeof(unsigned int));
+            u_ElemCntr                   = realloc(u_ElemCntr,  uBSegN* sizeof *u_ElemCntr );
+            u_ElemCntr2                  = realloc(u_ElemCntr2, uBSegN* sizeof *u_ElemCntr2 );
+            u_ElSegIDs                   = realloc(u_ElSegIDs,  uBSegN* sizeof *u_ElSegIDs );
+            memset(u_ElemCntr,  0,  uBSegN* sizeof(unsigned int) );
+            memset(u_ElemCntr2, 0,  uBSegN* sizeof(unsigned int) );
+            
+            for (i = 0u; i < uBPNum; i++)   {   u_ElemCntr[uB_temp[i*4 +3]] += 1u;                                                  }
+            for (i = 0u; i < uBSegN; i++)   {   u_ElSegIDs[i]                = calloc(  u_ElemCntr[i], sizeof *u_ElSegIDs[i] );     }
+            
             for (i = 0u; i < uBPNum; i++)
-            {   uNxtSegID = uB_temp[i*4 +3];
-                u_ElSegIDs[uNxtSegID*uMaxPNum + u_ElemCntr[uNxtSegID]] = i;
-                u_ElemCntr[uNxtSegID] += 1u;
+            {   u_ElSegIDs[uB_temp[i*4 +3]][u_ElemCntr2[uB_temp[i*4 +3]]] = i;
+                u_ElemCntr2[uB_temp[i*4 +3]]                             += 1u;
             }
             
             for (i = 0u; i < uBSegN; i++)
             {   
                 u_OTElem_temp = realloc(u_OTElem_temp,    u_ElemCntr[i]*u_MaxBrLvl* sizeof *u_OTElem_temp);
+                u_BrIds       = realloc(u_BrIds,       u_ElemCntr[i]*            sizeof *u_BrIds  ); 
+                u_nBrIds      = realloc(u_nBrIds,      u_ElemCntr[i]*            sizeof *u_nBrIds ); 
+                f_BrLims      = realloc(f_BrLims,      u_ElemCntr[i]*4*          sizeof *f_BrLims ); 
+                f_nBrLims     = realloc(f_nBrLims,     u_ElemCntr[i]*4*          sizeof *f_nBrLims ); 
+                fCentRot      = realloc(fCentRot,      u_ElemCntr[i]*3*          sizeof *fCentRot );
+                u_sElem       = realloc(u_sElem,       u_ElemCntr[i]*            sizeof *u_sElem ); 
+
                 memset(u_OTElem_temp,    0, u_ElemCntr[i]*u_MaxBrLvl* sizeof(unsigned int) );
                 memset(u_BrIds,          0, u_ElemCntr[i]*            sizeof(unsigned int) );
+                memcpy(fNrm, &fB_SegVals[i*6 +3], 3u*sizeof(float));
                 
-                GetStkAndDipVect(&fB_SegVals[i*6 +3], fStk, fDip);
-                
-                fTemp = -FLT_MAX;
+                GetStkAndDipVect(fNrm, fStk, fDip);
                 
                 for (j = 0; j < u_ElemCntr[i]; j++)
-                {   fShftCent[0] = fB_temp[ u_ElSegIDs[i*uMaxPNum +j]*16 +0] - fB_SegVals[i*6 +0];
-                    fShftCent[1] = fB_temp[ u_ElSegIDs[i*uMaxPNum +j]*16 +1] - fB_SegVals[i*6 +1];
-                    fShftCent[2] = fB_temp[ u_ElSegIDs[i*uMaxPNum +j]*16 +2] - fB_SegVals[i*6 +2];
+                {   fShftCent[0] = fB_temp[ u_ElSegIDs[i][j]*16 +0] - fB_SegVals[i*6 +0];
+                    fShftCent[1] = fB_temp[ u_ElSegIDs[i][j]*16 +1] - fB_SegVals[i*6 +1];
+                    fShftCent[2] = fB_temp[ u_ElSegIDs[i][j]*16 +2] - fB_SegVals[i*6 +2];
                     
                     fCentRot[j*3 +0] = fNrm[0]*fShftCent[0] + fNrm[1]*fShftCent[1] + fNrm[2]*fShftCent[2];
                     fCentRot[j*3 +1] = fStk[0]*fShftCent[0] + fStk[1]*fShftCent[1] + fStk[2]*fShftCent[2];
                     fCentRot[j*3 +2] = fDip[0]*fShftCent[0] + fDip[1]*fShftCent[1] + fDip[2]*fShftCent[2];
-                    
-                    fTemp = MAX(fTemp, fCentRot[j*3 +2]);
                 }
-                for (j = 0; j < u_ElemCntr[i]; j++)     {   fCentRot[j*3 +2] -= fTemp;      }
                 fMaxMinVals[0] = fCentRot[0*3 +1];                                fMaxMinVals[2] = fCentRot[0*3 +1];
                 fMaxMinVals[3] = fCentRot[0*3 +2];                                fMaxMinVals[5] = fCentRot[0*3 +2];
                 
@@ -958,11 +1032,9 @@ int main(int argc, char **argv)
                     fMaxMinVals[3] = MIN(fMaxMinVals[3], fCentRot[j*3 +2]);       fMaxMinVals[5] = MAX(fMaxMinVals[5], fCentRot[j*3 +2]);
                 }
                 
-                fMaxMinVals[0]  -= fBndSide;                    fMaxMinVals[2] += fBndSide;
-                fMaxMinVals[3]  -= fBndSide;                    fMaxMinVals[5] += fBndSide;
                 fBrSize          = MAX((fMaxMinVals[2] -fMaxMinVals[0]), (fMaxMinVals[5] -fMaxMinVals[3]));
-                f_BrLims[0*4 +0] = -0.5f*fBrSize;              f_BrLims[0*4 +1] = 0.5f*fBrSize;
-                f_BrLims[0*4 +2] = -1.0f*fBrSize;              f_BrLims[0*4 +3] = 0.0f*fBrSize;
+                f_BrLims[0*4 +0] = fMaxMinVals[0];              f_BrLims[0*4 +1] = fMaxMinVals[2];
+                f_BrLims[0*4 +2] = fMaxMinVals[3];              f_BrLims[0*4 +3] = fMaxMinVals[5];
                 
                 uBrLevel = 0u; 
                 uBrCount = 0u;
@@ -987,49 +1059,96 @@ int main(int argc, char **argv)
                             uElem          = (uTemp0 == 1u)*(uElem+1u) + (uTemp0 != 1u)*uElem;
                         }
                         
-                        for (k = 0u; k < uElem; k++)
-                        {   if ( (fCentRot[u_sElem[k]*3 +1] >= fMaxMinVals[1])       &&  (fCentRot[u_sElem[k]*3 +2] >= fMaxMinVals[4]) )
-                            {   if (u_newBr[0*4 +0] == 0u)
-                                {   uBrCount += 1u;      u_newBr[0*4 +0] = 1u;            u_newBr[1*4 +0] = uBrCount;
-                                    f_nBrLims[unBrNum*4 +0] = fMaxMinVals[1];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[2];
-                                    f_nBrLims[unBrNum*4 +2] = fMaxMinVals[4];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[5];
-                                    u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
-                                    uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0] +=1u;    uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0]] = (uBrCount +uB_TotalOffs);
+                        fAspRatio = (fMaxMinVals[2]-fMaxMinVals[0]+fBndSide)/(fMaxMinVals[5]-fMaxMinVals[3]+fBndSide);
+                        
+                        if      (fAspRatio >= 2.0f)
+                        {   for (k = 0u; k < uElem; k++)
+                            {   if      (fCentRot[u_sElem[k]*3 +1] < fMaxMinVals[1])
+                                {   if (u_newBr[0*4 +0] == 0u)
+                                    {   uBrCount += 1u;      u_newBr[0*4 +0] = 1u;            u_newBr[1*4 +0] = uBrCount;
+                                        f_nBrLims[unBrNum*4 +0] = fMaxMinVals[0];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[1];
+                                        f_nBrLims[unBrNum*4 +2] = fMaxMinVals[3];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[5];
+                                        u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                        uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0] +=1u;    uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0]] = (uBrCount +uB_TotalOffs);
+                                    }
+                                    u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +0];
                                 }
-                                u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +0];
-                            }
-                            else if ( (fCentRot[u_sElem[k]*3 +1] < fMaxMinVals[1])  &&  (fCentRot[u_sElem[k]*3 +2] >= fMaxMinVals[4]) )
-                            {   if (u_newBr[0*4 +1] == 0u)
-                                {   uBrCount += 1u;      u_newBr[0*4 +1] = 1u;            u_newBr[1*4 +1] = uBrCount;
-                                    f_nBrLims[unBrNum*4 +0] = fMaxMinVals[0];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[1];
-                                    f_nBrLims[unBrNum*4 +2] = fMaxMinVals[4];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[5];
-                                    u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
-                                    uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0] +=1u;    uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0]] = (uBrCount +uB_TotalOffs);
+                                else if (fCentRot[u_sElem[k]*3 +1] >= fMaxMinVals[1])
+                                {   if (u_newBr[0*4 +1] == 0u)
+                                    {   uBrCount += 1u;      u_newBr[0*4 +1] = 1u;            u_newBr[1*4 +1] = uBrCount;
+                                        f_nBrLims[unBrNum*4 +0] = fMaxMinVals[1];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[2];
+                                        f_nBrLims[unBrNum*4 +2] = fMaxMinVals[3];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[5];
+                                        u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                        uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0] +=1u;    uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0]] = (uBrCount +uB_TotalOffs);
+                                    }
+                                    u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +1];
+                        }   }   }
+                        else if (fAspRatio <= 0.5f)
+                        {   for (k = 0u; k < uElem; k++)
+                            {   if      (fCentRot[u_sElem[k]*3 +2] < fMaxMinVals[4])
+                                {   if (u_newBr[0*4 +0] == 0u)
+                                    {   uBrCount += 1u;      u_newBr[0*4 +0] = 1u;            u_newBr[1*4 +0] = uBrCount;
+                                        f_nBrLims[unBrNum*4 +0] = fMaxMinVals[0];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[2];
+                                        f_nBrLims[unBrNum*4 +2] = fMaxMinVals[3];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[4];
+                                        u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                        uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0] +=1u;    uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0]] = (uBrCount +uB_TotalOffs);
+                                    }
+                                    u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +0];
                                 }
-                                u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +1];
-                            }
-                            else if ( (fCentRot[u_sElem[k]*3 +1] < fMaxMinVals[1])  &&  (fCentRot[u_sElem[k]*3 +2] < fMaxMinVals[4]) )
-                            {   if (u_newBr[0*4 +2] == 0u)
-                                {   uBrCount += 1u;      u_newBr[0*4 +2] = 1u;            u_newBr[1*4 +2] = uBrCount;
-                                    f_nBrLims[unBrNum*4 +0] = fMaxMinVals[0];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[1];
-                                    f_nBrLims[unBrNum*4 +2] = fMaxMinVals[3];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[4];
-                                    u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
-                                    uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0] +=1u;    uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0]] = (uBrCount +uB_TotalOffs);
+                                else if (fCentRot[u_sElem[k]*3 +2] >= fMaxMinVals[4])
+                                {   if (u_newBr[0*4 +1] == 0u)
+                                    {   uBrCount += 1u;      u_newBr[0*4 +1] = 1u;            u_newBr[1*4 +1] = uBrCount;
+                                        f_nBrLims[unBrNum*4 +0] = fMaxMinVals[0];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[2];
+                                        f_nBrLims[unBrNum*4 +2] = fMaxMinVals[4];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[5];
+                                        u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                        uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0] +=1u;    uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0]] = (uBrCount +uB_TotalOffs);
+                                    }
+                                    u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +1];
+                        }   }   }
+                        else
+                        {   for (k = 0u; k < uElem; k++)
+                            {   if ( (fCentRot[u_sElem[k]*3 +1] >= fMaxMinVals[1])       &&  (fCentRot[u_sElem[k]*3 +2] >= fMaxMinVals[4]) )
+                                {   if (u_newBr[0*4 +0] == 0u)
+                                    {   uBrCount += 1u;      u_newBr[0*4 +0] = 1u;            u_newBr[1*4 +0] = uBrCount;
+                                        f_nBrLims[unBrNum*4 +0] = fMaxMinVals[1];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[2];
+                                        f_nBrLims[unBrNum*4 +2] = fMaxMinVals[4];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[5];
+                                        u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                        uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0] +=1u;    uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0]] = (uBrCount +uB_TotalOffs);
+                                    }
+                                    u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +0];
                                 }
-                                u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +2];
-                            }
-                            else if ( (fCentRot[u_sElem[k]*3 +1] >=  fMaxMinVals[1])  &&  (fCentRot[u_sElem[k]*3 +2] < fMaxMinVals[4]) )
-                            {   if (u_newBr[0*4 +3] == 0u)
-                                {   uBrCount += 1u;      u_newBr[0*4 +3] = 1u;            u_newBr[1*4 +3] = uBrCount;
-                                    f_nBrLims[unBrNum*4 +0] = fMaxMinVals[1];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[2];
-                                    f_nBrLims[unBrNum*4 +2] = fMaxMinVals[3];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[4];
-                                    u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
-                                    uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0] +=1u;    uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0]] = (uBrCount +uB_TotalOffs);
+                                else if ( (fCentRot[u_sElem[k]*3 +1] < fMaxMinVals[1])  &&  (fCentRot[u_sElem[k]*3 +2] >= fMaxMinVals[4]) )
+                                {   if (u_newBr[0*4 +1] == 0u)
+                                    {   uBrCount += 1u;      u_newBr[0*4 +1] = 1u;            u_newBr[1*4 +1] = uBrCount;
+                                        f_nBrLims[unBrNum*4 +0] = fMaxMinVals[0];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[1];
+                                        f_nBrLims[unBrNum*4 +2] = fMaxMinVals[4];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[5];
+                                        u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                        uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0] +=1u;    uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0]] = (uBrCount +uB_TotalOffs);
+                                    }
+                                    u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +1];
                                 }
-                                u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +3];
-                    }   }   }
-                    memcpy(u_BrIds, u_nBrIds,     uMaxPNum* sizeof(unsigned int) );
-                    memcpy(f_BrLims, f_nBrLims, 4*uMaxPNum* sizeof(float) );
+                                else if ( (fCentRot[u_sElem[k]*3 +1] < fMaxMinVals[1])  &&  (fCentRot[u_sElem[k]*3 +2] < fMaxMinVals[4]) )
+                                {   if (u_newBr[0*4 +2] == 0u)
+                                    {   uBrCount += 1u;      u_newBr[0*4 +2] = 1u;            u_newBr[1*4 +2] = uBrCount;
+                                        f_nBrLims[unBrNum*4 +0] = fMaxMinVals[0];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[1];
+                                        f_nBrLims[unBrNum*4 +2] = fMaxMinVals[3];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[4];
+                                        u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                        uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0] +=1u;    uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0]] = (uBrCount +uB_TotalOffs);
+                                    }
+                                    u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +2];
+                                }
+                                else if ( (fCentRot[u_sElem[k]*3 +1] >=  fMaxMinVals[1])  &&  (fCentRot[u_sElem[k]*3 +2] < fMaxMinVals[4]) )
+                                {   if (u_newBr[0*4 +3] == 0u)
+                                    {   uBrCount += 1u;      u_newBr[0*4 +3] = 1u;            u_newBr[1*4 +3] = uBrCount;
+                                        f_nBrLims[unBrNum*4 +0] = fMaxMinVals[1];             f_nBrLims[unBrNum*4 +1] = fMaxMinVals[2];
+                                        f_nBrLims[unBrNum*4 +2] = fMaxMinVals[3];             f_nBrLims[unBrNum*4 +3] = fMaxMinVals[4];
+                                        u_nBrIds[unBrNum] = uBrCount;                         unBrNum += 1u;
+                                        uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0] +=1u;    uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +uB_OTPrtChld[(u_BrIds[j]+uB_TotalOffs)*5 +0]] = (uBrCount +uB_TotalOffs);
+                                    }
+                                    u_OTElem_temp[u_MaxBrLvl*u_sElem[k] +uBrLevel] = u_newBr[1*4 +3];
+                    }   }   }   }
+                    memcpy(u_BrIds, u_nBrIds,     u_ElemCntr[i]* sizeof(unsigned int) );
+                    memcpy(f_BrLims, f_nBrLims, 4*u_ElemCntr[i]* sizeof(float) );
                     uBrNum = unBrNum;
                 }
                 
@@ -1039,10 +1158,10 @@ int main(int argc, char **argv)
                 {   
                     u_OTElem_temp[u_MaxBrLvl*j + uBrLevel -1] = (uBrCount+ j);
                     
-                    uTemp0 = u_ElSegIDs[i*uMaxPNum +j]*u_MaxBrLvl;
+                    uTemp0 = u_ElSegIDs[i][j]*u_MaxBrLvl;
                     uB_OTElem[uTemp0 +0] = uBrLevel; 
                     
-                    for (k = 0; k < uBrLevel; k++)
+                    for (k = 1; k < uBrLevel; k++)
                     {   uB_OTElem[uTemp0 +(u_MaxBrLvl -uBrLevel +k)] = u_OTElem_temp[u_MaxBrLvl*j +k] +uB_TotalOffs;
                 }   }
                 
@@ -1054,7 +1173,7 @@ int main(int argc, char **argv)
             MPI_Allreduce(MPI_IN_PLACE, &time_taken, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD); 
             time_taken /=(double)iSIZE;
             if (iRANK == 0) 
-            {   fprintf(stdout,"Total RunTime for OctTree (seconds): %6.4f   (min. branch size factor: %2.2f)\nBranchCountF: %7u\nBranchCountB:%7u\n",time_taken, MINBRANCHSZEFACT, uF_TotalOffs, uB_TotalOffs);
+            {   fprintf(stdout,"Total RunTime for QuadTree (seconds): %6.4f   (min. branch size factor: %2.2f)\nBranchCountF: %7u\nBranchCountB:%7u\n",time_taken, MINBRANCHSZEFACT, uF_TotalOffs, uB_TotalOffs);
             }
         } 
         
@@ -1063,6 +1182,7 @@ int main(int argc, char **argv)
             unsigned int uGlobPos,   uUsdNum,   uSrcElem,  uTemp0,   uTemp1,   uTemp2,   uPrvBrLv,   uTstBrId,   uPrvBrId;
             float fTemp0,   fTemp1,   fTemp2,   fTemp3,   fTemp4,   fTemp5,   fDist,  fDistF;
             float fRcv[3],   fSrc[3],   fP1[3],   fP2[3],   fP3[3],   fP4[3],   fStressStk[6],   fStressDip[6],   fStressNrm[6],   fStressStkT[6],   fStressDipT[6],   fStressNrmT[6],   fStrain[6];
+            float fTempG[3],   fTempL[3];
             float fRotMat[9], fTempVect[3],   fPrvStress[9],   fTstStress[9];
             float fNrm[3],   fStk[3],   fDip[3];
 
@@ -1070,6 +1190,9 @@ int main(int argc, char **argv)
             unsigned int *uFPrvEl = calloc(  uFPNum, sizeof *uFPrvEl );
             unsigned int *uFTstEl = calloc(  uFPNum, sizeof *uFTstEl );
             float *fKh_FFBrch     = calloc(21*uF_TotalOffs, sizeof *fKh_FFBrch );
+            
+            
+            
             unsigned int *uFUsdBrch = calloc( uF_TotalOffs, sizeof *uFUsdBrch );
             unsigned int *uBUsdEl = calloc(  uBPNum, sizeof *uBUsdEl );
             unsigned int *uBPrvEl = calloc(  uBPNum, sizeof *uBPrvEl );
@@ -1082,99 +1205,229 @@ int main(int argc, char **argv)
             {   uTemp0 = uF_OTElem[u_MaxBrLvl*j +0];
                 for (k = 0u; k < uTemp0; k++)
                 {   uTemp1 = uF_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +k)]*21u;
-                    fKh_FFBrch[uTemp1 +15] = FLT_MAX;           fKh_FFBrch[uTemp1 +16] = -FLT_MAX;
-                    fKh_FFBrch[uTemp1 +17] = FLT_MAX;           fKh_FFBrch[uTemp1 +18] = -FLT_MAX;
-                    fKh_FFBrch[uTemp1 +19] = FLT_MAX;           fKh_FFBrch[uTemp1 +20] = -FLT_MAX;
-            }   }
-            
+                    fKh_FFBrch[uTemp1 +0] += fF_temp[j*16 +0];      fKh_FFBrch[uTemp1 +1] += fF_temp[j*16 +1];      fKh_FFBrch[uTemp1 +2] += fF_temp[j*16 +2];
+                    fKh_FFBrch[uTemp1 +3] += fF_temp[j*16 +15];
+                    fKh_FFBrch[uTemp1 +4] += 1.0f;
+                    fKh_FFBrch[uTemp1 +6] += fF_temp[j*16 +6];      fKh_FFBrch[uTemp1 +7] += fF_temp[j*16 +7];      fKh_FFBrch[uTemp1 +8] += fF_temp[j*16 +8];
+            }   }            
+            for (j = 0u; j < uF_TotalOffs; j++)
+            {   fKh_FFBrch[j*21 +0] /= fKh_FFBrch[j*21 +4];         fKh_FFBrch[j*21 +1] /= fKh_FFBrch[j*21 +4];     fKh_FFBrch[j*21 +2] /= fKh_FFBrch[j*21 +4];
+                NrmlzeVect( &fKh_FFBrch[j*21 +6] );
+                
+                fKh_FFBrch[j*21 +5] = -FLT_MAX;
+                fKh_FFBrch[j*21 +9] =  FLT_MAX;                   fKh_FFBrch[j*21+10] = -FLT_MAX;
+                fKh_FFBrch[j*21+11] =  FLT_MAX;                   fKh_FFBrch[j*21+12] = -FLT_MAX;
+            }
             for (j = 0u; j < uFPNum; j++)
-            {   uTemp0 = uF_OTElem[u_MaxBrLvl*j +0];
-                memcpy(fP1, &fFV_temp[uF_temp[j*7 +0]*4 +0],  3u*sizeof(float));
+            {   memcpy(fP1, &fFV_temp[uF_temp[j*7 +0]*4 +0],  3u*sizeof(float));
                 memcpy(fP2, &fFV_temp[uF_temp[j*7 +1]*4 +0],  3u*sizeof(float));
-                memcpy(fP3, &fFV_temp[uF_temp[j*7 +2]*4 +0],  3u*sizeof(float));
-                fTemp0 = MIN(fP1[0], fP2[0]);       fTemp0 = MIN(fTemp0, fP3[0]);            fTemp1 = MAX(fP1[0], fP2[0]);       fTemp1 = MAX(fTemp1, fP3[0]);
-                fTemp2 = MIN(fP1[1], fP2[1]);       fTemp2 = MIN(fTemp2, fP3[1]);            fTemp3 = MAX(fP1[1], fP2[1]);       fTemp3 = MAX(fTemp3, fP3[1]);
-                fTemp4 = MIN(fP1[2], fP2[2]);       fTemp4 = MIN(fTemp4, fP3[2]);            fTemp5 = MAX(fP1[2], fP2[2]);       fTemp5 = MAX(fTemp5, fP3[2]);
+                memcpy(fP3, &fFV_temp[uF_temp[j*7 +2]*4 +0],  3u*sizeof(float));      
+                uTemp0 = uF_OTElem[u_MaxBrLvl*j +0];
                 for (k = 0u; k < uTemp0; k++)
                 {   uTemp1 = uF_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +k)]*21u;
                     
+                    memcpy(fSrc, &fKh_FFBrch[uTemp1 +0], 3u*sizeof(float));
+                    memcpy(fNrm, &fKh_FFBrch[uTemp1 +6], 3u*sizeof(float));
+                    GetStkAndDipVect(fNrm, fStk, fDip);
                     
+                    SubtractVect3(fTempG, fP1, fSrc);
+                    fTempL[0] = fStk[0]*fTempG[0] + fStk[1]*fTempG[1] +  fStk[2]*fTempG[2]; 
+                    fTempL[1] = fDip[0]*fTempG[0] + fDip[1]*fTempG[1] +  fDip[2]*fTempG[2]; 
                     
-                    fKh_FFBrch[uTemp1 +0] += fF_temp[j*16 +0];       fKh_FFBrch[uTemp1 +1] += fF_temp[j*16 +1];    fKh_FFBrch[uTemp1 +2] += fF_temp[j*16 +2];
-                    fKh_FFBrch[uTemp1 +3] += fF_temp[j*16 +15];
-                    fKh_FFBrch[uTemp1 +4] += fF_temp[j*16 +6];       fKh_FFBrch[uTemp1 +5] += fF_temp[j*16 +7];    fKh_FFBrch[uTemp1 +6] += fF_temp[j*16 +8];
-                    fKh_FFBrch[uTemp1 +13]+= 1.0f;
-                    fKh_FFBrch[uTemp1 +15] = MIN(fKh_FFBrch[uTemp1 +15], fTemp0);           fKh_FFBrch[uTemp1 +16] = MAX(fKh_FFBrch[uTemp1 +16], fTemp1);
-                    fKh_FFBrch[uTemp1 +17] = MIN(fKh_FFBrch[uTemp1 +17], fTemp2);           fKh_FFBrch[uTemp1 +18] = MAX(fKh_FFBrch[uTemp1 +18], fTemp3);
-                    fKh_FFBrch[uTemp1 +19] = MIN(fKh_FFBrch[uTemp1 +19], fTemp4);           fKh_FFBrch[uTemp1 +20] = MAX(fKh_FFBrch[uTemp1 +20], fTemp5);
-            }   }
-            
+                    fKh_FFBrch[uTemp1 +9] = MIN(fKh_FFBrch[uTemp1 +9], fTempL[0]);
+                    fKh_FFBrch[uTemp1+10] = MAX(fKh_FFBrch[uTemp1+10], fTempL[0]);
+                    fKh_FFBrch[uTemp1+11] = MIN(fKh_FFBrch[uTemp1+11], fTempL[1]);
+                    fKh_FFBrch[uTemp1+12] = MAX(fKh_FFBrch[uTemp1+12], fTempL[1]);
+
+                    SubtractVect3(fTempG, fP2, fSrc);
+                    fTempL[0] = fStk[0]*fTempG[0] + fStk[1]*fTempG[1] +  fStk[2]*fTempG[2]; 
+                    fTempL[1] = fDip[0]*fTempG[0] + fDip[1]*fTempG[1] +  fDip[2]*fTempG[2]; 
+                    
+                    fKh_FFBrch[uTemp1 +9] = MIN(fKh_FFBrch[uTemp1 +9], fTempL[0]);
+                    fKh_FFBrch[uTemp1+10] = MAX(fKh_FFBrch[uTemp1+10], fTempL[0]);
+                    fKh_FFBrch[uTemp1+11] = MIN(fKh_FFBrch[uTemp1+11], fTempL[1]);
+                    fKh_FFBrch[uTemp1+12] = MAX(fKh_FFBrch[uTemp1+12], fTempL[1]);
+                    
+                    SubtractVect3(fTempG, fP3, fSrc);
+                    fTempL[0] = fStk[0]*fTempG[0] + fStk[1]*fTempG[1] +  fStk[2]*fTempG[2]; 
+                    fTempL[1] = fDip[0]*fTempG[0] + fDip[1]*fTempG[1] +  fDip[2]*fTempG[2]; 
+                    
+                    fKh_FFBrch[uTemp1 +9] = MIN(fKh_FFBrch[uTemp1 +9], fTempL[0]);
+                    fKh_FFBrch[uTemp1+10] = MAX(fKh_FFBrch[uTemp1+10], fTempL[0]);
+                    fKh_FFBrch[uTemp1+11] = MIN(fKh_FFBrch[uTemp1+11], fTempL[1]);
+                    fKh_FFBrch[uTemp1+12] = MAX(fKh_FFBrch[uTemp1+12], fTempL[1]);
+                    
+                }
+            }
             for (j = 0u; j < uF_TotalOffs; j++)
-            {   fKh_FFBrch[j*21 +0] /= fKh_FFBrch[j*21 +13];    fKh_FFBrch[j*21 +1] /= fKh_FFBrch[j*21 +13];        fKh_FFBrch[j*21 +2] /= fKh_FFBrch[j*21 +13];
-                memcpy(fNrm, &fKh_FFBrch[j*21 +4], 3u*sizeof(float));
-                NrmlzeVect(fNrm);
-                memcpy(&fKh_FFBrch[j*21 +4], fNrm, 3u*sizeof(float));
+            {   fP1[0] = fKh_FFBrch[j*21 +9];              fP1[1] = fKh_FFBrch[j*21+11];          fP1[2] = 0.0f;
+                fP2[0] = fKh_FFBrch[j*21+10];              fP2[1] = fKh_FFBrch[j*21+11];          fP2[2] = 0.0f;
+                fP3[0] = fKh_FFBrch[j*21+10];              fP3[1] = fKh_FFBrch[j*21+12];          fP3[2] = 0.0f;
+                fP4[0] = fKh_FFBrch[j*21 +9];              fP4[1] = fKh_FFBrch[j*21+12];          fP4[2] = 0.0f;
+
+                fTemp1 = fabs(fP2[0]-fP1[0])/fabs(fP3[1]-fP2[1]); 
+                fTemp2 = sqrtf(fKh_FFBrch[j*21 +3]/fTemp1); 
+                fTemp3 = fKh_FFBrch[j*21 +3]/fTemp2; 
+
+                fTemp4 = fabs(fP2[0]-fP1[0])/fTemp3;
+                fTemp5 = fabs(fP3[1]-fP2[1])/fTemp2;
+                
+                fP1[0] /= fTemp4;              fP1[1] /= fTemp5;
+                fP2[0] /= fTemp4;              fP2[1] /= fTemp5;
+                fP3[0] /= fTemp4;              fP3[1] /= fTemp5;
+                fP4[0] /= fTemp4;              fP4[1] /= fTemp5;
+                
+                memcpy(fNrm, &fKh_FFBrch[j*21 +6], 3u*sizeof(float));
                 
                 GetStkAndDipVect(fNrm, fStk, fDip);
                 
-                memcpy(&fKh_FFBrch[j*21 +7], fStk, 3u*sizeof(float));
-                memcpy(&fKh_FFBrch[j*21+10], fDip, 3u*sizeof(float));
+                fTempG[0] = fStk[0]*fP1[0] + fDip[0]*fP1[1] + fNrm[0]*fP1[2] + fKh_FFBrch[j*21 +0];
+                fTempG[1] = fStk[1]*fP1[0] + fDip[1]*fP1[1] + fNrm[1]*fP1[2] + fKh_FFBrch[j*21 +1];
+                fTempG[2] = fStk[2]*fP1[0] + fDip[2]*fP1[1] + fNrm[2]*fP1[2] + fKh_FFBrch[j*21 +2];
+                fTempG[2] = MIN(fTempG[2], -0.0f);
+                memcpy(&fKh_FFBrch[j*21 +9], fTempG, 3u*sizeof(float));
+ 
+                fTempG[0] = fStk[0]*fP2[0] + fDip[0]*fP2[1] + fNrm[0]*fP2[2] + fKh_FFBrch[j*21 +0];
+                fTempG[1] = fStk[1]*fP2[0] + fDip[1]*fP2[1] + fNrm[1]*fP2[2] + fKh_FFBrch[j*21 +1];
+                fTempG[2] = fStk[2]*fP2[0] + fDip[2]*fP2[1] + fNrm[2]*fP2[2] + fKh_FFBrch[j*21 +2];
+                fTempG[2] = MIN(fTempG[2], -0.0f);
+                memcpy(&fKh_FFBrch[j*21 +12], fTempG, 3u*sizeof(float));
+
+                fTempG[0] = fStk[0]*fP3[0] + fDip[0]*fP3[1] + fNrm[0]*fP3[2] + fKh_FFBrch[j*21 +0];
+                fTempG[1] = fStk[1]*fP3[0] + fDip[1]*fP3[1] + fNrm[1]*fP3[2] + fKh_FFBrch[j*21 +1];
+                fTempG[2] = fStk[2]*fP3[0] + fDip[2]*fP3[1] + fNrm[2]*fP3[2] + fKh_FFBrch[j*21 +2];
+                fTempG[2] = MIN(fTempG[2], -0.0f);
+                memcpy(&fKh_FFBrch[j*21 +15], fTempG, 3u*sizeof(float));
+
+                fTempG[0] = fStk[0]*fP4[0] + fDip[0]*fP4[1] + fNrm[0]*fP4[2] + fKh_FFBrch[j*21 +0];
+                fTempG[1] = fStk[1]*fP4[0] + fDip[1]*fP4[1] + fNrm[1]*fP4[2] + fKh_FFBrch[j*21 +1];
+                fTempG[2] = fStk[2]*fP4[0] + fDip[2]*fP4[1] + fNrm[2]*fP4[2] + fKh_FFBrch[j*21 +2];
+                fTempG[2] = MIN(fTempG[2], -0.0f);
+                memcpy(&fKh_FFBrch[j*21 +18], fTempG, 3u*sizeof(float));
                 
-                fTemp0 = MAX(fabs(fKh_FFBrch[j*21 +15] - fKh_FFBrch[j*21 +0]),  fabs(fKh_FFBrch[j*21 +16] - fKh_FFBrch[j*21 +0]));
-                fTemp1 = MAX(fabs(fKh_FFBrch[j*21 +17] - fKh_FFBrch[j*21 +1]),  fabs(fKh_FFBrch[j*21 +18] - fKh_FFBrch[j*21 +1]));
-                fTemp2 = MAX(fabs(fKh_FFBrch[j*21 +19] - fKh_FFBrch[j*21 +2]),  fabs(fKh_FFBrch[j*21 +20] - fKh_FFBrch[j*21 +2]));
-                
-                fKh_FFBrch[j*21 +14] = sqrtf(fTemp0*fTemp0 +fTemp1*fTemp1 +fTemp2*fTemp2);
+                SubtractVect3(fTempVect,  &fKh_FFBrch[j*21 +0], &fKh_FFBrch[j*21 +9]);               fDist  = VectorLength(fTempVect);
+                fKh_FFBrch[j*21 +5] =  MAX(fDist, fKh_FFBrch[j*21 +5]);
+                SubtractVect3(fTempVect,  &fKh_FFBrch[j*21 +0], &fKh_FFBrch[j*21+12]);               fDist  = VectorLength(fTempVect);
+                fKh_FFBrch[j*21 +5] =  MAX(fDist, fKh_FFBrch[j*21 +5]);
+                SubtractVect3(fTempVect,  &fKh_FFBrch[j*21 +0], &fKh_FFBrch[j*21+15]);               fDist  = VectorLength(fTempVect);
+                fKh_FFBrch[j*21 +5] =  MAX(fDist, fKh_FFBrch[j*21 +5]);
+                SubtractVect3(fTempVect,  &fKh_FFBrch[j*21 +0], &fKh_FFBrch[j*21+18]);               fDist  = VectorLength(fTempVect);
+                fKh_FFBrch[j*21 +5] =  MAX(fDist, fKh_FFBrch[j*21 +5]);
                 
             }
             
             for (j = 0u; j < uBPNum; j++)
             {   uTemp0 = uB_OTElem[u_MaxBrLvl*j +0];
                 for (k = 0u; k < uTemp0; k++)
-                {   uTemp1 = uB_OTElem[u_MaxBrLvl*j +(u_MaxBrLvl -uTemp0 +k)]*21u;
-                    fKh_BBBrch[uTemp1 +15] = FLT_MAX;           fKh_BBBrch[uTemp1 +16] = -FLT_MAX;
-                    fKh_BBBrch[uTemp1 +17] = FLT_MAX;           fKh_BBBrch[uTemp1 +18] = -FLT_MAX;
-                    fKh_BBBrch[uTemp1 +19] = FLT_MAX;           fKh_BBBrch[uTemp1 +20] = -FLT_MAX;
-            }   }
-            
-            for (j = 0u; j < uBPNum; j++)
-            {   uTemp0 = uB_OTElem[u_MaxBrLvl*j +0];
-                memcpy(fP1, &fBV_temp[uB_temp[j*4 +0]*3 +0],  3u*sizeof(float));
-                memcpy(fP2, &fBV_temp[uB_temp[j*4 +1]*3 +0],  3u*sizeof(float));
-                memcpy(fP3, &fBV_temp[uB_temp[j*4 +2]*3 +0],  3u*sizeof(float));
-                fTemp0 = MIN(fP1[0], fP2[0]);       fTemp0 = MIN(fTemp0, fP3[0]);            fTemp1 = MAX(fP1[0], fP2[0]);       fTemp1 = MAX(fTemp1, fP3[0]);
-                fTemp2 = MIN(fP1[1], fP2[1]);       fTemp2 = MIN(fTemp2, fP3[1]);            fTemp3 = MAX(fP1[1], fP2[1]);       fTemp3 = MAX(fTemp3, fP3[1]);
-                fTemp4 = MIN(fP1[2], fP2[2]);       fTemp4 = MIN(fTemp4, fP3[2]);            fTemp5 = MAX(fP1[2], fP2[2]);       fTemp5 = MAX(fTemp5, fP3[2]);
-                for (k = 0u; k < uTemp0; k++)
-                {   uTemp1 = uB_OTElem[u_MaxBrLvl*j +(u_MaxBrLvl -uTemp0 +k)]*21u;
-                    
-                    
-                    
-                    fKh_BBBrch[uTemp1 +0] += fB_temp[j*16 +0];       fKh_BBBrch[uTemp1 +1] += fB_temp[j*16 +1];    fKh_BBBrch[uTemp1 +2] += fB_temp[j*16 +2];
+                {   uTemp1 = uB_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +k)]*21u;
+                    fKh_BBBrch[uTemp1 +0] += fB_temp[j*16 +0];      fKh_BBBrch[uTemp1 +1] += fB_temp[j*16 +1];      fKh_BBBrch[uTemp1 +2] += fB_temp[j*16 +2];
                     fKh_BBBrch[uTemp1 +3] += fB_temp[j*16 +15];
-                    fKh_BBBrch[uTemp1 +4] += fB_temp[j*16 +6];       fKh_BBBrch[uTemp1 +5] += fB_temp[j*16 +7];    fKh_BBBrch[uTemp1 +6] += fB_temp[j*16 +8];
-                    fKh_BBBrch[uTemp1 +13]+= 1.0f;
-                    fKh_BBBrch[uTemp1 +15] = MIN(fKh_BBBrch[uTemp1 +15], fTemp0);           fKh_BBBrch[uTemp1 +16] = MAX(fKh_BBBrch[uTemp1 +16], fTemp1);
-                    fKh_BBBrch[uTemp1 +17] = MIN(fKh_BBBrch[uTemp1 +17], fTemp2);           fKh_BBBrch[uTemp1 +18] = MAX(fKh_BBBrch[uTemp1 +18], fTemp3);
-                    fKh_BBBrch[uTemp1 +19] = MIN(fKh_BBBrch[uTemp1 +19], fTemp4);           fKh_BBBrch[uTemp1 +20] = MAX(fKh_BBBrch[uTemp1 +20], fTemp5);
-            }   }
-             
+                    fKh_BBBrch[uTemp1 +4] += 1.0f;
+                    fKh_BBBrch[uTemp1 +6] += fB_temp[j*16 +6];      fKh_BBBrch[uTemp1 +7] += fB_temp[j*16 +7];      fKh_BBBrch[uTemp1 +8] += fB_temp[j*16 +8];
+            }   }            
             for (j = 0u; j < uB_TotalOffs; j++)
-            {   fKh_BBBrch[j*21 +0] /= fKh_BBBrch[j*21 +13];    fKh_BBBrch[j*21 +1] /= fKh_BBBrch[j*21 +13];        fKh_BBBrch[j*21 +2] /= fKh_BBBrch[j*21 +13];
-                memcpy(fNrm, &fKh_BBBrch[j*21 +4], 3u*sizeof(float));
-                NrmlzeVect(fNrm);
-                memcpy(&fKh_BBBrch[j*21 +4], fNrm, 3u*sizeof(float));
+            {   fKh_BBBrch[j*21 +0] /= fKh_BBBrch[j*21 +4];         fKh_BBBrch[j*21 +1] /= fKh_BBBrch[j*21 +4];     fKh_BBBrch[j*21 +2] /= fKh_BBBrch[j*21 +4];
+                NrmlzeVect( &fKh_BBBrch[j*21 +6] );
+                
+                fKh_BBBrch[j*21 +5] = -FLT_MAX;
+                fKh_BBBrch[j*21 +9] =  FLT_MAX;                   fKh_BBBrch[j*21+10] = -FLT_MAX;
+                fKh_BBBrch[j*21+11] =  FLT_MAX;                   fKh_BBBrch[j*21+12] = -FLT_MAX;
+            }
+            for (j = 0u; j < uBPNum; j++)
+            {   memcpy(fP1, &fBV_temp[uB_temp[j*4 +0]*3 +0],  3u*sizeof(float));
+                memcpy(fP2, &fBV_temp[uB_temp[j*4 +1]*3 +0],  3u*sizeof(float));
+                memcpy(fP3, &fBV_temp[uB_temp[j*4 +2]*3 +0],  3u*sizeof(float));      
+                uTemp0 = uB_OTElem[u_MaxBrLvl*j +0];
+                for (k = 0u; k < uTemp0; k++)
+                {   uTemp1 = uB_OTElem[j*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +k)]*21u;
+                    
+                    memcpy(fSrc, &fKh_BBBrch[uTemp1 +0], 3u*sizeof(float));
+                    memcpy(fNrm, &fKh_BBBrch[uTemp1 +6], 3u*sizeof(float));
+                    GetStkAndDipVect(fNrm, fStk, fDip);
+                    
+                    SubtractVect3(fTempG, fP1, fSrc);
+                    fTempL[0] = fStk[0]*fTempG[0] + fStk[1]*fTempG[1] +  fStk[2]*fTempG[2]; 
+                    fTempL[1] = fDip[0]*fTempG[0] + fDip[1]*fTempG[1] +  fDip[2]*fTempG[2]; 
+                    
+                    fKh_BBBrch[uTemp1 +9] = MIN(fKh_BBBrch[uTemp1 +9], fTempL[0]);
+                    fKh_BBBrch[uTemp1+10] = MAX(fKh_BBBrch[uTemp1+10], fTempL[0]);
+                    fKh_BBBrch[uTemp1+11] = MIN(fKh_BBBrch[uTemp1+11], fTempL[1]);
+                    fKh_BBBrch[uTemp1+12] = MAX(fKh_BBBrch[uTemp1+12], fTempL[1]);
+
+                    SubtractVect3(fTempG, fP2, fSrc);
+                    fTempL[0] = fStk[0]*fTempG[0] + fStk[1]*fTempG[1] +  fStk[2]*fTempG[2]; 
+                    fTempL[1] = fDip[0]*fTempG[0] + fDip[1]*fTempG[1] +  fDip[2]*fTempG[2]; 
+                    
+                    fKh_BBBrch[uTemp1 +9] = MIN(fKh_BBBrch[uTemp1 +9], fTempL[0]);
+                    fKh_BBBrch[uTemp1+10] = MAX(fKh_BBBrch[uTemp1+10], fTempL[0]);
+                    fKh_BBBrch[uTemp1+11] = MIN(fKh_BBBrch[uTemp1+11], fTempL[1]);
+                    fKh_BBBrch[uTemp1+12] = MAX(fKh_BBBrch[uTemp1+12], fTempL[1]);
+                    
+                    SubtractVect3(fTempG, fP3, fSrc);
+                    fTempL[0] = fStk[0]*fTempG[0] + fStk[1]*fTempG[1] +  fStk[2]*fTempG[2]; 
+                    fTempL[1] = fDip[0]*fTempG[0] + fDip[1]*fTempG[1] +  fDip[2]*fTempG[2]; 
+                    
+                    fKh_BBBrch[uTemp1 +9] = MIN(fKh_BBBrch[uTemp1 +9], fTempL[0]);
+                    fKh_BBBrch[uTemp1+10] = MAX(fKh_BBBrch[uTemp1+10], fTempL[0]);
+                    fKh_BBBrch[uTemp1+11] = MIN(fKh_BBBrch[uTemp1+11], fTempL[1]);
+                    fKh_BBBrch[uTemp1+12] = MAX(fKh_BBBrch[uTemp1+12], fTempL[1]);
+                    
+                }
+            }
+            for (j = 0u; j < uB_TotalOffs; j++)
+            {   fP1[0] = fKh_BBBrch[j*21 +9];              fP1[1] = fKh_BBBrch[j*21+11];          fP1[2] = 0.0f;
+                fP2[0] = fKh_BBBrch[j*21+10];              fP2[1] = fKh_BBBrch[j*21+11];          fP2[2] = 0.0f;
+                fP3[0] = fKh_BBBrch[j*21+10];              fP3[1] = fKh_BBBrch[j*21+12];          fP3[2] = 0.0f;
+                fP4[0] = fKh_BBBrch[j*21 +9];              fP4[1] = fKh_BBBrch[j*21+12];          fP4[2] = 0.0f;
+
+                fTemp1 = fabs(fP2[0]-fP1[0])/fabs(fP3[1]-fP2[1]); 
+                fTemp2 = sqrtf(fKh_BBBrch[j*21 +3]/fTemp1); 
+                fTemp3 = fKh_BBBrch[j*21 +3]/fTemp2; 
+
+                fTemp4 = fabs(fP2[0]-fP1[0])/fTemp3;
+                fTemp5 = fabs(fP3[1]-fP2[1])/fTemp2;
+                
+                fP1[0] /= fTemp4;              fP1[1] /= fTemp5;
+                fP2[0] /= fTemp4;              fP2[1] /= fTemp5;
+                fP3[0] /= fTemp4;              fP3[1] /= fTemp5;
+                fP4[0] /= fTemp4;              fP4[1] /= fTemp5;
+                
+                memcpy(fNrm, &fKh_BBBrch[j*21 +6], 3u*sizeof(float));
                 
                 GetStkAndDipVect(fNrm, fStk, fDip);
                 
-                memcpy(&fKh_BBBrch[j*21 +7], fStk, 3u*sizeof(float));
-                memcpy(&fKh_BBBrch[j*21+10], fDip, 3u*sizeof(float));
-                
-                fTemp0 = MAX(fabs(fKh_BBBrch[j*21 +15] - fKh_BBBrch[j*21 +0]),  fabs(fKh_BBBrch[j*21 +16] - fKh_BBBrch[j*21 +0]));
-                fTemp1 = MAX(fabs(fKh_BBBrch[j*21 +17] - fKh_BBBrch[j*21 +1]),  fabs(fKh_BBBrch[j*21 +18] - fKh_BBBrch[j*21 +1]));
-                fTemp2 = MAX(fabs(fKh_BBBrch[j*21 +19] - fKh_BBBrch[j*21 +2]),  fabs(fKh_BBBrch[j*21 +20] - fKh_BBBrch[j*21 +2]));
+                fTempG[0] = fStk[0]*fP1[0] + fDip[0]*fP1[1] + fNrm[0]*fP1[2] + fKh_BBBrch[j*21 +0];
+                fTempG[1] = fStk[1]*fP1[0] + fDip[1]*fP1[1] + fNrm[1]*fP1[2] + fKh_BBBrch[j*21 +1];
+                fTempG[2] = fStk[2]*fP1[0] + fDip[2]*fP1[1] + fNrm[2]*fP1[2] + fKh_BBBrch[j*21 +2];
+                fTempG[2] = MIN(fTempG[2], -0.0f);
+                memcpy(&fKh_BBBrch[j*21 +9], fTempG, 3u*sizeof(float));
+ 
+                fTempG[0] = fStk[0]*fP2[0] + fDip[0]*fP2[1] + fNrm[0]*fP2[2] + fKh_BBBrch[j*21 +0];
+                fTempG[1] = fStk[1]*fP2[0] + fDip[1]*fP2[1] + fNrm[1]*fP2[2] + fKh_BBBrch[j*21 +1];
+                fTempG[2] = fStk[2]*fP2[0] + fDip[2]*fP2[1] + fNrm[2]*fP2[2] + fKh_BBBrch[j*21 +2];
+                fTempG[2] = MIN(fTempG[2], -0.0f);
+                memcpy(&fKh_BBBrch[j*21 +12], fTempG, 3u*sizeof(float));
 
-                fKh_BBBrch[j*21 +14] = sqrtf(fTemp0*fTemp0 +fTemp1*fTemp1 +fTemp2*fTemp2);
+                fTempG[0] = fStk[0]*fP3[0] + fDip[0]*fP3[1] + fNrm[0]*fP3[2] + fKh_BBBrch[j*21 +0];
+                fTempG[1] = fStk[1]*fP3[0] + fDip[1]*fP3[1] + fNrm[1]*fP3[2] + fKh_BBBrch[j*21 +1];
+                fTempG[2] = fStk[2]*fP3[0] + fDip[2]*fP3[1] + fNrm[2]*fP3[2] + fKh_BBBrch[j*21 +2];
+                fTempG[2] = MIN(fTempG[2], -0.0f);
+                memcpy(&fKh_BBBrch[j*21 +15], fTempG, 3u*sizeof(float));
+
+                fTempG[0] = fStk[0]*fP4[0] + fDip[0]*fP4[1] + fNrm[0]*fP4[2] + fKh_BBBrch[j*21 +0];
+                fTempG[1] = fStk[1]*fP4[0] + fDip[1]*fP4[1] + fNrm[1]*fP4[2] + fKh_BBBrch[j*21 +1];
+                fTempG[2] = fStk[2]*fP4[0] + fDip[2]*fP4[1] + fNrm[2]*fP4[2] + fKh_BBBrch[j*21 +2];
+                fTempG[2] = MIN(fTempG[2], -0.0f);
+                memcpy(&fKh_BBBrch[j*21 +18], fTempG, 3u*sizeof(float));
+                
+                SubtractVect3(fTempVect,  &fKh_BBBrch[j*21 +0], &fKh_BBBrch[j*21 +9]);               fDist  = VectorLength(fTempVect);
+                fKh_BBBrch[j*21 +5] =  MAX(fDist, fKh_BBBrch[j*21 +5]);
+                SubtractVect3(fTempVect,  &fKh_BBBrch[j*21 +0], &fKh_BBBrch[j*21+12]);               fDist  = VectorLength(fTempVect);
+                fKh_BBBrch[j*21 +5] =  MAX(fDist, fKh_BBBrch[j*21 +5]);
+                SubtractVect3(fTempVect,  &fKh_BBBrch[j*21 +0], &fKh_BBBrch[j*21+15]);               fDist  = VectorLength(fTempVect);
+                fKh_BBBrch[j*21 +5] =  MAX(fDist, fKh_BBBrch[j*21 +5]);
+                SubtractVect3(fTempVect,  &fKh_BBBrch[j*21 +0], &fKh_BBBrch[j*21+18]);               fDist  = VectorLength(fTempVect);
+                fKh_BBBrch[j*21 +5] =  MAX(fDist, fKh_BBBrch[j*21 +5]);
                 
             }
             
@@ -1205,9 +1458,9 @@ int main(int argc, char **argv)
                     
                     SubtractVect3(fTempVect, fRcv, fSrc);               fDist  = VectorLength(fTempVect);
                     
-                    fDistF = (fDist >= 0.2f*fFltSide)*1.0f                    + (fDist < 0.2f*fFltSide)*0.0f; 
+                    fDistF = (fDist >= 0.26f*fFltSide)*1.0f                    + (fDist < 0.26f*fFltSide)*0.0f; 
                     fDistF = (uF_temp[uGlobPos*7 +4] == uF_temp[uSrcElem*7 +4])*1.0f + (uF_temp[uGlobPos*7 +4] != uF_temp[uSrcElem*7 +4])*fDistF;
-                    uF_temp[uGlobPos*7 +6] = (fDistF == 1.0f)*uF_temp[uGlobPos*7 +6] + (fDistF != 1.0f)*1u;
+
                     
                     uTemp0 = uF_OTElem[uSrcElem*u_MaxBrLvl +0];
                     uTemp1 = 0u;
@@ -1219,9 +1472,10 @@ int main(int argc, char **argv)
                         memcpy(fSrc, &fKh_FFBrch[uPrvBrId*21 +0], 3u*sizeof(float));
                         SubtractVect3(fTempVect, fRcv, fSrc);               fDist  = VectorLength(fTempVect);
                         
-                        uTemp1  = (uFUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uFUsdBrch[uPrvBrId]                                    != 0u)*0u;
-                        uTemp1  = (uF_OTPrtChld[uPrvBrId*5 +0]                            > 1u)*uTemp1 + (uF_OTPrtChld[uPrvBrId*5 +0]                            <= 1u)*0u;
-                        uTemp1  = (fDist > (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*uTemp1 + (fDist <= (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*0u;
+                        uTemp1  = (uFUsdBrch[uPrvBrId]                                                  == 0u)*1u     + (uFUsdBrch[uPrvBrId]                                                  != 0u)*0u;
+                        uTemp1  = (uF_OTPrtChld[uPrvBrId*5 +0]                                           > 1u)*uTemp1 + (uF_OTPrtChld[uPrvBrId*5 +0]                                          <= 1u)*0u;
+                        uTemp1  = (uF_OTElem[uGlobPos*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] != uPrvBrId)*uTemp1 + (uF_OTElem[uGlobPos*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] == uPrvBrId)*0u;
+                        uTemp1  = (fDist > (fKh_FFBrch[uPrvBrId*21 +5]+KH_FULL_DIST*fFltSide)                )*uTemp1 + (fDist <= (fKh_FFBrch[uPrvBrId*21 +5]+KH_FULL_DIST*fFltSide)               )*0u;
                         
                         if (uTemp1 == 1u)         {       break;      }
                     } 
@@ -1301,16 +1555,18 @@ int main(int argc, char **argv)
                             uPrvBrId = uF_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)];
                             uTemp1   = 0u;
                             
-                            while (uPrvBrLv < (uTemp0 -2))
+                            while (uPrvBrLv < (uTemp0 -1))
+
                             {   uPrvBrLv += 1u;
                                 uPrvBrId  = uF_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)];
                                 
                                 memcpy(fSrc, &fKh_FFBrch[uPrvBrId*21 +0], 3u*sizeof(float));
                                 SubtractVect3(fTempVect, fRcv, fSrc);               fDist  = VectorLength(fTempVect);
                                 
-                                uTemp1  = (uFUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uFUsdBrch[uPrvBrId]                                      != 0u)*0u;
-                                uTemp1  = (uF_OTPrtChld[uPrvBrId*5 +0]                            > 1u)*uTemp1 + (uF_OTPrtChld[uPrvBrId*5 +0]                              <= 1u)*0u;
-                                uTemp1  = (fDist > (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*uTemp1 + (fDist <= (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*0u;
+                                uTemp1  = (uFUsdBrch[uPrvBrId]                                                  == 0u)*1u     + (uFUsdBrch[uPrvBrId]                                                  != 0u)*0u;
+                                uTemp1  = (uF_OTPrtChld[uPrvBrId*5 +0]                                           > 1u)*uTemp1 + (uF_OTPrtChld[uPrvBrId*5 +0]                                          <= 1u)*0u;
+                                uTemp1  = (uF_OTElem[uGlobPos*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] != uPrvBrId)*uTemp1 + (uF_OTElem[uGlobPos*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] == uPrvBrId)*0u;
+                                uTemp1  = (fDist > (fKh_FFBrch[uPrvBrId*21 +5]+KH_FULL_DIST*fFltSide)                )*uTemp1 + (fDist <= (fKh_FFBrch[uPrvBrId*21 +5]+KH_FULL_DIST*fFltSide)               )*0u;
                                 
                                 if (uTemp1 == 1u)         {       break;      }
                             }
@@ -1352,8 +1608,11 @@ int main(int argc, char **argv)
                                 uTemp2 = 0u;
                             }
                             else
-                            {   
-                                GetGlobVertsForRectangle(fP1, fP2, fP3, fP4, fKh_FFBrch, uPrvBrId*21u);
+                            {    
+                                 memcpy(fP1, &fKh_FFBrch[uPrvBrId*21u + 9], 3u*sizeof(float));
+                                 memcpy(fP2, &fKh_FFBrch[uPrvBrId*21u +12], 3u*sizeof(float));
+                                 memcpy(fP3, &fKh_FFBrch[uPrvBrId*21u +15], 3u*sizeof(float));
+                                 memcpy(fP4, &fKh_FFBrch[uPrvBrId*21u +18], 3u*sizeof(float));
                                 
                                 if (USEHALFSPACE == 1u)
                                 {   StrainHS_Nikkhoo(fStressStkT, fStrain, fRcv[0], fRcv[1], fRcv[2], fP1, fP2, fP4, fUnitSlipF, 0.0f, 0.0f, fModPara[2], fModPara[4]);
@@ -1388,15 +1647,18 @@ int main(int argc, char **argv)
                                     fStressNrm[3] += fStressNrmT[3];        fStressNrm[4] += fStressNrmT[4];        fStressNrm[5] += fStressNrmT[5];
                                 }
                                 
-                                ScaleStress6(fStressStk, (fDistF/fUnitSlipF));          ScaleStress6(fStressStk, (1.0f/fKh_FFBrch[uPrvBrId*21 +13]));       RotStressG2L(&fPrvStress[0], fRotMat, fStressStk);
-                                ScaleStress6(fStressDip, (fDistF/fUnitSlipF));          ScaleStress6(fStressDip, (1.0f/fKh_FFBrch[uPrvBrId*21 +13]));       RotStressG2L(&fPrvStress[3], fRotMat, fStressDip);
-                                ScaleStress6(fStressNrm, (fDistF/fUnitSlipF));          ScaleStress6(fStressNrm, (1.0f/fKh_FFBrch[uPrvBrId*21 +13]));       RotStressG2L(&fPrvStress[6], fRotMat, fStressNrm);
+                                ScaleStress6(fStressStk, (fDistF/fUnitSlipF));          ScaleStress6(fStressStk, (1.0f/fKh_FFBrch[uPrvBrId*21 +4]));       RotStressG2L(&fPrvStress[0], fRotMat, fStressStk);
+                                ScaleStress6(fStressDip, (fDistF/fUnitSlipF));          ScaleStress6(fStressDip, (1.0f/fKh_FFBrch[uPrvBrId*21 +4]));       RotStressG2L(&fPrvStress[3], fRotMat, fStressDip);
+                                ScaleStress6(fStressNrm, (fDistF/fUnitSlipF));          ScaleStress6(fStressNrm, (1.0f/fKh_FFBrch[uPrvBrId*21 +4]));       RotStressG2L(&fPrvStress[6], fRotMat, fStressNrm);
                                 
                                 uTemp1 = 1u;
                                 for (j = 0; j < uF_OTPrtChld[uPrvBrId*5 +0]; j++)
                                 {   uTstBrId = uF_OTPrtChld[uPrvBrId*5 +(j+1)];
                                     
-                                    GetGlobVertsForRectangle(fP1, fP2, fP3, fP4, fKh_FFBrch, uTstBrId*21u);
+                                    memcpy(fP1, &fKh_FFBrch[uTstBrId*21u + 9], 3u*sizeof(float));
+                                    memcpy(fP2, &fKh_FFBrch[uTstBrId*21u +12], 3u*sizeof(float));
+                                    memcpy(fP3, &fKh_FFBrch[uTstBrId*21u +15], 3u*sizeof(float));
+                                    memcpy(fP4, &fKh_FFBrch[uTstBrId*21u +18], 3u*sizeof(float));
                                     
                                     if (USEHALFSPACE == 1u)
                                     {   StrainHS_Nikkhoo(fStressStkT, fStrain, fRcv[0], fRcv[1], fRcv[2], fP1, fP2, fP4, fUnitSlipF, 0.0f, 0.0f, fModPara[2], fModPara[4]);
@@ -1431,9 +1693,9 @@ int main(int argc, char **argv)
                                         fStressNrm[3] += fStressNrmT[3];        fStressNrm[4] += fStressNrmT[4];        fStressNrm[5] += fStressNrmT[5];
                                     }
                                     
-                                    ScaleStress6(fStressStk, (fDistF/fUnitSlipF));          ScaleStress6(fStressStk, (1.0f/fKh_FFBrch[uTstBrId*21 +13]));       RotStressG2L(&fTstStress[0], fRotMat, fStressStk);
-                                    ScaleStress6(fStressDip, (fDistF/fUnitSlipF));          ScaleStress6(fStressDip, (1.0f/fKh_FFBrch[uTstBrId*21 +13]));       RotStressG2L(&fTstStress[3], fRotMat, fStressDip);
-                                    ScaleStress6(fStressNrm, (fDistF/fUnitSlipF));          ScaleStress6(fStressNrm, (1.0f/fKh_FFBrch[uTstBrId*21 +13]));       RotStressG2L(&fTstStress[6], fRotMat, fStressNrm);
+                                    ScaleStress6(fStressStk, (fDistF/fUnitSlipF));          ScaleStress6(fStressStk, (1.0f/fKh_FFBrch[uTstBrId*21 +4]));       RotStressG2L(&fTstStress[0], fRotMat, fStressStk);
+                                    ScaleStress6(fStressDip, (fDistF/fUnitSlipF));          ScaleStress6(fStressDip, (1.0f/fKh_FFBrch[uTstBrId*21 +4]));       RotStressG2L(&fTstStress[3], fRotMat, fStressDip);
+                                    ScaleStress6(fStressNrm, (fDistF/fUnitSlipF));          ScaleStress6(fStressNrm, (1.0f/fKh_FFBrch[uTstBrId*21 +4]));       RotStressG2L(&fTstStress[6], fRotMat, fStressNrm);
                                     
                                     memcpy(fSrc, &fKh_FFBrch[uTstBrId*21 +0], 3u*sizeof(float));
                                     SubtractVect3(fTempVect, fRcv, fSrc);
@@ -1494,7 +1756,7 @@ int main(int argc, char **argv)
                     
                     SubtractVect3(fTempVect, fRcv, fSrc);               fDist  = VectorLength(fTempVect);
                     
-                    fDistF = (fDist >= 0.2f*fBndSide)*1.0f + (fDist < 0.2f*fBndSide)*0.0f; 
+                    fDistF = (fDist >= 0.26f*fBndSide)*1.0f + (fDist < 0.26f*fBndSide)*0.0f; 
                     uF_temp[uGlobPos*7 +6] = (fDistF == 1.0f)*uF_temp[uGlobPos*7 +6] + (fDistF != 1.0f)*1u;
                     
                     uTemp0 = uB_OTElem[uSrcElem*u_MaxBrLvl +0];
@@ -1507,9 +1769,9 @@ int main(int argc, char **argv)
                         memcpy(fSrc, &fKh_BBBrch[uPrvBrId*21 +0], 3u*sizeof(float));
                         SubtractVect3(fTempVect, fRcv, fSrc);               fDist  = VectorLength(fTempVect);
                         
-                        uTemp1  = (uBUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uBUsdBrch[uPrvBrId]                                      != 0u)*0u;
-                        uTemp1  = (uB_OTPrtChld[uPrvBrId*5 +0]                            > 1u)*uTemp1 + (uB_OTPrtChld[uPrvBrId*5 +0]                              <= 1u)*0u;
-                        uTemp1  = (fDist > (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*uTemp1 + (fDist <= (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*0u;
+                        uTemp1  = (uBUsdBrch[uPrvBrId]                                  == 0u)*1u     + (uBUsdBrch[uPrvBrId]                                   != 0u)*0u;
+                        uTemp1  = (uB_OTPrtChld[uPrvBrId*5 +0]                           > 1u)*uTemp1 + (uB_OTPrtChld[uPrvBrId*5 +0]                           <= 1u)*0u;
+                        uTemp1  = (fDist > (fKh_BBBrch[uPrvBrId*21 +5]+KH_FULL_DIST*fBndSide))*uTemp1 + (fDist <= (fKh_BBBrch[uPrvBrId*21 +5]+KH_FULL_DIST*fBndSide))*0u;
                         
                         if (uTemp1 == 1u)         {       break;      }
                     } 
@@ -1554,16 +1816,17 @@ int main(int argc, char **argv)
                             uPrvBrId = uB_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)];
                             uTemp1   = 0u;
                             
-                            while (uPrvBrLv < (uTemp0 -2))
+
+                            while (uPrvBrLv < (uTemp0 -1))
                             {   uPrvBrLv += 1u;
                                 uPrvBrId  = uB_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)];
                                 
                                 memcpy(fSrc, &fKh_BBBrch[uPrvBrId*21 +0], 3u*sizeof(float));
                                 SubtractVect3(fTempVect, fRcv, fSrc);               fDist  = VectorLength(fTempVect);
                                 
-                                uTemp1  = (uBUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uBUsdBrch[uPrvBrId]                                      != 0u)*0u;
-                                uTemp1  = (uB_OTPrtChld[uPrvBrId*5 +0]                            > 1u)*uTemp1 + (uB_OTPrtChld[uPrvBrId*5 +0]                              <= 1u)*0u;
-                                uTemp1  = (fDist > (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*uTemp1 + (fDist <= (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*0u;
+                                uTemp1  = (uBUsdBrch[uPrvBrId]                                  == 0u)*1u     + (uBUsdBrch[uPrvBrId]                                   != 0u)*0u;
+                                uTemp1  = (uB_OTPrtChld[uPrvBrId*5 +0]                           > 1u)*uTemp1 + (uB_OTPrtChld[uPrvBrId*5 +0]                           <= 1u)*0u;
+                                uTemp1  = (fDist > (fKh_BBBrch[uPrvBrId*21 +5]+KH_FULL_DIST*fBndSide))*uTemp1 + (fDist <= (fKh_BBBrch[uPrvBrId*21 +5]+KH_FULL_DIST*fBndSide))*0u;
                                 
                                 if (uTemp1 == 1u)         {       break;      }
                             }
@@ -1602,9 +1865,11 @@ int main(int argc, char **argv)
                                 uTemp2 = 0u;
                             }
                             else
-                            {  
-                                
-                                GetGlobVertsForRectangle(fP1, fP2, fP3, fP4, fKh_BBBrch, uPrvBrId*21u);
+                            {   
+                                memcpy(fP1, &fKh_BBBrch[uPrvBrId*21u + 9], 3u*sizeof(float));
+                                memcpy(fP2, &fKh_BBBrch[uPrvBrId*21u +12], 3u*sizeof(float));
+                                memcpy(fP3, &fKh_BBBrch[uPrvBrId*21u +15], 3u*sizeof(float));
+                                memcpy(fP4, &fKh_BBBrch[uPrvBrId*21u +18], 3u*sizeof(float));
                                 
                                 if (USEHALFSPACE == 1u)
                                 {   StrainHS_Nikkhoo(fStressStkT, fStrain, fRcv[0], fRcv[1], fRcv[2], fP1, fP2, fP4, fUnitSlipB, 0.0f, 0.0f, fModPara[2], fModPara[4]);
@@ -1639,15 +1904,18 @@ int main(int argc, char **argv)
                                     fStressNrm[3] += fStressNrmT[3];        fStressNrm[4] += fStressNrmT[4];        fStressNrm[5] += fStressNrmT[5];
                                 }
                                 
-                                ScaleStress6(fStressStk, (fDistF/fUnitSlipB));          ScaleStress6(fStressStk, (1.0f/fKh_BBBrch[uPrvBrId*21 +13]));           RotStressG2L(&fPrvStress[0], fRotMat, fStressStk);
-                                ScaleStress6(fStressDip, (fDistF/fUnitSlipB));          ScaleStress6(fStressDip, (1.0f/fKh_BBBrch[uPrvBrId*21 +13]));           RotStressG2L(&fPrvStress[3], fRotMat, fStressDip);
-                                ScaleStress6(fStressNrm, (fDistF/fUnitSlipB));          ScaleStress6(fStressNrm, (1.0f/fKh_BBBrch[uPrvBrId*21 +13]));           RotStressG2L(&fPrvStress[6], fRotMat, fStressNrm);
+                                ScaleStress6(fStressStk, (fDistF/fUnitSlipB));          ScaleStress6(fStressStk, (1.0f/fKh_BBBrch[uPrvBrId*21 +4]));           RotStressG2L(&fPrvStress[0], fRotMat, fStressStk);
+                                ScaleStress6(fStressDip, (fDistF/fUnitSlipB));          ScaleStress6(fStressDip, (1.0f/fKh_BBBrch[uPrvBrId*21 +4]));           RotStressG2L(&fPrvStress[3], fRotMat, fStressDip);
+                                ScaleStress6(fStressNrm, (fDistF/fUnitSlipB));          ScaleStress6(fStressNrm, (1.0f/fKh_BBBrch[uPrvBrId*21 +4]));           RotStressG2L(&fPrvStress[6], fRotMat, fStressNrm);
                                 
                                 uTemp1 = 1u;
                                 for (j = 0; j < uB_OTPrtChld[uPrvBrId*5 +0]; j++)
                                 {   uTstBrId = uB_OTPrtChld[uPrvBrId*5 +(j+1)];
                                     
-                                    GetGlobVertsForRectangle(fP1, fP2, fP3, fP4, fKh_BBBrch, uTstBrId*21u);
+                                    memcpy(fP1, &fKh_BBBrch[uTstBrId*21u + 9], 3u*sizeof(float));
+                                    memcpy(fP2, &fKh_BBBrch[uTstBrId*21u +12], 3u*sizeof(float));
+                                    memcpy(fP3, &fKh_BBBrch[uTstBrId*21u +15], 3u*sizeof(float));
+                                    memcpy(fP4, &fKh_BBBrch[uTstBrId*21u +18], 3u*sizeof(float));
                                     
                                     if (USEHALFSPACE == 1u)
                                     {   StrainHS_Nikkhoo(fStressStkT, fStrain, fRcv[0], fRcv[1], fRcv[2], fP1, fP2, fP4, fUnitSlipB, 0.0f, 0.0f, fModPara[2], fModPara[4]);
@@ -1682,9 +1950,9 @@ int main(int argc, char **argv)
                                         fStressNrm[3] += fStressNrmT[3];        fStressNrm[4] += fStressNrmT[4];        fStressNrm[5] += fStressNrmT[5];
                                     }
                                     
-                                    ScaleStress6(fStressStk, (fDistF/fUnitSlipB));          ScaleStress6(fStressStk, (1.0f/fKh_BBBrch[uTstBrId*21 +13]));           RotStressG2L(&fTstStress[0], fRotMat, fStressStk);
-                                    ScaleStress6(fStressDip, (fDistF/fUnitSlipB));          ScaleStress6(fStressDip, (1.0f/fKh_BBBrch[uTstBrId*21 +13]));           RotStressG2L(&fTstStress[3], fRotMat, fStressDip);
-                                    ScaleStress6(fStressNrm, (fDistF/fUnitSlipB));          ScaleStress6(fStressNrm, (1.0f/fKh_BBBrch[uTstBrId*21 +13]));           RotStressG2L(&fTstStress[6], fRotMat, fStressNrm);
+                                    ScaleStress6(fStressStk, (fDistF/fUnitSlipB));          ScaleStress6(fStressStk, (1.0f/fKh_BBBrch[uTstBrId*21 +4]));           RotStressG2L(&fTstStress[0], fRotMat, fStressStk);
+                                    ScaleStress6(fStressDip, (fDistF/fUnitSlipB));          ScaleStress6(fStressDip, (1.0f/fKh_BBBrch[uTstBrId*21 +4]));           RotStressG2L(&fTstStress[3], fRotMat, fStressDip);
+                                    ScaleStress6(fStressNrm, (fDistF/fUnitSlipB));          ScaleStress6(fStressNrm, (1.0f/fKh_BBBrch[uTstBrId*21 +4]));           RotStressG2L(&fTstStress[6], fRotMat, fStressNrm);
                                     
                                     memcpy(fSrc, &fKh_BBBrch[uTstBrId*21 +0], 3u*sizeof(float));
                                     SubtractVect3(fTempVect, fRcv, fSrc);
@@ -1747,7 +2015,7 @@ int main(int argc, char **argv)
                     
                     SubtractVect3(fTempVect, fRcv, fSrc);               fDist  = VectorLength(fTempVect);
                     
-                    fDistF = (fDist >= 0.2f*fBndSide)*1.0f + (fDist < 0.2f*fBndSide)*0.0f; 
+                    fDistF = (fDist >= 0.26f*fBndSide)*1.0f + (fDist < 0.26f*fBndSide)*0.0f; 
                     fDistF = (uB_temp[uGlobPos*4 +3] == uB_temp[uSrcElem*4 +3])*1.0f + (uB_temp[uGlobPos*4 +3] != uB_temp[uSrcElem*4 +3])*fDistF;
                     
                     uTemp0 = uB_OTElem[uSrcElem*u_MaxBrLvl +0];
@@ -1760,9 +2028,10 @@ int main(int argc, char **argv)
                         memcpy(fSrc, &fKh_BBBrch[uPrvBrId*21 +0], 3u*sizeof(float));
                         SubtractVect3(fTempVect, fRcv, fSrc);               fDist  = VectorLength(fTempVect);
                         
-                        uTemp1  = (uBUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uBUsdBrch[uPrvBrId]                                      != 0u)*0u;
-                        uTemp1  = (uB_OTPrtChld[uPrvBrId*5 +0]                            > 1u)*uTemp1 + (uB_OTPrtChld[uPrvBrId*5 +0]                              <= 1u)*0u;
-                        uTemp1  = (fDist > (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*uTemp1 + (fDist <= (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*0u;
+                        uTemp1  = (uBUsdBrch[uPrvBrId]                                                  == 0u)*1u     + (uBUsdBrch[uPrvBrId]                                                  != 0u)*0u;
+                        uTemp1  = (uB_OTPrtChld[uPrvBrId*5 +0]                                           > 1u)*uTemp1 + (uB_OTPrtChld[uPrvBrId*5 +0]                                          <= 1u)*0u;
+                        uTemp1  = (uB_OTElem[uGlobPos*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] != uPrvBrId)*uTemp1 + (uB_OTElem[uGlobPos*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] == uPrvBrId)*0u;
+                        uTemp1  = (fDist > (fKh_BBBrch[uPrvBrId*21 +5]+KH_FULL_DIST*fBndSide)                )*uTemp1 + (fDist <= (fKh_BBBrch[uPrvBrId*21 +5]+KH_FULL_DIST*fBndSide)               )*0u;
                         
                         if (uTemp1 == 1u)         {       break;      }
                     } 
@@ -1822,9 +2091,10 @@ int main(int argc, char **argv)
                                 memcpy(fSrc, &fKh_BBBrch[uPrvBrId*21 +0], 3u*sizeof(float));
                                 SubtractVect3(fTempVect, fRcv, fSrc);               fDist  = VectorLength(fTempVect);
                                 
-                                uTemp1  = (uBUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uBUsdBrch[uPrvBrId]                                      != 0u)*0u;
-                                uTemp1  = (uB_OTPrtChld[uPrvBrId*5 +0]                            > 1u)*uTemp1 + (uB_OTPrtChld[uPrvBrId*5 +0]                              <= 1u)*0u;
-                                uTemp1  = (fDist > (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*uTemp1 + (fDist <= (fKh_BBBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fBndSide))*0u;
+                                uTemp1  = (uBUsdBrch[uPrvBrId]                                                  == 0u)*1u     + (uBUsdBrch[uPrvBrId]                                                  != 0u)*0u;
+                                uTemp1  = (uB_OTPrtChld[uPrvBrId*5 +0]                                           > 1u)*uTemp1 + (uB_OTPrtChld[uPrvBrId*5 +0]                                          <= 1u)*0u;
+                                uTemp1  = (uB_OTElem[uGlobPos*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] != uPrvBrId)*uTemp1 + (uB_OTElem[uGlobPos*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)] == uPrvBrId)*0u;
+                                uTemp1  = (fDist > (fKh_BBBrch[uPrvBrId*21 +5]+KH_FULL_DIST*fBndSide)                )*uTemp1 + (fDist <= (fKh_BBBrch[uPrvBrId*21 +5]+KH_FULL_DIST*fBndSide)               )*0u;
                                 
                                 if (uTemp1 == 1u)         {       break;      }
                             }
@@ -1865,7 +2135,10 @@ int main(int argc, char **argv)
                             }
                             else
                             {   
-                                GetGlobVertsForRectangle(fP1, fP2, fP3, fP4, fKh_BBBrch, uPrvBrId*21u);
+                                memcpy(fP1, &fKh_BBBrch[uPrvBrId*21u + 9], 3u*sizeof(float));
+                                memcpy(fP2, &fKh_BBBrch[uPrvBrId*21u +12], 3u*sizeof(float));
+                                memcpy(fP3, &fKh_BBBrch[uPrvBrId*21u +15], 3u*sizeof(float));
+                                memcpy(fP4, &fKh_BBBrch[uPrvBrId*21u +18], 3u*sizeof(float));
                                 
                                 if (USEHALFSPACE == 1u)
                                 {   StrainHS_Nikkhoo(fStressStkT, fStrain, fRcv[0], fRcv[1], fRcv[2], fP1, fP2, fP4, fUnitSlipB, 0.0f, 0.0f, fModPara[2], fModPara[4]);
@@ -1900,15 +2173,18 @@ int main(int argc, char **argv)
                                     fStressNrm[3] += fStressNrmT[3];        fStressNrm[4] += fStressNrmT[4];        fStressNrm[5] += fStressNrmT[5];
                                 }
                                 
-                                ScaleStress6(fStressStk, (fDistF/fUnitSlipB));          ScaleStress6(fStressStk, (1.0f/fKh_BBBrch[uPrvBrId*21 +13]));           RotStressG2L(&fPrvStress[0], fRotMat, fStressStk);
-                                ScaleStress6(fStressDip, (fDistF/fUnitSlipB));          ScaleStress6(fStressDip, (1.0f/fKh_BBBrch[uPrvBrId*21 +13]));           RotStressG2L(&fPrvStress[3], fRotMat, fStressDip);
-                                ScaleStress6(fStressNrm, (fDistF/fUnitSlipB));          ScaleStress6(fStressNrm, (1.0f/fKh_BBBrch[uPrvBrId*21 +13]));           RotStressG2L(&fPrvStress[6], fRotMat, fStressNrm);
+                                ScaleStress6(fStressStk, (fDistF/fUnitSlipB));          ScaleStress6(fStressStk, (1.0f/fKh_BBBrch[uPrvBrId*21 +4]));           RotStressG2L(&fPrvStress[0], fRotMat, fStressStk);
+                                ScaleStress6(fStressDip, (fDistF/fUnitSlipB));          ScaleStress6(fStressDip, (1.0f/fKh_BBBrch[uPrvBrId*21 +4]));           RotStressG2L(&fPrvStress[3], fRotMat, fStressDip);
+                                ScaleStress6(fStressNrm, (fDistF/fUnitSlipB));          ScaleStress6(fStressNrm, (1.0f/fKh_BBBrch[uPrvBrId*21 +4]));           RotStressG2L(&fPrvStress[6], fRotMat, fStressNrm);
                                 
                                 uTemp1 = 1u;
                                 for (j = 0; j < uB_OTPrtChld[uPrvBrId*5 +0]; j++)
                                 {   uTstBrId = uB_OTPrtChld[uPrvBrId*5 +(j+1)];
                                     
-                                    GetGlobVertsForRectangle(fP1, fP2, fP3, fP4, fKh_BBBrch, uTstBrId*21u);
+                                    memcpy(fP1, &fKh_BBBrch[uTstBrId*21u + 9], 3u*sizeof(float));
+                                    memcpy(fP2, &fKh_BBBrch[uTstBrId*21u +12], 3u*sizeof(float));
+                                    memcpy(fP3, &fKh_BBBrch[uTstBrId*21u +15], 3u*sizeof(float));
+                                    memcpy(fP4, &fKh_BBBrch[uTstBrId*21u +18], 3u*sizeof(float));
                                     
                                     if (USEHALFSPACE == 1u)
                                     {   StrainHS_Nikkhoo(fStressStkT, fStrain, fRcv[0], fRcv[1], fRcv[2], fP1, fP2, fP4, fUnitSlipB, 0.0f, 0.0f, fModPara[2], fModPara[4]);
@@ -1943,9 +2219,9 @@ int main(int argc, char **argv)
                                         fStressNrm[3] += fStressNrmT[3];        fStressNrm[4] += fStressNrmT[4];        fStressNrm[5] += fStressNrmT[5];
                                     }
                                     
-                                    ScaleStress6(fStressStk, (fDistF/fUnitSlipB));          ScaleStress6(fStressStk, (1.0f/fKh_BBBrch[uTstBrId*21 +13]));           RotStressG2L(&fTstStress[0], fRotMat, fStressStk);
-                                    ScaleStress6(fStressDip, (fDistF/fUnitSlipB));          ScaleStress6(fStressDip, (1.0f/fKh_BBBrch[uTstBrId*21 +13]));           RotStressG2L(&fTstStress[3], fRotMat, fStressDip);
-                                    ScaleStress6(fStressNrm, (fDistF/fUnitSlipB));          ScaleStress6(fStressNrm, (1.0f/fKh_BBBrch[uTstBrId*21 +13]));           RotStressG2L(&fTstStress[6], fRotMat, fStressNrm);
+                                    ScaleStress6(fStressStk, (fDistF/fUnitSlipB));          ScaleStress6(fStressStk, (1.0f/fKh_BBBrch[uTstBrId*21 +4]));           RotStressG2L(&fTstStress[0], fRotMat, fStressStk);
+                                    ScaleStress6(fStressDip, (fDistF/fUnitSlipB));          ScaleStress6(fStressDip, (1.0f/fKh_BBBrch[uTstBrId*21 +4]));           RotStressG2L(&fTstStress[3], fRotMat, fStressDip);
+                                    ScaleStress6(fStressNrm, (fDistF/fUnitSlipB));          ScaleStress6(fStressNrm, (1.0f/fKh_BBBrch[uTstBrId*21 +4]));           RotStressG2L(&fTstStress[6], fRotMat, fStressNrm);
                                     
                                     memcpy(fSrc, &fKh_BBBrch[uTstBrId*21 +0], 3u*sizeof(float));
                                     SubtractVect3(fTempVect, fRcv, fSrc);
@@ -2004,7 +2280,7 @@ int main(int argc, char **argv)
                     
                     SubtractVect3(fTempVect, fRcv, fSrc);               fDist  = VectorLength(fTempVect);
                     
-                    fDistF = (fDist >= 0.2f*fFltSide)*1.0f + (fDist < 0.2f*fFltSide)*0.0f; 
+                    fDistF = (fDist >= 0.26f*fFltSide)*1.0f + (fDist < 0.26f*fFltSide)*0.0f; 
                     
                     uTemp0 = uF_OTElem[uSrcElem*u_MaxBrLvl +0];
                     uTemp1 = 0u;
@@ -2016,9 +2292,9 @@ int main(int argc, char **argv)
                         memcpy(fSrc, &fKh_FFBrch[uPrvBrId*21 +0], 3u*sizeof(float));
                         SubtractVect3(fTempVect, fRcv, fSrc);               fDist  = VectorLength(fTempVect);
                         
-                        uTemp1  = (uFUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uFUsdBrch[uPrvBrId]                                      != 0u)*0u;
-                        uTemp1  = (uF_OTPrtChld[uPrvBrId*5 +0]                            > 1u)*uTemp1 + (uF_OTPrtChld[uPrvBrId*5 +0]                              <= 1u)*0u;
-                        uTemp1  = (fDist > (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*uTemp1 + (fDist <= (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*0u;
+                        uTemp1  = (uFUsdBrch[uPrvBrId]                                  == 0u)*1u     + (uFUsdBrch[uPrvBrId]                                   != 0u)*0u;
+                        uTemp1  = (uF_OTPrtChld[uPrvBrId*5 +0]                           > 1u)*uTemp1 + (uF_OTPrtChld[uPrvBrId*5 +0]                           <= 1u)*0u;
+                        uTemp1  = (fDist > (fKh_FFBrch[uPrvBrId*21 +5]+KH_FULL_DIST*fFltSide))*uTemp1 + (fDist <= (fKh_FFBrch[uPrvBrId*21 +5]+KH_FULL_DIST*fFltSide))*0u;
                         
                         if (uTemp1 == 1u)         {       break;      }
                     } 
@@ -2071,9 +2347,9 @@ int main(int argc, char **argv)
                                 memcpy(fSrc, &fKh_FFBrch[uPrvBrId*21 +0], 3u*sizeof(float));
                                 SubtractVect3(fTempVect, fRcv, fSrc);               fDist  = VectorLength(fTempVect);
                                 
-                                uTemp1  = (uFUsdBrch[uPrvBrId]                                   == 0u)*1u     + (uFUsdBrch[uPrvBrId]                                      != 0u)*0u;
-                                uTemp1  = (uF_OTPrtChld[uPrvBrId*5 +0]                            > 1u)*uTemp1 + (uF_OTPrtChld[uPrvBrId*5 +0]                              <= 1u)*0u;
-                                uTemp1  = (fDist > (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*uTemp1 + (fDist <= (fKh_FFBrch[uPrvBrId*21 +14]+KH_FULL_DIST*fFltSide))*0u;
+                                uTemp1  = (uFUsdBrch[uPrvBrId]                                  == 0u)*1u     + (uFUsdBrch[uPrvBrId]                                   != 0u)*0u;
+                                uTemp1  = (uF_OTPrtChld[uPrvBrId*5 +0]                           > 1u)*uTemp1 + (uF_OTPrtChld[uPrvBrId*5 +0]                           <= 1u)*0u;
+                                uTemp1  = (fDist > (fKh_FFBrch[uPrvBrId*21 +5]+KH_FULL_DIST*fFltSide))*uTemp1 + (fDist <= (fKh_FFBrch[uPrvBrId*21 +5]+KH_FULL_DIST*fFltSide))*0u;
                                 
                                 if (uTemp1 == 1u)         {       break;      }
                             }
@@ -2114,7 +2390,10 @@ int main(int argc, char **argv)
                             }
                             else
                             {   
-                                GetGlobVertsForRectangle(fP1, fP2, fP3, fP4, fKh_FFBrch, uPrvBrId*21u);
+                                 memcpy(fP1, &fKh_FFBrch[uPrvBrId*21u + 9], 3u*sizeof(float));
+                                 memcpy(fP2, &fKh_FFBrch[uPrvBrId*21u +12], 3u*sizeof(float));
+                                 memcpy(fP3, &fKh_FFBrch[uPrvBrId*21u +15], 3u*sizeof(float));
+                                 memcpy(fP4, &fKh_FFBrch[uPrvBrId*21u +18], 3u*sizeof(float));
                                 
                                 if (USEHALFSPACE == 1u)
                                 {   StrainHS_Nikkhoo(fStressStkT, fStrain, fRcv[0], fRcv[1], fRcv[2], fP1, fP2, fP4, fUnitSlipF, 0.0f, 0.0f, fModPara[2], fModPara[4]);
@@ -2149,15 +2428,18 @@ int main(int argc, char **argv)
                                     fStressNrm[3] += fStressNrmT[3];        fStressNrm[4] += fStressNrmT[4];        fStressNrm[5] += fStressNrmT[5];
                                 }
                                 
-                                ScaleStress6(fStressStk, (fDistF/fUnitSlipF));          ScaleStress6(fStressStk, (1.0f/fKh_FFBrch[uPrvBrId*21 +13]));           RotStressG2L(&fPrvStress[0], fRotMat, fStressStk);
-                                ScaleStress6(fStressDip, (fDistF/fUnitSlipF));          ScaleStress6(fStressDip, (1.0f/fKh_FFBrch[uPrvBrId*21 +13]));           RotStressG2L(&fPrvStress[3], fRotMat, fStressDip);
-                                ScaleStress6(fStressNrm, (fDistF/fUnitSlipF));          ScaleStress6(fStressNrm, (1.0f/fKh_FFBrch[uPrvBrId*21 +13]));           RotStressG2L(&fPrvStress[6], fRotMat, fStressNrm);
+                                ScaleStress6(fStressStk, (fDistF/fUnitSlipF));          ScaleStress6(fStressStk, (1.0f/fKh_FFBrch[uPrvBrId*21 +4]));           RotStressG2L(&fPrvStress[0], fRotMat, fStressStk);
+                                ScaleStress6(fStressDip, (fDistF/fUnitSlipF));          ScaleStress6(fStressDip, (1.0f/fKh_FFBrch[uPrvBrId*21 +4]));           RotStressG2L(&fPrvStress[3], fRotMat, fStressDip);
+                                ScaleStress6(fStressNrm, (fDistF/fUnitSlipF));          ScaleStress6(fStressNrm, (1.0f/fKh_FFBrch[uPrvBrId*21 +4]));           RotStressG2L(&fPrvStress[6], fRotMat, fStressNrm);
                                 
                                 uTemp1 = 1u;
                                 for (j = 0; j < uF_OTPrtChld[uPrvBrId*5 +0]; j++)
                                 {   uTstBrId = uF_OTPrtChld[uPrvBrId*5 +(j+1)];
                                     
-                                    GetGlobVertsForRectangle(fP1, fP2, fP3, fP4, fKh_FFBrch, uTstBrId*21u);
+                                    memcpy(fP1, &fKh_FFBrch[uTstBrId*21u + 9], 3u*sizeof(float));
+                                    memcpy(fP2, &fKh_FFBrch[uTstBrId*21u +12], 3u*sizeof(float));
+                                    memcpy(fP3, &fKh_FFBrch[uTstBrId*21u +15], 3u*sizeof(float));
+                                    memcpy(fP4, &fKh_FFBrch[uTstBrId*21u +18], 3u*sizeof(float));
                                     
                                     if (USEHALFSPACE == 1u)
                                     {   StrainHS_Nikkhoo(fStressStkT, fStrain, fRcv[0], fRcv[1], fRcv[2], fP1, fP2, fP4, fUnitSlipF, 0.0f, 0.0f, fModPara[2], fModPara[4]);
@@ -2192,9 +2474,9 @@ int main(int argc, char **argv)
                                         fStressNrm[3] += fStressNrmT[3];        fStressNrm[4] += fStressNrmT[4];        fStressNrm[5] += fStressNrmT[5];
                                     }
                                     
-                                    ScaleStress6(fStressStk, (fDistF/fUnitSlipF));          ScaleStress6(fStressStk, (1.0f/fKh_FFBrch[uTstBrId*21 +13]));           RotStressG2L(&fTstStress[0], fRotMat, fStressStk);
-                                    ScaleStress6(fStressDip, (fDistF/fUnitSlipF));          ScaleStress6(fStressDip, (1.0f/fKh_FFBrch[uTstBrId*21 +13]));           RotStressG2L(&fTstStress[3], fRotMat, fStressDip);
-                                    ScaleStress6(fStressNrm, (fDistF/fUnitSlipF));          ScaleStress6(fStressNrm, (1.0f/fKh_FFBrch[uTstBrId*21 +13]));           RotStressG2L(&fTstStress[6], fRotMat, fStressNrm);
+                                    ScaleStress6(fStressStk, (fDistF/fUnitSlipF));          ScaleStress6(fStressStk, (1.0f/fKh_FFBrch[uTstBrId*21 +4]));           RotStressG2L(&fTstStress[0], fRotMat, fStressStk);
+                                    ScaleStress6(fStressDip, (fDistF/fUnitSlipF));          ScaleStress6(fStressDip, (1.0f/fKh_FFBrch[uTstBrId*21 +4]));           RotStressG2L(&fTstStress[3], fRotMat, fStressDip);
+                                    ScaleStress6(fStressNrm, (fDistF/fUnitSlipF));          ScaleStress6(fStressNrm, (1.0f/fKh_FFBrch[uTstBrId*21 +4]));           RotStressG2L(&fTstStress[6], fRotMat, fStressNrm);
                                     
                                     memcpy(fSrc, &fKh_FFBrch[uTstBrId*21 +0], 3u*sizeof(float));
                                     SubtractVect3(fTempVect, fRcv, fSrc);
@@ -2570,9 +2852,9 @@ int main(int argc, char **argv)
     float *fBslip    = calloc(3*uBPNum, sizeof *fBslip); 
     
     int *iStartPosF  = calloc(iSIZE, sizeof *iStartPosF);
-    int *iOffstPosF  = calloc(iSIZE+1, sizeof *iOffstPosF);
+    int *iOffstPosF  = calloc(iSIZE, sizeof *iOffstPosF);
     int *iStartPosB  = calloc(iSIZE, sizeof *iStartPosB);
-    int *iOffstPosB  = calloc(iSIZE+1, sizeof *iOffstPosB);
+    int *iOffstPosB  = calloc(iSIZE, sizeof *iOffstPosB);
     float *fSTFslip  = calloc(2*iFOFFSET[iRANK]*MAXMOMRATEFUNCLENGTH, sizeof *fSTFslip);
     float *fFslipL   = calloc(3*iFOFFSET[iRANK], sizeof *fFslipL);
     float *fFslipG   = calloc(3*uFPNum, sizeof *fFslipG); 
@@ -2581,6 +2863,7 @@ int main(int argc, char **argv)
     
     
     {   if (iRANK  == 0)    {   fprintf(stdout,"now determining tectonic loading function\n");       }
+        int iOffPos;
         unsigned int uAnyLoad;
         unsigned int uGlobPos,   uTemp0,   uTemp1;
         float fTemp0,   fTemp1,   fTemp2,   fCmbSlp1,   fCmbSlp2,   fMinPS_f,   fMinPS_b = 0.0f;
@@ -2605,26 +2888,29 @@ int main(int argc, char **argv)
         fCmbSlp1 = (fBlah[2] <= 0.0f)*0.0f  + (fBlah[2] > 0.0f)* (fBlah[1]/fTemp0);
         
         if (uBPNum > 0u)
-        {   memset(iStartPosB, 0, iSIZE*sizeof(int) );           memset(iOffstPosB, 0, (iSIZE+1)*sizeof(int) );
+        {   iStartPosB[0]     = 0;
+            iOffPos           = 0;
             for (i = 0u; i < iBOFFSET[iRANK]; i++)
             {   fMinPS_b += ((fBEvent[i*9 +4] + fBEvent[i*9 +5] + fBEvent[i*9 +6])/3.0f);
                 uGlobPos  = i +iBSTART[iRANK];
-                fTemp0    =  -fB_temp[uGlobPos*16 +3];                      fTemp1 =  -fB_temp[uGlobPos*16 +4];             fTemp2 =  -fB_temp[uGlobPos*16 +5];
+                fTemp0    =  -fB_temp[uGlobPos*16 +3];              fTemp1 =  -fB_temp[uGlobPos*16 +4];         fTemp2 =  -fB_temp[uGlobPos*16 +5];
                 if ((fabs(fTemp0) + fabs(fTemp1) + fabs(fTemp2)) > 0.0f)
-                {   fBslipL[iOffstPosB[iSIZE]*4 +0] = (float)uGlobPos;      fBslipL[iOffstPosB[iSIZE]*4 +1] = fTemp0;       fBslipL[iOffstPosB[iSIZE]*4 +2] = fTemp1;           fBslipL[iOffstPosB[iSIZE]*4 +3] = fTemp2;
-                    iOffstPosB[iSIZE] += 1;
+                {   fBslipL[iOffPos*4 +0] = (float)uGlobPos;        fBslipL[iOffPos*4 +1] = fTemp0;             fBslipL[iOffPos*4 +2] = fTemp1;
+                    fBslipL[iOffPos*4 +3] = fTemp2;                 iOffPos += 1;
             }   }
-            iOffstPosB[iRANK] = iOffstPosB[iSIZE]*4;
+            iOffPos *= 4;
             
             MPI_Allreduce(MPI_IN_PLACE, &fMinPS_b,  1, MPI_FLOAT,    MPI_SUM, MPI_COMM_WORLD); 
-            MPI_Allreduce(MPI_IN_PLACE, iOffstPosB, (iSIZE+1), MPI_INT,  MPI_SUM, MPI_COMM_WORLD);
-            for (i = 1; i < iSIZE; i++)        {    iStartPosB[i]  = iStartPosB[i-1] +iOffstPosB[i-1];    } 
+            MPI_Allgather(&iOffPos, 1, MPI_INT, iOffstPosB, 1, MPI_INT, MPI_COMM_WORLD);
+            memcpy(&iStartPosB[1], &iOffstPosB[0], (iSIZE-1)*sizeof(int));
+            for (i = 2; i < iSIZE; i++)         {       iStartPosF[i]  += iStartPosF[i-1];         }
+            iOffPos = (iStartPosB[iSIZE-1] + iOffstPosB[iSIZE-1])/4;
             MPI_Allgatherv(fBslipL, iOffstPosB[iRANK], MPI_FLOAT, fBslipG, iOffstPosB, iStartPosB, MPI_FLOAT, MPI_COMM_WORLD);
             fMinPS_b = fabs(1000.0f *MININTSEISSTRESSCHANGE / (fMinPS_b/(float)uBPNum));
             
             for (i = 0u; i < iFOFFSET[iRANK]; i++)
             {   memset(fBslip, 0, 3*uKh_FBcnt[i]*sizeof(float) );
-                for (j = 0u; j < iOffstPosB[iSIZE]; j++) 
+                for (j = 0u; j < iOffPos; j++) 
                 {   uTemp0 = (unsigned int)fBslipG[j*4 +0]; 
                     uTemp1 = uKh_FBps2[i][uTemp0]; 
                     fBslip[uTemp1*3 +0] += -fBslipG[j*4 +1];
@@ -2646,23 +2932,26 @@ int main(int argc, char **argv)
         if (uAnyLoad == 0u) {       fprintf(stdout,"no load was defined. abort \n");    exit(123);      }
         
         for (k = 0u; k < MAXITERATION4BOUNDARY; k++)
-        {   memset(iStartPosF, 0, iSIZE*sizeof(int) );           memset(iOffstPosF, 0, (iSIZE+1)*sizeof(int) ); 
+        {   iStartPosF[0]     = 0;
+            iOffPos           = 0;
             for (i = 0u; i < iFOFFSET[iRANK]; i++)
-            {   fTemp0 = -1.0f*fFTempVal[i*5 +0]/fFEvent[i*17 +4];       fFTempVal[i*5 +2] += fTemp0;
-                fTemp1 = -1.0f*fFTempVal[i*5 +1]/fFEvent[i*17 +5];       fFTempVal[i*5 +3] += fTemp1;
+            {   fTemp0 = -1.0f*fFTempVal[i*5 +0]/fFEvent[i*17 +4];      fFTempVal[i*5 +2] += fTemp0;
+                fTemp1 = -1.0f*fFTempVal[i*5 +1]/fFEvent[i*17 +5];      fFTempVal[i*5 +3] += fTemp1;
                 
-                fFslipL[iOffstPosF[iSIZE]*3 +0] = (float)(i +iFSTART[iRANK]);        fFslipL[iOffstPosF[iSIZE]*3 +1] = fTemp0;           fFslipL[iOffstPosF[iSIZE]*3 +2] = fTemp1;
-                iOffstPosF[iSIZE] += 1;
+                fFslipL[iOffPos*3 +0] = (float)(i +iFSTART[iRANK]);     fFslipL[iOffPos*3 +1] = fTemp0;
+                fFslipL[iOffPos*3 +2] = fTemp1;                         iOffPos += 1;
             }
-            iOffstPosF[iRANK] = iOffstPosF[iSIZE]*3;
+            iOffPos *= 3;
             
-            MPI_Allreduce(MPI_IN_PLACE, iOffstPosF, (iSIZE+1), MPI_INT, MPI_SUM, MPI_COMM_WORLD);
-            for (i = 1; i < iSIZE; i++)         {       iStartPosF[i]  = iStartPosF[i-1] +iOffstPosF[i-1];         }
+            MPI_Allgather(&iOffPos, 1, MPI_INT, iOffstPosF, 1, MPI_INT, MPI_COMM_WORLD);
+            memcpy(&iStartPosF[1], &iOffstPosF[0], (iSIZE-1)*sizeof(int));
+            for (i = 2; i < iSIZE; i++)         {       iStartPosF[i]  += iStartPosF[i-1];         }
+            iOffPos = (iStartPosF[iSIZE-1] + iOffstPosF[iSIZE-1])/3;
             MPI_Allgatherv(fFslipL, iOffstPosF[iRANK], MPI_FLOAT, fFslipG, iOffstPosF, iStartPosF, MPI_FLOAT, MPI_COMM_WORLD);
             
             for (i = 0u; i < iFOFFSET[iRANK]; i++)
             {   memset(fFslip, 0, 2*uKh_FFcnt[i]*sizeof(float) );
-                for (j = 0u; j < iOffstPosF[iSIZE]; j++) 
+                for (j = 0u; j < iOffPos; j++) 
                 {   uTemp0 = (unsigned int)fFslipG[j*3 +0]; 
                     uTemp1 = uKh_FFps2[i][uTemp0]; 
                     fFslip[uTemp1*2 +0] += fFslipG[j*3 +1];
@@ -2670,7 +2959,8 @@ int main(int argc, char **argv)
                 }
                 fFTempVal[i*5 +0] += cblas_sdot(2*uKh_FFcnt[i], fFslip, 1, fKh_FFvalstk[i], 1);
                 fFTempVal[i*5 +1] += cblas_sdot(2*uKh_FFcnt[i], fFslip, 1, fKh_FFvaldip[i], 1);
-        }   }
+            }
+        }
         
         memset(fBlah, 0, 3*sizeof(float));
         for (i = 0u; i < iFOFFSET[iRANK]; i++) 
@@ -2697,7 +2987,7 @@ int main(int argc, char **argv)
             fFTempVal[i*5 +2] *= fTemp0;        fFTempVal[i*5 +3] *= fTemp0;
             fFRef[i*14 +12]   *= fTemp0;
         }
-        if (iRANK == 0)     
+        if (iRANK == 0)
         {   fprintf(stdout,"Minimum AfterSlip (mm): %3.3f \nMinimum DeepRelaxationSlip (mm): %3.3f\n", fMinPS_f, fMinPS_b);
             fprintf(stdout,"\nResulting average stressing rate on faults (mm/yr): %5.5f   and  %5.5f,   scalefactor: %5.5f\n",fCmbSlp1*1000.0f, fCmbSlp2*1000.0f, fTemp0);      
         }
@@ -2781,7 +3071,7 @@ int main(int argc, char **argv)
               
             for (i = 0u; i < uFPNum; i++)   {   uTempF0[i] = uF_temp[i*7 +6];   }     fwrite( uTempF0,     sizeof(unsigned int),  uFPNum, fpPrePost);
             
-            fwrite(fTempF1, sizeof(float), uFPNum, fpPrePost);                     
+            fwrite(fTempF1, sizeof(float), uFPNum, fpPrePost);
             fwrite(fTempF2, sizeof(float), uFPNum, fpPrePost);
             fwrite(fTempF3, sizeof(float), uFPNum, fpPrePost); 
             fwrite(fTempF4, sizeof(float), uFPNum, fpPrePost); 
@@ -2916,15 +3206,17 @@ int main(int argc, char **argv)
     {   float fTemp0,   fTemp1,   fTemp2;
         for (i = 0u; i < iFOFFSET[iRANK]; i++)
         {   fTemp0   = sqrtf(fFEvent[i*17 +8]*fFEvent[i*17 +8] + fFEvent[i*17 +9]*fFEvent[i*17 +9]); 
-            fTemp1   = fFEvent[i*17 +3]*-1.0f*fFEvent[i*17 +2]; 
-            fTemp2   = 0.5f*(1.0f - fPreStressFract)*(ran0(&lSeed)*2.0f -1.0f);
-            fFEvent[i*17 +0] = ((fTemp1*(fPreStressFract+fTemp2))/fTemp0) * fFEvent[i*17 +8];
-            fFEvent[i*17 +1] = ((fTemp1*(fPreStressFract+fTemp2))/fTemp0) * fFEvent[i*17 +9];
-    }   } 
+            if (fTemp0 > 0.0f)
+            {   fTemp1   = fFEvent[i*17 +3]*-1.0f*fFEvent[i*17 +2]; 
+                fTemp2   = 0.5f*(1.0f - fPreStressFract)*(ran0(&lSeed)*2.0f -1.0f);
+                fFEvent[i*17 +0] = ((fTemp1*(fPreStressFract+fTemp2))/fTemp0) * fFEvent[i*17 +8];
+                fFEvent[i*17 +1] = ((fTemp1*(fPreStressFract+fTemp2))/fTemp0) * fFEvent[i*17 +9];
+    }   }   } 
     
     
     
     
+    int iOffPosF, iOffPosB;
     unsigned int uTemp0,   uTemp1,   uTemp2,   uEQstillOn,   uTotlRuptT,   uActElmG,   uActElmL,   uMRFlgth,   uUsedLoadStep;
     float fNxtLoadStep, fNxtHalfStep,   fTemp0,   fTemp1,   fTemp2,   fTemp3,    fTemp4,   fTemp5,   fTemp6,   fTemp7;
     float fMaxLoadStep      = FloatPow(2.0f, uLoadStep_POW2);
@@ -2974,8 +3266,8 @@ int main(int argc, char **argv)
         {   uPSeisSteps += (uEQcntr > 0u)*1u + (uEQcntr <= 0u)*0u;
             fHypoSlip  = 0.0f;      fHypoLoc[0] = 0.0f;       fHypoLoc[1] = 0.0f;      fHypoLoc[2] = 0.0f;
             
-            memset(iStartPosF, 0, iSIZE*sizeof(int) );           memset(iOffstPosF, 0, (iSIZE+1)*sizeof(int) );
-            memset(iStartPosB, 0, iSIZE*sizeof(int) );           memset(iOffstPosB, 0, (iSIZE+1)*sizeof(int) );
+            iStartPosF[0]     = 0;          iOffPosF = 0;
+            iStartPosB[0]     = 0;          iOffPosB = 0;
             
             fTemp0 = MAX(0.0f, expf(-1.0f*(fNxtLoadStep)/fAfterSlipTime)); 
             
@@ -2996,16 +3288,18 @@ int main(int argc, char **argv)
                 fTemp1 = (fTemp1 <= 0.0f)*-1.0f + (fTemp1 > 0.0f)*fTemp1;
                 fTemp3 = -1.0f*(((fTemp5/fTemp1)*fFTempVal[i*5 +0])/fFEvent[i*17 +4]);
                 fTemp4 = -1.0f*(((fTemp5/fTemp1)*fFTempVal[i*5 +1])/fFEvent[i*17 +5]);
-                fFTempVal[i*5 +4] =               (fTemp5 <= MININTSEISSTRESSCHANGE)*fFTempVal[i*5 +4]               + (fTemp5 > MININTSEISSTRESSCHANGE)*sqrtf(fTemp3*fTemp3 +fTemp4*fTemp4);
-                fFslipL[iOffstPosF[iSIZE]*3 +0] = (fTemp5 <= MININTSEISSTRESSCHANGE)*fFslipL[iOffstPosF[iSIZE]*3 +0] + (fTemp5 > MININTSEISSTRESSCHANGE)*(float)(i +iFSTART[iRANK]);
-                fFslipL[iOffstPosF[iSIZE]*3 +1] = (fTemp5 <= MININTSEISSTRESSCHANGE)*fFslipL[iOffstPosF[iSIZE]*3 +1] + (fTemp5 > MININTSEISSTRESSCHANGE)*fTemp3;
-                fFslipL[iOffstPosF[iSIZE]*3 +2] = (fTemp5 <= MININTSEISSTRESSCHANGE)*fFslipL[iOffstPosF[iSIZE]*3 +2] + (fTemp5 > MININTSEISSTRESSCHANGE)*fTemp4;
-                iOffstPosF[iSIZE] =               (fTemp5 <= MININTSEISSTRESSCHANGE)*iOffstPosF[iSIZE]               + (fTemp5 > MININTSEISSTRESSCHANGE)*(iOffstPosF[iSIZE] +1);
+                fFTempVal[i*5 +4] =      (fTemp5 <= MININTSEISSTRESSCHANGE)*fFTempVal[i*5 +4]      + (fTemp5 > MININTSEISSTRESSCHANGE)*sqrtf(fTemp3*fTemp3 +fTemp4*fTemp4);
+                fFslipL[iOffPosF*3 +0] = (fTemp5 <= MININTSEISSTRESSCHANGE)*fFslipL[iOffPosF*3 +0] + (fTemp5 > MININTSEISSTRESSCHANGE)*(float)(i +iFSTART[iRANK]);
+                fFslipL[iOffPosF*3 +1] = (fTemp5 <= MININTSEISSTRESSCHANGE)*fFslipL[iOffPosF*3 +1] + (fTemp5 > MININTSEISSTRESSCHANGE)*fTemp3;
+                fFslipL[iOffPosF*3 +2] = (fTemp5 <= MININTSEISSTRESSCHANGE)*fFslipL[iOffPosF*3 +2] + (fTemp5 > MININTSEISSTRESSCHANGE)*fTemp4;
+                iOffPosF               = (fTemp5 <= MININTSEISSTRESSCHANGE)*iOffPosF               + (fTemp5 > MININTSEISSTRESSCHANGE)*(iOffPosF +1);
             }
             
-            iOffstPosF[iRANK] = iOffstPosF[iSIZE]*3;
-            MPI_Allreduce(MPI_IN_PLACE, iOffstPosF, (iSIZE+1), MPI_INT, MPI_SUM, MPI_COMM_WORLD);
-            for (i = 1; i < iSIZE; i++)         {       iStartPosF[i]  = iStartPosF[i-1] +iOffstPosF[i-1];                   }
+            iOffPosF *= 3;
+            MPI_Allgather(&iOffPosF, 1, MPI_INT, iOffstPosF, 1, MPI_INT, MPI_COMM_WORLD);
+            memcpy(&iStartPosF[1], &iOffstPosF[0], (iSIZE-1)*sizeof(int));
+            for (i = 2; i < iSIZE; i++)         {       iStartPosF[i]  += iStartPosF[i-1];         }
+            iOffPosF = (iStartPosF[iSIZE-1] + iOffstPosF[iSIZE-1])/3;
             MPI_Allgatherv(fFslipL, iOffstPosF[iRANK], MPI_FLOAT, fFslipG, iOffstPosF, iStartPosF, MPI_FLOAT, MPI_COMM_WORLD);
             
             if (uBPNum > 0u)
@@ -3025,39 +3319,44 @@ int main(int argc, char **argv)
                     fTemp3 = (fTemp1 <= 0.0f)*0.0f  + (fTemp1 > 0.0f)*(-1.0f*((fTemp5/fTemp1)*fBTempVal[i*3 +0])/fBEvent[i*9 +4]);
                     fTemp4 = (fTemp1 <= 0.0f)*0.0f  + (fTemp1 > 0.0f)*(-1.0f*((fTemp5/fTemp1)*fBTempVal[i*3 +1])/fBEvent[i*9 +5]);
                     fTemp5 = (fTemp2 <= 0.0f)*0.0f  + (fTemp2 > 0.0f)*(-1.0f*((fTemp6/fTemp2)*fBTempVal[i*3 +2])/fBEvent[i*9 +6]);
-                    fBslipL[iOffstPosB[iSIZE]*4 +0] = (fTemp7 <= MININTSEISSTRESSCHANGE)*fBslipL[iOffstPosB[iSIZE]*4 +0] + (fTemp7 > MININTSEISSTRESSCHANGE)*(float)(i +iBSTART[iRANK]);
-                    fBslipL[iOffstPosB[iSIZE]*4 +1] = (fTemp7 <= MININTSEISSTRESSCHANGE)*fBslipL[iOffstPosB[iSIZE]*4 +1] + (fTemp7 > MININTSEISSTRESSCHANGE)*fTemp3;
-                    fBslipL[iOffstPosB[iSIZE]*4 +2] = (fTemp7 <= MININTSEISSTRESSCHANGE)*fBslipL[iOffstPosB[iSIZE]*4 +2] + (fTemp7 > MININTSEISSTRESSCHANGE)*fTemp4;
-                    fBslipL[iOffstPosB[iSIZE]*4 +3] = (fTemp7 <= MININTSEISSTRESSCHANGE)*fBslipL[iOffstPosB[iSIZE]*4 +3] + (fTemp7 > MININTSEISSTRESSCHANGE)*fTemp5;
-                    iOffstPosB[iSIZE] =               (fTemp7 <= MININTSEISSTRESSCHANGE)*iOffstPosB[iSIZE]               + (fTemp7 > MININTSEISSTRESSCHANGE)*(iOffstPosB[iSIZE]+1);
+                    fBslipL[iOffPosB*4 +0] = (fTemp7 <= MININTSEISSTRESSCHANGE)*fBslipL[iOffPosB*4 +0] + (fTemp7 > MININTSEISSTRESSCHANGE)*(float)(i +iBSTART[iRANK]);
+                    fBslipL[iOffPosB*4 +1] = (fTemp7 <= MININTSEISSTRESSCHANGE)*fBslipL[iOffPosB*4 +1] + (fTemp7 > MININTSEISSTRESSCHANGE)*fTemp3;
+                    fBslipL[iOffPosB*4 +2] = (fTemp7 <= MININTSEISSTRESSCHANGE)*fBslipL[iOffPosB*4 +2] + (fTemp7 > MININTSEISSTRESSCHANGE)*fTemp4;
+                    fBslipL[iOffPosB*4 +3] = (fTemp7 <= MININTSEISSTRESSCHANGE)*fBslipL[iOffPosB*4 +3] + (fTemp7 > MININTSEISSTRESSCHANGE)*fTemp5;
+                    iOffPosB =               (fTemp7 <= MININTSEISSTRESSCHANGE)*iOffPosB               + (fTemp7 > MININTSEISSTRESSCHANGE)*(iOffPosB+1);
                 }
                 
-                iOffstPosB[iRANK] = iOffstPosB[iSIZE]*4;
-                MPI_Allreduce(MPI_IN_PLACE, iOffstPosB, (iSIZE+1), MPI_INT, MPI_SUM, MPI_COMM_WORLD);
-                for (i = 1; i < iSIZE; i++)         {       iStartPosB[i]  = iStartPosB[i-1] +iOffstPosB[i-1];              }
+                iOffPosB *= 4;
+                MPI_Allgather(&iOffPosB, 1, MPI_INT, iOffstPosB, 1, MPI_INT, MPI_COMM_WORLD);
+                memcpy(&iStartPosB[1], &iOffstPosB[0], (iSIZE-1)*sizeof(int));
+                for (i = 2; i < iSIZE; i++)         {       iStartPosB[i]  += iStartPosB[i-1];         }
+                iOffPosB = (iStartPosB[iSIZE-1] + iOffstPosB[iSIZE-1])/4;
                 MPI_Allgatherv(fBslipL, iOffstPosB[iRANK], MPI_FLOAT, fBslipG, iOffstPosB, iStartPosB, MPI_FLOAT, MPI_COMM_WORLD);
             }
             
             uEQstillOn = 0u;
             for (i = 0u; i < iFOFFSET[iRANK]; i++)
             {   
-                uTemp0 = (iOffstPosB[iSIZE] <= uKh_FBcnt[i])*1 + (iOffstPosB[iSIZE] > uKh_FBcnt[i])*2;
-                uTemp0 = (iOffstPosB[iSIZE] <= 0)*0            + (iOffstPosB[iSIZE] > 0)*uTemp0;
+                uTemp0 = (iOffPosB <= uKh_FBcnt[i])*1 + (iOffPosB > uKh_FBcnt[i])*2;
+                uTemp0 = (iOffPosB <= 0)*0            + (iOffPosB > 0)*uTemp0;
                 
                 if ( uTemp0 == 1)
-                {   for (j = 0u; j < iOffstPosB[iSIZE]; j++) 
+                {   float fEv[2] = {0.0f, 0.0f};
+                    for (j = 0u; j < iOffPosB; j++) 
                     {   uTemp2 = (unsigned int)fBslipG[j*4 +0]; 
                         uTemp1 = uKh_FBps2[i][uTemp2]; 
                         fTemp0 = fBslipG[j*4 +1];
                         fTemp1 = fBslipG[j*4 +2];
                         fTemp2 = fBslipG[j*4 +3];
-                        
-                        fFTempVal[i*5 +0] += (fTemp0*fKh_FBvalstk[i][uTemp1*3 +0] + fTemp1*fKh_FBvalstk[i][uTemp1*3 +1] + fTemp2*fKh_FBvalstk[i][uTemp1*3 +2]);
-                        fFTempVal[i*5 +1] += (fTemp0*fKh_FBvaldip[i][uTemp1*3 +0] + fTemp1*fKh_FBvaldip[i][uTemp1*3 +1] + fTemp2*fKh_FBvaldip[i][uTemp1*3 +2]);
-                }   }
+                        fEv[0] += (fTemp0*fKh_FBvalstk[i][uTemp1*3 +0] + fTemp1*fKh_FBvalstk[i][uTemp1*3 +1] + fTemp2*fKh_FBvalstk[i][uTemp1*3 +2]);
+                        fEv[1] += (fTemp0*fKh_FBvaldip[i][uTemp1*3 +0] + fTemp1*fKh_FBvaldip[i][uTemp1*3 +1] + fTemp2*fKh_FBvaldip[i][uTemp1*3 +2]);
+                    }
+                    fFTempVal[i*5 +0] += fEv[0];
+                    fFTempVal[i*5 +1] += fEv[1];
+                }
                 else if (uTemp0 == 2)
                 {   memset(fBslip, 0, 3*uKh_FBcnt[i]*sizeof(float) );
-                    for (j = 0u; j < iOffstPosB[iSIZE]; j++) 
+                    for (j = 0u; j < iOffPosB; j++) 
                     {   uTemp2 = (unsigned int)fBslipG[j*4 +0]; 
                         uTemp1 = uKh_FBps2[i][uTemp2]; 
                         fBslip[uTemp1*3 +0] += fBslipG[j*4 +1];
@@ -3068,21 +3367,25 @@ int main(int argc, char **argv)
                     fFTempVal[i*5 +1] += cblas_sdot(3*uKh_FBcnt[i], fBslip, 1, fKh_FBvaldip[i], 1);
                 }
                 
-                uTemp0 = (iOffstPosF[iSIZE] <= uKh_FFcnt[i])*1 + (iOffstPosF[iSIZE] > uKh_FFcnt[i])*2;
-                uTemp0 = (iOffstPosF[iSIZE] <= 0)*0            + (iOffstPosF[iSIZE] > 0)*uTemp0;
+                uTemp0 = (iOffPosF <= uKh_FFcnt[i])*1 + (iOffPosF > uKh_FFcnt[i])*2;
+                uTemp0 = (iOffPosF <= 0)*0            + (iOffPosF > 0)*uTemp0;
                 
                 if ( uTemp0 == 1)
-                {   for (j = 0u; j < iOffstPosF[iSIZE]; j++) 
+                {  float  fEv[2] = {0.0f, 0.0f};
+                    for (j = 0u; j < iOffPosF; j++) 
                     {   uTemp2 = (unsigned int)fFslipG[j*3 +0]; 
                         uTemp1 = uKh_FFps2[i][uTemp2]; 
                         fTemp0 = fFslipG[j*3 +1];
                         fTemp1 = fFslipG[j*3 +2];
-                        fFTempVal[i*5 +0] += (fTemp0*fKh_FFvalstk[i][uTemp1*2 +0] + fTemp1*fKh_FFvalstk[i][uTemp1*2 +1]);
-                        fFTempVal[i*5 +1] += (fTemp0*fKh_FFvaldip[i][uTemp1*2 +0] + fTemp1*fKh_FFvaldip[i][uTemp1*2 +1]);
-                }   }
+                        fEv[0] += (fTemp0*fKh_FFvalstk[i][uTemp1*2 +0] + fTemp1*fKh_FFvalstk[i][uTemp1*2 +1]);
+                        fEv[1] += (fTemp0*fKh_FFvaldip[i][uTemp1*2 +0] + fTemp1*fKh_FFvaldip[i][uTemp1*2 +1]);
+                    }
+                    fFTempVal[i*5 +0] += fEv[0];
+                    fFTempVal[i*5 +1] += fEv[1];
+                }
                 else if (uTemp0 == 2)
                 {   memset(fFslip, 0, 2*uKh_FFcnt[i]*sizeof(float) );
-                    for (j = 0u; j < iOffstPosF[iSIZE]; j++) 
+                    for (j = 0u; j < iOffPosF; j++) 
                     {   uTemp2 = (unsigned int)fFslipG[j*3 +0]; 
                         uTemp1 = uKh_FFps2[i][uTemp2]; 
                         fFslip[uTemp1*2 +0] += fFslipG[j*3 +1];
@@ -3131,24 +3434,29 @@ int main(int argc, char **argv)
         
         for (i = 0u; i < iBOFFSET[iRANK]; i++)
         {   
-            uTemp0 = (iOffstPosB[iSIZE] <= uKh_BBcnt[i])*1 + (iOffstPosB[iSIZE] > uKh_BBcnt[i])*2;
-            uTemp0 = (iOffstPosB[iSIZE] <= 0)*0            + (iOffstPosB[iSIZE] > 0)*uTemp0;
+            uTemp0 = (iOffPosB <= uKh_BBcnt[i])*1 + (iOffPosB > uKh_BBcnt[i])*2;
+            uTemp0 = (iOffPosB <= 0)*0            + (iOffPosB > 0)*uTemp0;
             
             if ( uTemp0 == 1)
-            {   for (j = 0u; j < iOffstPosB[iSIZE]; j++) 
+            {   float fEv[3] = {0.0f, 0.0f, 0.0f};
+                for (j = 0u; j < iOffPosB; j++) 
                 {   uTemp2 = (unsigned int)fBslipG[j*4 +0]; 
                     uTemp1 = uKh_BBps2[i][uTemp2]; 
                     fTemp0 = fBslipG[j*4 +1];
                     fTemp1 = fBslipG[j*4 +2];
                     fTemp2 = fBslipG[j*4 +3];
                     
-                    fBTempVal[i*3 +0] += (fTemp0*fKh_BBvalstk[i][uTemp1*3 +0] + fTemp1*fKh_BBvalstk[i][uTemp1*3 +1] + fTemp2*fKh_BBvalstk[i][uTemp1*3 +2]);
-                    fBTempVal[i*3 +1] += (fTemp0*fKh_BBvaldip[i][uTemp1*3 +0] + fTemp1*fKh_BBvaldip[i][uTemp1*3 +1] + fTemp2*fKh_BBvaldip[i][uTemp1*3 +2]);
-                    fBTempVal[i*3 +2] += (fTemp0*fKh_BBvalnrm[i][uTemp1*3 +0] + fTemp1*fKh_BBvalnrm[i][uTemp1*3 +1] + fTemp2*fKh_BBvalnrm[i][uTemp1*3 +2]);
-            }   }
+                    fEv[0] += (fTemp0*fKh_BBvalstk[i][uTemp1*3 +0] + fTemp1*fKh_BBvalstk[i][uTemp1*3 +1] + fTemp2*fKh_BBvalstk[i][uTemp1*3 +2]);
+                    fEv[1] += (fTemp0*fKh_BBvaldip[i][uTemp1*3 +0] + fTemp1*fKh_BBvaldip[i][uTemp1*3 +1] + fTemp2*fKh_BBvaldip[i][uTemp1*3 +2]);
+                    fEv[2] += (fTemp0*fKh_BBvalnrm[i][uTemp1*3 +0] + fTemp1*fKh_BBvalnrm[i][uTemp1*3 +1] + fTemp2*fKh_BBvalnrm[i][uTemp1*3 +2]);
+                }
+                fBTempVal[i*3 +0] += fEv[0];
+                fBTempVal[i*3 +1] += fEv[1];
+                fBTempVal[i*3 +2] += fEv[2];
+            }
             else if ( uTemp0 == 2)
             {   memset(fBslip, 0, 3*uKh_BBcnt[i]*sizeof(float) );
-                for (j = 0u; j < iOffstPosB[iSIZE]; j++) 
+                for (j = 0u; j < iOffPosB; j++) 
                 {   uTemp2 = (unsigned int)fBslipG[j*4 +0]; 
                     uTemp1 = uKh_BBps2[i][uTemp2]; 
                     fBslip[uTemp1*3 +0] += fBslipG[j*4 +1];
@@ -3160,23 +3468,28 @@ int main(int argc, char **argv)
                 fBTempVal[i*3 +2] += cblas_sdot(3*uKh_BBcnt[i], fBslip, 1, fKh_BBvalnrm[i], 1);
             }
             
-            uTemp0 = (iOffstPosF[iSIZE] <= uKh_BFcnt[i])*1 + (iOffstPosF[iSIZE] > uKh_BFcnt[i])*2;
-            uTemp0 = (iOffstPosF[iSIZE] <= 0)*0            + (iOffstPosF[iSIZE] > 0)*uTemp0;
+            uTemp0 = (iOffPosF <= uKh_BFcnt[i])*1 + (iOffPosF > uKh_BFcnt[i])*2;
+            uTemp0 = (iOffPosF <= 0)*0            + (iOffPosF > 0)*uTemp0;
             
             if ( uTemp0 == 1)
-            {   for (j = 0u; j < iOffstPosF[iSIZE]; j++) 
+            {   float fEv[3] = {0.0f, 0.0f, 0.0f};
+                for (j = 0u; j < iOffPosF; j++) 
                 {   uTemp2 = (unsigned int)fFslipG[j*3 +0]; 
                     uTemp1 = uKh_BFps2[i][uTemp2]; 
                     fTemp0 = fFslipG[j*3 +1];
                     fTemp1 = fFslipG[j*3 +2];
                     
-                    fBTempVal[i*3 +0] += (fTemp0*fKh_BFvalstk[i][uTemp1*2 +0] + fTemp1*fKh_BFvalstk[i][uTemp1*2 +1]);
-                    fBTempVal[i*3 +1] += (fTemp0*fKh_BFvaldip[i][uTemp1*2 +0] + fTemp1*fKh_BFvaldip[i][uTemp1*2 +1]);
-                    fBTempVal[i*3 +2] += (fTemp0*fKh_BFvalnrm[i][uTemp1*2 +0] + fTemp1*fKh_BFvalnrm[i][uTemp1*2 +1]);
-            }   }
+                    fEv[0] += (fTemp0*fKh_BFvalstk[i][uTemp1*2 +0] + fTemp1*fKh_BFvalstk[i][uTemp1*2 +1]);
+                    fEv[1] += (fTemp0*fKh_BFvaldip[i][uTemp1*2 +0] + fTemp1*fKh_BFvaldip[i][uTemp1*2 +1]);
+                    fEv[2] += (fTemp0*fKh_BFvalnrm[i][uTemp1*2 +0] + fTemp1*fKh_BFvalnrm[i][uTemp1*2 +1]);
+                }
+                fBTempVal[i*3 +0] += fEv[0];
+                fBTempVal[i*3 +1] += fEv[1];
+                fBTempVal[i*3 +2] += fEv[2];
+            }
             else if ( uTemp0 == 2)
             {   memset(fFslip, 0, 2*uKh_BFcnt[i]*sizeof(float) );
-                for (j = 0u; j < iOffstPosF[iSIZE]; j++) 
+                for (j = 0u; j < iOffPosF; j++) 
                 {   uTemp2 = (unsigned int)fFslipG[j*3 +0]; 
                     uTemp1 = uKh_BFps2[i][uTemp2]; 
                     fFslip[uTemp1*2 +0] += fFslipG[j*3 +1];
@@ -3233,9 +3546,10 @@ int main(int argc, char **argv)
             }
             
             
-            iOffstPosF[iSIZE] = 1;
-            while (iOffstPosF[iSIZE] > 0)  
-            {   memset(iStartPosF, 0, iSIZE*sizeof(int) );           memset(iOffstPosF, 0, (iSIZE+1)*sizeof(int) );
+            iOffPosF = 1;
+            while (iOffPosF > 0)  
+            {   iStartPosF[0]     = 0;
+                iOffPosF          = 0;
                 
                 for (i = 0u; i < iFOFFSET[iRANK]; i++)
                 {   fTemp2 = fFFric[i*6 +3] - (fFFric[i*6 +3] - fFFric[i*6 +2]) *(fFEvent[i*17 +12]/fFEvent[i*17 +7]);
@@ -3288,8 +3602,8 @@ int main(int argc, char **argv)
                         fTemp5*= fTemp7;
                         fTemp6*= fTemp7;
                         
-                        fFslipL[iOffstPosF[iSIZE]*3 +0] = (float)(i +iFSTART[iRANK]);        fFslipL[iOffstPosF[iSIZE]*3 +1] = fTemp5;               fFslipL[iOffstPosF[iSIZE]*3 +2] = fTemp6;
-                        iOffstPosF[iSIZE] += 1;
+                        fFslipL[iOffPosF*3 +0] = (float)(i +iFSTART[iRANK]);        fFslipL[iOffPosF*3 +1] = fTemp5;
+                        fFslipL[iOffPosF*3 +2] = fTemp6;                            iOffPosF += 1;
                         
                         uTemp0 = 2u*i*MAXMOMRATEFUNCLENGTH + 2u*(uTotlRuptT - uFEvent[i*6 +3]);
                         fSTFslip[uTemp0 +0] = fTemp5;                          fSTFslip[uTemp0 +1] = fTemp6;
@@ -3302,31 +3616,36 @@ int main(int argc, char **argv)
                         fMRFvals[uMRFlgth] += (fFEvent[i*17 +11]*fFRef[i*14 +0]);
                         
                 }   }
-                iOffstPosF[iRANK] = iOffstPosF[iSIZE]*3;
-                
-                MPI_Allreduce(MPI_IN_PLACE, iOffstPosF, (iSIZE+1), MPI_INT, MPI_SUM, MPI_COMM_WORLD);
-                
-                for (i = 1; i < iSIZE; i++)        {    iStartPosF[i]  = iStartPosF[i-1] +iOffstPosF[i-1];    } 
+                iOffPosF *= 3;
+                MPI_Allgather(&iOffPosF, 1, MPI_INT, iOffstPosF, 1, MPI_INT, MPI_COMM_WORLD);
+                memcpy(&iStartPosF[1], &iOffstPosF[0], (iSIZE-1)*sizeof(int));
+                for (i = 2; i < iSIZE; i++)         {       iStartPosF[i]  += iStartPosF[i-1];         }
+                iOffPosF = (iStartPosF[iSIZE-1] + iOffstPosF[iSIZE-1])/3;
                 MPI_Allgatherv(fFslipL, iOffstPosF[iRANK], MPI_FLOAT, fFslipG, iOffstPosF, iStartPosF, MPI_FLOAT, MPI_COMM_WORLD);
                 
                 for (i = 0u; i < iFOFFSET[iRANK]; i++)
-                {   uTemp0 = (iOffstPosF[iSIZE] <= uKh_FFcnt[i])*1 + (iOffstPosF[iSIZE] > uKh_FFcnt[i])*2;
-                    uTemp0 = (iOffstPosF[iSIZE] <= 0)*0            + (iOffstPosF[iSIZE] > 0)*uTemp0;
+                {   uTemp0 = (iOffPosF <= uKh_FFcnt[i])*1 + (iOffPosF > uKh_FFcnt[i])*2;
+                    uTemp0 = (iOffPosF <= 0)*0            + (iOffPosF > 0)*uTemp0;
                     
                     if (uTemp0 == 1)
-                    {   for (j = 0u; j < iOffstPosF[iSIZE]; j++)
+                    {   float fEv[3] = {0.0f, 0.0f, 0.0f};
+                        for (j = 0u; j < iOffPosF; j++)
                         {   uTemp2 = (unsigned int)fFslipG[j*3 +0]; 
                             uTemp1 = uKh_FFps2[i][uTemp2]; 
                             fTemp0 = fFslipG[j*3 +1]; 
                             fTemp1 = fFslipG[j*3 +2]; 
                             
-                            fFEvent[i*17 +0] += (fTemp0*fKh_FFvalstk[i][uTemp1*2 +0] + fTemp1*fKh_FFvalstk[i][uTemp1*2 +1]);
-                            fFEvent[i*17 +1] += (fTemp0*fKh_FFvaldip[i][uTemp1*2 +0] + fTemp1*fKh_FFvaldip[i][uTemp1*2 +1]);
-                            fFEvent[i*17 +2] += (fTemp0*fKh_FFvalnrm[i][uTemp1*2 +0] + fTemp1*fKh_FFvalnrm[i][uTemp1*2 +1]);
-                    }   }
+                            fEv[0] += (fTemp0*fKh_FFvalstk[i][uTemp1*2 +0] + fTemp1*fKh_FFvalstk[i][uTemp1*2 +1]);
+                            fEv[1] += (fTemp0*fKh_FFvaldip[i][uTemp1*2 +0] + fTemp1*fKh_FFvaldip[i][uTemp1*2 +1]);
+                            fEv[2] += (fTemp0*fKh_FFvalnrm[i][uTemp1*2 +0] + fTemp1*fKh_FFvalnrm[i][uTemp1*2 +1]);
+                        }
+                        fFEvent[i*17 +0] += fEv[0];
+                        fFEvent[i*17 +1] += fEv[1];
+                        fFEvent[i*17 +2] += fEv[2];
+                    }
                     else if (uTemp0 == 2)
                     {   memset(fFslip, 0, 2*uKh_FFcnt[i]*sizeof(float) );
-                        for (j = 0u; j < iOffstPosF[iSIZE]; j++) 
+                        for (j = 0u; j < iOffPosF; j++) 
                         {   uTemp2 = (unsigned int)fFslipG[j*3 +0]; 
                             uTemp1 = uKh_FFps2[i][uTemp2]; 
                             fFslip[uTemp1*2 +0] += fFslipG[j*3 +1];
@@ -3336,7 +3655,7 @@ int main(int argc, char **argv)
                         fFEvent[i*17 +1] += cblas_sdot(2*uKh_FFcnt[i], fFslip, 1, fKh_FFvaldip[i], 1);
                         fFEvent[i*17 +2] += cblas_sdot(2*uKh_FFcnt[i], fFslip, 1, fKh_FFvalnrm[i], 1);
                 }   }
-                iOffstPosF[iSIZE] = (uTotlRuptT < MAXMOMRATEFUNCLENGTH-1)*iOffstPosF[iSIZE]  + (uTotlRuptT >= MAXMOMRATEFUNCLENGTH-1)*0; 
+                iOffPosF = (uTotlRuptT < MAXMOMRATEFUNCLENGTH-1)*iOffPosF  + (uTotlRuptT >= MAXMOMRATEFUNCLENGTH-1)*0; 
                 uTotlRuptT += 1u;
             }
             
@@ -3349,37 +3668,44 @@ int main(int argc, char **argv)
             
             
             if (uBPNum > 0)
-            {   memset(iStartPosF, 0, iSIZE*sizeof(int) );           memset(iOffstPosF, 0, (iSIZE+1)*sizeof(int) );
+            {   iStartPosF[0]     = 0;
+                iOffPosF          = 0;
                 for (i = 0u; i < iFOFFSET[iRANK]; i++)
                 {   fTemp0 = fFEvent[i*17 +13];
                     fTemp1 = fFEvent[i*17 +14];
                     if ((fabs(fTemp0) + fabs(fTemp1)) > 0.0f)
-                    {   fFslipL[iOffstPosF[iSIZE]*3 +0] = (float)(i +iFSTART[iRANK]);        fFslipL[iOffstPosF[iSIZE]*3 +1] = fTemp0;               fFslipL[iOffstPosF[iSIZE]*3 +2] = fTemp1;
-                        iOffstPosF[iSIZE] += 1;
+                    {   fFslipL[iOffPosF*3 +0] = (float)(i +iFSTART[iRANK]);        fFslipL[iOffPosF*3 +1] = fTemp0;
+                        fFslipL[iOffPosF*3 +2] = fTemp1;                            iOffPosF += 1;
                 }   }
-                iOffstPosF[iRANK] = iOffstPosF[iSIZE]*3;
-                
-                MPI_Allreduce(MPI_IN_PLACE, iOffstPosF, (iSIZE+1), MPI_INT, MPI_SUM, MPI_COMM_WORLD);
-                for (i = 1; i < iSIZE; i++)        {    iStartPosF[i]  = iStartPosF[i-1] +iOffstPosF[i-1];    } 
+                iOffPosF *= 3;
+                MPI_Allgather(&iOffPosF, 1, MPI_INT, iOffstPosF, 1, MPI_INT, MPI_COMM_WORLD);
+                memcpy(&iStartPosF[1], &iOffstPosF[0], (iSIZE-1)*sizeof(int));
+                for (i = 2; i < iSIZE; i++)         {       iStartPosF[i]  += iStartPosF[i-1];         }
+                iOffPosF = (iStartPosF[iSIZE-1] + iOffstPosF[iSIZE-1])/3;
                 MPI_Allgatherv(fFslipL, iOffstPosF[iRANK], MPI_FLOAT, fFslipG, iOffstPosF, iStartPosF, MPI_FLOAT, MPI_COMM_WORLD);
                 
                 for (i = 0u; i < iBOFFSET[iRANK]; i++)
-                {   uTemp0 = (iOffstPosF[iSIZE] <= uKh_BFcnt[i])*1 + (iOffstPosF[iSIZE] > uKh_BFcnt[i])*2;
-                    uTemp0 = (iOffstPosF[iSIZE] <= 0)*0            + (iOffstPosF[iSIZE] > 0)*uTemp0;
+                {   uTemp0 = (iOffPosF <= uKh_BFcnt[i])*1 + (iOffPosF > uKh_BFcnt[i])*2;
+                    uTemp0 = (iOffPosF <= 0)*0            + (iOffPosF > 0)*uTemp0;
                     if (uTemp0 == 1)
-                    {   for (j = 0u; j < iOffstPosF[iSIZE]; j++)
+                    {   float fEv[3] = {0.0f, 0.0f, 0.0f};
+                        for (j = 0u; j < iOffPosF; j++)
                         {   uTemp2 = (unsigned int)fFslipG[j*3 +0]; 
                             uTemp1 = uKh_BFps2[i][uTemp2]; 
                             fTemp0 = fFslipG[j*3 +1]; 
                             fTemp1 = fFslipG[j*3 +2]; 
                             
-                            fBEvent[i*9 +0] += (fTemp0*fKh_BFvalstk[i][uTemp1*2 +0] + fTemp1*fKh_BFvalstk[i][uTemp1*2 +1]);
-                            fBEvent[i*9 +1] += (fTemp0*fKh_BFvaldip[i][uTemp1*2 +0] + fTemp1*fKh_BFvaldip[i][uTemp1*2 +1]);
-                            fBEvent[i*9 +2] += (fTemp0*fKh_BFvalnrm[i][uTemp1*2 +0] + fTemp1*fKh_BFvalnrm[i][uTemp1*2 +1]);
-                    }   }
+                            fEv[0] += (fTemp0*fKh_BFvalstk[i][uTemp1*2 +0] + fTemp1*fKh_BFvalstk[i][uTemp1*2 +1]);
+                            fEv[1] += (fTemp0*fKh_BFvaldip[i][uTemp1*2 +0] + fTemp1*fKh_BFvaldip[i][uTemp1*2 +1]);
+                            fEv[2] += (fTemp0*fKh_BFvalnrm[i][uTemp1*2 +0] + fTemp1*fKh_BFvalnrm[i][uTemp1*2 +1]);
+                        }
+                        fBEvent[i*9 +0] += fEv[0];
+                        fBEvent[i*9 +1] += fEv[1];
+                        fBEvent[i*9 +2] += fEv[2];
+                    }
                     else if (uTemp0 == 2)
                     {   memset(fFslip, 0, 2*uKh_BFcnt[i]*sizeof(float) );
-                        for (j = 0u; j < iOffstPosF[iSIZE]; j++) 
+                        for (j = 0u; j < iOffPosF; j++) 
                         {   uTemp2 = (unsigned int)fFslipG[j*3 +0]; 
                             uTemp1 = uKh_BFps2[i][uTemp2]; 
                             fFslip[uTemp1*2 +0] += fFslipG[j*3 +1];
@@ -3397,7 +3723,7 @@ int main(int argc, char **argv)
             
             if (uActElmG >= uMinElemNum4Cat)
             {   uEQcntr += 1u;
-                memset(iStartPosF,   0, iSIZE*sizeof(int));           memset(iOffstPosF, 0, iSIZE*sizeof(int));
+                iStartPosF[0]     = 0;
                 memset(fEQMeanVals, 0,     7*sizeof(float));
                 
                 for (i = 0u; i < uActElmL; i++)
@@ -3415,22 +3741,23 @@ int main(int argc, char **argv)
                     uPatchID[i]  = uFActivEl[i] + iFSTART[iRANK];
                     ut0ofPtch[i] = uFEvent[uTemp1*6 +3];
                     uStabType[i] = uFEvent[uTemp1*6 +0];
-                    
+
                     fPtchDTau[i] = sqrtf(fFTempVal[uTemp1*5 +0]*fFTempVal[uTemp1*5 +0] + fFTempVal[uTemp1*5 +1]*fFTempVal[uTemp1*5 +1]) - sqrtf(fFEvent[uTemp1*17 +0]*fFEvent[uTemp1*17 +0] + fFEvent[uTemp1*17 +1]*fFEvent[uTemp1*17 +1]); 
                     fPtchSlpH[i] = fFEvent[uTemp1*17 +13];
                     fPtchSlpV[i] = fFEvent[uTemp1*17 +14];
                 }
-                iOffstPosF[iRANK] = (int)uActElmL;
                 
                 MPI_Allreduce( MPI_IN_PLACE, &uMRFlgth,        1,            MPI_UNSIGNED, MPI_MAX, MPI_COMM_WORLD);
-                MPI_Allreduce( MPI_IN_PLACE, iOffstPosF,     iSIZE,          MPI_INT, MPI_MAX, MPI_COMM_WORLD);
                 MPI_Allreduce( MPI_IN_PLACE, fMRFvals, MAXMOMRATEFUNCLENGTH, MPI_FLOAT, MPI_SUM, MPI_COMM_WORLD);
                 MPI_Allreduce( MPI_IN_PLACE, fEQMeanVals,      7,            MPI_FLOAT, MPI_SUM, MPI_COMM_WORLD);
                 
                 fEQMeanVals[0] /= fEQMomRel;            fEQMeanVals[1] /= fEQMomRel;            fEQMeanVals[2] /= fEQMomRel;
                 fEQMeanVals[4] /= (float) uActElmG;     fEQMeanVals[5] /= (float) uActElmG;
                 
-                for (i = 1; i < iSIZE; i++)        {    iStartPosF[i]  = iStartPosF[i-1] +iOffstPosF[i-1];    } 
+                iOffPosF = (int)uActElmL;
+                MPI_Allgather(&iOffPosF, 1, MPI_INT, iOffstPosF, 1, MPI_INT, MPI_COMM_WORLD);
+                memcpy(&iStartPosF[1], &iOffstPosF[0], (iSIZE-1)*sizeof(int));
+                for (i = 2; i < iSIZE; i++)         {       iStartPosF[i]  += iStartPosF[i-1];         }
                 
                 MPI_Gatherv(uPatchID,  iOffstPosF[iRANK], MPI_UNSIGNED, uTemp2Wrt1, iOffstPosF, iStartPosF, MPI_UNSIGNED, 0, MPI_COMM_WORLD);
                 MPI_Gatherv(ut0ofPtch, iOffstPosF[iRANK], MPI_UNSIGNED, uTemp2Wrt2, iOffstPosF, iStartPosF, MPI_UNSIGNED, 0, MPI_COMM_WORLD);
@@ -3441,7 +3768,6 @@ int main(int argc, char **argv)
                 
                 if (iRANK == 0)
                 {   fMaxMagnitude = (fEQMagn > fMaxMagnitude)*fEQMagn + (fEQMagn <= fMaxMagnitude)*fMaxMagnitude;
-                    
                     if (uPlotCatalog2Screen == 1u) { fprintf(stdout,"%5u  Time: %6.4lf  (%6.4lf since last)   RA: %8.2f   mSlip: %2.3f   mDtau: %3.3f   MRF %4u    M: %3.2f     M_max: %3.2f\n", uEQcntr, dCurrTime, (dCurrTime-dLastEQtime), (fEQMeanVals[3]*1.0E-6f), fEQMeanVals[4], (fEQMeanVals[5]*1.0E-6f), uMRFlgth, fEQMagn, fMaxMagnitude);       }
                     
                     fseek(fp_CATALOG, 0, SEEK_END);
@@ -3471,19 +3797,21 @@ int main(int argc, char **argv)
             
             
             if ((uStoreSTF4LargeEQs == 1u) && (fEQMagn >= fMinMag4STF))
-            {   memset(lSTF_offset, 0, iSIZE*sizeof(long long int) );           memset(lSTF_start, 0, iSIZE*sizeof(long long int) );
-                long long int lTemp0 = 0;
-                float *fSTFvals0 = calloc( MAXMOMRATEFUNCLENGTH, sizeof *fSTFvals0 );
+            {   float *fSTFvals0 = calloc( MAXMOMRATEFUNCLENGTH, sizeof *fSTFvals0 );
                 float *fSTFvals1 = calloc( MAXMOMRATEFUNCLENGTH, sizeof *fSTFvals1 );
+                long long int lTemp0 = 0;
+                long long int lOffPos = 0;
+                lSTF_start[0] = 0;
                 
                 for (i = 0; i < iFOFFSET[iRANK]; i++)
-                {   lSTF_offset[iRANK] = (uFEvent[i*6 +1] == 0u)*lSTF_offset[iRANK]  +  (uFEvent[i*6 +1] != 0u)*(lSTF_offset[iRANK] + 2*sizeof(float) +4*sizeof(unsigned int) +2*uFEvent[i*6 +4]*sizeof(float) );
+                {   lOffPos = (uFEvent[i*6 +1] == 0u)*lOffPos  +  (uFEvent[i*6 +1] != 0u)*(lOffPos + 2*sizeof(float) +4*sizeof(unsigned int) +2*uFEvent[i*6 +4]*sizeof(float) );
                 }
                 
-                MPI_Allreduce( MPI_IN_PLACE, lSTF_offset, iSIZE, MPI_LONG_LONG_INT, MPI_MAX, MPI_COMM_WORLD);
-                for (i = 1; i < iSIZE; i++)        {    lSTF_start[i]  = lSTF_start[i-1] + lSTF_offset[i-1];    }
+                MPI_Allgather(&lOffPos, 1, MPI_LONG_LONG_INT, lSTF_offset, 1, MPI_LONG_LONG_INT, MPI_COMM_WORLD);
+                memcpy(&lSTF_start[1], &lSTF_offset[0], (iSIZE-1)*sizeof(long long int));
+                for (i = 2; i < iSIZE; i++)         {       lSTF_start[i]  += lSTF_start[i-1];         }
                 
-                strcpy(cSTFName,cInputName);      strcat(cSTFName,"_M");         sprintf(cNameAppend, "%f",fEQMagn);      strcat(cSTFName,cNameAppend);      strcat(cSTFName,"_t");         sprintf(cNameAppend, "%lf",dCurrTime);      strcat(cSTFName,cNameAppend);      strcat(cSTFName,".srfb");
+                strcpy(cSTFName,cInputName);       strcat(cSTFName,"_t");         sprintf(cNameAppend, "%lf",dCurrTime);      strcat(cSTFName,cNameAppend);  strcat(cSTFName,"_M");         sprintf(cNameAppend, "%f",fEQMagn);      strcat(cSTFName,cNameAppend);           strcat(cSTFName,".srfb");
                 
                 MPI_File_delete(cSTFName, MPI_INFO_NULL);
                 MPI_File_open(MPI_COMM_WORLD, cSTFName, MPI_MODE_CREATE|MPI_MODE_WRONLY, MPI_INFO_NULL, &fp_STF);
@@ -3693,242 +4021,6 @@ int main(int argc, char **argv)
          fclose(fp_CATALOG);
 
     }
-/*    if (iRANK == 0)
-    {   float fSecsPerYear = 31622400.0f,   fNeighborDist = 0.0f,   fP2P1[3],   fP1P3[3];
-        
-        unsigned int *uTempF  = calloc(uFPNum,   sizeof *uTempF  );
-        unsigned int *uFtemp  = calloc(5*uFPNum, sizeof *uFtemp  );
-        float *fTempF         = calloc(uFPNum,   sizeof *fTempF  );
-        float *fTempFV        = calloc(uFVNum,   sizeof *fTempFV );
-        float *fFtemp         = calloc(3*uFPNum, sizeof *fFtemp  );
-        float *fFVtemp        = calloc(4*uFVNum, sizeof *fFVtemp );
-        float *fF_Area        = calloc(uFPNum,   sizeof *fF_Area );
-        
-        fseek(fp_CATALOG, (4*sizeof(unsigned int)+2*sizeof(float)), SEEK_SET);
-        
-        if (fread(uTempF,    sizeof(unsigned int),    uFPNum, fp_CATALOG) != uFPNum)       {   exit(10);   }           for (i = 0u; i < uFPNum; i++)   {   uFtemp[i*5 +0]  = uTempF[i];   }
-        if (fread(uTempF,    sizeof(unsigned int),    uFPNum, fp_CATALOG) != uFPNum)       {   exit(10);   }           for (i = 0u; i < uFPNum; i++)   {   uFtemp[i*5 +1]  = uTempF[i];   }
-        if (fread(uTempF,    sizeof(unsigned int),    uFPNum, fp_CATALOG) != uFPNum)       {   exit(10);   }           for (i = 0u; i < uFPNum; i++)   {   uFtemp[i*5 +2]  = uTempF[i];   }
-        if (fread(uTempF,    sizeof(unsigned int),    uFPNum, fp_CATALOG) != uFPNum)       {   exit(10);   }           for (i = 0u; i < uFPNum; i++)   {   uFtemp[i*5 +3]  = uTempF[i];   }
-        if (fread(uTempF,    sizeof(unsigned int),    uFPNum, fp_CATALOG) != uFPNum)       {   exit(10);   }           for (i = 0u; i < uFPNum; i++)   {   uFtemp[i*5 +4]  = uTempF[i];   }
-
-        if (fread(fTempFV,   sizeof(float),           uFVNum, fp_CATALOG) != uFVNum)       {   exit(10);   }           for (i = 0u; i < uFVNum; i++)   {   fFVtemp[i*4 +0] = fTempFV[i];  }
-        if (fread(fTempFV,   sizeof(float),           uFVNum, fp_CATALOG) != uFVNum)       {   exit(10);   }           for (i = 0u; i < uFVNum; i++)   {   fFVtemp[i*4 +1] = fTempFV[i];  }
-        if (fread(fTempFV,   sizeof(float),           uFVNum, fp_CATALOG) != uFVNum)       {   exit(10);   }           for (i = 0u; i < uFVNum; i++)   {   fFVtemp[i*4 +2] = fTempFV[i];  }
-        if (fread(fTempFV,   sizeof(float),           uFVNum, fp_CATALOG) != uFVNum)       {   exit(10);   }           for (i = 0u; i < uFVNum; i++)   {   fFVtemp[i*4 +3] = fTempFV[i];  }
-
-        if (fread(fTempF,    sizeof(float),           uFPNum, fp_CATALOG) != uFPNum)       {   exit(10);   }           for (i = 0u; i < uFPNum; i++)   {   fFtemp[i*3 +0]  = fTempF[i];   }
-        if (fread(fTempF,    sizeof(float),           uFPNum, fp_CATALOG) != uFPNum)       {   exit(10);   }           for (i = 0u; i < uFPNum; i++)   {   fFtemp[i*3 +1]  = fTempF[i];   }
-        if (fread(fTempF,    sizeof(float),           uFPNum, fp_CATALOG) != uFPNum)       {   exit(10);   }           for (i = 0u; i < uFPNum; i++)   {   fFtemp[i*3 +2]  = fTempF[i];   }
-        
-        if ((fp_CATALOGCUT = fopen(cOutputNameCUT,"wb")) == NULL)         {   printf("Error -cant open %s  ParsedCatalogFile...\n",cOutputNameCUT);      exit(10);     }
-        
-        fwrite(&uEQcntr,     sizeof(unsigned int), 1, fp_CATALOGCUT);
-        fwrite(&uCatType,    sizeof(unsigned int), 1, fp_CATALOGCUT);
-        fwrite(&fModPara[2], sizeof(float),        1, fp_CATALOGCUT);
-        fwrite(&fModPara[7], sizeof(float),        1, fp_CATALOGCUT);
-        
-        if (uCatType == 3u)
-        {   
-            fwrite(&uFPNum,      sizeof(unsigned int), 1, fp_CATALOGCUT);
-            fwrite(&uFVNum,      sizeof(unsigned int), 1, fp_CATALOGCUT);
-            
-            for (i = 0u; i < uFPNum; i++)   {   uTempF[i] = uFtemp[i*5 +0];   }     fwrite(uTempF,  sizeof(unsigned int), uFPNum, fp_CATALOGCUT);
-            for (i = 0u; i < uFPNum; i++)   {   uTempF[i] = uFtemp[i*5 +1];   }     fwrite(uTempF,  sizeof(unsigned int), uFPNum, fp_CATALOGCUT);
-            for (i = 0u; i < uFPNum; i++)   {   uTempF[i] = uFtemp[i*5 +2];   }     fwrite(uTempF,  sizeof(unsigned int), uFPNum, fp_CATALOGCUT);
-            for (i = 0u; i < uFPNum; i++)   {   uTempF[i] = uFtemp[i*5 +3];   }     fwrite(uTempF,  sizeof(unsigned int), uFPNum, fp_CATALOGCUT);
-            for (i = 0u; i < uFPNum; i++)   {   uTempF[i] = uFtemp[i*5 +4];   }     fwrite(uTempF,  sizeof(unsigned int), uFPNum, fp_CATALOGCUT);
-
-            for (i = 0u; i < uFVNum; i++)   {   fTempFV[i]= fFVtemp[i*4 +0];  }     fwrite(fTempFV, sizeof(float),        uFVNum, fp_CATALOGCUT);
-            for (i = 0u; i < uFVNum; i++)   {   fTempFV[i]= fFVtemp[i*4 +1];  }     fwrite(fTempFV, sizeof(float),        uFVNum, fp_CATALOGCUT);
-            for (i = 0u; i < uFVNum; i++)   {   fTempFV[i]= fFVtemp[i*4 +2];  }     fwrite(fTempFV, sizeof(float),        uFVNum, fp_CATALOGCUT);
-            for (i = 0u; i < uFVNum; i++)   {   fTempFV[i]= fFVtemp[i*4 +3];  }     fwrite(fTempFV, sizeof(float),        uFVNum, fp_CATALOGCUT);
-
-            for (i = 0u; i < uFPNum; i++)   {   fTempF[i] = fFtemp[i*3 +0];   }     fwrite(fTempF,  sizeof(float),        uFPNum, fp_CATALOGCUT);
-            for (i = 0u; i < uFPNum; i++)   {   fTempF[i] = fFtemp[i*3 +1];   }     fwrite(fTempF,  sizeof(float),        uFPNum, fp_CATALOGCUT);
-            for (i = 0u; i < uFPNum; i++)   {   fTempF[i] = fFtemp[i*3 +2];   }     fwrite(fTempF,  sizeof(float),        uFPNum, fp_CATALOGCUT);
-        }
-        
-        {   unsigned int uVert1,   uVert2,   uVert3;
-            float fVert1[3],   fVert2[3],   fVert3[3],   fDist[3];
-            
-            for (i = 0u; i < uFPNum; i++)
-            {   uVert1    = uFtemp[i*5 +0];            uVert2    = uFtemp[i*5 +1];            uVert3    = uFtemp[i*5 +2];
-                fVert1[0] = fFVtemp[uVert1*4 +0];      fVert1[1] = fFVtemp[uVert1*4 +1];      fVert1[2] = fFVtemp[uVert1*4 +2];
-                fVert2[0] = fFVtemp[uVert2*4 +0];      fVert2[1] = fFVtemp[uVert2*4 +1];      fVert2[2] = fFVtemp[uVert2*4 +2];
-                fVert3[0] = fFVtemp[uVert3*4 +0];      fVert3[1] = fFVtemp[uVert3*4 +1];      fVert3[2] = fFVtemp[uVert3*4 +2];
-                fDist[0]  = sqrtf((fVert2[0] -fVert1[0])*(fVert2[0] -fVert1[0]) + (fVert2[1] -fVert1[1])*(fVert2[1] -fVert1[1]) + (fVert2[2] -fVert1[2])*(fVert2[2] -fVert1[2]));
-                fDist[1]  = sqrtf((fVert3[0] -fVert2[0])*(fVert3[0] -fVert2[0]) + (fVert3[1] -fVert2[1])*(fVert3[1] -fVert2[1]) + (fVert3[2] -fVert2[2])*(fVert3[2] -fVert2[2]));
-                fDist[2]  = sqrtf((fVert1[0] -fVert3[0])*(fVert1[0] -fVert3[0]) + (fVert1[1] -fVert3[1])*(fVert1[1] -fVert3[1]) + (fVert1[2] -fVert3[2])*(fVert1[2] -fVert3[2]));
-                
-                fNeighborDist += ((fDist[0] + fDist[1] +fDist[2])/3.0f); 
-                
-                fP2P1[0]   = fVert2[0] - fVert1[0];      fP2P1[1]  = fVert2[1] - fVert1[1];      fP2P1[2]  = fVert2[2] - fVert1[2];
-                fP1P3[0]   = fVert1[0] - fVert3[0];      fP1P3[1]  = fVert1[1] - fVert3[1];      fP1P3[2]  = fVert1[2] - fVert3[2];
-                fF_Area[i] =  0.5f*sqrtf( (fP2P1[1]*fP1P3[2]-fP2P1[2]*fP1P3[1])*(fP2P1[1]*fP1P3[2]-fP2P1[2]*fP1P3[1]) + (fP2P1[2]*fP1P3[0]-fP2P1[0]*fP1P3[2])*(fP2P1[2]*fP1P3[0]-fP2P1[0]*fP1P3[2]) + (fP2P1[0]*fP1P3[1]-fP2P1[1]*fP1P3[0])*(fP2P1[0]*fP1P3[1]-fP2P1[1]*fP1P3[0]) );
-        }   }
-        fNeighborDist *= (NeighborFactor/(float)uFPNum);
-        fprintf(stdout,"max. neighbor distance: %f\n",fNeighborDist);
-        
-        unsigned int **uElNeighbors = NULL;
-        
-        uElNeighbors  = calloc(uFPNum, sizeof *uElNeighbors );
-        
-        for (i = 0; i < uFPNum; i++)
-        {   uElNeighbors[i] = calloc( uFPNum, sizeof *uElNeighbors[i] );
-            for (j = 0; j < uFPNum; j++)
-            {   
-                fTemp0 = (i == j)*(2.0f*fNeighborDist)  +  (i != j)*sqrtf((fFtemp[i*3 +0]-fFtemp[j*3 +0])*(fFtemp[i*3 +0]-fFtemp[j*3 +0]) + (fFtemp[i*3 +1]-fFtemp[j*3 +1])*(fFtemp[i*3 +1]-fFtemp[j*3 +1]) + (fFtemp[i*3 +2]-fFtemp[j*3 +2])*(fFtemp[i*3 +2]-fFtemp[j*3 +2]));
-                
-                uElNeighbors[i][0]                    = (fTemp0 >= fNeighborDist)*uElNeighbors[i][0]                     +  (fTemp0 < fNeighborDist)*(uElNeighbors[i][0] +1u);
-                uElNeighbors[i][uElNeighbors[i][0]] = (fTemp0 >= fNeighborDist)*uElNeighbors[i][uElNeighbors[i][0]]  +  (fTemp0 < fNeighborDist)*j;
-            }
-            uElNeighbors[i]  = realloc(uElNeighbors[i], (uElNeighbors[i][0]+1) *sizeof *uElNeighbors[i] );
-        }
-        
-        
-        double dEQtime, dEQtimeMod;
-        float fMagn,   fHypoLoc[3],   fMeanVals[6];
-        unsigned int uMRFlgth,   uElNum;
-        
-        float *fMRF           = calloc(MAXMOMRATEFUNCLENGTH, sizeof *fMRF );
-        unsigned int *uElID   = calloc(uFPNum,       sizeof *uElID );
-        
-        unsigned int *uStrtT  = calloc(uFPNum,       sizeof *uStrtT );
-        unsigned int *uStabT  = calloc(uFPNum,       sizeof *uStabT );
-        float *fDtau          = calloc(uFPNum,       sizeof *fDtau );
-        float *fSlip_H        = calloc(uFPNum,       sizeof *fSlip_H );
-        float *fSlip_V        = calloc(uFPNum,       sizeof *fSlip_V );
-        
-        unsigned int *ugStrtT = calloc(uFPNum,       sizeof *ugStrtT );
-        unsigned int *ugStabT = calloc(uFPNum,       sizeof *ugStabT );
-        float *fgDtau         = calloc(uFPNum,       sizeof *fgDtau );
-        float *fgSlip_H       = calloc(uFPNum,       sizeof *fgSlip_H );
-        float *fgSlip_V       = calloc(uFPNum,       sizeof *fgSlip_V );
-        
-        unsigned int *ug2Write = calloc(uFPNum,      sizeof *ug2Write );
-        float *fg2Write        = calloc(uFPNum,      sizeof *fg2Write );
-        
-        unsigned int uSelElem,   uTstElem,   uEl2TestCnt,   uNx2TestCnt,   uSubEQElCnt,   uEQcntrNEW = 0u;
-        unsigned int uMinStartTime,   uMinStartTPos,   uElLeft;
-        unsigned int *uElVisited   = calloc(uFPNum, sizeof *uElVisited );
-        unsigned int *uElSlipped   = calloc(uFPNum, sizeof *uElSlipped );
-        unsigned int *uEl2Test     = calloc(uFPNum, sizeof *uEl2Test );
-        unsigned int *uNx2Test     = calloc(uFPNum, sizeof *uNx2Test );
-        unsigned int *uSubEQEl     = calloc(uFPNum, sizeof *uSubEQEl );
-        
-        for (i = 0; i < uEQcntr; i++)
-        {   if (fread(&dEQtime,    sizeof(double),          1,     fp_CATALOG) != 1)              {   exit(10);   }
-            if (fread(&fMagn,      sizeof(float),           1,     fp_CATALOG) != 1)              {   exit(10);   }
-            if (fread(fHypoLoc,    sizeof(float),           3,     fp_CATALOG) != 3)              {   exit(10);   }
-            if (fread(fMeanVals,   sizeof(float),           6,     fp_CATALOG) != 6)              {   exit(10);   }
-            if (fread(&uMRFlgth,   sizeof(unsigned int),    1,     fp_CATALOG) != 1)              {   exit(10);   }
-            if (fread(fMRF,        sizeof(float),        uMRFlgth, fp_CATALOG) != uMRFlgth)       {   exit(10);   }
-            if (fread(&uElNum,     sizeof(unsigned int),    1,     fp_CATALOG) != 1)              {   exit(10);   }
-            if (fread(uElID,       sizeof(unsigned int), uElNum,   fp_CATALOG) != uElNum)         {   exit(10);   }
-            if (fread(uStrtT,      sizeof(unsigned int), uElNum,   fp_CATALOG) != uElNum)         {   exit(10);   }
-            if (fread(fDtau,       sizeof(float),        uElNum,   fp_CATALOG) != uElNum)         {   exit(10);   }
-            if (fread(fSlip_H,     sizeof(float),        uElNum,   fp_CATALOG) != uElNum)         {   exit(10);   }
-            if (fread(fSlip_V,     sizeof(float),        uElNum,   fp_CATALOG) != uElNum)         {   exit(10);   }
-            if (fread(uStabT,      sizeof(unsigned int), uElNum,   fp_CATALOG) != uElNum)         {   exit(10);   }
-            
-            
-            memset(uElSlipped, 0, uFPNum*sizeof(unsigned int) );
-            memset(uElVisited, 0, uFPNum*sizeof(unsigned int) );
-            
-            for (j = 0; j < uElNum; j++)
-            {   uElSlipped[uElID[j]] = 1u;                  ugStrtT[uElID[j]]    = uStrtT[j];
-                ugStabT[uElID[j]]    = uStabT[j];           fgDtau[uElID[j]]     = fDtau[j];
-                fgSlip_H[uElID[j]]   = fSlip_H[j];          fgSlip_V[uElID[j]]   = fSlip_V[j];
-            }
-            
-            uElLeft = uElNum;
-            
-            while (uElLeft > 0u)
-            {   uMinStartTime = UINT_MAX;
-                uMinStartTPos = 0;
-                uSubEQElCnt   = 0;
-                uEQcntrNEW   += 1u;
-                
-                for (j = 0; j < uElNum; j++)      {   if ((uStrtT[j] < uMinStartTime) && (uElVisited[uElID[j]]) == 0u)        {       uMinStartTime = uStrtT[j];        uMinStartTPos = uElID[j];      }        }
-                
-                dEQtimeMod   = dEQtime + (double)(((float)uMinStartTime *fModPara[7])/fSecsPerYear);
-                uEl2Test[0]  = uMinStartTPos;                     uEl2TestCnt    = 1u;
-                uSubEQEl[0]  = uMinStartTPos;                     uSubEQElCnt    = 1u;
-                uElLeft     -= 1u;
-                uElVisited[uMinStartTPos] = uEQcntrNEW;
-                
-                while (uEl2TestCnt > 0u)
-                {   
-                    uNx2TestCnt = 0u;
-                    for (j = 0; j < uEl2TestCnt; j++)
-                    {   
-                        uSelElem = uEl2Test[j];
-                        for (k = 1; k <= uElNeighbors[uSelElem][0]; k++)
-                        {   uTstElem = uElNeighbors[uSelElem][k];
-                            if ((uElSlipped[uTstElem] == 1u) && (uElVisited[uTstElem] == 0u))
-                            {   uNx2Test[uNx2TestCnt] = uTstElem;           uNx2TestCnt += 1u;
-                                uSubEQEl[uSubEQElCnt] = uTstElem;           uSubEQElCnt += 1u;
-                                uElVisited[uTstElem]  = uEQcntrNEW;
-                                uElLeft              -= 1u;
-                    }   }   }
-                    
-                    if (uNx2TestCnt > 0u)
-                    {   memcpy(uEl2Test, uNx2Test,     uNx2TestCnt* sizeof(unsigned int) );
-                        uEl2TestCnt = uNx2TestCnt;
-                    }
-                    else    {   break;      }
-                }
-                
-                memset(fMeanVals, 0, 6*sizeof(float) );
-                fTemp2      = 0.0f;
-                fHypoLoc[0] = fFtemp[uSubEQEl[0]*3 +0];            fHypoLoc[1] = fFtemp[uSubEQEl[0]*3 +1];            fHypoLoc[2] = fFtemp[uSubEQEl[0]*3 +2];
-                
-                for (j = 0; j < uSubEQElCnt; j++)
-                {   uTemp0        = uSubEQEl[j]; 
-                    fTemp0        = sqrtf( fgSlip_H[uTemp0]*fgSlip_H[uTemp0] + fgSlip_V[uTemp0]*fgSlip_V[uTemp0] );
-                    fTemp1        = fTemp0*fF_Area[uTemp0];
-                    fTemp2       += fTemp1;
-                    
-                    fMeanVals[0] += (fFtemp[uTemp0*3 +0] *fTemp1);
-                    fMeanVals[1] += (fFtemp[uTemp0*3 +1] *fTemp1);
-                    fMeanVals[2] += (fFtemp[uTemp0*3 +2] *fTemp1);
-                    fMeanVals[3] += fF_Area[uTemp0];
-                    fMeanVals[4] += fTemp0;
-                    fMeanVals[5] += fgDtau[uTemp0];
-                }
-                
-                fMeanVals[0] /= fTemp2;                 fMeanVals[1] /= fTemp2;             fMeanVals[2] /= fTemp2;
-                fMeanVals[4] /= (float)uSubEQElCnt;     fMeanVals[5] /= (float)uSubEQElCnt;
-                fMagn = (log10f(fTemp2*fModPara[2]) -9.1f)/1.5f;
-                
-                fwrite(&dEQtimeMod, sizeof(double),       1,   fp_CATALOGCUT);
-                fwrite(&fMagn,      sizeof(float),        1,   fp_CATALOGCUT);
-                fwrite(&fHypoLoc,   sizeof(float),        3,   fp_CATALOGCUT);
-                fwrite(&fMeanVals,  sizeof(float),        6,   fp_CATALOGCUT);
-                if (uCatType > 1u)
-                {   fwrite(&uMRFlgth,   sizeof(unsigned int), 1,   fp_CATALOGCUT);
-                    fwrite(fMRF,        sizeof(float),   uMRFlgth, fp_CATALOGCUT);
-                }
-                if (uCatType > 2u)
-                {   fwrite(&uSubEQElCnt,sizeof(unsigned int), 1,   fp_CATALOGCUT);
-                    for (j = 0; j < uSubEQElCnt; j++)   {   ug2Write[j] = uSubEQEl[j];            }      fwrite(ug2Write,  sizeof(unsigned int), uSubEQElCnt, fp_CATALOGCUT);
-                    for (j = 0; j < uSubEQElCnt; j++)   {   ug2Write[j] = ugStrtT[uSubEQEl[j]];   }      fwrite(ug2Write,  sizeof(unsigned int), uSubEQElCnt, fp_CATALOGCUT);
-                    for (j = 0; j < uSubEQElCnt; j++)   {   fg2Write[j] = fgDtau[uSubEQEl[j]];    }      fwrite(fg2Write,  sizeof(float),        uSubEQElCnt, fp_CATALOGCUT);
-                    for (j = 0; j < uSubEQElCnt; j++)   {   fg2Write[j] = fgSlip_H[uSubEQEl[j]];  }      fwrite(fg2Write,  sizeof(float),        uSubEQElCnt, fp_CATALOGCUT);
-                    for (j = 0; j < uSubEQElCnt; j++)   {   fg2Write[j] = fgSlip_V[uSubEQEl[j]];  }      fwrite(fg2Write,  sizeof(float),        uSubEQElCnt, fp_CATALOGCUT);
-                    for (j = 0; j < uSubEQElCnt; j++)   {   ug2Write[j] = ugStabT[uSubEQEl[j]];   }      fwrite(ug2Write,  sizeof(unsigned int), uSubEQElCnt, fp_CATALOGCUT);
-        }   }   }
-        
-        fseek(fp_CATALOGCUT, 0, SEEK_SET);
-        fwrite(&uEQcntrNEW, sizeof(unsigned int), 1, fp_CATALOGCUT);
-        fprintf(stdout,"EQ number after parsing:  %u\n",uEQcntrNEW);
-        
-        fclose(fp_CATALOG);
-        fclose(fp_CATALOGCUT);
-        
-    }
-*/  
     
     
     MPI_Barrier( MPI_COMM_WORLD );
@@ -4008,105 +4100,6 @@ void    NrmlzeVect(float fTempVect[3])
 }
 
 
-void FindMainStressDir(float fSMaxVect[3], float fStrIn[6])
-{   
-    int i, j, ip, iq, maxIndx;
-    float sm, theta, thres, g, h, t, c, tau, s, maxEig;
-    float b[3], z[3];
-    float fStress[9],   fEigVect[9],   fEigVal[3];
-    fStress[0] = fStrIn[0];         fStress[1] = fStrIn[1];         fStress[2] = fStrIn[2];
-    fStress[3] = fStrIn[1];         fStress[4] = fStrIn[3];         fStress[5] = fStrIn[4];
-    fStress[6] = fStrIn[2];         fStress[7] = fStrIn[4];         fStress[8] = fStrIn[5];
-    
-    for (i = 0; i < 3; i++)
-    {   for (j = 0; j < 3; j++)             {        fEigVect[i*3 +j] = 0.0f;           }
-        fEigVect[i*3 +i] = 1.0f;
-        fEigVal[i]       = fStress[i*3 +i];
-        b[i]             = fStress[i*3 +i];
-        z[i]             = 0.0f;  
-    }
-    
-    for (i = 0; i < 50; i++)
-    {   sm = 0.0f;
-        for (ip = 0; ip < 2; ip++)
-        {   for (iq = (ip+1); iq < 3; iq++)
-            {   sm += fabs(fStress[ip*3 +iq]);
-        }   }
-        if (sm <= FLT_EPSILON)
-        {  
-            
-            maxIndx = 0;
-            maxEig  = fabs(fEigVal[0]);
-            for (j = 1; j < 3; j++)
-            { if (fabs(fEigVal[j]) > maxEig)    {       maxEig = fabs(fEigVal[j]);      maxIndx = j;        }
-            }
-            for (j = 0; j < 3; j++)
-            {   fSMaxVect[j] = fEigVect[j*3 +maxIndx] *fEigVal[maxIndx];
-            }
-            
-            return;
-        }
-        
-        if (i < 4)              {   thres = 0.2f*sm/9.0f;       }
-        else                    {   thres = 0.0f;               }
-        
-        for (ip = 0; ip < 2; ip++)
-        {   for (iq = (ip+1); iq < 3; iq++)
-            {   g = 100.0f*fabs(fStress[ip*3 +iq]);
-        
-                if ( (i > 4) && ( fabs(fEigVal[ip]) +g == fabs(fEigVal[ip]) ) &&  ( fabs(fEigVal[iq]) +g == fabs(fEigVal[iq]) ) )
-                {   fStress[ip*3 +iq] = 0.0f;   
-                }
-                else if (fabs(fStress[ip*3 +iq]) > thres  )
-                {   h = fEigVal[iq] - fEigVal[ip];
-                    if (fabs(h) +g == fabs(h))
-                    {   t = fStress[ip*3 +iq]/h;
-                    }
-                    else
-                    {   theta = 0.5f*h/fStress[ip*3 +iq];
-                        t     = 1.0f/(fabs(theta) +sqrtf(1.0f +theta*theta) );
-                        if (theta < 0.0f)   {   t *= -1.0f;       }
-                    }
-                    c   = 1.0f/sqrtf(1.0f +t*t);
-                    s   = t*c;
-                    tau = s/(1.0f+c);
-                    h   = t*fStress[ip*3 +iq];
-                    z[ip      ] -= h;
-                    z[iq]       += h;
-                    fEigVal[ip] -= h;
-                    fEigVal[iq] += h;
-                    
-                    fStress[ip*3 +iq] = 0.0f;
-                    
-                    for (j = 0; j < ip; j++)
-                    {   g = fStress[j*3 +ip];                   h = fStress[j*3 +iq];
-                        fStress[j*3 +ip] = g -s*(h+g*tau);      fStress[j*3 +iq] = h +s*(g-h*tau);
-                    }
-                    for (j = (ip+1); j < iq; j++)
-                    {   g = fStress[ip*3 +j];                   h = fStress[j*3 +iq];
-                        fStress[ip*3 +j] = g -s*(h+g*tau);      fStress[j*3 +iq] = h +s*(g-h*tau);
-                    }
-                    for (j = (iq+1); j < 3; j++)
-                    {   g = fStress[ip*3 +j];                   h = fStress[iq*3 +j];
-                        fStress[ip*3 +j] = g -s*(h+g*tau);      fStress[iq*3 +j] = h +s*(g-h*tau);
-                    }
-                    
-                    for (j = 0; j < 3; j++)
-                    {   g = fEigVect[j*3 +ip];                  h = fEigVect[j*3 +iq];
-                        fEigVect[j*3 +ip] = g -s*(h+g*tau);     fEigVect[j*3 +iq] = h +s*(g-h*tau);
-        }   }   }   }
-        
-        for (ip = 0; ip < 2; ip++)
-        {   b[ip]      += z[ip];
-            fEigVal[ip] = b[ip];
-            z[ip]       = 0.0f;
-        }
-        
-    }
-    return;
-}
-
-
 void GetStkAndDipVect(float fNrm[3], float fStk[3], float fDip[3])
 {   
     float fVectLgth, feZ[3];
@@ -4120,111 +4113,6 @@ void GetStkAndDipVect(float fNrm[3], float fStk[3], float fDip[3])
     
     CrossProduct(fDip, fNrm, fStk);         NrmlzeVect(fDip);
     
-    return;
-}
-
-
-void GetGlobVertsForRectangle(float fP1[3], float fP2[3], float fP3[3], float fP4[3], float *fKh_Brch, unsigned int uStart)
-{   
-    float fMinSL,   fMaxSL,   fMinDL,   fMaxDL;
-    float fPt1[3],   fPt2[3],   fPt3[3],   fPt4[3],   fPt5[3],   fPt6[3],   fPt7[3],   fPt8[3];
-    float fPt1L[3],   fPt2L[3],   fPt3L[3],   fPt4L[3],   fPt5L[3],   fPt6L[3],   fPt7L[3],   fPt8L[3];
-    float fRM_G2L[3][3];
-    float fRM_L2G[3][3];
-    float fEmid = 0.5f*(fKh_Brch[uStart +15] + fKh_Brch[uStart +16]);
-    float fNmid = 0.5f*(fKh_Brch[uStart +17] + fKh_Brch[uStart +18]);
-    float fZmid = 0.5f*(fKh_Brch[uStart +19] + fKh_Brch[uStart +20]);
-    float fAspRatio, fSLdist, fDLdist;
-    
-    fRM_L2G[0][0] = fKh_Brch[uStart +7];        fRM_L2G[0][1] = fKh_Brch[uStart +10];       fRM_L2G[0][2] = fKh_Brch[uStart +4];
-    fRM_L2G[1][0] = fKh_Brch[uStart +8];        fRM_L2G[1][1] = fKh_Brch[uStart +11];       fRM_L2G[1][2] = fKh_Brch[uStart +5];
-    fRM_L2G[2][0] = fKh_Brch[uStart +9];        fRM_L2G[2][1] = fKh_Brch[uStart +12];       fRM_L2G[2][2] = fKh_Brch[uStart +6];
-    
-    fRM_G2L[0][0] = fKh_Brch[uStart +7];        fRM_G2L[0][1] = fKh_Brch[uStart  +8];       fRM_G2L[0][2] = fKh_Brch[uStart +9];
-    fRM_G2L[1][0] = fKh_Brch[uStart+10];        fRM_G2L[1][1] = fKh_Brch[uStart +11];       fRM_G2L[1][2] = fKh_Brch[uStart+12];
-    fRM_G2L[2][0] = fKh_Brch[uStart +4];        fRM_G2L[2][1] = fKh_Brch[uStart  +5];       fRM_G2L[2][2] = fKh_Brch[uStart +6];
-    
-    fPt1[0] = fKh_Brch[uStart +15] - fEmid;     fPt1[1] = fKh_Brch[uStart +17] - fNmid;     fPt1[2] = fKh_Brch[uStart +19] - fZmid; 
-    fPt2[0] = fKh_Brch[uStart +15] - fEmid;     fPt2[1] = fKh_Brch[uStart +17] - fNmid;     fPt2[2] = fKh_Brch[uStart +20] - fZmid; 
-    fPt3[0] = fKh_Brch[uStart +15] - fEmid;     fPt3[1] = fKh_Brch[uStart +18] - fNmid;     fPt3[2] = fKh_Brch[uStart +19] - fZmid; 
-    fPt4[0] = fKh_Brch[uStart +16] - fEmid;     fPt4[1] = fKh_Brch[uStart +17] - fNmid;     fPt4[2] = fKh_Brch[uStart +19] - fZmid; 
-    fPt5[0] = fKh_Brch[uStart +15] - fEmid;     fPt5[1] = fKh_Brch[uStart +18] - fNmid;     fPt5[2] = fKh_Brch[uStart +20] - fZmid; 
-    fPt6[0] = fKh_Brch[uStart +16] - fEmid;     fPt6[1] = fKh_Brch[uStart +17] - fNmid;     fPt6[2] = fKh_Brch[uStart +20] - fZmid; 
-    fPt7[0] = fKh_Brch[uStart +16] - fEmid;     fPt7[1] = fKh_Brch[uStart +18] - fNmid;     fPt7[2] = fKh_Brch[uStart +19] - fZmid; 
-    fPt8[0] = fKh_Brch[uStart +16] - fEmid;     fPt8[1] = fKh_Brch[uStart +18] - fNmid;     fPt8[2] = fKh_Brch[uStart +20] - fZmid; 
-    
-    fPt1L[0] = fRM_G2L[0][0]*fPt1[0] + fRM_G2L[0][1]*fPt1[1] +  fRM_G2L[0][2]*fPt1[2];
-    fPt1L[1] = fRM_G2L[1][0]*fPt1[0] + fRM_G2L[1][1]*fPt1[1] +  fRM_G2L[1][2]*fPt1[2];
-    fPt1L[2] = fRM_G2L[2][0]*fPt1[0] + fRM_G2L[2][1]*fPt1[1] +  fRM_G2L[2][2]*fPt1[2];
-    
-    fPt2L[0] = fRM_G2L[0][0]*fPt2[0] + fRM_G2L[0][1]*fPt2[1] +  fRM_G2L[0][2]*fPt2[2];
-    fPt2L[1] = fRM_G2L[1][0]*fPt2[0] + fRM_G2L[1][1]*fPt2[1] +  fRM_G2L[1][2]*fPt2[2];
-    fPt2L[2] = fRM_G2L[2][0]*fPt2[0] + fRM_G2L[2][1]*fPt2[1] +  fRM_G2L[2][2]*fPt2[2];
-    
-    fPt3L[0] = fRM_G2L[0][0]*fPt3[0] + fRM_G2L[0][1]*fPt3[1] +  fRM_G2L[0][2]*fPt3[2];
-    fPt3L[1] = fRM_G2L[1][0]*fPt3[0] + fRM_G2L[1][1]*fPt3[1] +  fRM_G2L[1][2]*fPt3[2];
-    fPt3L[2] = fRM_G2L[2][0]*fPt3[0] + fRM_G2L[2][1]*fPt3[1] +  fRM_G2L[2][2]*fPt3[2];
-    
-    fPt4L[0] = fRM_G2L[0][0]*fPt4[0] + fRM_G2L[0][1]*fPt4[1] +  fRM_G2L[0][2]*fPt4[2];
-    fPt4L[1] = fRM_G2L[1][0]*fPt4[0] + fRM_G2L[1][1]*fPt4[1] +  fRM_G2L[1][2]*fPt4[2];
-    fPt4L[2] = fRM_G2L[2][0]*fPt4[0] + fRM_G2L[2][1]*fPt4[1] +  fRM_G2L[2][2]*fPt4[2];
-    
-    fPt5L[0] = fRM_G2L[0][0]*fPt5[0] + fRM_G2L[0][1]*fPt5[1] +  fRM_G2L[0][2]*fPt5[2];
-    fPt5L[1] = fRM_G2L[1][0]*fPt5[0] + fRM_G2L[1][1]*fPt5[1] +  fRM_G2L[1][2]*fPt5[2];
-    fPt5L[2] = fRM_G2L[2][0]*fPt5[0] + fRM_G2L[2][1]*fPt5[1] +  fRM_G2L[2][2]*fPt5[2];
-    
-    fPt6L[0] = fRM_G2L[0][0]*fPt6[0] + fRM_G2L[0][1]*fPt6[1] +  fRM_G2L[0][2]*fPt6[2];
-    fPt6L[1] = fRM_G2L[1][0]*fPt6[0] + fRM_G2L[1][1]*fPt6[1] +  fRM_G2L[1][2]*fPt6[2];
-    fPt6L[2] = fRM_G2L[2][0]*fPt6[0] + fRM_G2L[2][1]*fPt6[1] +  fRM_G2L[2][2]*fPt6[2];
-    
-    fPt7L[0] = fRM_G2L[0][0]*fPt7[0] + fRM_G2L[0][1]*fPt7[1] +  fRM_G2L[0][2]*fPt7[2];
-    fPt7L[1] = fRM_G2L[1][0]*fPt7[0] + fRM_G2L[1][1]*fPt7[1] +  fRM_G2L[1][2]*fPt7[2];
-    fPt7L[2] = fRM_G2L[2][0]*fPt7[0] + fRM_G2L[2][1]*fPt7[1] +  fRM_G2L[2][2]*fPt7[2];
-    
-    fPt8L[0] = fRM_G2L[0][0]*fPt8[0] + fRM_G2L[0][1]*fPt8[1] +  fRM_G2L[0][2]*fPt8[2];
-    fPt8L[1] = fRM_G2L[1][0]*fPt8[0] + fRM_G2L[1][1]*fPt8[1] +  fRM_G2L[1][2]*fPt8[2];
-    fPt8L[2] = fRM_G2L[2][0]*fPt8[0] + fRM_G2L[2][1]*fPt8[1] +  fRM_G2L[2][2]*fPt8[2];
-    
-    fMinSL = fPt1L[0];       fMaxSL = fPt1L[0];       fMinDL = fPt1L[1];       fMaxDL = fPt1L[1];
-    
-    fMinSL = MIN(fMinSL, fPt2L[0]);   fMinSL = MIN(fMinSL, fPt3L[0]);   fMinSL = MIN(fMinSL, fPt4L[0]);   fMinSL = MIN(fMinSL, fPt5L[0]);   fMinSL = MIN(fMinSL, fPt6L[0]);   fMinSL = MIN(fMinSL, fPt7L[0]);   fMinSL = MIN(fMinSL, fPt8L[0]);
-    fMaxSL = MAX(fMaxSL, fPt2L[0]);   fMaxSL = MAX(fMaxSL, fPt3L[0]);   fMaxSL = MAX(fMaxSL, fPt4L[0]);   fMaxSL = MAX(fMaxSL, fPt5L[0]);   fMaxSL = MAX(fMaxSL, fPt6L[0]);   fMaxSL = MAX(fMaxSL, fPt7L[0]);   fMaxSL = MAX(fMaxSL, fPt8L[0]);
-    
-    fMinDL = MIN(fMinDL, fPt2L[1]);   fMinDL = MIN(fMinDL, fPt3L[1]);   fMinDL = MIN(fMinDL, fPt4L[1]);   fMinDL = MIN(fMinDL, fPt5L[1]);   fMinDL = MIN(fMinDL, fPt6L[1]);   fMinDL = MIN(fMinDL, fPt7L[1]);   fMinDL = MIN(fMinDL, fPt8L[1]);
-    fMaxDL = MAX(fMaxDL, fPt2L[1]);   fMaxDL = MAX(fMaxDL, fPt3L[1]);   fMaxDL = MAX(fMaxDL, fPt4L[1]);   fMaxDL = MAX(fMaxDL, fPt5L[1]);   fMaxDL = MAX(fMaxDL, fPt6L[1]);   fMaxDL = MAX(fMaxDL, fPt7L[1]);   fMaxDL = MAX(fMaxDL, fPt8L[1]);
-    
-    fAspRatio = (fMaxSL - fMinSL)/(fMaxDL - fMinDL);
-    fSLdist   = sqrtf(fKh_Brch[uStart +3] *fAspRatio);
-    fDLdist   = fSLdist/fAspRatio;
-    
-    if (fabs(fKh_Brch[uStart+12]) > FLT_EPSILON ) 
-    {   fDLdist = MIN(fDLdist, 2.0f*fabs(fZmid/fKh_Brch[uStart +12]));
-        fSLdist = fKh_Brch[uStart +3]/fDLdist;
-    }
-    
-    fPt1L[0]  = -0.5f*fSLdist;          fPt1L[1]  = -0.5f*fDLdist;              fPt1L[2]  = 0.0f;
-    fPt2L[0]  =  0.5f*fSLdist;          fPt2L[1]  = -0.5f*fDLdist;              fPt2L[2]  = 0.0f;
-    fPt3L[0]  =  0.5f*fSLdist;          fPt3L[1]  =  0.5f*fDLdist;              fPt3L[2]  = 0.0f;
-    fPt4L[0]  = -0.5f*fSLdist;          fPt4L[1]  =  0.5f*fDLdist;              fPt4L[2]  = 0.0f;
-    
-    fP1[0] = fRM_L2G[0][0]*fPt1L[0] + fRM_L2G[0][1]*fPt1L[1] + fRM_L2G[0][2]*fPt1L[2] + fEmid;
-    fP1[1] = fRM_L2G[1][0]*fPt1L[0] + fRM_L2G[1][1]*fPt1L[1] + fRM_L2G[1][2]*fPt1L[2] + fNmid;
-    fP1[2] = fRM_L2G[2][0]*fPt1L[0] + fRM_L2G[2][1]*fPt1L[1] + fRM_L2G[2][2]*fPt1L[2] + fZmid;
-
-    fP2[0] = fRM_L2G[0][0]*fPt2L[0] + fRM_L2G[0][1]*fPt2L[1] + fRM_L2G[0][2]*fPt2L[2] + fEmid;
-    fP2[1] = fRM_L2G[1][0]*fPt2L[0] + fRM_L2G[1][1]*fPt2L[1] + fRM_L2G[1][2]*fPt2L[2] + fNmid;
-    fP2[2] = fRM_L2G[2][0]*fPt2L[0] + fRM_L2G[2][1]*fPt2L[1] + fRM_L2G[2][2]*fPt2L[2] + fZmid;
-    
-    fP3[0] = fRM_L2G[0][0]*fPt3L[0] + fRM_L2G[0][1]*fPt3L[1] + fRM_L2G[0][2]*fPt3L[2] + fEmid;
-    fP3[1] = fRM_L2G[1][0]*fPt3L[0] + fRM_L2G[1][1]*fPt3L[1] + fRM_L2G[1][2]*fPt3L[2] + fNmid;
-    fP3[2] = fRM_L2G[2][0]*fPt3L[0] + fRM_L2G[2][1]*fPt3L[1] + fRM_L2G[2][2]*fPt3L[2] + fZmid;
-    
-    fP4[0] = fRM_L2G[0][0]*fPt4L[0] + fRM_L2G[0][1]*fPt4L[1] + fRM_L2G[0][2]*fPt4L[2] + fEmid;
-    fP4[1] = fRM_L2G[1][0]*fPt4L[0] + fRM_L2G[1][1]*fPt4L[1] + fRM_L2G[1][2]*fPt4L[2] + fNmid;
-    fP4[2] = fRM_L2G[2][0]*fPt4L[0] + fRM_L2G[2][1]*fPt4L[1] + fRM_L2G[2][2]*fPt4L[2] + fZmid;
-    
-    fP1[2] = (fP1[2] > 0.0f)*0.0f + (fP1[2] <= 0.0f)*fP1[2];        fP2[2] = (fP2[2] > 0.0f)*0.0f + (fP2[2] <= 0.0f)*fP2[2];
-    fP3[2] = (fP3[2] > 0.0f)*0.0f + (fP3[2] <= 0.0f)*fP3[2];        fP4[2] = (fP4[2] > 0.0f)*0.0f + (fP4[2] <= 0.0f)*fP4[2];
     return;
 }
 
