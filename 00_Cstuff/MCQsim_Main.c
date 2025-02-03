@@ -6,8 +6,8 @@
 #include <mpi.h>
 #include <time.h>
 #include <limits.h>
-#include <cblas.h>
-//#include <gsl/gsl_cblas.h>
+//#include <cblas.h>
+#include <gsl/gsl_cblas.h>
 
 #define USEHALFSPACE            1u 
 #define MINBRANCHSZEFACT        1.5f 
@@ -735,8 +735,8 @@ int main(int argc, char **argv)
     }   }   }
     
     
-    unsigned int *uKh_FFcnt  = calloc(iFOFFSET[iRANK], sizeof *uKh_FFcnt );
-    unsigned int **uKh_FFps2 = NULL;
+    unsigned short int *uKh_FFcnt  = calloc(iFOFFSET[iRANK], sizeof *uKh_FFcnt );
+    unsigned short int **uKh_FFps2 = NULL;
     unsigned int **uKh_FF_ttime = NULL;
     float **fKh_FFvalstk = NULL;
     float **fKh_FFvaldip = NULL;
@@ -747,16 +747,16 @@ int main(int argc, char **argv)
     fKh_FFvaldip = calloc(iFOFFSET[iRANK], sizeof *fKh_FFvaldip );
     fKh_FFvalnrm = calloc(iFOFFSET[iRANK], sizeof *fKh_FFvalnrm );
     
-    unsigned int *uKh_FBcnt = calloc(iFOFFSET[iRANK], sizeof *uKh_FBcnt );
-    unsigned int **uKh_FBps2 = NULL;
+    unsigned short int *uKh_FBcnt = calloc(iFOFFSET[iRANK], sizeof *uKh_FBcnt );
+    unsigned short int **uKh_FBps2 = NULL;
     float **fKh_FBvalstk = NULL;
     float **fKh_FBvaldip = NULL;
     uKh_FBps2    = calloc(iFOFFSET[iRANK], sizeof *uKh_FBps2 );
     fKh_FBvalstk = calloc(iFOFFSET[iRANK], sizeof *fKh_FBvalstk );
     fKh_FBvaldip = calloc(iFOFFSET[iRANK], sizeof *fKh_FBvaldip );
     
-    unsigned int *uKh_BBcnt = calloc(iBOFFSET[iRANK], sizeof *uKh_BBcnt );
-    unsigned int **uKh_BBps2 = NULL;
+    unsigned short int *uKh_BBcnt = calloc(iBOFFSET[iRANK], sizeof *uKh_BBcnt );
+    unsigned short int **uKh_BBps2 = NULL;
     float **fKh_BBvalstk = NULL;
     float **fKh_BBvaldip = NULL;
     float **fKh_BBvalnrm = NULL;
@@ -765,8 +765,8 @@ int main(int argc, char **argv)
     fKh_BBvaldip = calloc(iBOFFSET[iRANK], sizeof *fKh_BBvaldip );
     fKh_BBvalnrm = calloc(iBOFFSET[iRANK], sizeof *fKh_BBvalnrm );
     
-    unsigned int *uKh_BFcnt = calloc(iBOFFSET[iRANK], sizeof *uKh_BFcnt );
-    unsigned int **uKh_BFps2 = NULL;
+    unsigned short int *uKh_BFcnt = calloc(iBOFFSET[iRANK], sizeof *uKh_BFcnt );
+    unsigned short int **uKh_BFps2 = NULL;
     float **fKh_BFvalstk = NULL;
     float **fKh_BFvaldip = NULL;
     float **fKh_BFvalnrm = NULL;
@@ -1516,7 +1516,7 @@ int main(int argc, char **argv)
                             fFEvent[i*17 +3] = fFFric[i*6 +0]; 
                             
                             fTemp0 = ran0(&lSeed);      fTemp0 = fTemp0*2.0f -1.0f;
-                            fFFric[i*6 +1]   = fFRef[i*14 +5] + (fFRef[i*14 +6] * fTemp0); 
+                            fFFric[i*6 +1]   = MAX(0.0f, (fFRef[i*14 +5] + (fFRef[i*14 +6] * fTemp0)) ); 
                                 
                             fTemp0 =(fFFric[i*6 +0] - fFFric[i*6 +1]) *-1.0f*fFRef[i*14 +1];; 
                             fTemp1 = fTemp0/fFRef[i*14 +2];
@@ -1526,7 +1526,7 @@ int main(int argc, char **argv)
                             fTemp0 = fFFric[i*6 +1]*-1.0f*fFRef[i*14 +1] + fFRef[i*14 +2]*fFEvent[i*17 +7]; 
                             fTemp1 = fFFric[i*6 +0]*-1.0f*fFRef[i*14 +1]; 
                             fTemp2 = MAX(fTemp0, fTemp1)/(-1.0f*fFRef[i*14 +1]); 
-                            fFFric[i*6 +2]   = fTemp2 - fOvershootFract*(fTemp2-fFFric[i*6 +1]); 
+                            fFFric[i*6 +2]   = MAX(0.0f, (fTemp2 - fOvershootFract*(fTemp2-fFFric[i*6 +1])) ); 
                             
                             fFEvent[i*17 +10]= (fFFric[i*6 +1] - fFFric[i*6 +2])*-1.0f*fFRef[i*14 +1];
                             
@@ -1556,7 +1556,6 @@ int main(int argc, char **argv)
                             uTemp1   = 0u;
                             
                             while (uPrvBrLv < (uTemp0 -1))
-
                             {   uPrvBrLv += 1u;
                                 uPrvBrId  = uF_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)];
                                 
@@ -1816,7 +1815,6 @@ int main(int argc, char **argv)
                             uPrvBrId = uB_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)];
                             uTemp1   = 0u;
                             
-
                             while (uPrvBrLv < (uTemp0 -1))
                             {   uPrvBrLv += 1u;
                                 uPrvBrId  = uB_OTElem[uSrcElem*u_MaxBrLvl +(u_MaxBrLvl -uTemp0 +uPrvBrLv)];
@@ -2560,10 +2558,10 @@ int main(int argc, char **argv)
             } 
             OFFSETall = (4 * sizeof(unsigned int));
             
-            MPI_File_write_at(fp_KHMAT,  (OFFSETall + iFSTART[iRANK]*sizeof(unsigned int)),  uKh_FFcnt,  iFOFFSET[iRANK], MPI_UNSIGNED,   &STATUS);         OFFSETall += (uFPNum * sizeof(unsigned int));
-            MPI_File_write_at(fp_KHMAT,  (OFFSETall + iFSTART[iRANK]*sizeof(unsigned int)),  uKh_FBcnt,  iFOFFSET[iRANK], MPI_UNSIGNED,   &STATUS);         OFFSETall += (uFPNum * sizeof(unsigned int));
-            MPI_File_write_at(fp_KHMAT,  (OFFSETall + iBSTART[iRANK]*sizeof(unsigned int)),  uKh_BBcnt,  iBOFFSET[iRANK], MPI_UNSIGNED,   &STATUS);         OFFSETall += (uBPNum * sizeof(unsigned int));
-            MPI_File_write_at(fp_KHMAT,  (OFFSETall + iBSTART[iRANK]*sizeof(unsigned int)),  uKh_BFcnt,  iBOFFSET[iRANK], MPI_UNSIGNED,   &STATUS);         OFFSETall += (uBPNum * sizeof(unsigned int));
+            MPI_File_write_at(fp_KHMAT,  (OFFSETall + iFSTART[iRANK]*sizeof(unsigned short int)),  uKh_FFcnt,  iFOFFSET[iRANK], MPI_UNSIGNED_SHORT,   &STATUS);         OFFSETall += (uFPNum * sizeof(unsigned short int));
+            MPI_File_write_at(fp_KHMAT,  (OFFSETall + iFSTART[iRANK]*sizeof(unsigned short int)),  uKh_FBcnt,  iFOFFSET[iRANK], MPI_UNSIGNED_SHORT,   &STATUS);         OFFSETall += (uFPNum * sizeof(unsigned short int));
+            MPI_File_write_at(fp_KHMAT,  (OFFSETall + iBSTART[iRANK]*sizeof(unsigned short int)),  uKh_BBcnt,  iBOFFSET[iRANK], MPI_UNSIGNED_SHORT,   &STATUS);         OFFSETall += (uBPNum * sizeof(unsigned short int));
+            MPI_File_write_at(fp_KHMAT,  (OFFSETall + iBSTART[iRANK]*sizeof(unsigned short int)),  uKh_BFcnt,  iBOFFSET[iRANK], MPI_UNSIGNED_SHORT,   &STATUS);         OFFSETall += (uBPNum * sizeof(unsigned short int));
       
             for (i = 0u; i < iFOFFSET[iRANK]; i++)  {       FTempVect[i] = fFEvent[i*17 +4];      }
             MPI_File_write_at(fp_KHMAT,  (OFFSETall + iFSTART[iRANK]*sizeof(float)),  FTempVect,  iFOFFSET[iRANK], MPI_FLOAT,   &STATUS);                   OFFSETall += (uFPNum * sizeof(float));
@@ -2579,7 +2577,7 @@ int main(int argc, char **argv)
             MPI_File_write_at(fp_KHMAT,  (OFFSETall + iBSTART[iRANK]*sizeof(float)),  BTempVect,  iBOFFSET[iRANK], MPI_FLOAT,   &STATUS);                   OFFSETall += (uBPNum * sizeof(float));
             
             lTemp0 = 0;         memset(lRankOffset, 0, iSIZE*sizeof(unsigned long long ));
-            for (i = 0u; i < iFOFFSET[iRANK]; i++)  {   lTemp0 += ( uKh_FFcnt[i]*(                          7*sizeof(float) ) + uFPNum*sizeof(unsigned int));                   }
+            for (i = 0u; i < iFOFFSET[iRANK]; i++)  {   lTemp0 += ( uKh_FFcnt[i] * (6*sizeof(float) + sizeof(unsigned int)) + uFPNum*sizeof(unsigned short int)  );                   }
             lRankOffset[iRANK] = lTemp0;
             MPI_Allreduce(MPI_IN_PLACE, &lTemp0,       1,   MPI_UNSIGNED_LONG_LONG, MPI_SUM, MPI_COMM_WORLD);
             MPI_Allreduce(MPI_IN_PLACE, lRankOffset, iSIZE, MPI_UNSIGNED_LONG_LONG, MPI_MAX, MPI_COMM_WORLD);
@@ -2587,7 +2585,7 @@ int main(int argc, char **argv)
             
             lLoclOffset = 0;
             for (i = 0u; i < iFOFFSET[iRANK]; i++)  
-            {   MPI_File_write_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),     uKh_FFps2[i],   uFPNum,       MPI_UNSIGNED,   &STATUS);         lLoclOffset += (uFPNum        *sizeof(unsigned int));
+            {   MPI_File_write_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),     uKh_FFps2[i],   uFPNum,       MPI_UNSIGNED_SHORT,   &STATUS);   lLoclOffset += (uFPNum        *sizeof(unsigned short int));
                 MPI_File_write_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  uKh_FF_ttime[i],   uKh_FFcnt[i], MPI_UNSIGNED,   &STATUS);         lLoclOffset += (uKh_FFcnt[i]  *sizeof(unsigned int));
                 MPI_File_write_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  fKh_FFvalstk[i], 2*uKh_FFcnt[i], MPI_FLOAT,      &STATUS);         lLoclOffset += (uKh_FFcnt[i]*2*sizeof(float));
                 MPI_File_write_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  fKh_FFvaldip[i], 2*uKh_FFcnt[i], MPI_FLOAT,      &STATUS);         lLoclOffset += (uKh_FFcnt[i]*2*sizeof(float));
@@ -2596,7 +2594,7 @@ int main(int argc, char **argv)
             OFFSETall += lTemp0;
             
             lTemp0 = 0;         memset(lRankOffset, 0, iSIZE*sizeof(unsigned long long ));
-            for (i = 0u; i < iFOFFSET[iRANK]; i++)  {   lTemp0 += ( uKh_FBcnt[i]*( 6*sizeof(float)) + uBPNum*sizeof(unsigned int));     }
+            for (i = 0u; i < iFOFFSET[iRANK]; i++)  {   lTemp0 += ( uKh_FBcnt[i]* 6*sizeof(float) + uBPNum*sizeof(unsigned short int) );     }
             lRankOffset[iRANK] = lTemp0; 
             MPI_Allreduce(MPI_IN_PLACE, &lTemp0,       1,   MPI_UNSIGNED_LONG_LONG, MPI_SUM, MPI_COMM_WORLD);
             MPI_Allreduce(MPI_IN_PLACE, lRankOffset, iSIZE, MPI_UNSIGNED_LONG_LONG, MPI_MAX, MPI_COMM_WORLD);
@@ -2604,14 +2602,14 @@ int main(int argc, char **argv)
             
             lLoclOffset = 0;
             for (i = 0u; i < iFOFFSET[iRANK]; i++)  
-            {   MPI_File_write_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  uKh_FBps2[i],      uBPNum,       MPI_UNSIGNED,   &STATUS);         lLoclOffset += (uBPNum        *sizeof(unsigned int));
+            {   MPI_File_write_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  uKh_FBps2[i],      uBPNum,       MPI_UNSIGNED_SHORT,   &STATUS);   lLoclOffset += (uBPNum        *sizeof(unsigned short int));
                 MPI_File_write_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  fKh_FBvalstk[i], 3*uKh_FBcnt[i], MPI_FLOAT,      &STATUS);         lLoclOffset += (uKh_FBcnt[i]*3*sizeof(float));
                 MPI_File_write_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  fKh_FBvaldip[i], 3*uKh_FBcnt[i], MPI_FLOAT,      &STATUS);         lLoclOffset += (uKh_FBcnt[i]*3*sizeof(float));
             }
             OFFSETall += lTemp0;
             
             lTemp0 = 0;         memset(lRankOffset, 0, iSIZE*sizeof(unsigned long long ));
-            for (i = 0u; i < iBOFFSET[iRANK]; i++)  {   lTemp0 += ( uKh_BBcnt[i]*( 9*sizeof(float)) + uBPNum*sizeof(unsigned int));     }
+            for (i = 0u; i < iBOFFSET[iRANK]; i++)  {   lTemp0 += ( uKh_BBcnt[i]* 9*sizeof(float) + uBPNum*sizeof(unsigned short int) );     }
             lRankOffset[iRANK] = lTemp0; 
             MPI_Allreduce(MPI_IN_PLACE, &lTemp0,       1,   MPI_UNSIGNED_LONG_LONG, MPI_SUM, MPI_COMM_WORLD);
             MPI_Allreduce(MPI_IN_PLACE, lRankOffset, iSIZE, MPI_UNSIGNED_LONG_LONG, MPI_MAX, MPI_COMM_WORLD);
@@ -2619,7 +2617,7 @@ int main(int argc, char **argv)
             
             lLoclOffset = 0;
             for (i = 0u; i < iBOFFSET[iRANK]; i++)  
-            {   MPI_File_write_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  uKh_BBps2[i],      uBPNum,       MPI_UNSIGNED,   &STATUS);         lLoclOffset += (uBPNum        *sizeof(unsigned int));
+            {   MPI_File_write_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  uKh_BBps2[i],      uBPNum,       MPI_UNSIGNED_SHORT,   &STATUS);   lLoclOffset += (uBPNum        *sizeof(unsigned short int));
                 MPI_File_write_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  fKh_BBvalstk[i], 3*uKh_BBcnt[i], MPI_FLOAT,      &STATUS);         lLoclOffset += (uKh_BBcnt[i]*3*sizeof(float));
                 MPI_File_write_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  fKh_BBvaldip[i], 3*uKh_BBcnt[i], MPI_FLOAT,      &STATUS);         lLoclOffset += (uKh_BBcnt[i]*3*sizeof(float));
                 MPI_File_write_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  fKh_BBvalnrm[i], 3*uKh_BBcnt[i], MPI_FLOAT,      &STATUS);         lLoclOffset += (uKh_BBcnt[i]*3*sizeof(float));
@@ -2627,7 +2625,7 @@ int main(int argc, char **argv)
             OFFSETall += lTemp0;
             
             lTemp0 = 0;         memset(lRankOffset, 0, iSIZE*sizeof(unsigned long long ));
-            for (i = 0u; i < iBOFFSET[iRANK]; i++)  {   lTemp0 += ( uKh_BFcnt[i]*( 6*sizeof(float)) + uFPNum*sizeof(unsigned int));     }
+            for (i = 0u; i < iBOFFSET[iRANK]; i++)  {   lTemp0 += ( uKh_BFcnt[i]* 6*sizeof(float) + uFPNum*sizeof(unsigned short int) );     }
             lRankOffset[iRANK] = lTemp0; 
             MPI_Allreduce(MPI_IN_PLACE, &lTemp0,       1,   MPI_UNSIGNED_LONG_LONG, MPI_SUM, MPI_COMM_WORLD);
             MPI_Allreduce(MPI_IN_PLACE, lRankOffset, iSIZE, MPI_UNSIGNED_LONG_LONG, MPI_MAX, MPI_COMM_WORLD);
@@ -2635,7 +2633,7 @@ int main(int argc, char **argv)
             
             lLoclOffset = 0;
             for (i = 0u; i < iBOFFSET[iRANK]; i++)  
-            {   MPI_File_write_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  uKh_BFps2[i],      uFPNum,       MPI_UNSIGNED,   &STATUS);         lLoclOffset += (uFPNum        *sizeof(unsigned int));
+            {   MPI_File_write_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  uKh_BFps2[i],      uFPNum,       MPI_UNSIGNED_SHORT,   &STATUS);   lLoclOffset += (uFPNum        *sizeof(unsigned short int));
                 MPI_File_write_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  fKh_BFvalstk[i], 2*uKh_BFcnt[i], MPI_FLOAT,      &STATUS);         lLoclOffset += (uKh_BFcnt[i]*2*sizeof(float));
                 MPI_File_write_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  fKh_BFvaldip[i], 2*uKh_BFcnt[i], MPI_FLOAT,      &STATUS);         lLoclOffset += (uKh_BFcnt[i]*2*sizeof(float));
                 MPI_File_write_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  fKh_BFvalnrm[i], 2*uKh_BFcnt[i], MPI_FLOAT,      &STATUS);         lLoclOffset += (uKh_BFcnt[i]*2*sizeof(float));
@@ -2666,10 +2664,10 @@ int main(int argc, char **argv)
         
         OFFSETall = (4 * sizeof(unsigned int)) ;
         
-        MPI_File_read_at(fp_KHMAT, (OFFSETall + iFSTART[iRANK]*sizeof(unsigned int)), uKh_FFcnt, iFOFFSET[iRANK], MPI_UNSIGNED, &STATUS);       OFFSETall += (uFPNum * sizeof(unsigned int));
-        MPI_File_read_at(fp_KHMAT, (OFFSETall + iFSTART[iRANK]*sizeof(unsigned int)), uKh_FBcnt, iFOFFSET[iRANK], MPI_UNSIGNED, &STATUS);       OFFSETall += (uFPNum * sizeof(unsigned int));
-        MPI_File_read_at(fp_KHMAT, (OFFSETall + iBSTART[iRANK]*sizeof(unsigned int)), uKh_BBcnt, iBOFFSET[iRANK], MPI_UNSIGNED, &STATUS);       OFFSETall += (uBPNum * sizeof(unsigned int));
-        MPI_File_read_at(fp_KHMAT, (OFFSETall + iBSTART[iRANK]*sizeof(unsigned int)), uKh_BFcnt, iBOFFSET[iRANK], MPI_UNSIGNED, &STATUS);       OFFSETall += (uBPNum * sizeof(unsigned int));
+        MPI_File_read_at(fp_KHMAT, (OFFSETall + iFSTART[iRANK]*sizeof(unsigned short int)), uKh_FFcnt, iFOFFSET[iRANK], MPI_UNSIGNED_SHORT, &STATUS);       OFFSETall += (uFPNum * sizeof(unsigned short int));
+        MPI_File_read_at(fp_KHMAT, (OFFSETall + iFSTART[iRANK]*sizeof(unsigned short int)), uKh_FBcnt, iFOFFSET[iRANK], MPI_UNSIGNED_SHORT, &STATUS);       OFFSETall += (uFPNum * sizeof(unsigned short int));
+        MPI_File_read_at(fp_KHMAT, (OFFSETall + iBSTART[iRANK]*sizeof(unsigned short int)), uKh_BBcnt, iBOFFSET[iRANK], MPI_UNSIGNED_SHORT, &STATUS);       OFFSETall += (uBPNum * sizeof(unsigned short int));
+        MPI_File_read_at(fp_KHMAT, (OFFSETall + iBSTART[iRANK]*sizeof(unsigned short int)), uKh_BFcnt, iBOFFSET[iRANK], MPI_UNSIGNED_SHORT, &STATUS);       OFFSETall += (uBPNum * sizeof(unsigned short int));
   
         MPI_File_read_at(fp_KHMAT, (OFFSETall + iFSTART[iRANK]*sizeof(float)), FTempVect, iFOFFSET[iRANK], MPI_FLOAT, &STATUS);       OFFSETall += (uFPNum * sizeof(float));
         for (i = 0u; i < iFOFFSET[iRANK]; i++)  {   fFEvent[i*17 +4] = FTempVect[i];     }
@@ -2692,7 +2690,7 @@ int main(int argc, char **argv)
             fKh_FFvalstk[i] = calloc(   2*uKh_FFcnt[i], sizeof *fKh_FFvalstk[i] );
             fKh_FFvaldip[i] = calloc(   2*uKh_FFcnt[i], sizeof *fKh_FFvaldip[i] );
             fKh_FFvalnrm[i] = calloc(   2*uKh_FFcnt[i], sizeof *fKh_FFvalnrm[i] );
-            lTemp0 += (uKh_FFcnt[i]*(                           7*sizeof(float) ) + uFPNum*sizeof(unsigned int));
+            lTemp0 += ( uKh_FFcnt[i] * (6*sizeof(float) + sizeof(unsigned int)) + uFPNum*sizeof(unsigned short int)  );
         }
         lRankOffset[iRANK] = lTemp0;
         MPI_Allreduce(MPI_IN_PLACE, &lTemp0,       1,   MPI_UNSIGNED_LONG_LONG, MPI_SUM, MPI_COMM_WORLD);
@@ -2701,7 +2699,7 @@ int main(int argc, char **argv)
         
         lLoclOffset = 0;
         for (i = 0u; i < iFOFFSET[iRANK]; i++)  
-        {   MPI_File_read_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),     uKh_FFps2[i],   uFPNum,       MPI_UNSIGNED,   &STATUS);         lLoclOffset += (uFPNum        *sizeof(unsigned int));
+        {   MPI_File_read_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),     uKh_FFps2[i],   uFPNum,       MPI_UNSIGNED_SHORT,   &STATUS);   lLoclOffset += (uFPNum        *sizeof(unsigned short int));
             MPI_File_read_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  uKh_FF_ttime[i],   uKh_FFcnt[i], MPI_UNSIGNED,   &STATUS);         lLoclOffset += (uKh_FFcnt[i]  *sizeof(unsigned int));
             MPI_File_read_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  fKh_FFvalstk[i], 2*uKh_FFcnt[i], MPI_FLOAT,      &STATUS);         lLoclOffset += (uKh_FFcnt[i]*2*sizeof(float));
             MPI_File_read_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  fKh_FFvaldip[i], 2*uKh_FFcnt[i], MPI_FLOAT,      &STATUS);         lLoclOffset += (uKh_FFcnt[i]*2*sizeof(float));
@@ -2714,7 +2712,7 @@ int main(int argc, char **argv)
         {   uKh_FBps2[i]    = calloc(     uBPNum,       sizeof *uKh_FBps2[i] );
             fKh_FBvalstk[i] = calloc(   3*uKh_FBcnt[i], sizeof *fKh_FBvalstk[i] );
             fKh_FBvaldip[i] = calloc(   3*uKh_FBcnt[i], sizeof *fKh_FBvaldip[i] );
-            lTemp0 += (uKh_FBcnt[i]*( 6*sizeof(float)) + uBPNum*sizeof(unsigned int));
+            lTemp0 += (uKh_FBcnt[i]* 6*sizeof(float) + uBPNum*sizeof(unsigned short int) );
         }
         lRankOffset[iRANK] = lTemp0;
         MPI_Allreduce(MPI_IN_PLACE, &lTemp0,       1,   MPI_UNSIGNED_LONG_LONG, MPI_SUM, MPI_COMM_WORLD);
@@ -2723,7 +2721,7 @@ int main(int argc, char **argv)
         
         lLoclOffset = 0;
         for (i = 0u; i < iFOFFSET[iRANK]; i++)  
-        {   MPI_File_read_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),     uKh_FBps2[i],   uBPNum,       MPI_UNSIGNED,   &STATUS);         lLoclOffset += (uBPNum  *sizeof(unsigned int));
+        {   MPI_File_read_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),     uKh_FBps2[i],   uBPNum,       MPI_UNSIGNED_SHORT,   &STATUS);   lLoclOffset += (uBPNum  *sizeof(unsigned short int));
             MPI_File_read_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  fKh_FBvalstk[i], 3*uKh_FBcnt[i], MPI_FLOAT,      &STATUS);         lLoclOffset += (uKh_FBcnt[i]*3*sizeof(float));
             MPI_File_read_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  fKh_FBvaldip[i], 3*uKh_FBcnt[i], MPI_FLOAT,      &STATUS);         lLoclOffset += (uKh_FBcnt[i]*3*sizeof(float));
         }
@@ -2735,7 +2733,7 @@ int main(int argc, char **argv)
             fKh_BBvalstk[i] = calloc(   3*uKh_BBcnt[i], sizeof *fKh_BBvalstk[i] );
             fKh_BBvaldip[i] = calloc(   3*uKh_BBcnt[i], sizeof *fKh_BBvaldip[i] );
             fKh_BBvalnrm[i] = calloc(   3*uKh_BBcnt[i], sizeof *fKh_BBvalnrm[i] );
-            lTemp0 += (uKh_BBcnt[i]*( 9*sizeof(float)) + uBPNum*sizeof(unsigned int));
+            lTemp0 += (uKh_BBcnt[i]* 9*sizeof(float) + uBPNum*sizeof(unsigned short int));
         }
         lRankOffset[iRANK] = lTemp0;
         MPI_Allreduce(MPI_IN_PLACE, &lTemp0,       1,   MPI_UNSIGNED_LONG_LONG, MPI_SUM, MPI_COMM_WORLD);
@@ -2744,7 +2742,7 @@ int main(int argc, char **argv)
         
         lLoclOffset = 0;
         for (i = 0u; i < iBOFFSET[iRANK]; i++)  
-        {   MPI_File_read_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),     uKh_BBps2[i],   uBPNum,       MPI_UNSIGNED,   &STATUS);         lLoclOffset += (uBPNum  *sizeof(unsigned int));
+        {   MPI_File_read_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),     uKh_BBps2[i],   uBPNum,       MPI_UNSIGNED_SHORT,   &STATUS);   lLoclOffset += (uBPNum  *sizeof(unsigned short int));
             MPI_File_read_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  fKh_BBvalstk[i], 3*uKh_BBcnt[i], MPI_FLOAT,      &STATUS);         lLoclOffset += (uKh_BBcnt[i]*3*sizeof(float));
             MPI_File_read_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  fKh_BBvaldip[i], 3*uKh_BBcnt[i], MPI_FLOAT,      &STATUS);         lLoclOffset += (uKh_BBcnt[i]*3*sizeof(float));
             MPI_File_read_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  fKh_BBvalnrm[i], 3*uKh_BBcnt[i], MPI_FLOAT,      &STATUS);         lLoclOffset += (uKh_BBcnt[i]*3*sizeof(float));
@@ -2757,7 +2755,7 @@ int main(int argc, char **argv)
             fKh_BFvalstk[i] = calloc(   2*uKh_BFcnt[i], sizeof *fKh_BFvalstk[i] );
             fKh_BFvaldip[i] = calloc(   2*uKh_BFcnt[i], sizeof *fKh_BFvaldip[i] );
             fKh_BFvalnrm[i] = calloc(   2*uKh_BFcnt[i], sizeof *fKh_BFvalnrm[i] );
-            lTemp0 += (uKh_BFcnt[i]*( 6*sizeof(float)) + uFPNum*sizeof(unsigned int));
+            lTemp0 += (uKh_BFcnt[i]* 6*sizeof(float) + uFPNum*sizeof(unsigned short int) );
         }
         lRankOffset[iRANK] = lTemp0;
         MPI_Allreduce(MPI_IN_PLACE, &lTemp0,       1,   MPI_UNSIGNED_LONG_LONG, MPI_SUM, MPI_COMM_WORLD);
@@ -2766,7 +2764,7 @@ int main(int argc, char **argv)
         
         lLoclOffset = 0;
         for (i = 0u; i < iBOFFSET[iRANK]; i++)  
-        {   MPI_File_read_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),     uKh_BFps2[i],   uFPNum,       MPI_UNSIGNED,   &STATUS);         lLoclOffset += (uFPNum  *sizeof(unsigned int));
+        {   MPI_File_read_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),     uKh_BFps2[i],   uFPNum,       MPI_UNSIGNED_SHORT,   &STATUS);   lLoclOffset += (uFPNum  *sizeof(unsigned short int));
             MPI_File_read_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  fKh_BFvalstk[i], 2*uKh_BFcnt[i], MPI_FLOAT,      &STATUS);         lLoclOffset += (uKh_BFcnt[i]*2*sizeof(float));
             MPI_File_read_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  fKh_BFvaldip[i], 2*uKh_BFcnt[i], MPI_FLOAT,      &STATUS);         lLoclOffset += (uKh_BFcnt[i]*2*sizeof(float));
             MPI_File_read_at(fp_KHMAT,  (OFFSETall + lRankStart[iRANK] + lLoclOffset),  fKh_BFvalnrm[i], 2*uKh_BFcnt[i], MPI_FLOAT,      &STATUS);         lLoclOffset += (uKh_BFcnt[i]*2*sizeof(float));
@@ -2789,7 +2787,7 @@ int main(int argc, char **argv)
             fFEvent[i*17 +3] = fFFric[i*6 +0]; 
             
             fTemp0 = ran0(&lSeed);      fTemp0 = fTemp0*2.0f -1.0f;
-            fFFric[i*6 +1] = fFRef[i*14 +5] + (fFRef[i*14 +6] * fTemp0); 
+            fFFric[i*6 +1] = MAX(0.0f, (fFRef[i*14 +5] + (fFRef[i*14 +6] * fTemp0)) ); 
             
             fTemp0 =(fFFric[i*6 +0] - fFFric[i*6 +1]) *-1.0f*fFRef[i*14 +1]; 
             fTemp1 = fTemp0/fFRef[i*14 +2];
@@ -2799,7 +2797,7 @@ int main(int argc, char **argv)
             fTemp0 = fFFric[i*6 +1]*-1.0f*fFRef[i*14 +1] + fFRef[i*14 +2]*fFEvent[i*17 +7]; 
             fTemp1 = fFFric[i*6 +0]*-1.0f*fFRef[i*14 +1]; 
             fTemp2 = MAX(fTemp0, fTemp1)/(-1.0f*fFRef[i*14 +1]); 
-            fFFric[i*6 +2]  = fTemp2 - fOvershootFract*(fTemp2-fFFric[i*6 +1]); 
+            fFFric[i*6 +2]  = MAX(0.0f, (fTemp2 - fOvershootFract*(fTemp2-fFFric[i*6 +1]))  ); 
             
             fFEvent[i*17 +10] = (fFFric[i*6 +1] - fFFric[i*6 +2])*-1.0f*fFRef[i*14 +1];
             
@@ -2810,7 +2808,7 @@ int main(int argc, char **argv)
     unsigned int uMeanKLgths[4] = {0u,       0u,       0u,       0u};
     unsigned int uMin_KLgths[4] = {UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX};
     unsigned int uMax_KLgths[4] = {0u,       0u,       0u,       0u};
-    for (i = 0u; i < iFOFFSET[iRANK]; i++)      
+    for (i = 0u; i < iFOFFSET[iRANK]; i++)
     {   uMeanKLgths[0] += uKh_FFcnt[i];      uMin_KLgths[0] = (uMin_KLgths[0] < uKh_FFcnt[i])*uMin_KLgths[0]  +  (uMin_KLgths[0] >= uKh_FFcnt[i])*uKh_FFcnt[i];      uMax_KLgths[0] = (uMax_KLgths[0] > uKh_FFcnt[i])*uMax_KLgths[0]  +  (uMax_KLgths[0] < uKh_FFcnt[i])*uKh_FFcnt[i];
         uMeanKLgths[1] += uKh_FBcnt[i];      uMin_KLgths[1] = (uMin_KLgths[1] < uKh_FBcnt[i])*uMin_KLgths[1]  +  (uMin_KLgths[1] >= uKh_FBcnt[i])*uKh_FBcnt[i];      uMax_KLgths[1] = (uMax_KLgths[1] > uKh_FBcnt[i])*uMax_KLgths[1]  +  (uMax_KLgths[1] < uKh_FBcnt[i])*uKh_FBcnt[i];
     }
@@ -3581,8 +3579,8 @@ int main(int argc, char **argv)
                     fTemp5   = MAX(fTemp3, 0.0f) / fFRef[i*14 +2]; 
                     
                     uTemp0   = (uFEvent[i*6 +2] == 0u)*1u           + (uFEvent[i*6 +2] != 0u)*0u; 
-                    uTemp0   = (fTemp5 >= fModPara[9])*uTemp0      + (fTemp5 < fModPara[9])*0u;
-                    uTemp0   = (fTemp4 >= fFEvent[i*17 +10])*uTemp0 + (fTemp4 < fFEvent[i*17 +10])*0u;
+                    uTemp0   = (fTemp5 >  fModPara[9])*uTemp0      + (fTemp5 <= fModPara[9])*0u;
+                    uTemp0   = (fTemp4 > fFEvent[i*17 +10])*uTemp0 + (fTemp4 <= fFEvent[i*17 +10])*0u; 
                     
                     if (uTemp0 == 1u) 
                     {   
@@ -3854,7 +3852,7 @@ int main(int argc, char **argv)
                         fFFric[uTemp1*6 +0] = fFRef[uTemp1*14 +3] + (fFRef[uTemp1*14 +4] * fTemp0); 
                         
                         fTemp0 = ran0(&lSeed);      fTemp0 = fTemp0*2.0f -1.0f;
-                        fFFric[uTemp1*6 +1] = fFRef[uTemp1*14 +5] + (fFRef[uTemp1*14 +6] * fTemp0); 
+                        fFFric[uTemp1*6 +1] = MAX(0.0f, (fFRef[uTemp1*14 +5] + (fFRef[uTemp1*14 +6] * fTemp0)) ); 
                         
                         fTemp0 =(fFFric[uTemp1*6 +0] - fFFric[uTemp1*6 +1]) *-1.0f*fFRef[uTemp1*14 +1]; 
                         fTemp1 = fTemp0/fFRef[uTemp1*14 +2];
@@ -3864,7 +3862,7 @@ int main(int argc, char **argv)
                         fTemp0 = fFFric[uTemp1*6 +1]*-1.0f*fFRef[uTemp1*14 +1] + fFRef[uTemp1*14 +2]*fFEvent[uTemp1*17 +7]; 
                         fTemp1 = fFFric[uTemp1*6 +0]*-1.0f*fFRef[uTemp1*14 +1]; 
                         fTemp2 = MAX(fTemp0, fTemp1)/(-1.0f*fFRef[uTemp1*14 +1]); 
-                        fFFric[uTemp1*6 +2]  = fTemp2 - fOvershootFract*(fTemp2-fFFric[uTemp1*6 +1]); 
+                        fFFric[uTemp1*6 +2]  = MAX(0.0f, (fTemp2 - fOvershootFract*(fTemp2-fFFric[uTemp1*6 +1])) ); 
                         
                         fFEvent[uTemp1*17 +10] = (fFFric[uTemp1*6 +1] - fFFric[uTemp1*6 +2])*-1.0f*fFRef[uTemp1*14 +1];
                         
