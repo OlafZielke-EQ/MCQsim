@@ -6,7 +6,7 @@
 #include <mpi.h>
 #include <time.h>
 #include <limits.h>
-//#include <cblas.h>
+
 #include <gsl/gsl_cblas.h>
 
 #define USEHALFSPACE            1u 
@@ -55,7 +55,7 @@ int main(int argc, char **argv)
     unsigned int i,   j,   k;
     int iRANK,   iSIZE;
     double time_taken,   time_InterSeis = 0.0,   time_CoSeis = 0.0;
-    clock_t     timer0,   timerI,   timerC;
+    clock_t     timer0,   timerI,   timerC,   timerE;
 
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &iRANK);
@@ -298,7 +298,9 @@ int main(int argc, char **argv)
             
             fclose(fp3);
         }
-        else    {   fprintf(stdout,"\nWarning -cant open  %s; Continue without boundary surface\n",cFileName3);     }
+        else
+        {   
+        }
         
         fFltSide = 0.0f;   fBndSide = 0.0f;   fElemArea = 0.0f,   fBoundArea = 0.0f;
         
@@ -2901,7 +2903,7 @@ int main(int argc, char **argv)
             MPI_Allreduce(MPI_IN_PLACE, &fMinPS_b,  1, MPI_FLOAT,    MPI_SUM, MPI_COMM_WORLD); 
             MPI_Allgather(&iOffPos, 1, MPI_INT, iOffstPosB, 1, MPI_INT, MPI_COMM_WORLD);
             memcpy(&iStartPosB[1], &iOffstPosB[0], (iSIZE-1)*sizeof(int));
-            for (i = 2; i < iSIZE; i++)         {       iStartPosF[i]  += iStartPosF[i-1];         }
+            for (i = 2; i < iSIZE; i++)         {       iStartPosB[i]  += iStartPosB[i-1];         }
             iOffPos = (iStartPosB[iSIZE-1] + iOffstPosB[iSIZE-1])/4;
             MPI_Allgatherv(fBslipL, iOffstPosB[iRANK], MPI_FLOAT, fBslipG, iOffstPosB, iStartPosB, MPI_FLOAT, MPI_COMM_WORLD);
             fMinPS_b = fabs(1000.0f *MININTSEISSTRESSCHANGE / (fMinPS_b/(float)uBPNum));
@@ -3511,7 +3513,8 @@ int main(int argc, char **argv)
         
         
         if (uEQstillOn > 0u)
-        {   timerI = clock() - timerI;        time_InterSeis += (((double)timerI)/CLOCKS_PER_SEC);
+        {   timerE = clock();
+            timerI = clock() - timerI;        time_InterSeis += (((double)timerI)/CLOCKS_PER_SEC);
             timerC = clock();
             uEQtickr += 1u;
             
@@ -3838,7 +3841,15 @@ int main(int argc, char **argv)
                         for (j = 0; j < uFEvent[i*6 +4]; j++)       {   uTemp0 = 2u*i*MAXMOMRATEFUNCLENGTH + 2u*j;          fSTFvals0[j] = fSTFslip[uTemp0 +0];         fSTFvals1[j] = fSTFslip[uTemp0 +1];         }
                         MPI_File_write_at(fp_STF, (lSTF_start[iRANK]+lTemp0), fSTFvals0, uFEvent[i*6 +4], MPI_FLOAT, &STATUS);          lTemp0 += uFEvent[i*6 +4]*sizeof(float);
                         MPI_File_write_at(fp_STF, (lSTF_start[iRANK]+lTemp0), fSTFvals1, uFEvent[i*6 +4], MPI_FLOAT, &STATUS);          lTemp0 += uFEvent[i*6 +4]*sizeof(float);
-            }   }   } 
+                }   }
+                
+                double CPUtime;
+                timerE = clock() - timerE;
+                CPUtime = (double)timerC /CLOCKS_PER_SEC /3600.0 *(double)iSIZE ;
+                if (iRANK == 0)
+                {   fprintf(stdout,"CPU time for STF event %s:  %lf\n",cSTFName, CPUtime);
+                }
+            } 
             
             
             {   if (uChgBtwEQs == 1u)
