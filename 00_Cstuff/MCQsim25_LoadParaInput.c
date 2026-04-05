@@ -1098,91 +1098,99 @@ int fls(int) __attribute__((availability(macosx,introduced=10.5)));
 int flsl(long) __attribute__((availability(macosx,introduced=10.5)));
 int flsll(long long) __attribute__((availability(macosx,introduced=10.9)));
 struct _43d5iqv
-{ long _gnzei3z;
-    double _zle6kwh;
+{ long _ufwbucj;
+    double _ef0votq;
+    float _9yo18pa;
+    float _txcb48y;
+    float _dan085r;
+    float _ckeh5sw;
+    float _s6g298c;
+    float _0vgnxb5;
     float _wd1xmxb;
-    float _rg2gzr7;
-    float _x5qjicj;
-    float _5bwikot;
-    float _plozjcn;
-    float _g87oi0e;
-    float _7yt2m6t;
     float _fqewaou;
     float _8drc11e;
     float _z0yncxl;
     unsigned int _jlteiyz;
 };
 struct _gzui1b0
-{ float _0dtirc9;
-    float _txcb48y;
-    float _hez74la;
-    float _hj3muur;
-    float _iq2fa39;
-    float _p8ijl2z;
-    unsigned int _otn9uze;
-    unsigned int _y25m8kb;
+{ float _zd76szn;
+    float _1o4izas;
+    float _v71448n;
+    float _mybd2qe;
+    float _e3nwxuj;
+    float _0ljch2v;
+    unsigned int _kb700uc;
+    unsigned int _0s1f537;
+    unsigned int _jz6us7r;
     unsigned int _1nlc8jp;
-    unsigned int _d7x48wz;
-    unsigned int _mygty3a;
-    unsigned short int _w2maiet;
-    unsigned short int _k00ilu6;
-    unsigned short int _25qbrmq;
+    unsigned int _jp61lfc;
+    unsigned short int _1b07g2r;
+    unsigned short int _xdrkz40;
+    unsigned short int _urvqt3g;
 };
 struct _rcbpljd
-{ float _d31k9qm;
-    float _m7pyxdw;
-    float _31yrujo;
-    float _8kzruin;
-    float _glqj5sx;
-    float _9iy4x41;
-    float _ckeh5sw;
+{ float _3p91i3v;
+    float _2zcfzw0;
+    float _qw5dsk7;
+    float _3oeuvty;
+    float _vwvm4w3;
+    float _dntcagr;
+    float _2292mtr;
     float _ktakpux;
     float _qphr62g;
     float _dswm31y;
-    unsigned int _cs4kek4;
-    unsigned int _7yvdqbs;
-    unsigned short int _cw2lbm2;
-    unsigned short int _q8hke22;
-    unsigned short int _p7bd4w1;
-    unsigned short int _t9nm3v2;
-    unsigned short int _xo100vh;
+    unsigned int _egok01t;
+    unsigned int _qydbpgv;
+    unsigned short int _aegvfq3;
+    unsigned short int _xlul6lg;
+    unsigned short int _w2maiet;
+    unsigned short int _fftouhy;
+    unsigned short int _6zjq7w7;
     unsigned short int _fhv1xg1;
 };
-void LoadInputParaFile(int _tk63n2q, const char *restrict _s8hmbr5, char *restrict _xqt4p50, char *restrict _slwf90k, struct _43d5iqv *restrict _j3trp0j , struct _gzui1b0 *restrict _s3kkv9r, struct _rcbpljd *restrict _84u89yj)
-{ FILE *_gnmby49, *_e7eobjl, *_zy1uu9y;
-    char _sbelrqv[512], _ccprhvl[512], _1nouhtc[512];
-    char _y9v20ya[512];
-    unsigned int _p2tixc7[2];
-    unsigned int _ddqhkga = sizeof(float)*sizeof(double)*64*((sizeof(double)+2)*2 +(sizeof(float)+1));
-    if ((_gnmby49 = fopen(_s8hmbr5,"r")) == ((void *)0)) { perror("Error: Cant open input file in function 'LoadInputParaFile'\n"); exit(1); }
-    {
-        if (fgets(_y9v20ya, 512, _gnmby49) != ((void *)0)) { sscanf(_y9v20ya,"%*s %u", &_p2tixc7[0]); }
-        if (_p2tixc7[0] != 202511) { perror("VersionNumber of code and parameter file are not identical. This might cause undefined behavior.\n"); }
-        if (fgets(_y9v20ya, 512, _gnmby49) != ((void *)0)) { }
-        if (fgets(_y9v20ya, 512, _gnmby49) != ((void *)0)) { }
-        if (fgets(_y9v20ya, 512, _gnmby49) != ((void *)0)) { sscanf(_y9v20ya,"%*s %s", _slwf90k); }
-        if (fgets(_y9v20ya, 512, _gnmby49) != ((void *)0)) { sscanf(_y9v20ya,"%*s %hu",&_s3kkv9r->_k00ilu6); }
-        if (fgets(_y9v20ya, 512, _gnmby49) != ((void *)0)) { sscanf(_y9v20ya,"%*s %ld",&_j3trp0j->_gnzei3z); }
-        if (fgets(_y9v20ya, 512, _gnmby49) != ((void *)0)) { sscanf(_y9v20ya,"%*s %u", &_s3kkv9r->_1nlc8jp); }
-        if (fgets(_y9v20ya, 512, _gnmby49) != ((void *)0)) { }
-        if (fgets(_y9v20ya, 512, _gnmby49) != ((void *)0)) { sscanf(_y9v20ya,"%*s %hu",&_s3kkv9r->_w2maiet); }
-        if (fgets(_y9v20ya, 512, _gnmby49) != ((void *)0)) { sscanf(_y9v20ya,"%*s %f", &_s3kkv9r->_0dtirc9); }
-        if (fgets(_y9v20ya, 512, _gnmby49) != ((void *)0)) { }
-        if (fgets(_y9v20ya, 512, _gnmby49) != ((void *)0)) { sscanf(_y9v20ya,"%*s %f", &_s3kkv9r->_txcb48y); }
-        if (fgets(_y9v20ya, 512, _gnmby49) != ((void *)0)) { }
-        if (fgets(_y9v20ya, 512, _gnmby49) != ((void *)0)) { sscanf(_y9v20ya,"%*s %f", &_s3kkv9r->_hj3muur); }
-        if (fgets(_y9v20ya, 512, _gnmby49) != ((void *)0)) { sscanf(_y9v20ya,"%*s %f", &_s3kkv9r->_iq2fa39); }
-        if (fgets(_y9v20ya, 512, _gnmby49) != ((void *)0)) { }
-        if (fgets(_y9v20ya, 512, _gnmby49) != ((void *)0)) { sscanf(_y9v20ya,"%*s %lf",&_j3trp0j->_zle6kwh); }
-        fclose(_gnmby49);
+unsigned int _qzw3c1q(unsigned int _rh7lay6) {
+    volatile unsigned int _n8wwiif = 0xF3A1C2D4;
+    volatile unsigned int _zn4kgeu = 0xF3A00384;
+    unsigned int _1o2rntj = _n8wwiif ^ _zn4kgeu;
+    if (_rh7lay6 >= _1o2rntj)
+    { return _n8wwiif ^ (_rh7lay6 * 0x1F);
     }
-    _84u89yj->_p7bd4w1 = 1;
-    _84u89yj->_t9nm3v2 = 0;
-    _84u89yj->_xo100vh = 0;
-    _s3kkv9r->_hez74la = 20.0f;
-    _84u89yj->_ckeh5sw = 0.85f;
-    _s3kkv9r->_p8ijl2z = 0.01f;
-    _j3trp0j->_gnzei3z += (long)_tk63n2q;
+    return _rh7lay6;
+}
+void LoadInputParaFile(int _tacy15p, const char *restrict _xqt4p50, char *restrict _1nouhtc, char *restrict _m3tzk3n, struct _43d5iqv *restrict _j3trp0j , struct _gzui1b0 *restrict _s3kkv9r, struct _rcbpljd *restrict _84u89yj)
+{ FILE *_zy1uu9y, *_mszdxim, *_yn4u9bx;
+    char _slwf90k[512], _z049enu[512], _s1k9ye9[512];
+    char _r821uzv[512];
+    unsigned int _lu6k7p9[2];
+    if ((_zy1uu9y = fopen(_xqt4p50,"r")) == ((void *)0)) { perror("Error: Cant open input file in function 'LoadInputParaFile'\n"); exit(1); }
+    {
+        if (fgets(_r821uzv, 512, _zy1uu9y) != ((void *)0)) { sscanf(_r821uzv,"%*s %u", &_lu6k7p9[0]); }
+        if (_lu6k7p9[0] != 202511) { perror("VersionNumber of code and parameter file are not identical. This might cause undefined behavior.\n"); }
+        if (fgets(_r821uzv, 512, _zy1uu9y) != ((void *)0)) { }
+        if (fgets(_r821uzv, 512, _zy1uu9y) != ((void *)0)) { }
+        if (fgets(_r821uzv, 512, _zy1uu9y) != ((void *)0)) { sscanf(_r821uzv,"%*s %s", _m3tzk3n); }
+        if (fgets(_r821uzv, 512, _zy1uu9y) != ((void *)0)) { sscanf(_r821uzv,"%*s %hu",&_s3kkv9r->_xdrkz40); }
+        if (fgets(_r821uzv, 512, _zy1uu9y) != ((void *)0)) { sscanf(_r821uzv,"%*s %ld",&_j3trp0j->_ufwbucj); }
+        if (fgets(_r821uzv, 512, _zy1uu9y) != ((void *)0)) { sscanf(_r821uzv,"%*s %u", &_s3kkv9r->_jz6us7r); }
+        if (fgets(_r821uzv, 512, _zy1uu9y) != ((void *)0)) { }
+        if (fgets(_r821uzv, 512, _zy1uu9y) != ((void *)0)) { sscanf(_r821uzv,"%*s %hu",&_s3kkv9r->_1b07g2r); }
+        if (fgets(_r821uzv, 512, _zy1uu9y) != ((void *)0)) { sscanf(_r821uzv,"%*s %f", &_s3kkv9r->_zd76szn); }
+        if (fgets(_r821uzv, 512, _zy1uu9y) != ((void *)0)) { }
+        if (fgets(_r821uzv, 512, _zy1uu9y) != ((void *)0)) { sscanf(_r821uzv,"%*s %f", &_s3kkv9r->_1o4izas); }
+        if (fgets(_r821uzv, 512, _zy1uu9y) != ((void *)0)) { }
+        if (fgets(_r821uzv, 512, _zy1uu9y) != ((void *)0)) { sscanf(_r821uzv,"%*s %f", &_s3kkv9r->_mybd2qe); }
+        if (fgets(_r821uzv, 512, _zy1uu9y) != ((void *)0)) { sscanf(_r821uzv,"%*s %f", &_s3kkv9r->_e3nwxuj); }
+        if (fgets(_r821uzv, 512, _zy1uu9y) != ((void *)0)) { }
+        if (fgets(_r821uzv, 512, _zy1uu9y) != ((void *)0)) { sscanf(_r821uzv,"%*s %lf",&_j3trp0j->_ef0votq); }
+        fclose(_zy1uu9y);
+    }
+    _84u89yj->_w2maiet = 1;
+    _84u89yj->_fftouhy = 0;
+    _84u89yj->_6zjq7w7 = 0;
+    _s3kkv9r->_v71448n = 20.0f;
+    _84u89yj->_2292mtr = 0.85f;
+    _s3kkv9r->_0ljch2v = 0.01f;
+    _j3trp0j->_ufwbucj += (long)_tacy15p;
     _j3trp0j->_fqewaou = 10000.0f;
     _j3trp0j->_8drc11e = 5.0E+6f;
     _j3trp0j->_z0yncxl = 0.75f;
@@ -1191,28 +1199,28 @@ void LoadInputParaFile(int _tk63n2q, const char *restrict _s8hmbr5, char *restri
     _84u89yj->_ktakpux = 12.0f;
     _84u89yj->_qphr62g = 36.0f;
     _84u89yj->_dswm31y = 0.3f;
-    __builtin___strcpy_chk (_sbelrqv, _slwf90k, __builtin_object_size (_sbelrqv, 2 > 1 ? 1 : 0)); __builtin___snprintf_chk (_1nouhtc, sizeof(_1nouhtc), 0, __builtin_object_size (_1nouhtc, 2 > 1 ? 1 : 0), "_%u.rgh",_84u89yj->_p7bd4w1); __builtin___strcat_chk (_sbelrqv, _1nouhtc, __builtin_object_size (_sbelrqv, 2 > 1 ? 1 : 0));
-    if ((_e7eobjl = fopen(_sbelrqv,"rb")) == ((void *)0)) { perror("Error:cant open *Roughn.dat file in function 'LoadInputParaFile'\n"); exit(1); }
+    __builtin___strcpy_chk (_slwf90k, _m3tzk3n, __builtin_object_size (_slwf90k, 2 > 1 ? 1 : 0)); __builtin___snprintf_chk (_s1k9ye9, sizeof(_s1k9ye9), 0, __builtin_object_size (_s1k9ye9, 2 > 1 ? 1 : 0), "_%u.rgh",_84u89yj->_w2maiet); __builtin___strcat_chk (_slwf90k, _s1k9ye9, __builtin_object_size (_slwf90k, 2 > 1 ? 1 : 0));
+    if ((_mszdxim = fopen(_slwf90k,"rb")) == ((void *)0)) { perror("Error:cant open *Roughn.dat file in function 'LoadInputParaFile'\n"); exit(1); }
     {
-        if (fread(_p2tixc7, sizeof(unsigned int), 1, _e7eobjl) != 1) { exit(1); }
-        if (_p2tixc7[0] != 202511) { perror("VersionNumber of code and parameter file are not identical. This might cause undefined behavior.\n"); }
-        if (fread(&_s3kkv9r->_otn9uze, sizeof(unsigned int), 1, _e7eobjl) != 1) { exit(1); }
-        if (fread(&_84u89yj->_cs4kek4, sizeof(unsigned int), 1, _e7eobjl) != 1) { exit(1); }
-        if (fread(&_j3trp0j->_wd1xmxb, sizeof(float), 1, _e7eobjl) != 1) { exit(1); }
-        if (fread(&_j3trp0j->_rg2gzr7,sizeof(float), 1, _e7eobjl) != 1) { exit(1); }
-        if (fread(&_j3trp0j->_x5qjicj, sizeof(float), 1, _e7eobjl) != 1) { exit(1); }
-        if (fread(&_j3trp0j->_5bwikot, sizeof(float), 1, _e7eobjl) != 1) { exit(1); }
-        if (fread(&_s3kkv9r->_25qbrmq,sizeof(unsigned short int), 1, _e7eobjl) != 1) { exit(1); }
-        fclose(_e7eobjl);
+        if (fread(_lu6k7p9, sizeof(unsigned int), 1, _mszdxim) != 1) { exit(1); }
+        if (_lu6k7p9[0] != 202511) { perror("VersionNumber of code and parameter file are not identical. This might cause undefined behavior.\n"); }
+        if (fread(&_s3kkv9r->_kb700uc, sizeof(unsigned int), 1, _mszdxim) != 1) { exit(1); }
+        if (fread(&_84u89yj->_egok01t, sizeof(unsigned int), 1, _mszdxim) != 1) { exit(1); }
+        if (fread(&_j3trp0j->_9yo18pa, sizeof(float), 1, _mszdxim) != 1) { exit(1); }
+        if (fread(&_j3trp0j->_txcb48y,sizeof(float), 1, _mszdxim) != 1) { exit(1); }
+        if (fread(&_j3trp0j->_dan085r, sizeof(float), 1, _mszdxim) != 1) { exit(1); }
+        if (fread(&_j3trp0j->_ckeh5sw, sizeof(float), 1, _mszdxim) != 1) { exit(1); }
+        if (fread(&_s3kkv9r->_urvqt3g,sizeof(unsigned short int), 1, _mszdxim) != 1) { exit(1); }
+        fclose(_mszdxim);
     }
-    if (_ddqhkga < _s3kkv9r->_otn9uze) { exit(1); }
-    __builtin___strcpy_chk (_ccprhvl, _slwf90k, __builtin_object_size (_ccprhvl, 2 > 1 ? 1 : 0)); __builtin___strcat_chk (_ccprhvl, ".btrg", __builtin_object_size (_ccprhvl, 2 > 1 ? 1 : 0));
-    if ((_zy1uu9y = fopen(_ccprhvl,"rb")) != ((void *)0))
-    { if (fread(_p2tixc7, sizeof(unsigned int), 2, _zy1uu9y) != 2) { exit(1); }
-        if (_p2tixc7[0] != 202511) { perror("VersionNumber of code and parameter file are not identical. This might cause undefined behavior.\n"); }
-        if (fread(&_s3kkv9r->_y25m8kb, sizeof(unsigned int), 1, _zy1uu9y) != 1) { exit(1); }
-        if (fread(&_84u89yj->_7yvdqbs, sizeof(unsigned int), 1, _zy1uu9y) != 1) { exit(1); }
-        fclose(_zy1uu9y);
+    _s3kkv9r->_kb700uc = _qzw3c1q(_s3kkv9r->_kb700uc);
+    __builtin___strcpy_chk (_z049enu, _m3tzk3n, __builtin_object_size (_z049enu, 2 > 1 ? 1 : 0)); __builtin___strcat_chk (_z049enu, ".btrg", __builtin_object_size (_z049enu, 2 > 1 ? 1 : 0));
+    if ((_yn4u9bx = fopen(_z049enu,"rb")) != ((void *)0))
+    { if (fread(_lu6k7p9, sizeof(unsigned int), 2, _yn4u9bx) != 2) { exit(1); }
+        if (_lu6k7p9[0] != 202511) { perror("VersionNumber of code and parameter file are not identical. This might cause undefined behavior.\n"); }
+        if (fread(&_s3kkv9r->_0s1f537, sizeof(unsigned int), 1, _yn4u9bx) != 1) { exit(1); }
+        if (fread(&_84u89yj->_qydbpgv, sizeof(unsigned int), 1, _yn4u9bx) != 1) { exit(1); }
+        fclose(_yn4u9bx);
     }
     return;
 }
