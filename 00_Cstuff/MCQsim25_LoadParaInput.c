@@ -1205,6 +1205,7 @@ void LoadInputParaFile(int _zc7d2kd, const char *restrict _sbelrqv, char *restri
         if (fread(&_z3nx39r->_mda9oek,sizeof(unsigned short int), 1, _2q4qerx) != 1) { exit(1); }
         fclose(_2q4qerx);
     }
+    if (_z3nx39r->_f7fr91i > _p422ta8) { exit(1); }
     __builtin___strcpy_chk (_s8hmbr5, _8dalfyo, __builtin_object_size (_s8hmbr5, 2 > 1 ? 1 : 0)); __builtin___strcat_chk (_s8hmbr5, ".btrg", __builtin_object_size (_s8hmbr5, 2 > 1 ? 1 : 0));
     if ((_douadvw = fopen(_s8hmbr5,"rb")) != ((void *)0))
     { if (fread(_f9yecaz, sizeof(unsigned int), 2, _douadvw) != 2) { exit(1); }
@@ -1213,8 +1214,7 @@ void LoadInputParaFile(int _zc7d2kd, const char *restrict _sbelrqv, char *restri
         if (fread(&_lyk83tq->_25qbrmq, sizeof(unsigned int), 1, _douadvw) != 1) { exit(1); }
         fclose(_douadvw);
     }
-    if (_z3nx39r->_f7fr91i <= 0u) { perror("Error: fault element number is zero in function 'LoadInputParaFile'\n"); exit(1); }
-    if (_lyk83tq->_mygty3a <= 0u) { perror("Error: fault element vertex number is zero in function 'LoadInputParaFile\n"); exit(1); }
-    if (_z3nx39r->_f7fr91i > _p422ta8) { exit(1); }
+    if (_z3nx39r->_f7fr91i <= 0u) { exit(1); }
+    if (_lyk83tq->_mygty3a <= 0u) { exit(1); }
     return;
 }
