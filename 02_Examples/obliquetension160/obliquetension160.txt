@@ -1,0 +1,17 @@
+VersionNumber:                 202511
+Run_Parameter_Information
+--------------------------
+InputName:                     obliquetension160
+PlotCatalog2Screen:            1
+RandSeedValue:                 1001
+MinElementNum4Catalog:         1
+--------------------------
+StoreSTF4LargeEQs(0/1):        0
+MinMagnitude4STF:              3.3f
+--------------------------
+Visco_AfterSlip(years):        1.5f
+--------------------------
+HealingDuringCoseis:           0.1f
+OvershootFraction:             1.2f
+--------------------------
+EQrecordLength(years):         3000.0f
