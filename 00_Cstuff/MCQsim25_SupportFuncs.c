@@ -9323,423 +9323,423 @@ typedef int (QMPI_Register_datarep_c_t) (QMPI_Context context, int tool_id, cons
              MPI_Datarep_extent_function *dtype_file_extent_fn, void *extra_state);
 typedef int (QMPI_File_toint_t) (QMPI_Context context, int tool_id, MPI_File file);
 typedef MPI_File (QMPI_File_fromint_t) (QMPI_Context context, int tool_id, int file);
-struct _r1yxr2d
-{ long _k5ogz2u;
-    double _q30o30u;
-    float _xpbwhvn;
-    float _dntcagr;
-    float _pkxvhag;
-    float _uug95rl;
-    float _9dde3cu;
-    float _4yfds0d;
-    float _gfu8iog;
-    float _at9mx2x;
-    float _rtj5pht;
-    float _ktakpux;
-    unsigned int _148p0tv;
-};
-struct _q0oxfq8
-{ float _yj9boq0;
-    float _p2u4dtb;
+struct _43d5iqv
+{ long _gnzei3z;
+    double _zle6kwh;
+    float _wd1xmxb;
+    float _rg2gzr7;
     float _x5qjicj;
-    float _e9ftaxp;
-    float _6snglh6;
-    float _3ac6pe6;
-    unsigned int _jp61lfc;
-    unsigned int _urvqt3g;
-    unsigned int _o31yhxs;
-    unsigned int _l9ue421;
-    unsigned int _2h2p39y;
-    unsigned short int _nwngucz;
-    unsigned short int _zk94yxf;
-    unsigned short int _qsq0p82;
+    float _5bwikot;
+    float _plozjcn;
+    float _g87oi0e;
+    float _7yt2m6t;
+    float _fqewaou;
+    float _8drc11e;
+    float _z0yncxl;
+    unsigned int _jlteiyz;
 };
-struct _wrdmly4
-{ float _n8la100;
-    float _lw2lm34;
-    float _6fokzix;
-    float _jssuuqo;
-    float _q01tee1;
-    float _8o1bj9r;
-    float _rdihsa7;
-    float _ihair4c;
-    float _owgzrix;
-    float _a11dpg8;
-    unsigned int _3ru7myo;
-    unsigned int _5izolnn;
-    unsigned short int _hx6zdcu;
-    unsigned short int _fftouhy;
-    unsigned short int _aq15o2n;
-    unsigned short int _cs4kek4;
-    unsigned short int _2qgv3dr;
-    unsigned short int _26q3xlr;
+struct _gzui1b0
+{ float _0dtirc9;
+    float _txcb48y;
+    float _hez74la;
+    float _hj3muur;
+    float _iq2fa39;
+    float _p8ijl2z;
+    unsigned int _otn9uze;
+    unsigned int _y25m8kb;
+    unsigned int _1nlc8jp;
+    unsigned int _d7x48wz;
+    unsigned int _mygty3a;
+    unsigned short int _w2maiet;
+    unsigned short int _k00ilu6;
+    unsigned short int _25qbrmq;
 };
-long int GetByteSize(int _6zx1tv1, int _tk63n2q, int _qtkcd0r)
-{ long int _f1t2tal;
-    long int _a753lc5;
-    _a753lc5 = _tk63n2q *_qtkcd0r;
-    _f1t2tal = (_a753lc5%_6zx1tv1 == 0)*_a753lc5 + (_a753lc5%_6zx1tv1 != 0)*((long int)(_a753lc5/_6zx1tv1) +1)*_6zx1tv1;
-    return _f1t2tal;
+struct _rcbpljd
+{ float _d31k9qm;
+    float _m7pyxdw;
+    float _31yrujo;
+    float _8kzruin;
+    float _glqj5sx;
+    float _9iy4x41;
+    float _ckeh5sw;
+    float _ktakpux;
+    float _qphr62g;
+    float _dswm31y;
+    unsigned int _cs4kek4;
+    unsigned int _7yvdqbs;
+    unsigned short int _cw2lbm2;
+    unsigned short int _q8hke22;
+    unsigned short int _p7bd4w1;
+    unsigned short int _t9nm3v2;
+    unsigned short int _xo100vh;
+    unsigned short int _fhv1xg1;
+};
+long int GetByteSize(int _eoz0kz4, int _tajw253, int _0fqldb2)
+{ long int _sg65kxv;
+    long int _f1t2tal;
+    _f1t2tal = _tajw253 *_0fqldb2;
+    _sg65kxv = (_f1t2tal%_eoz0kz4 == 0)*_f1t2tal + (_f1t2tal%_eoz0kz4 != 0)*((long int)(_f1t2tal/_eoz0kz4) +1)*_eoz0kz4;
+    return _sg65kxv;
 }
-void SubtractVect3(float *restrict _zh13cd5, const float *restrict _3lbqgu3, const float *restrict _li076a3)
-{ _zh13cd5[0] = _3lbqgu3[0] - _li076a3[0];
-    _zh13cd5[1] = _3lbqgu3[1] - _li076a3[1];
-    _zh13cd5[2] = _3lbqgu3[2] - _li076a3[2];
+void SubtractVect3(float *restrict _9yo18pa, const float *restrict _0ljch2v, const float *restrict _6zs62yw)
+{ _9yo18pa[0] = _0ljch2v[0] - _6zs62yw[0];
+    _9yo18pa[1] = _0ljch2v[1] - _6zs62yw[1];
+    _9yo18pa[2] = _0ljch2v[2] - _6zs62yw[2];
     return;
 }
-void CrossProduct(float *restrict _bk2l0d1, const float *restrict _3dzeedh, const float *restrict _hjshzkb)
-{ _bk2l0d1[0] = _3dzeedh[1]*_hjshzkb[2] - _3dzeedh[2]*_hjshzkb[1];
-    _bk2l0d1[1] = _3dzeedh[2]*_hjshzkb[0] - _3dzeedh[0]*_hjshzkb[2];
-    _bk2l0d1[2] = _3dzeedh[0]*_hjshzkb[1] - _3dzeedh[1]*_hjshzkb[0];
+void CrossProduct(float *restrict _jtb9xxa, const float *restrict _gywiyme, const float *restrict _nvg3kk0)
+{ _jtb9xxa[0] = _gywiyme[1]*_nvg3kk0[2] - _gywiyme[2]*_nvg3kk0[1];
+    _jtb9xxa[1] = _gywiyme[2]*_nvg3kk0[0] - _gywiyme[0]*_nvg3kk0[2];
+    _jtb9xxa[2] = _gywiyme[0]*_nvg3kk0[1] - _gywiyme[1]*_nvg3kk0[0];
     return;
 }
-float VectorLength(const float *restrict _nvg3kk0)
-{ float _rh7lay6 = 0.0f;
-    _rh7lay6 = sqrtf(_nvg3kk0[0]*_nvg3kk0[0] + _nvg3kk0[1]*_nvg3kk0[1] + _nvg3kk0[2]*_nvg3kk0[2]);
-    return _rh7lay6;
+float VectorLength(const float *restrict _2ljk4q5)
+{ float _vm59m6m = 0.0f;
+    _vm59m6m = sqrtf(_2ljk4q5[0]*_2ljk4q5[0] + _2ljk4q5[1]*_2ljk4q5[1] + _2ljk4q5[2]*_2ljk4q5[2]);
+    return _vm59m6m;
 }
-void NrmlzeVect(float *restrict _nvg3kk0)
-{ float _rh7lay6 = 0.0f;
-    _rh7lay6 = sqrtf(_nvg3kk0[0]*_nvg3kk0[0] + _nvg3kk0[1]*_nvg3kk0[1] + _nvg3kk0[2]*_nvg3kk0[2]);
-    _nvg3kk0[0] /= _rh7lay6; _nvg3kk0[1] /= _rh7lay6; _nvg3kk0[2] /= _rh7lay6;
+void NrmlzeVect(float *restrict _2ljk4q5)
+{ float _vm59m6m = 0.0f;
+    _vm59m6m = sqrtf(_2ljk4q5[0]*_2ljk4q5[0] + _2ljk4q5[1]*_2ljk4q5[1] + _2ljk4q5[2]*_2ljk4q5[2]);
+    _2ljk4q5[0] /= _vm59m6m; _2ljk4q5[1] /= _vm59m6m; _2ljk4q5[2] /= _vm59m6m;
     return;
 }
-void GetStkAndDipVect(const float *restrict _5bwikot, float *restrict _pt5r5rc, float *restrict _glqj5sx)
+void GetStkAndDipVect(const float *restrict _ljefy3z, float *restrict _wrb7f6f, float *restrict _jssuuqo)
 {
-    float _rh7lay6, _gnmby49[3];
-    _gnmby49[0] = 0.0f; _gnmby49[1] = 0.0f; _gnmby49[2] = 1.0f;
-    CrossProduct(_pt5r5rc, _gnmby49, _5bwikot); _rh7lay6 = VectorLength(_pt5r5rc);
-    if (_rh7lay6 <= 1.19209290e-7F)
-    { _pt5r5rc[0] = 0.0f; _pt5r5rc[1] = 1.0f; _pt5r5rc[2] = 0.0f; }
+    float _vm59m6m, _rh7lay6[3];
+    _rh7lay6[0] = 0.0f; _rh7lay6[1] = 0.0f; _rh7lay6[2] = 1.0f;
+    CrossProduct(_wrb7f6f, _rh7lay6, _ljefy3z); _vm59m6m = VectorLength(_wrb7f6f);
+    if (_vm59m6m <= 1.19209290e-7F)
+    { _wrb7f6f[0] = 0.0f; _wrb7f6f[1] = 1.0f; _wrb7f6f[2] = 0.0f; }
     else
-    { _pt5r5rc[0] /= _rh7lay6; _pt5r5rc[1]/= _rh7lay6; _pt5r5rc[2]/= _rh7lay6; }
-    CrossProduct(_glqj5sx, _5bwikot, _pt5r5rc); NrmlzeVect(_glqj5sx);
+    { _wrb7f6f[0] /= _vm59m6m; _wrb7f6f[1]/= _vm59m6m; _wrb7f6f[2]/= _vm59m6m; }
+    CrossProduct(_jssuuqo, _ljefy3z, _wrb7f6f); NrmlzeVect(_jssuuqo);
     return;
 }
-void RotStressG2L(float *restrict _2292mtr, const float *restrict _088o98b, const float *restrict _kkrzd5e)
-{ _2292mtr[2] = (_088o98b[0]*_kkrzd5e[0] + _088o98b[1]*_kkrzd5e[1] + _088o98b[2]*_kkrzd5e[2])*_088o98b[0] + (_088o98b[0]*_kkrzd5e[1] + _088o98b[1]*_kkrzd5e[3] + _088o98b[2]*_kkrzd5e[4])*_088o98b[1] + (_088o98b[0]*_kkrzd5e[2] + _088o98b[1]*_kkrzd5e[4] + _088o98b[2]*_kkrzd5e[5])*_088o98b[2];
-    _2292mtr[0] = (_088o98b[3]*_kkrzd5e[0] + _088o98b[4]*_kkrzd5e[1] + _088o98b[5]*_kkrzd5e[2])*_088o98b[0] + (_088o98b[3]*_kkrzd5e[1] + _088o98b[4]*_kkrzd5e[3] + _088o98b[5]*_kkrzd5e[4])*_088o98b[1] + (_088o98b[3]*_kkrzd5e[2] + _088o98b[4]*_kkrzd5e[4] + _088o98b[5]*_kkrzd5e[5])*_088o98b[2];
-    _2292mtr[1] = (_088o98b[6]*_kkrzd5e[0] + _088o98b[7]*_kkrzd5e[1] + _088o98b[8]*_kkrzd5e[2])*_088o98b[0] + (_088o98b[6]*_kkrzd5e[1] + _088o98b[7]*_kkrzd5e[3] + _088o98b[8]*_kkrzd5e[4])*_088o98b[1] + (_088o98b[6]*_kkrzd5e[2] + _088o98b[7]*_kkrzd5e[4] + _088o98b[8]*_kkrzd5e[5])*_088o98b[2];
+void RotStressG2L(float *restrict _yj9boq0, const float *restrict _v3z6bz8, const float *restrict _e1g983e)
+{ _yj9boq0[2] = (_v3z6bz8[0]*_e1g983e[0] + _v3z6bz8[1]*_e1g983e[1] + _v3z6bz8[2]*_e1g983e[2])*_v3z6bz8[0] + (_v3z6bz8[0]*_e1g983e[1] + _v3z6bz8[1]*_e1g983e[3] + _v3z6bz8[2]*_e1g983e[4])*_v3z6bz8[1] + (_v3z6bz8[0]*_e1g983e[2] + _v3z6bz8[1]*_e1g983e[4] + _v3z6bz8[2]*_e1g983e[5])*_v3z6bz8[2];
+    _yj9boq0[0] = (_v3z6bz8[3]*_e1g983e[0] + _v3z6bz8[4]*_e1g983e[1] + _v3z6bz8[5]*_e1g983e[2])*_v3z6bz8[0] + (_v3z6bz8[3]*_e1g983e[1] + _v3z6bz8[4]*_e1g983e[3] + _v3z6bz8[5]*_e1g983e[4])*_v3z6bz8[1] + (_v3z6bz8[3]*_e1g983e[2] + _v3z6bz8[4]*_e1g983e[4] + _v3z6bz8[5]*_e1g983e[5])*_v3z6bz8[2];
+    _yj9boq0[1] = (_v3z6bz8[6]*_e1g983e[0] + _v3z6bz8[7]*_e1g983e[1] + _v3z6bz8[8]*_e1g983e[2])*_v3z6bz8[0] + (_v3z6bz8[6]*_e1g983e[1] + _v3z6bz8[7]*_e1g983e[3] + _v3z6bz8[8]*_e1g983e[4])*_v3z6bz8[1] + (_v3z6bz8[6]*_e1g983e[2] + _v3z6bz8[7]*_e1g983e[4] + _v3z6bz8[8]*_e1g983e[5])*_v3z6bz8[2];
     return;
 }
-void ScaleStress6(float *restrict _e1g983e, float _wrb7f6f)
-{ _e1g983e[0] *= _wrb7f6f; _e1g983e[1] *= _wrb7f6f; _e1g983e[2] *= _wrb7f6f;
-    _e1g983e[3] *= _wrb7f6f; _e1g983e[4] *= _wrb7f6f; _e1g983e[5] *= _wrb7f6f;
+void ScaleStress6(float *restrict _kibu4fm, float _088o98b)
+{ _kibu4fm[0] *= _088o98b; _kibu4fm[1] *= _088o98b; _kibu4fm[2] *= _088o98b;
+    _kibu4fm[3] *= _088o98b; _kibu4fm[4] *= _088o98b; _kibu4fm[5] *= _088o98b;
     return;
 }
-float ran0(long *_e05qmkt)
+float ran0(long *_1poxrte)
 { long k;
-    float _9rr7s20;
-    *_e05qmkt ^= 123459876;
-    k = (*_e05qmkt)/127773;
-    *_e05qmkt = 16807*(*_e05qmkt-k*127773) -2836*k;
-    if (*_e05qmkt < 0) *_e05qmkt += 2147483647;
-    _9rr7s20 = (1.0/2147483647)*(*_e05qmkt);
-    *_e05qmkt ^= 123459876;
-    return _9rr7s20;
+    float _0lbt3g2;
+    *_1poxrte ^= 123459876;
+    k = (*_1poxrte)/127773;
+    *_1poxrte = 16807*(*_1poxrte-k*127773) -2836*k;
+    if (*_1poxrte < 0) *_1poxrte += 2147483647;
+    _0lbt3g2 = (1.0/2147483647)*(*_1poxrte);
+    *_1poxrte ^= 123459876;
+    return _0lbt3g2;
 }
-float ran1(long *_e05qmkt)
+float ran1(long *_1poxrte)
 { int j;
     long k;
-    static long _gnzei3z = 0;
-    static long _vsffcxh[32];
-    float _wahk2ls;
-    if (*_e05qmkt <= 0 || !_gnzei3z )
-    { if (-(*_e05qmkt) < 1) { *_e05qmkt = 1; }
-        else { *_e05qmkt = -(*_e05qmkt); }
+    static long _gv44ftj = 0;
+    static long _e05qmkt[32];
+    float _qpwbsf3;
+    if (*_1poxrte <= 0 || !_gv44ftj )
+    { if (-(*_1poxrte) < 1) { *_1poxrte = 1; }
+        else { *_1poxrte = -(*_1poxrte); }
         for (j = 32 +7; j >= 0; j--)
-        { k = (*_e05qmkt)/127773;
-            *_e05qmkt = 16807*(*_e05qmkt -k*127773) -2836*k;
-            if (*_e05qmkt < 0) { *_e05qmkt += 2147483647; }
-            if (j < 32) { _vsffcxh[j] = *_e05qmkt; }
+        { k = (*_1poxrte)/127773;
+            *_1poxrte = 16807*(*_1poxrte -k*127773) -2836*k;
+            if (*_1poxrte < 0) { *_1poxrte += 2147483647; }
+            if (j < 32) { _e05qmkt[j] = *_1poxrte; }
         }
-        _gnzei3z = _vsffcxh[0];
+        _gv44ftj = _e05qmkt[0];
     }
-    k = (*_e05qmkt)/127773;
-    *_e05qmkt = 16807*(*_e05qmkt -k*127773) -2836*k;
-    if (*_e05qmkt < 0) { *_e05qmkt += 2147483647; }
-    j = _gnzei3z/(1+(2147483647 -1)/32);
-    _gnzei3z = _vsffcxh[j];
-    _vsffcxh[j] = *_e05qmkt;
-    if ((_wahk2ls = (1.0/2147483647)*_gnzei3z) > (1.0 - 1.2e-7)) { return (1.0 - 1.2e-7); }
-    else { return _wahk2ls; }
+    k = (*_1poxrte)/127773;
+    *_1poxrte = 16807*(*_1poxrte -k*127773) -2836*k;
+    if (*_1poxrte < 0) { *_1poxrte += 2147483647; }
+    j = _gv44ftj/(1+(2147483647 -1)/32);
+    _gv44ftj = _e05qmkt[j];
+    _e05qmkt[j] = *_1poxrte;
+    if ((_qpwbsf3 = (1.0/2147483647)*_gv44ftj) > (1.0 - 1.2e-7)) { return (1.0 - 1.2e-7); }
+    else { return _qpwbsf3; }
 }
-void ReAssignElemVals(struct _r1yxr2d *restrict _5zja8dz, const struct _q0oxfq8 *restrict _z3nx39r, unsigned int i, unsigned int *restrict _6zjq7w7, float *restrict _3n3bzt9, float *restrict _mzwffhh, unsigned int _7qqyzqi)
-{ float _9p3jpxg[4];
-    _9p3jpxg[0] = ran0(&_5zja8dz->_k5ogz2u); _9p3jpxg[0] = _9p3jpxg[0]*2.0f -1.0f;
-    _mzwffhh[i*16 +2] = _mzwffhh[i*16 +8] + (_mzwffhh[i*16 +9] * _9p3jpxg[0]);
-    _9p3jpxg[0] = ran0(&_5zja8dz->_k5ogz2u); _9p3jpxg[0] = _9p3jpxg[0]*2.0f -1.0f;
-    _mzwffhh[i*16 +3] = ( ((0.0f) > ((_mzwffhh[i*16 +10] + (_mzwffhh[i*16 +11] * _9p3jpxg[0])))) *(0.0f) + ((0.0f) <= ((_mzwffhh[i*16 +10] + (_mzwffhh[i*16 +11] * _9p3jpxg[0])))) *((_mzwffhh[i*16 +10] + (_mzwffhh[i*16 +11] * _9p3jpxg[0]))) );
-    _9p3jpxg[0] = ran0(&_5zja8dz->_k5ogz2u); _9p3jpxg[0] = _9p3jpxg[0]*2.0f -1.0f;
-    _3n3bzt9[i*16 +4] = _mzwffhh[i*16 +12] + (_mzwffhh[i*16 +13] * _9p3jpxg[0]);
-    _3n3bzt9[i*16 +3] = (_7qqyzqi == 1u)*_mzwffhh[i*16 +2] + (_7qqyzqi != 1u)*_3n3bzt9[i*16 +3];
-    _9p3jpxg[0] = (_mzwffhh[i*16 +2] - _mzwffhh[i*16 +3]) *-1.0f*_mzwffhh[i*16 +0];
-    _9p3jpxg[1] = _9p3jpxg[0]/_mzwffhh[i*16 +1];
-    _6zjq7w7[i*4 +0] = (_9p3jpxg[0] >= 0.0f)*2u + (_9p3jpxg[0] < 0.0f)*3u;
-    _6zjq7w7[i*4 +0] = (_9p3jpxg[1] > _3n3bzt9[i*16 +4])*1u + (_9p3jpxg[1] <= _3n3bzt9[i*16 +4])*_6zjq7w7[i*4 +0];
-    _9p3jpxg[0] = _mzwffhh[i*16 +3]*-1.0f*_mzwffhh[i*16 +0] + _3n3bzt9[i*16 +4]*_mzwffhh[i*16 +1];
-    _9p3jpxg[1] = _mzwffhh[i*16 +2]*-1.0f*_mzwffhh[i*16 +0];
-    _9p3jpxg[2] = ( ((_9p3jpxg[0]) > (_9p3jpxg[1])) *(_9p3jpxg[0]) + ((_9p3jpxg[0]) <= (_9p3jpxg[1])) *(_9p3jpxg[1]) )/(-1.0f*_mzwffhh[i*16 +0]);
-    _mzwffhh[i*16 +4] = ( ((0.0f) > ((_9p3jpxg[2] - _z3nx39r->_6snglh6*(_9p3jpxg[2]-_mzwffhh[i*16 +3])))) *(0.0f) + ((0.0f) <= ((_9p3jpxg[2] - _z3nx39r->_6snglh6*(_9p3jpxg[2]-_mzwffhh[i*16 +3])))) *((_9p3jpxg[2] - _z3nx39r->_6snglh6*(_9p3jpxg[2]-_mzwffhh[i*16 +3]))) );
+void ReAssignElemVals(struct _43d5iqv *restrict _j3trp0j, const struct _gzui1b0 *restrict _s3kkv9r, unsigned int i, unsigned int *restrict _mgvu4is, float *restrict _vwvm4w3, float *restrict _wyx9trf, unsigned int _gvz9aaw)
+{ float _p9p9w4j[4];
+    _p9p9w4j[0] = ran0(&_j3trp0j->_gnzei3z); _p9p9w4j[0] = _p9p9w4j[0]*2.0f -1.0f;
+    _wyx9trf[i*16 +2] = _wyx9trf[i*16 +8] + (_wyx9trf[i*16 +9] * _p9p9w4j[0]);
+    _p9p9w4j[0] = ran0(&_j3trp0j->_gnzei3z); _p9p9w4j[0] = _p9p9w4j[0]*2.0f -1.0f;
+    _wyx9trf[i*16 +3] = ( ((0.0f) > ((_wyx9trf[i*16 +10] + (_wyx9trf[i*16 +11] * _p9p9w4j[0])))) *(0.0f) + ((0.0f) <= ((_wyx9trf[i*16 +10] + (_wyx9trf[i*16 +11] * _p9p9w4j[0])))) *((_wyx9trf[i*16 +10] + (_wyx9trf[i*16 +11] * _p9p9w4j[0]))) );
+    _p9p9w4j[0] = ran0(&_j3trp0j->_gnzei3z); _p9p9w4j[0] = _p9p9w4j[0]*2.0f -1.0f;
+    _vwvm4w3[i*16 +4] = _wyx9trf[i*16 +12] + (_wyx9trf[i*16 +13] * _p9p9w4j[0]);
+    _vwvm4w3[i*16 +3] = (_gvz9aaw == 1u)*_wyx9trf[i*16 +2] + (_gvz9aaw != 1u)*_vwvm4w3[i*16 +3];
+    _p9p9w4j[0] = (_wyx9trf[i*16 +2] - _wyx9trf[i*16 +3]) *-1.0f*_wyx9trf[i*16 +0];
+    _p9p9w4j[1] = _p9p9w4j[0]/_wyx9trf[i*16 +1];
+    _mgvu4is[i*4 +0] = (_p9p9w4j[0] >= 0.0f)*2u + (_p9p9w4j[0] < 0.0f)*3u;
+    _mgvu4is[i*4 +0] = (_p9p9w4j[1] > _vwvm4w3[i*16 +4])*1u + (_p9p9w4j[1] <= _vwvm4w3[i*16 +4])*_mgvu4is[i*4 +0];
+    _p9p9w4j[0] = _wyx9trf[i*16 +3]*-1.0f*_wyx9trf[i*16 +0] + _vwvm4w3[i*16 +4]*_wyx9trf[i*16 +1];
+    _p9p9w4j[1] = _wyx9trf[i*16 +2]*-1.0f*_wyx9trf[i*16 +0];
+    _p9p9w4j[2] = ( ((_p9p9w4j[0]) > (_p9p9w4j[1])) *(_p9p9w4j[0]) + ((_p9p9w4j[0]) <= (_p9p9w4j[1])) *(_p9p9w4j[1]) )/(-1.0f*_wyx9trf[i*16 +0]);
+    _wyx9trf[i*16 +4] = ( ((0.0f) > ((_p9p9w4j[2] - _s3kkv9r->_iq2fa39*(_p9p9w4j[2]-_wyx9trf[i*16 +3])))) *(0.0f) + ((0.0f) <= ((_p9p9w4j[2] - _s3kkv9r->_iq2fa39*(_p9p9w4j[2]-_wyx9trf[i*16 +3])))) *((_p9p9w4j[2] - _s3kkv9r->_iq2fa39*(_p9p9w4j[2]-_wyx9trf[i*16 +3]))) );
     return;
 }
-void ResetAfterEvent(int _20n8tte, const int *restrict _b6gs8g8, struct _r1yxr2d *restrict _5zja8dz, unsigned int *restrict _6zjq7w7, float *restrict _3n3bzt9, float *restrict _mzwffhh, float *restrict _3p91i3v)
+void ResetAfterEvent(int _tk63n2q, const int *restrict _6zx1tv1, struct _43d5iqv *restrict _j3trp0j, unsigned int *restrict _mgvu4is, float *restrict _vwvm4w3, float *restrict _wyx9trf, float *restrict _gyspeng)
 { int i;
-    unsigned int _h9ier7u;
-    float _9p3jpxg[4];
-    for (i = 0u; i < _b6gs8g8[_20n8tte]; i++)
-    { _9p3jpxg[0] = sqrtf(_3n3bzt9[i*16 +13]*_3n3bzt9[i*16 +13] +_3n3bzt9[i*16 +14]*_3n3bzt9[i*16 +14]);
-        _3p91i3v[i*8 +3] += _9p3jpxg[0];
-        _3p91i3v[i*8 +4] += _9p3jpxg[0];
-        _3n3bzt9[i*16 +2] = _mzwffhh[i*16 +0];
-        _9p3jpxg[0] = sqrtf(_3n3bzt9[i*16 +0]*_3n3bzt9[i*16 +0] + _3n3bzt9[i*16 +1]*_3n3bzt9[i*16 +1]);
-        _9p3jpxg[1] = _mzwffhh[i*16 +2] *-1.0f*_mzwffhh[i*16 +0];
-        _h9ier7u = (_9p3jpxg[0] > _9p3jpxg[1])*1u + (_9p3jpxg[0]<= _9p3jpxg[1])*0u;
-        _9p3jpxg[3] = (_h9ier7u == 1u)*(_9p3jpxg[0]/(-1.0f*_3n3bzt9[i*16 +2])) + (_h9ier7u != 1u)*_mzwffhh[i*16 +2];
-        _3n3bzt9[i*16 +3] = ( ((_9p3jpxg[3]) < (_5zja8dz->_ktakpux)) *(_9p3jpxg[3]) + ((_9p3jpxg[3]) >= (_5zja8dz->_ktakpux)) *(_5zja8dz->_ktakpux) );
-        _9p3jpxg[1] = _3n3bzt9[i*16 +3] *-1.0f*_3n3bzt9[i*16 +2];
-        _9p3jpxg[2] = ( (((_9p3jpxg[0]/_9p3jpxg[1])) > (1.0f)) *((_9p3jpxg[0]/_9p3jpxg[1])) + (((_9p3jpxg[0]/_9p3jpxg[1])) <= (1.0f)) *(1.0f) );
-        _3n3bzt9[i*16 +0] /= _9p3jpxg[2];
-        _3n3bzt9[i*16 +1] /= _9p3jpxg[2];
-        _mzwffhh[i*16 +7] = _3n3bzt9[i*16 +3] - _mzwffhh[i*16 +2];
-        _6zjq7w7[i*4 +1] = 0u; _6zjq7w7[i*4 +2] = 0u; _6zjq7w7[i*4 +3] = 0u;
-        _3n3bzt9[i*16 +11] = 0.0f; _3n3bzt9[i*16 +12] = 0.0f; _3n3bzt9[i*16 +13] = 0.0f; _3n3bzt9[i*16 +14] = 0.0f; _3n3bzt9[i*16 +15] = 0.0f;
+    unsigned int _dn1th1x;
+    float _p9p9w4j[4];
+    for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++)
+    { _p9p9w4j[0] = sqrtf(_vwvm4w3[i*16 +13]*_vwvm4w3[i*16 +13] +_vwvm4w3[i*16 +14]*_vwvm4w3[i*16 +14]);
+        _gyspeng[i*8 +3] += _p9p9w4j[0];
+        _gyspeng[i*8 +4] += _p9p9w4j[0];
+        _vwvm4w3[i*16 +2] = _wyx9trf[i*16 +0];
+        _p9p9w4j[0] = sqrtf(_vwvm4w3[i*16 +0]*_vwvm4w3[i*16 +0] + _vwvm4w3[i*16 +1]*_vwvm4w3[i*16 +1]);
+        _p9p9w4j[1] = _wyx9trf[i*16 +2] *-1.0f*_wyx9trf[i*16 +0];
+        _dn1th1x = (_p9p9w4j[0] > _p9p9w4j[1])*1u + (_p9p9w4j[0]<= _p9p9w4j[1])*0u;
+        _p9p9w4j[3] = (_dn1th1x == 1u)*(_p9p9w4j[0]/(-1.0f*_vwvm4w3[i*16 +2])) + (_dn1th1x != 1u)*_wyx9trf[i*16 +2];
+        _vwvm4w3[i*16 +3] = ( ((_p9p9w4j[3]) < (_j3trp0j->_z0yncxl)) *(_p9p9w4j[3]) + ((_p9p9w4j[3]) >= (_j3trp0j->_z0yncxl)) *(_j3trp0j->_z0yncxl) );
+        _p9p9w4j[1] = _vwvm4w3[i*16 +3] *-1.0f*_vwvm4w3[i*16 +2];
+        _p9p9w4j[2] = ( (((_p9p9w4j[0]/_p9p9w4j[1])) > (1.0f)) *((_p9p9w4j[0]/_p9p9w4j[1])) + (((_p9p9w4j[0]/_p9p9w4j[1])) <= (1.0f)) *(1.0f) );
+        _vwvm4w3[i*16 +0] /= _p9p9w4j[2];
+        _vwvm4w3[i*16 +1] /= _p9p9w4j[2];
+        _wyx9trf[i*16 +7] = _vwvm4w3[i*16 +3] - _wyx9trf[i*16 +2];
+        _mgvu4is[i*4 +1] = 0u; _mgvu4is[i*4 +2] = 0u; _mgvu4is[i*4 +3] = 0u;
+        _vwvm4w3[i*16 +11] = 0.0f; _vwvm4w3[i*16 +12] = 0.0f; _vwvm4w3[i*16 +13] = 0.0f; _vwvm4w3[i*16 +14] = 0.0f; _vwvm4w3[i*16 +15] = 0.0f;
     }
     return;
 }
-void WriteFltComp(int _20n8tte, int _8kgyggs, int _npuevjl, const char *restrict _m1zxyvg, unsigned int _qy8yb7w, const int *restrict _b6gs8g8, const unsigned int *restrict _xo100vh, const unsigned int *restrict _t4q9bc2, const float *restrict _qw5dsk7, const float *restrict _z39pecn, const float *restrict _mzwffhh, const float *restrict _3n3bzt9, const float *restrict _3p91i3v)
+void WriteFltComp(int _tk63n2q, int _z7whwkm, int _y9x8syl, const char *restrict _r821uzv, unsigned int _mda9oek, const int *restrict _6zx1tv1, const unsigned int *restrict _5izolnn, const unsigned int *restrict _egok01t, const float *restrict _3n3bzt9, const float *restrict _n8la100, const float *restrict _wyx9trf, const float *restrict _vwvm4w3, const float *restrict _gyspeng)
 { unsigned int i;
-    float *_gywiyme = malloc(_qy8yb7w *sizeof (float)); __builtin___memset_chk (_gywiyme, 0, _qy8yb7w *sizeof (float), __builtin_object_size (_gywiyme, 0));
-    FILE *_douadvw;
-    if ((_douadvw = fopen(_m1zxyvg,"w")) == ((void *)0)) { fprintf(__stdoutp,"Error -cant open %s file in MCQsim25_SmallFuncs.c function \n",_m1zxyvg); exit(1); }
-    if (_20n8tte == 0)
-    { fprintf(_douadvw,"FromCodeVersion#:     %d\n", 202511);
-        if (_8kgyggs == 1) { fprintf(_douadvw,"output written for:   uF_t \n"); }
-        else if (_8kgyggs == 2) { fprintf(_douadvw,"output written for:   fF_t \n"); }
-        else if (_8kgyggs == 3) { fprintf(_douadvw,"output written for:   fFRF \n"); }
-        else if (_8kgyggs == 4) { fprintf(_douadvw,"output written for:   fFEv \n"); }
-        else if (_8kgyggs == 5) { fprintf(_douadvw,"output written for:   fFLcPl \n"); }
+    float *_gymdm0l = malloc(_mda9oek *sizeof (float)); __builtin___memset_chk (_gymdm0l, 0, _mda9oek *sizeof (float), __builtin_object_size (_gymdm0l, 0));
+    FILE *_gnmby49;
+    if ((_gnmby49 = fopen(_r821uzv,"w")) == ((void *)0)) { fprintf(__stdoutp,"Error -cant open %s file in MCQsim25_SmallFuncs.c function \n",_r821uzv); exit(1); }
+    if (_tk63n2q == 0)
+    { fprintf(_gnmby49,"FromCodeVersion#:     %d\n", 202511);
+        if (_z7whwkm == 1) { fprintf(_gnmby49,"output written for:   uF_t \n"); }
+        else if (_z7whwkm == 2) { fprintf(_gnmby49,"output written for:   fF_t \n"); }
+        else if (_z7whwkm == 3) { fprintf(_gnmby49,"output written for:   fFRF \n"); }
+        else if (_z7whwkm == 4) { fprintf(_gnmby49,"output written for:   fFEv \n"); }
+        else if (_z7whwkm == 5) { fprintf(_gnmby49,"output written for:   fFLcPl \n"); }
         else { fprintf(__stdoutp,"incorrect array selection\n"); exit(1); }
-        if ( (_8kgyggs == 1) && ((_npuevjl < 0) || (_npuevjl > 5)) ) { fprintf(__stdoutp,"incorrect array entry selection\n"); exit(1); }
-        if ( (_8kgyggs == 2) && ((_npuevjl < 0) || (_npuevjl > 15)) ) { fprintf(__stdoutp,"incorrect array entry selection\n"); exit(1); }
-        if ( (_8kgyggs == 3) && ((_npuevjl < 0) || (_npuevjl > 13)) ) { fprintf(__stdoutp,"incorrect array entry selection\n"); exit(1); }
-        if ( (_8kgyggs == 4) && ((_npuevjl < 0) || (_npuevjl > 15)) ) { fprintf(__stdoutp,"incorrect array entry selection\n"); exit(1); }
-        if ( (_8kgyggs == 5) && ((_npuevjl < 0) || (_npuevjl > 5)) ) { fprintf(__stdoutp,"incorrect array entry selection\n"); exit(1); }
+        if ( (_z7whwkm == 1) && ((_y9x8syl < 0) || (_y9x8syl > 5)) ) { fprintf(__stdoutp,"incorrect array entry selection\n"); exit(1); }
+        if ( (_z7whwkm == 2) && ((_y9x8syl < 0) || (_y9x8syl > 15)) ) { fprintf(__stdoutp,"incorrect array entry selection\n"); exit(1); }
+        if ( (_z7whwkm == 3) && ((_y9x8syl < 0) || (_y9x8syl > 13)) ) { fprintf(__stdoutp,"incorrect array entry selection\n"); exit(1); }
+        if ( (_z7whwkm == 4) && ((_y9x8syl < 0) || (_y9x8syl > 15)) ) { fprintf(__stdoutp,"incorrect array entry selection\n"); exit(1); }
+        if ( (_z7whwkm == 5) && ((_y9x8syl < 0) || (_y9x8syl > 5)) ) { fprintf(__stdoutp,"incorrect array entry selection\n"); exit(1); }
     }
-    if (_8kgyggs == 3)
-    { for (i = 0u; i < _b6gs8g8[_20n8tte]; i++) { _gywiyme[_xo100vh[i]] = _mzwffhh[i*16 +_npuevjl]; }
-        MPI_Reduce((void *) -1, _gywiyme, _qy8yb7w, ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), 0, ((MPI_Comm)0x44000000));
+    if (_z7whwkm == 3)
+    { for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++) { _gymdm0l[_5izolnn[i]] = _wyx9trf[i*16 +_y9x8syl]; }
+        MPI_Reduce((void *) -1, _gymdm0l, _mda9oek, ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), 0, ((MPI_Comm)0x44000000));
     }
-    else if (_8kgyggs == 4)
-    { for (i = 0u; i < _b6gs8g8[_20n8tte]; i++) { _gywiyme[_xo100vh[i]] = _3n3bzt9[i*16 +_npuevjl]; }
-        MPI_Reduce((void *) -1, _gywiyme, _qy8yb7w, ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), 0, ((MPI_Comm)0x44000000));
+    else if (_z7whwkm == 4)
+    { for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++) { _gymdm0l[_5izolnn[i]] = _vwvm4w3[i*16 +_y9x8syl]; }
+        MPI_Reduce((void *) -1, _gymdm0l, _mda9oek, ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), 0, ((MPI_Comm)0x44000000));
     }
-    else if (_8kgyggs == 5)
-    { for (i = 0u; i < _b6gs8g8[_20n8tte]; i++) { _gywiyme[_xo100vh[i]] = _3p91i3v[i*8 +_npuevjl]; }
-        MPI_Reduce((void *) -1, _gywiyme, _qy8yb7w, ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), 0, ((MPI_Comm)0x44000000));
+    else if (_z7whwkm == 5)
+    { for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++) { _gymdm0l[_5izolnn[i]] = _gyspeng[i*8 +_y9x8syl]; }
+        MPI_Reduce((void *) -1, _gymdm0l, _mda9oek, ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), 0, ((MPI_Comm)0x44000000));
     }
-    if (_20n8tte == 0)
+    if (_tk63n2q == 0)
     {
-        fprintf(_douadvw,"ArrayEntryPosition:   %d\n", _npuevjl);
-        fprintf(_douadvw,"ElementNumber:        %d\n", _qy8yb7w);
-        if (_8kgyggs == 1)
-        { for (i = 0u; i < _qy8yb7w; i++)
-            { fprintf(_douadvw,"ElemID:     %d\n",i);
-                fprintf(_douadvw,"ElemValue:  %d\n",_t4q9bc2[i*8 +_npuevjl]);
-                fprintf(_douadvw,"Vert1:      %e    %e    %e\n", _z39pecn[_t4q9bc2[i*8 +0] *4 +0], _z39pecn[_t4q9bc2[i*8 +0] *4 +1], _z39pecn[_t4q9bc2[i*8 +0] *4 +2]);
-                fprintf(_douadvw,"Vert2:      %e    %e    %e\n", _z39pecn[_t4q9bc2[i*8 +1] *4 +0], _z39pecn[_t4q9bc2[i*8 +1] *4 +1], _z39pecn[_t4q9bc2[i*8 +1] *4 +2]);
-                fprintf(_douadvw,"Vert3:      %e    %e    %e\n", _z39pecn[_t4q9bc2[i*8 +2] *4 +0], _z39pecn[_t4q9bc2[i*8 +2] *4 +1], _z39pecn[_t4q9bc2[i*8 +2] *4 +2]);
+        fprintf(_gnmby49,"ArrayEntryPosition:   %d\n", _y9x8syl);
+        fprintf(_gnmby49,"ElementNumber:        %d\n", _mda9oek);
+        if (_z7whwkm == 1)
+        { for (i = 0u; i < _mda9oek; i++)
+            { fprintf(_gnmby49,"ElemID:     %d\n",i);
+                fprintf(_gnmby49,"ElemValue:  %d\n",_egok01t[i*8 +_y9x8syl]);
+                fprintf(_gnmby49,"Vert1:      %e    %e    %e\n", _n8la100[_egok01t[i*8 +0] *4 +0], _n8la100[_egok01t[i*8 +0] *4 +1], _n8la100[_egok01t[i*8 +0] *4 +2]);
+                fprintf(_gnmby49,"Vert2:      %e    %e    %e\n", _n8la100[_egok01t[i*8 +1] *4 +0], _n8la100[_egok01t[i*8 +1] *4 +1], _n8la100[_egok01t[i*8 +1] *4 +2]);
+                fprintf(_gnmby49,"Vert3:      %e    %e    %e\n", _n8la100[_egok01t[i*8 +2] *4 +0], _n8la100[_egok01t[i*8 +2] *4 +1], _n8la100[_egok01t[i*8 +2] *4 +2]);
         } }
-        else if (_8kgyggs == 2)
-        { for (i = 0u; i < _qy8yb7w; i++)
-            { fprintf(_douadvw,"ElemID:     %d\n",i);
-                fprintf(_douadvw,"ElemValue:  %e\n",_qw5dsk7[i*16 +_npuevjl]);
-                fprintf(_douadvw,"Vert1:      %e    %e    %e\n", _z39pecn[_t4q9bc2[i*8 +0] *4 +0], _z39pecn[_t4q9bc2[i*8 +0] *4 +1], _z39pecn[_t4q9bc2[i*8 +0] *4 +2]);
-                fprintf(_douadvw,"Vert2:      %e    %e    %e\n", _z39pecn[_t4q9bc2[i*8 +1] *4 +0], _z39pecn[_t4q9bc2[i*8 +1] *4 +1], _z39pecn[_t4q9bc2[i*8 +1] *4 +2]);
-                fprintf(_douadvw,"Vert3:      %e    %e    %e\n", _z39pecn[_t4q9bc2[i*8 +2] *4 +0], _z39pecn[_t4q9bc2[i*8 +2] *4 +1], _z39pecn[_t4q9bc2[i*8 +2] *4 +2]);
+        else if (_z7whwkm == 2)
+        { for (i = 0u; i < _mda9oek; i++)
+            { fprintf(_gnmby49,"ElemID:     %d\n",i);
+                fprintf(_gnmby49,"ElemValue:  %e\n",_3n3bzt9[i*16 +_y9x8syl]);
+                fprintf(_gnmby49,"Vert1:      %e    %e    %e\n", _n8la100[_egok01t[i*8 +0] *4 +0], _n8la100[_egok01t[i*8 +0] *4 +1], _n8la100[_egok01t[i*8 +0] *4 +2]);
+                fprintf(_gnmby49,"Vert2:      %e    %e    %e\n", _n8la100[_egok01t[i*8 +1] *4 +0], _n8la100[_egok01t[i*8 +1] *4 +1], _n8la100[_egok01t[i*8 +1] *4 +2]);
+                fprintf(_gnmby49,"Vert3:      %e    %e    %e\n", _n8la100[_egok01t[i*8 +2] *4 +0], _n8la100[_egok01t[i*8 +2] *4 +1], _n8la100[_egok01t[i*8 +2] *4 +2]);
         } }
-        else if (_8kgyggs >= 3)
-        { for (i = 0u; i < _qy8yb7w; i++)
-            { fprintf(_douadvw,"ElemID:     %d\n",i);
-                fprintf(_douadvw,"ElemValue:  %e\n",_gywiyme[i]);
-                fprintf(_douadvw,"Vert1:      %e    %e    %e\n", _z39pecn[_t4q9bc2[i*8 +0] *4 +0], _z39pecn[_t4q9bc2[i*8 +0] *4 +1], _z39pecn[_t4q9bc2[i*8 +0] *4 +2]);
-                fprintf(_douadvw,"Vert2:      %e    %e    %e\n", _z39pecn[_t4q9bc2[i*8 +1] *4 +0], _z39pecn[_t4q9bc2[i*8 +1] *4 +1], _z39pecn[_t4q9bc2[i*8 +1] *4 +2]);
-                fprintf(_douadvw,"Vert3:      %e    %e    %e\n", _z39pecn[_t4q9bc2[i*8 +2] *4 +0], _z39pecn[_t4q9bc2[i*8 +2] *4 +1], _z39pecn[_t4q9bc2[i*8 +2] *4 +2]);
+        else if (_z7whwkm >= 3)
+        { for (i = 0u; i < _mda9oek; i++)
+            { fprintf(_gnmby49,"ElemID:     %d\n",i);
+                fprintf(_gnmby49,"ElemValue:  %e\n",_gymdm0l[i]);
+                fprintf(_gnmby49,"Vert1:      %e    %e    %e\n", _n8la100[_egok01t[i*8 +0] *4 +0], _n8la100[_egok01t[i*8 +0] *4 +1], _n8la100[_egok01t[i*8 +0] *4 +2]);
+                fprintf(_gnmby49,"Vert2:      %e    %e    %e\n", _n8la100[_egok01t[i*8 +1] *4 +0], _n8la100[_egok01t[i*8 +1] *4 +1], _n8la100[_egok01t[i*8 +1] *4 +2]);
+                fprintf(_gnmby49,"Vert3:      %e    %e    %e\n", _n8la100[_egok01t[i*8 +2] *4 +0], _n8la100[_egok01t[i*8 +2] *4 +1], _n8la100[_egok01t[i*8 +2] *4 +2]);
     } } }
-    free(_gywiyme);
-    fclose(_douadvw);
+    free(_gymdm0l);
+    fclose(_gnmby49);
     return;
 }
-void WritePreRunData(int _20n8tte, const char *restrict _m1zxyvg, const struct _q0oxfq8 *restrict _z3nx39r, const struct _wrdmly4 *restrict _lyk83tq, const int *restrict _b6gs8g8, const unsigned int *restrict _xo100vh, const unsigned int *restrict _t4q9bc2, const float *restrict _qw5dsk7, const float *restrict _z39pecn, const unsigned int *restrict _6zjq7w7, float *restrict _3n3bzt9, const float *restrict _mzwffhh)
+void WritePreRunData(int _tk63n2q, const char *restrict _r821uzv, const struct _gzui1b0 *restrict _s3kkv9r, const struct _rcbpljd *restrict _84u89yj, const int *restrict _6zx1tv1, const unsigned int *restrict _5izolnn, const unsigned int *restrict _egok01t, const float *restrict _3n3bzt9, const float *restrict _n8la100, const unsigned int *restrict _mgvu4is, float *restrict _vwvm4w3, const float *restrict _wyx9trf)
 { unsigned int i;
-    unsigned int *_qke2gjr = malloc(_z3nx39r->_jp61lfc *sizeof(unsigned int)); __builtin___memset_chk (_qke2gjr, 0, _z3nx39r->_jp61lfc *sizeof(unsigned int), __builtin_object_size (_qke2gjr, 0));
-    float *_6qlz2rw = malloc(_z3nx39r->_jp61lfc *sizeof(float)); __builtin___memset_chk (_6qlz2rw, 0, _z3nx39r->_jp61lfc *sizeof(float), __builtin_object_size (_6qlz2rw, 0));
-    float *_xyzx9jp = malloc(_z3nx39r->_jp61lfc *sizeof(float)); __builtin___memset_chk (_xyzx9jp, 0, _z3nx39r->_jp61lfc *sizeof(float), __builtin_object_size (_xyzx9jp, 0));
-    float *_t26ys44 = malloc(_z3nx39r->_jp61lfc *sizeof(float)); __builtin___memset_chk (_t26ys44, 0, _z3nx39r->_jp61lfc *sizeof(float), __builtin_object_size (_t26ys44, 0));
-    float *_5gdej31 = malloc(_z3nx39r->_jp61lfc *sizeof(float)); __builtin___memset_chk (_5gdej31, 0, _z3nx39r->_jp61lfc *sizeof(float), __builtin_object_size (_5gdej31, 0));
-    float *_gymdm0l = malloc(_z3nx39r->_jp61lfc *sizeof(float)); __builtin___memset_chk (_gymdm0l, 0, _z3nx39r->_jp61lfc *sizeof(float), __builtin_object_size (_gymdm0l, 0));
-    float *_2ljk4q5 = malloc(_z3nx39r->_jp61lfc *sizeof(float)); __builtin___memset_chk (_2ljk4q5, 0, _z3nx39r->_jp61lfc *sizeof(float), __builtin_object_size (_2ljk4q5, 0));
-    float *_v7c6s5n = malloc(_z3nx39r->_jp61lfc *sizeof(float)); __builtin___memset_chk (_v7c6s5n, 0, _z3nx39r->_jp61lfc *sizeof(float), __builtin_object_size (_v7c6s5n, 0));
-    for (i = 0u; i < _b6gs8g8[_20n8tte]; i++)
-    { _6qlz2rw[_xo100vh[i]]= _3n3bzt9[i*16 +11]; _xyzx9jp[_xo100vh[i]] = _3n3bzt9[i*16 +12];
-        _t26ys44[_xo100vh[i]] = _3n3bzt9[i*16 +9]; _5gdej31[_xo100vh[i]] = _3n3bzt9[i*16 +10];
-        _gymdm0l[_xo100vh[i]] = _mzwffhh[i*16 +2] - _mzwffhh[i*16 +3]; _2ljk4q5[_xo100vh[i]] = (_mzwffhh[i*16 +2] - _mzwffhh[i*16 +3])* -1.0*_mzwffhh[i*16 +0];
-        _v7c6s5n[_xo100vh[i]] = _3n3bzt9[i*16 +4];
-        _qke2gjr[_xo100vh[i]] = _6zjq7w7[i*4 +0];
-        _3n3bzt9[i*16 +0] = 0.0f; _3n3bzt9[i*16 +1] = 0.0f; _3n3bzt9[i*16 +11] = 0.0f; _3n3bzt9[i*16 +12] = 0.0f;
-        _3n3bzt9[i*16 +13] = 0.0f; _3n3bzt9[i*16 +14] = 0.0f;
+    unsigned int *_5v2wwg8 = malloc(_s3kkv9r->_otn9uze *sizeof(unsigned int)); __builtin___memset_chk (_5v2wwg8, 0, _s3kkv9r->_otn9uze *sizeof(unsigned int), __builtin_object_size (_5v2wwg8, 0));
+    float *_xyzx9jp = malloc(_s3kkv9r->_otn9uze *sizeof(float)); __builtin___memset_chk (_xyzx9jp, 0, _s3kkv9r->_otn9uze *sizeof(float), __builtin_object_size (_xyzx9jp, 0));
+    float *_0yknfu8 = malloc(_s3kkv9r->_otn9uze *sizeof(float)); __builtin___memset_chk (_0yknfu8, 0, _s3kkv9r->_otn9uze *sizeof(float), __builtin_object_size (_0yknfu8, 0));
+    float *_1a6xvaj = malloc(_s3kkv9r->_otn9uze *sizeof(float)); __builtin___memset_chk (_1a6xvaj, 0, _s3kkv9r->_otn9uze *sizeof(float), __builtin_object_size (_1a6xvaj, 0));
+    float *_2k8xpnm = malloc(_s3kkv9r->_otn9uze *sizeof(float)); __builtin___memset_chk (_2k8xpnm, 0, _s3kkv9r->_otn9uze *sizeof(float), __builtin_object_size (_2k8xpnm, 0));
+    float *_jqy3ods = malloc(_s3kkv9r->_otn9uze *sizeof(float)); __builtin___memset_chk (_jqy3ods, 0, _s3kkv9r->_otn9uze *sizeof(float), __builtin_object_size (_jqy3ods, 0));
+    float *_x4nxvkd = malloc(_s3kkv9r->_otn9uze *sizeof(float)); __builtin___memset_chk (_x4nxvkd, 0, _s3kkv9r->_otn9uze *sizeof(float), __builtin_object_size (_x4nxvkd, 0));
+    float *_c9x5jz6 = malloc(_s3kkv9r->_otn9uze *sizeof(float)); __builtin___memset_chk (_c9x5jz6, 0, _s3kkv9r->_otn9uze *sizeof(float), __builtin_object_size (_c9x5jz6, 0));
+    for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++)
+    { _xyzx9jp[_5izolnn[i]]= _vwvm4w3[i*16 +11]; _0yknfu8[_5izolnn[i]] = _vwvm4w3[i*16 +12];
+        _1a6xvaj[_5izolnn[i]] = _vwvm4w3[i*16 +9]; _2k8xpnm[_5izolnn[i]] = _vwvm4w3[i*16 +10];
+        _jqy3ods[_5izolnn[i]] = _wyx9trf[i*16 +2] - _wyx9trf[i*16 +3]; _x4nxvkd[_5izolnn[i]] = (_wyx9trf[i*16 +2] - _wyx9trf[i*16 +3])* -1.0*_wyx9trf[i*16 +0];
+        _c9x5jz6[_5izolnn[i]] = _vwvm4w3[i*16 +4];
+        _5v2wwg8[_5izolnn[i]] = _mgvu4is[i*4 +0];
+        _vwvm4w3[i*16 +0] = 0.0f; _vwvm4w3[i*16 +1] = 0.0f; _vwvm4w3[i*16 +11] = 0.0f; _vwvm4w3[i*16 +12] = 0.0f;
+        _vwvm4w3[i*16 +13] = 0.0f; _vwvm4w3[i*16 +14] = 0.0f;
     }
-    MPI_Allreduce((void *) -1, _6qlz2rw, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
-    MPI_Allreduce((void *) -1, _xyzx9jp, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
-    MPI_Allreduce((void *) -1, _t26ys44, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
-    MPI_Allreduce((void *) -1, _5gdej31, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
-    MPI_Allreduce((void *) -1, _gymdm0l, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
-    MPI_Allreduce((void *) -1, _2ljk4q5, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
-    MPI_Allreduce((void *) -1, _v7c6s5n, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
-    MPI_Allreduce((void *) -1, _qke2gjr, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c000406), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
-    if (_20n8tte == 0)
-    { unsigned int *_omxlvz4 = malloc(_z3nx39r->_jp61lfc *sizeof(unsigned int)); __builtin___memset_chk (_omxlvz4, 0, _z3nx39r->_jp61lfc *sizeof(unsigned int), __builtin_object_size (_omxlvz4, 0));
-        float *_kb4ehou = malloc(_lyk83tq->_3ru7myo *sizeof(float)); __builtin___memset_chk (_kb4ehou, 0, _lyk83tq->_3ru7myo *sizeof(float), __builtin_object_size (_kb4ehou, 0));
-        float *_nbzug0i = malloc(_z3nx39r->_jp61lfc *sizeof(float)); __builtin___memset_chk (_nbzug0i, 0, _z3nx39r->_jp61lfc *sizeof(float), __builtin_object_size (_nbzug0i, 0));
-        FILE *_e1hm38k;
-        char _r821uzv[512], _m3tzk3n[512];
-        __builtin___strcpy_chk (_r821uzv, _m1zxyvg, __builtin_object_size (_r821uzv, 2 > 1 ? 1 : 0)); __builtin___strcat_chk (_r821uzv, "_", __builtin_object_size (_r821uzv, 2 > 1 ? 1 : 0)); __builtin___snprintf_chk (_m3tzk3n, sizeof(_m3tzk3n), 0, __builtin_object_size (_m3tzk3n, 2 > 1 ? 1 : 0), "%u",_lyk83tq->_aq15o2n); __builtin___strcat_chk (_r821uzv, _m3tzk3n, __builtin_object_size (_r821uzv, 2 > 1 ? 1 : 0)); __builtin___strcat_chk (_r821uzv, ".pre", __builtin_object_size (_r821uzv, 2 > 1 ? 1 : 0));
-        if ((_e1hm38k = fopen(_r821uzv,"wb")) == ((void *)0)) { printf("Error -cant open %s  PrePostFile...\n", _r821uzv); exit(1); }
-        int _dyk0x65 = (int)202511;
-        fwrite( &_dyk0x65, sizeof(int), 1, _e1hm38k);
-        fwrite( &_z3nx39r->_jp61lfc, sizeof(unsigned int), 1, _e1hm38k);
-        fwrite( &_lyk83tq->_3ru7myo, sizeof(unsigned int), 1, _e1hm38k);
-        for (i = 0u; i < _z3nx39r->_jp61lfc; i++) { _omxlvz4[i] = _t4q9bc2[i*8 +0]; } fwrite( _omxlvz4, sizeof(unsigned int), _z3nx39r->_jp61lfc, _e1hm38k);
-        for (i = 0u; i < _z3nx39r->_jp61lfc; i++) { _omxlvz4[i] = _t4q9bc2[i*8 +1]; } fwrite( _omxlvz4, sizeof(unsigned int), _z3nx39r->_jp61lfc, _e1hm38k);
-        for (i = 0u; i < _z3nx39r->_jp61lfc; i++) { _omxlvz4[i] = _t4q9bc2[i*8 +2]; } fwrite( _omxlvz4, sizeof(unsigned int), _z3nx39r->_jp61lfc, _e1hm38k);
-        for (i = 0u; i < _z3nx39r->_jp61lfc; i++) { _omxlvz4[i] = _t4q9bc2[i*8 +3]; } fwrite( _omxlvz4, sizeof(unsigned int), _z3nx39r->_jp61lfc, _e1hm38k);
-        for (i = 0u; i < _z3nx39r->_jp61lfc; i++) { _omxlvz4[i] = _t4q9bc2[i*8 +4]; } fwrite( _omxlvz4, sizeof(unsigned int), _z3nx39r->_jp61lfc, _e1hm38k);
-        for (i = 0u; i < _lyk83tq->_3ru7myo; i++) { _kb4ehou[i] = _z39pecn[i*4 +0]; } fwrite( _kb4ehou, sizeof(float), _lyk83tq->_3ru7myo, _e1hm38k);
-        for (i = 0u; i < _lyk83tq->_3ru7myo; i++) { _kb4ehou[i] = _z39pecn[i*4 +1]; } fwrite( _kb4ehou, sizeof(float), _lyk83tq->_3ru7myo, _e1hm38k);
-        for (i = 0u; i < _lyk83tq->_3ru7myo; i++) { _kb4ehou[i] = _z39pecn[i*4 +2]; } fwrite( _kb4ehou, sizeof(float), _lyk83tq->_3ru7myo, _e1hm38k);
-        for (i = 0u; i < _lyk83tq->_3ru7myo; i++) { _kb4ehou[i] = _z39pecn[i*4 +3]; } fwrite( _kb4ehou, sizeof(float), _lyk83tq->_3ru7myo, _e1hm38k);
-        for (i = 0u; i < _z3nx39r->_jp61lfc; i++) { _nbzug0i[i] = _qw5dsk7[i*16 +0]; } fwrite( _nbzug0i, sizeof(float), _z3nx39r->_jp61lfc, _e1hm38k);
-        for (i = 0u; i < _z3nx39r->_jp61lfc; i++) { _nbzug0i[i] = _qw5dsk7[i*16 +1]; } fwrite( _nbzug0i, sizeof(float), _z3nx39r->_jp61lfc, _e1hm38k);
-        for (i = 0u; i < _z3nx39r->_jp61lfc; i++) { _nbzug0i[i] = _qw5dsk7[i*16 +2]; } fwrite( _nbzug0i, sizeof(float), _z3nx39r->_jp61lfc, _e1hm38k);
-        fwrite(_6qlz2rw,sizeof(float), _z3nx39r->_jp61lfc, _e1hm38k);
-        fwrite(_xyzx9jp, sizeof(float), _z3nx39r->_jp61lfc, _e1hm38k);
-        fwrite(_t26ys44, sizeof(float), _z3nx39r->_jp61lfc, _e1hm38k);
-        fwrite(_5gdej31, sizeof(float), _z3nx39r->_jp61lfc, _e1hm38k);
-        fwrite(_gymdm0l, sizeof(float), _z3nx39r->_jp61lfc, _e1hm38k);
-        fwrite(_2ljk4q5, sizeof(float), _z3nx39r->_jp61lfc, _e1hm38k);
-        fwrite(_v7c6s5n, sizeof(float), _z3nx39r->_jp61lfc, _e1hm38k);
-        fwrite(_qke2gjr, sizeof(unsigned int), _z3nx39r->_jp61lfc, _e1hm38k);
-        fclose(_e1hm38k);
-        free(_omxlvz4); free(_kb4ehou); free(_nbzug0i);
+    MPI_Allreduce((void *) -1, _xyzx9jp, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
+    MPI_Allreduce((void *) -1, _0yknfu8, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
+    MPI_Allreduce((void *) -1, _1a6xvaj, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
+    MPI_Allreduce((void *) -1, _2k8xpnm, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
+    MPI_Allreduce((void *) -1, _jqy3ods, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
+    MPI_Allreduce((void *) -1, _x4nxvkd, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
+    MPI_Allreduce((void *) -1, _c9x5jz6, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
+    MPI_Allreduce((void *) -1, _5v2wwg8, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c000406), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
+    if (_tk63n2q == 0)
+    { unsigned int *_yce4qgm = malloc(_s3kkv9r->_otn9uze *sizeof(unsigned int)); __builtin___memset_chk (_yce4qgm, 0, _s3kkv9r->_otn9uze *sizeof(unsigned int), __builtin_object_size (_yce4qgm, 0));
+        float *_kf1622v = malloc(_84u89yj->_cs4kek4 *sizeof(float)); __builtin___memset_chk (_kf1622v, 0, _84u89yj->_cs4kek4 *sizeof(float), __builtin_object_size (_kf1622v, 0));
+        float *_4xyjoa2 = malloc(_s3kkv9r->_otn9uze *sizeof(float)); __builtin___memset_chk (_4xyjoa2, 0, _s3kkv9r->_otn9uze *sizeof(float), __builtin_object_size (_4xyjoa2, 0));
+        FILE *_mszdxim;
+        char _o2m71hs[512], _1nouhtc[512];
+        __builtin___strcpy_chk (_o2m71hs, _r821uzv, __builtin_object_size (_o2m71hs, 2 > 1 ? 1 : 0)); __builtin___strcat_chk (_o2m71hs, "_", __builtin_object_size (_o2m71hs, 2 > 1 ? 1 : 0)); __builtin___snprintf_chk (_1nouhtc, sizeof(_1nouhtc), 0, __builtin_object_size (_1nouhtc, 2 > 1 ? 1 : 0), "%u",_84u89yj->_p7bd4w1); __builtin___strcat_chk (_o2m71hs, _1nouhtc, __builtin_object_size (_o2m71hs, 2 > 1 ? 1 : 0)); __builtin___strcat_chk (_o2m71hs, ".pre", __builtin_object_size (_o2m71hs, 2 > 1 ? 1 : 0));
+        if ((_mszdxim = fopen(_o2m71hs,"wb")) == ((void *)0)) { printf("Error -cant open %s  PrePostFile...\n", _o2m71hs); exit(1); }
+        int _c54wsqt = (int)202511;
+        fwrite( &_c54wsqt, sizeof(int), 1, _mszdxim);
+        fwrite( &_s3kkv9r->_otn9uze, sizeof(unsigned int), 1, _mszdxim);
+        fwrite( &_84u89yj->_cs4kek4, sizeof(unsigned int), 1, _mszdxim);
+        for (i = 0u; i < _s3kkv9r->_otn9uze; i++) { _yce4qgm[i] = _egok01t[i*8 +0]; } fwrite( _yce4qgm, sizeof(unsigned int), _s3kkv9r->_otn9uze, _mszdxim);
+        for (i = 0u; i < _s3kkv9r->_otn9uze; i++) { _yce4qgm[i] = _egok01t[i*8 +1]; } fwrite( _yce4qgm, sizeof(unsigned int), _s3kkv9r->_otn9uze, _mszdxim);
+        for (i = 0u; i < _s3kkv9r->_otn9uze; i++) { _yce4qgm[i] = _egok01t[i*8 +2]; } fwrite( _yce4qgm, sizeof(unsigned int), _s3kkv9r->_otn9uze, _mszdxim);
+        for (i = 0u; i < _s3kkv9r->_otn9uze; i++) { _yce4qgm[i] = _egok01t[i*8 +3]; } fwrite( _yce4qgm, sizeof(unsigned int), _s3kkv9r->_otn9uze, _mszdxim);
+        for (i = 0u; i < _s3kkv9r->_otn9uze; i++) { _yce4qgm[i] = _egok01t[i*8 +4]; } fwrite( _yce4qgm, sizeof(unsigned int), _s3kkv9r->_otn9uze, _mszdxim);
+        for (i = 0u; i < _84u89yj->_cs4kek4; i++) { _kf1622v[i] = _n8la100[i*4 +0]; } fwrite( _kf1622v, sizeof(float), _84u89yj->_cs4kek4, _mszdxim);
+        for (i = 0u; i < _84u89yj->_cs4kek4; i++) { _kf1622v[i] = _n8la100[i*4 +1]; } fwrite( _kf1622v, sizeof(float), _84u89yj->_cs4kek4, _mszdxim);
+        for (i = 0u; i < _84u89yj->_cs4kek4; i++) { _kf1622v[i] = _n8la100[i*4 +2]; } fwrite( _kf1622v, sizeof(float), _84u89yj->_cs4kek4, _mszdxim);
+        for (i = 0u; i < _84u89yj->_cs4kek4; i++) { _kf1622v[i] = _n8la100[i*4 +3]; } fwrite( _kf1622v, sizeof(float), _84u89yj->_cs4kek4, _mszdxim);
+        for (i = 0u; i < _s3kkv9r->_otn9uze; i++) { _4xyjoa2[i] = _3n3bzt9[i*16 +0]; } fwrite( _4xyjoa2, sizeof(float), _s3kkv9r->_otn9uze, _mszdxim);
+        for (i = 0u; i < _s3kkv9r->_otn9uze; i++) { _4xyjoa2[i] = _3n3bzt9[i*16 +1]; } fwrite( _4xyjoa2, sizeof(float), _s3kkv9r->_otn9uze, _mszdxim);
+        for (i = 0u; i < _s3kkv9r->_otn9uze; i++) { _4xyjoa2[i] = _3n3bzt9[i*16 +2]; } fwrite( _4xyjoa2, sizeof(float), _s3kkv9r->_otn9uze, _mszdxim);
+        fwrite(_xyzx9jp,sizeof(float), _s3kkv9r->_otn9uze, _mszdxim);
+        fwrite(_0yknfu8, sizeof(float), _s3kkv9r->_otn9uze, _mszdxim);
+        fwrite(_1a6xvaj, sizeof(float), _s3kkv9r->_otn9uze, _mszdxim);
+        fwrite(_2k8xpnm, sizeof(float), _s3kkv9r->_otn9uze, _mszdxim);
+        fwrite(_jqy3ods, sizeof(float), _s3kkv9r->_otn9uze, _mszdxim);
+        fwrite(_x4nxvkd, sizeof(float), _s3kkv9r->_otn9uze, _mszdxim);
+        fwrite(_c9x5jz6, sizeof(float), _s3kkv9r->_otn9uze, _mszdxim);
+        fwrite(_5v2wwg8, sizeof(unsigned int), _s3kkv9r->_otn9uze, _mszdxim);
+        fclose(_mszdxim);
+        free(_yce4qgm); free(_kf1622v); free(_4xyjoa2);
     }
-    free(_qke2gjr); free(_6qlz2rw); free(_xyzx9jp); free(_t26ys44); free(_5gdej31); free(_gymdm0l); free(_2ljk4q5); free(_v7c6s5n);
+    free(_5v2wwg8); free(_xyzx9jp); free(_0yknfu8); free(_1a6xvaj); free(_2k8xpnm); free(_jqy3ods); free(_x4nxvkd); free(_c9x5jz6);
     return;
 }
-void ContinueCatalog(int _20n8tte, const char *restrict _8dalfyo, struct _r1yxr2d *restrict _5zja8dz, const struct _q0oxfq8 *restrict _z3nx39r, const struct _wrdmly4 *restrict _lyk83tq, unsigned int *restrict _jzr25md, double *restrict _txhi15c, const int *restrict _b6gs8g8, const int *restrict _zfflb7w, const unsigned int *restrict _xo100vh, const unsigned int *restrict _g1ved32, const unsigned int *restrict _t4q9bc2, const float *restrict _qw5dsk7, const float *restrict _z39pecn, unsigned int *restrict _6zjq7w7, float *restrict _3n3bzt9, float *restrict _mzwffhh, float *restrict _3p91i3v, float *restrict _m7pyxdw)
+void ContinueCatalog(int _tk63n2q, const char *restrict _slwf90k, struct _43d5iqv *restrict _j3trp0j, const struct _gzui1b0 *restrict _s3kkv9r, const struct _rcbpljd *restrict _84u89yj, unsigned int *restrict _urvqt3g, double *restrict _u1g463s, const int *restrict _6zx1tv1, const int *restrict _emruyp0, const unsigned int *restrict _5izolnn, const unsigned int *restrict _laym0wb, const unsigned int *restrict _egok01t, const float *restrict _3n3bzt9, const float *restrict _n8la100, unsigned int *restrict _mgvu4is, float *restrict _vwvm4w3, float *restrict _wyx9trf, float *restrict _gyspeng, float *restrict _dntcagr)
 {
-    if (_lyk83tq->_cs4kek4 == 1u)
+    if (_84u89yj->_t9nm3v2 == 1u)
     {
-        MPI_Status _py6b2kn;
-        MPI_Offset _et1ghr0;
-        MPI_File _zdo74v1;
-        int _lexdw6l;
+        MPI_Status _myx444n;
+        MPI_Offset _r1yxr2d;
+        MPI_File _8bixoiq;
+        int _uuijnwp;
         unsigned int i;
-        unsigned int *_be3yqy5 = ((void *)0);
-        float *_zareiya = ((void *)0), *_1vsmado = ((void *)0);
-        _be3yqy5 = malloc(_z3nx39r->_jp61lfc *sizeof(unsigned int)); __builtin___memset_chk (_be3yqy5, 0, _z3nx39r->_jp61lfc *sizeof(unsigned int), __builtin_object_size (_be3yqy5, 0));
-        _zareiya = malloc(_z3nx39r->_jp61lfc *sizeof(float)); __builtin___memset_chk (_zareiya, 0, _z3nx39r->_jp61lfc *sizeof(float), __builtin_object_size (_zareiya, 0));
-        if (_z3nx39r->_urvqt3g > 0u)
-        { _1vsmado = malloc(_z3nx39r->_urvqt3g *sizeof(float)); __builtin___memset_chk (_1vsmado, 0, _z3nx39r->_urvqt3g *sizeof(float), __builtin_object_size (_1vsmado, 0));
+        unsigned int *_nzrf5a7 = ((void *)0);
+        float *_qw5dsk7 = ((void *)0), *_3oeuvty = ((void *)0);
+        _nzrf5a7 = malloc(_s3kkv9r->_otn9uze *sizeof(unsigned int)); __builtin___memset_chk (_nzrf5a7, 0, _s3kkv9r->_otn9uze *sizeof(unsigned int), __builtin_object_size (_nzrf5a7, 0));
+        _qw5dsk7 = malloc(_s3kkv9r->_otn9uze *sizeof(float)); __builtin___memset_chk (_qw5dsk7, 0, _s3kkv9r->_otn9uze *sizeof(float), __builtin_object_size (_qw5dsk7, 0));
+        if (_s3kkv9r->_y25m8kb > 0u)
+        { _3oeuvty = malloc(_s3kkv9r->_y25m8kb *sizeof(float)); __builtin___memset_chk (_3oeuvty, 0, _s3kkv9r->_y25m8kb *sizeof(float), __builtin_object_size (_3oeuvty, 0));
         }
-        char _r821uzv[512], _m3tzk3n[512];
-        __builtin___strcpy_chk (_r821uzv, _8dalfyo, __builtin_object_size (_r821uzv, 2 > 1 ? 1 : 0)); __builtin___snprintf_chk (_m3tzk3n, sizeof(_m3tzk3n), 0, __builtin_object_size (_m3tzk3n, 2 > 1 ? 1 : 0), "_%u.post",_lyk83tq->_aq15o2n); __builtin___strcat_chk (_r821uzv, _m3tzk3n, __builtin_object_size (_r821uzv, 2 > 1 ? 1 : 0));
-        MPI_File_open(((MPI_Comm)0x44000000), _r821uzv, 2, ((MPI_Info)0x1c000000), &_zdo74v1);
-        MPI_File_read(_zdo74v1, &_lexdw6l, 1, ((MPI_Datatype)0x4c000405), &_py6b2kn);
-        MPI_File_read(_zdo74v1, _txhi15c, 1, ((MPI_Datatype)0x4c00080b), &_py6b2kn);
-        MPI_File_read(_zdo74v1, _jzr25md, 1, ((MPI_Datatype)0x4c000406), &_py6b2kn);
-        MPI_File_read(_zdo74v1, _be3yqy5, 2, ((MPI_Datatype)0x4c000406), &_py6b2kn);
-        if (_lexdw6l != 202511) { perror("Version number of code and *.post file are not identical. This can cause undefined behavior\n"); }
-        if (_be3yqy5[0] != _z3nx39r->_jp61lfc) { perror("Number of fault patches from this run is different from that in *.post file. Abort.\n"); exit(1); }
-        if (_be3yqy5[1] != _z3nx39r->_urvqt3g) { perror("Number of boundary patches from this run is different from that in *.post file. Abort.\n"); exit(1); }
-        _et1ghr0 = sizeof(int) + sizeof(double) +3*sizeof(unsigned int);
-        MPI_File_read_at(_zdo74v1, _et1ghr0, _be3yqy5, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c000406), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc*sizeof(unsigned int));
-        for (i = 0u; i < _b6gs8g8[_20n8tte]; i++) { _6zjq7w7[i*4 +0] = _be3yqy5[_xo100vh[i]]; }
-        MPI_File_read_at(_zdo74v1, _et1ghr0, _zareiya, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc*sizeof(float));
-        for (i = 0u; i < _b6gs8g8[_20n8tte]; i++) { _3n3bzt9[i*16 +0] = _zareiya[_xo100vh[i]]; }
-        MPI_File_read_at(_zdo74v1, _et1ghr0, _zareiya, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc*sizeof(float));
-        for (i = 0u; i < _b6gs8g8[_20n8tte]; i++) { _3n3bzt9[i*16 +1] = _zareiya[_xo100vh[i]]; }
-        MPI_File_read_at(_zdo74v1, _et1ghr0, _zareiya, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc*sizeof(float));
-        for (i = 0u; i < _b6gs8g8[_20n8tte]; i++) { _3n3bzt9[i*16 +2] = _zareiya[_xo100vh[i]]; }
-        MPI_File_read_at(_zdo74v1, _et1ghr0, _zareiya, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc*sizeof(float));
-        for (i = 0u; i < _b6gs8g8[_20n8tte]; i++) { _3n3bzt9[i*16 +3] = _zareiya[_xo100vh[i]]; }
-        MPI_File_read_at(_zdo74v1, _et1ghr0, _zareiya, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc*sizeof(float));
-        for (i = 0u; i < _b6gs8g8[_20n8tte]; i++) { _3n3bzt9[i*16 +4] = _zareiya[_xo100vh[i]]; }
-        MPI_File_read_at(_zdo74v1, _et1ghr0, _zareiya, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc*sizeof(float));
-        for (i = 0u; i < _b6gs8g8[_20n8tte]; i++) { _mzwffhh[i*16 +2] = _zareiya[_xo100vh[i]]; }
-        MPI_File_read_at(_zdo74v1, _et1ghr0, _zareiya, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc*sizeof(float));
-        for (i = 0u; i < _b6gs8g8[_20n8tte]; i++) { _mzwffhh[i*16 +3] = _zareiya[_xo100vh[i]]; }
-        MPI_File_read_at(_zdo74v1, _et1ghr0, _zareiya, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc*sizeof(float));
-        for (i = 0u; i < _b6gs8g8[_20n8tte]; i++) { _mzwffhh[i*16 +4] = _zareiya[_xo100vh[i]]; }
-        MPI_File_read_at(_zdo74v1, _et1ghr0, _zareiya, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc*sizeof(float));
-        for (i = 0u; i < _b6gs8g8[_20n8tte]; i++) { _mzwffhh[i*16 +7] = _zareiya[_xo100vh[i]]; }
-        MPI_File_read_at(_zdo74v1, _et1ghr0, _zareiya, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc*sizeof(float));
-        for (i = 0u; i < _b6gs8g8[_20n8tte]; i++) { _3p91i3v[i*8 +3] = _zareiya[_xo100vh[i]]; }
-        MPI_File_read_at(_zdo74v1, _et1ghr0, _zareiya, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc*sizeof(float));
-        for (i = 0u; i < _b6gs8g8[_20n8tte]; i++) { _3p91i3v[i*8 +4] = _zareiya[_xo100vh[i]]; }
-        if (_z3nx39r->_urvqt3g > 0u)
-        { MPI_File_read_at(_zdo74v1, _et1ghr0, _1vsmado, _z3nx39r->_urvqt3g, ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_urvqt3g*sizeof(float));
-            for (i = 0u; i < _zfflb7w[_20n8tte]; i++) { _m7pyxdw[i*16 +0] = _1vsmado[_g1ved32[i]]; }
-            MPI_File_read_at(_zdo74v1, _et1ghr0, _1vsmado, _z3nx39r->_urvqt3g, ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_urvqt3g*sizeof(float));
-            for (i = 0u; i < _zfflb7w[_20n8tte]; i++) { _m7pyxdw[i*16 +1] = _1vsmado[_g1ved32[i]]; }
-            MPI_File_read_at(_zdo74v1, _et1ghr0, _1vsmado, _z3nx39r->_urvqt3g, ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_urvqt3g*sizeof(float));
-            for (i = 0u; i < _zfflb7w[_20n8tte]; i++) { _m7pyxdw[i*16 +2] = _1vsmado[_g1ved32[i]]; }
+        char _o2m71hs[512], _1nouhtc[512];
+        __builtin___strcpy_chk (_o2m71hs, _slwf90k, __builtin_object_size (_o2m71hs, 2 > 1 ? 1 : 0)); __builtin___snprintf_chk (_1nouhtc, sizeof(_1nouhtc), 0, __builtin_object_size (_1nouhtc, 2 > 1 ? 1 : 0), "_%u.post",_84u89yj->_p7bd4w1); __builtin___strcat_chk (_o2m71hs, _1nouhtc, __builtin_object_size (_o2m71hs, 2 > 1 ? 1 : 0));
+        MPI_File_open(((MPI_Comm)0x44000000), _o2m71hs, 2, ((MPI_Info)0x1c000000), &_8bixoiq);
+        MPI_File_read(_8bixoiq, &_uuijnwp, 1, ((MPI_Datatype)0x4c000405), &_myx444n);
+        MPI_File_read(_8bixoiq, _u1g463s, 1, ((MPI_Datatype)0x4c00080b), &_myx444n);
+        MPI_File_read(_8bixoiq, _urvqt3g, 1, ((MPI_Datatype)0x4c000406), &_myx444n);
+        MPI_File_read(_8bixoiq, _nzrf5a7, 2, ((MPI_Datatype)0x4c000406), &_myx444n);
+        if (_uuijnwp != 202511) { perror("Version number of code and *.post file are not identical. This can cause undefined behavior\n"); }
+        if (_nzrf5a7[0] != _s3kkv9r->_otn9uze) { exit(1); }
+        if (_nzrf5a7[1] != _s3kkv9r->_y25m8kb) { exit(1); }
+        _r1yxr2d = sizeof(int) + sizeof(double) +3*sizeof(unsigned int);
+        MPI_File_read_at(_8bixoiq, _r1yxr2d, _nzrf5a7, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c000406), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze*sizeof(unsigned int));
+        for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++) { _mgvu4is[i*4 +0] = _nzrf5a7[_5izolnn[i]]; }
+        MPI_File_read_at(_8bixoiq, _r1yxr2d, _qw5dsk7, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze*sizeof(float));
+        for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++) { _vwvm4w3[i*16 +0] = _qw5dsk7[_5izolnn[i]]; }
+        MPI_File_read_at(_8bixoiq, _r1yxr2d, _qw5dsk7, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze*sizeof(float));
+        for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++) { _vwvm4w3[i*16 +1] = _qw5dsk7[_5izolnn[i]]; }
+        MPI_File_read_at(_8bixoiq, _r1yxr2d, _qw5dsk7, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze*sizeof(float));
+        for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++) { _vwvm4w3[i*16 +2] = _qw5dsk7[_5izolnn[i]]; }
+        MPI_File_read_at(_8bixoiq, _r1yxr2d, _qw5dsk7, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze*sizeof(float));
+        for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++) { _vwvm4w3[i*16 +3] = _qw5dsk7[_5izolnn[i]]; }
+        MPI_File_read_at(_8bixoiq, _r1yxr2d, _qw5dsk7, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze*sizeof(float));
+        for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++) { _vwvm4w3[i*16 +4] = _qw5dsk7[_5izolnn[i]]; }
+        MPI_File_read_at(_8bixoiq, _r1yxr2d, _qw5dsk7, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze*sizeof(float));
+        for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++) { _wyx9trf[i*16 +2] = _qw5dsk7[_5izolnn[i]]; }
+        MPI_File_read_at(_8bixoiq, _r1yxr2d, _qw5dsk7, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze*sizeof(float));
+        for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++) { _wyx9trf[i*16 +3] = _qw5dsk7[_5izolnn[i]]; }
+        MPI_File_read_at(_8bixoiq, _r1yxr2d, _qw5dsk7, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze*sizeof(float));
+        for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++) { _wyx9trf[i*16 +4] = _qw5dsk7[_5izolnn[i]]; }
+        MPI_File_read_at(_8bixoiq, _r1yxr2d, _qw5dsk7, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze*sizeof(float));
+        for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++) { _wyx9trf[i*16 +7] = _qw5dsk7[_5izolnn[i]]; }
+        MPI_File_read_at(_8bixoiq, _r1yxr2d, _qw5dsk7, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze*sizeof(float));
+        for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++) { _gyspeng[i*8 +3] = _qw5dsk7[_5izolnn[i]]; }
+        MPI_File_read_at(_8bixoiq, _r1yxr2d, _qw5dsk7, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze*sizeof(float));
+        for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++) { _gyspeng[i*8 +4] = _qw5dsk7[_5izolnn[i]]; }
+        if (_s3kkv9r->_y25m8kb > 0u)
+        { MPI_File_read_at(_8bixoiq, _r1yxr2d, _3oeuvty, _s3kkv9r->_y25m8kb, ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_y25m8kb*sizeof(float));
+            for (i = 0u; i < _emruyp0[_tk63n2q]; i++) { _dntcagr[i*16 +0] = _3oeuvty[_laym0wb[i]]; }
+            MPI_File_read_at(_8bixoiq, _r1yxr2d, _3oeuvty, _s3kkv9r->_y25m8kb, ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_y25m8kb*sizeof(float));
+            for (i = 0u; i < _emruyp0[_tk63n2q]; i++) { _dntcagr[i*16 +1] = _3oeuvty[_laym0wb[i]]; }
+            MPI_File_read_at(_8bixoiq, _r1yxr2d, _3oeuvty, _s3kkv9r->_y25m8kb, ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_y25m8kb*sizeof(float));
+            for (i = 0u; i < _emruyp0[_tk63n2q]; i++) { _dntcagr[i*16 +2] = _3oeuvty[_laym0wb[i]]; }
         }
-        MPI_File_close(&_zdo74v1);
+        MPI_File_close(&_8bixoiq);
         MPI_Barrier( ((MPI_Comm)0x44000000) );
-        free(_be3yqy5); free(_zareiya); free(_1vsmado);
+        free(_nzrf5a7); free(_qw5dsk7); free(_3oeuvty);
     }
     else
     {
-        if (_20n8tte == 0)
-        { FILE *_szbffzz;
+        if (_tk63n2q == 0)
+        { FILE *_yn4u9bx;
             unsigned int i;
-            unsigned int *_xkc5i8x = malloc(_z3nx39r->_jp61lfc *sizeof(unsigned int)); __builtin___memset_chk (_xkc5i8x, 0, _z3nx39r->_jp61lfc *sizeof(unsigned int), __builtin_object_size (_xkc5i8x, 0));
-            float *_kf1622v = malloc(_z3nx39r->_jp61lfc *sizeof(float)); __builtin___memset_chk (_kf1622v, 0, _z3nx39r->_jp61lfc *sizeof(float), __builtin_object_size (_kf1622v, 0));
-            float *_kb4ehou = malloc(_lyk83tq->_3ru7myo *sizeof(float)); __builtin___memset_chk (_kf1622v, 0, _lyk83tq->_3ru7myo *sizeof(float), __builtin_object_size (_kf1622v, 0));
-            char _y9v20ya[512], _m3tzk3n[512];
-            __builtin___strcpy_chk (_y9v20ya, _8dalfyo, __builtin_object_size (_y9v20ya, 2 > 1 ? 1 : 0)); __builtin___snprintf_chk (_m3tzk3n, sizeof(_m3tzk3n), 0, __builtin_object_size (_m3tzk3n, 2 > 1 ? 1 : 0), "_%u.cat",_lyk83tq->_aq15o2n); __builtin___strcat_chk (_y9v20ya, _m3tzk3n, __builtin_object_size (_y9v20ya, 2 > 1 ? 1 : 0));
-            if ((_szbffzz = fopen(_y9v20ya,"wb")) == ((void *)0)) { perror("Error -cannot open/write   RawCatalogFile...\n"); exit(1); }
-            int _dyk0x65 = (int)202511;
-            fwrite(_jzr25md, sizeof(unsigned int), 1, _szbffzz);
-            fwrite(&_dyk0x65, sizeof(int), 1, _szbffzz);
-            fwrite(&_5zja8dz->_pkxvhag,sizeof(float), 1, _szbffzz);
-            fwrite(&_5zja8dz->_gfu8iog, sizeof(float), 1, _szbffzz);
-            fwrite(&_z3nx39r->_jp61lfc, sizeof(unsigned int), 1, _szbffzz);
-            fwrite(&_lyk83tq->_3ru7myo, sizeof(unsigned int), 1, _szbffzz);
-            for (i = 0u; i < _z3nx39r->_jp61lfc; i++) { _xkc5i8x[i] = _t4q9bc2[i*8 +0]; } fwrite(_xkc5i8x, sizeof(unsigned int), _z3nx39r->_jp61lfc, _szbffzz);
-            for (i = 0u; i < _z3nx39r->_jp61lfc; i++) { _xkc5i8x[i] = _t4q9bc2[i*8 +1]; } fwrite(_xkc5i8x, sizeof(unsigned int), _z3nx39r->_jp61lfc, _szbffzz);
-            for (i = 0u; i < _z3nx39r->_jp61lfc; i++) { _xkc5i8x[i] = _t4q9bc2[i*8 +2]; } fwrite(_xkc5i8x, sizeof(unsigned int), _z3nx39r->_jp61lfc, _szbffzz);
-            for (i = 0u; i < _z3nx39r->_jp61lfc; i++) { _xkc5i8x[i] = _t4q9bc2[i*8 +3]; } fwrite(_xkc5i8x, sizeof(unsigned int), _z3nx39r->_jp61lfc, _szbffzz);
-            for (i = 0u; i < _z3nx39r->_jp61lfc; i++) { _xkc5i8x[i] = _t4q9bc2[i*8 +4]; } fwrite(_xkc5i8x, sizeof(unsigned int), _z3nx39r->_jp61lfc, _szbffzz);
-            for (i = 0u; i < _lyk83tq->_3ru7myo; i++) { _kb4ehou[i]= _z39pecn[i*4 +0]; } fwrite(_kb4ehou, sizeof(float), _lyk83tq->_3ru7myo, _szbffzz);
-            for (i = 0u; i < _lyk83tq->_3ru7myo; i++) { _kb4ehou[i]= _z39pecn[i*4 +1]; } fwrite(_kb4ehou, sizeof(float), _lyk83tq->_3ru7myo, _szbffzz);
-            for (i = 0u; i < _lyk83tq->_3ru7myo; i++) { _kb4ehou[i]= _z39pecn[i*4 +2]; } fwrite(_kb4ehou, sizeof(float), _lyk83tq->_3ru7myo, _szbffzz);
-            for (i = 0u; i < _lyk83tq->_3ru7myo; i++) { _kb4ehou[i]= _z39pecn[i*4 +3]; } fwrite(_kb4ehou, sizeof(float), _lyk83tq->_3ru7myo, _szbffzz);
-            for (i = 0u; i < _z3nx39r->_jp61lfc; i++) { _kf1622v[i] = _qw5dsk7[i*16 +0]; } fwrite(_kf1622v, sizeof(float), _z3nx39r->_jp61lfc, _szbffzz);
-            for (i = 0u; i < _z3nx39r->_jp61lfc; i++) { _kf1622v[i] = _qw5dsk7[i*16 +1]; } fwrite(_kf1622v, sizeof(float), _z3nx39r->_jp61lfc, _szbffzz);
-            for (i = 0u; i < _z3nx39r->_jp61lfc; i++) { _kf1622v[i] = _qw5dsk7[i*16 +2]; } fwrite(_kf1622v, sizeof(float), _z3nx39r->_jp61lfc, _szbffzz);
-            free(_xkc5i8x); free(_kf1622v); free(_kb4ehou);
-            fclose(_szbffzz);
+            unsigned int *_nezw9he = malloc(_s3kkv9r->_otn9uze *sizeof(unsigned int)); __builtin___memset_chk (_nezw9he, 0, _s3kkv9r->_otn9uze *sizeof(unsigned int), __builtin_object_size (_nezw9he, 0));
+            float *_vg5vmf6 = malloc(_s3kkv9r->_otn9uze *sizeof(float)); __builtin___memset_chk (_vg5vmf6, 0, _s3kkv9r->_otn9uze *sizeof(float), __builtin_object_size (_vg5vmf6, 0));
+            float *_kf1622v = malloc(_84u89yj->_cs4kek4 *sizeof(float)); __builtin___memset_chk (_vg5vmf6, 0, _84u89yj->_cs4kek4 *sizeof(float), __builtin_object_size (_vg5vmf6, 0));
+            char _s1k9ye9[512], _1nouhtc[512];
+            __builtin___strcpy_chk (_s1k9ye9, _slwf90k, __builtin_object_size (_s1k9ye9, 2 > 1 ? 1 : 0)); __builtin___snprintf_chk (_1nouhtc, sizeof(_1nouhtc), 0, __builtin_object_size (_1nouhtc, 2 > 1 ? 1 : 0), "_%u.cat",_84u89yj->_p7bd4w1); __builtin___strcat_chk (_s1k9ye9, _1nouhtc, __builtin_object_size (_s1k9ye9, 2 > 1 ? 1 : 0));
+            if ((_yn4u9bx = fopen(_s1k9ye9,"wb")) == ((void *)0)) { perror("Error -cannot open/write   RawCatalogFile...\n"); exit(1); }
+            int _c54wsqt = (int)202511;
+            fwrite(_urvqt3g, sizeof(unsigned int), 1, _yn4u9bx);
+            fwrite(&_c54wsqt, sizeof(int), 1, _yn4u9bx);
+            fwrite(&_j3trp0j->_x5qjicj,sizeof(float), 1, _yn4u9bx);
+            fwrite(&_j3trp0j->_7yt2m6t, sizeof(float), 1, _yn4u9bx);
+            fwrite(&_s3kkv9r->_otn9uze, sizeof(unsigned int), 1, _yn4u9bx);
+            fwrite(&_84u89yj->_cs4kek4, sizeof(unsigned int), 1, _yn4u9bx);
+            for (i = 0u; i < _s3kkv9r->_otn9uze; i++) { _nezw9he[i] = _egok01t[i*8 +0]; } fwrite(_nezw9he, sizeof(unsigned int), _s3kkv9r->_otn9uze, _yn4u9bx);
+            for (i = 0u; i < _s3kkv9r->_otn9uze; i++) { _nezw9he[i] = _egok01t[i*8 +1]; } fwrite(_nezw9he, sizeof(unsigned int), _s3kkv9r->_otn9uze, _yn4u9bx);
+            for (i = 0u; i < _s3kkv9r->_otn9uze; i++) { _nezw9he[i] = _egok01t[i*8 +2]; } fwrite(_nezw9he, sizeof(unsigned int), _s3kkv9r->_otn9uze, _yn4u9bx);
+            for (i = 0u; i < _s3kkv9r->_otn9uze; i++) { _nezw9he[i] = _egok01t[i*8 +3]; } fwrite(_nezw9he, sizeof(unsigned int), _s3kkv9r->_otn9uze, _yn4u9bx);
+            for (i = 0u; i < _s3kkv9r->_otn9uze; i++) { _nezw9he[i] = _egok01t[i*8 +4]; } fwrite(_nezw9he, sizeof(unsigned int), _s3kkv9r->_otn9uze, _yn4u9bx);
+            for (i = 0u; i < _84u89yj->_cs4kek4; i++) { _kf1622v[i]= _n8la100[i*4 +0]; } fwrite(_kf1622v, sizeof(float), _84u89yj->_cs4kek4, _yn4u9bx);
+            for (i = 0u; i < _84u89yj->_cs4kek4; i++) { _kf1622v[i]= _n8la100[i*4 +1]; } fwrite(_kf1622v, sizeof(float), _84u89yj->_cs4kek4, _yn4u9bx);
+            for (i = 0u; i < _84u89yj->_cs4kek4; i++) { _kf1622v[i]= _n8la100[i*4 +2]; } fwrite(_kf1622v, sizeof(float), _84u89yj->_cs4kek4, _yn4u9bx);
+            for (i = 0u; i < _84u89yj->_cs4kek4; i++) { _kf1622v[i]= _n8la100[i*4 +3]; } fwrite(_kf1622v, sizeof(float), _84u89yj->_cs4kek4, _yn4u9bx);
+            for (i = 0u; i < _s3kkv9r->_otn9uze; i++) { _vg5vmf6[i] = _3n3bzt9[i*16 +0]; } fwrite(_vg5vmf6, sizeof(float), _s3kkv9r->_otn9uze, _yn4u9bx);
+            for (i = 0u; i < _s3kkv9r->_otn9uze; i++) { _vg5vmf6[i] = _3n3bzt9[i*16 +1]; } fwrite(_vg5vmf6, sizeof(float), _s3kkv9r->_otn9uze, _yn4u9bx);
+            for (i = 0u; i < _s3kkv9r->_otn9uze; i++) { _vg5vmf6[i] = _3n3bzt9[i*16 +2]; } fwrite(_vg5vmf6, sizeof(float), _s3kkv9r->_otn9uze, _yn4u9bx);
+            free(_nezw9he); free(_vg5vmf6); free(_kf1622v);
+            fclose(_yn4u9bx);
         }
         unsigned int i;
-        float _9p3jpxg[3];
-        for (i = 0u; i < _b6gs8g8[_20n8tte]; i++)
-        { _9p3jpxg[0] = sqrtf(_3n3bzt9[i*16 +9]*_3n3bzt9[i*16 +9] + _3n3bzt9[i*16 +10]*_3n3bzt9[i*16 +10]);
-            if (_9p3jpxg[0] > 0.0f)
-            { _9p3jpxg[1] = _3n3bzt9[i*16 +3]*-1.0f*_3n3bzt9[i*16 +2];
-                _9p3jpxg[2] = 0.5f*(1.0f - _lyk83tq->_rdihsa7)*(ran0(&_5zja8dz->_k5ogz2u)*2.0f -1.0f);
-                _3n3bzt9[i*16 +0] = ((_9p3jpxg[1]*(_lyk83tq->_rdihsa7+_9p3jpxg[2]))/_9p3jpxg[0]) * _3n3bzt9[i*16 +9];
-                _3n3bzt9[i*16 +1] = ((_9p3jpxg[1]*(_lyk83tq->_rdihsa7+_9p3jpxg[2]))/_9p3jpxg[0]) * _3n3bzt9[i*16 +10];
+        float _p9p9w4j[3];
+        for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++)
+        { _p9p9w4j[0] = sqrtf(_vwvm4w3[i*16 +9]*_vwvm4w3[i*16 +9] + _vwvm4w3[i*16 +10]*_vwvm4w3[i*16 +10]);
+            if (_p9p9w4j[0] > 0.0f)
+            { _p9p9w4j[1] = _vwvm4w3[i*16 +3]*-1.0f*_vwvm4w3[i*16 +2];
+                _p9p9w4j[2] = 0.5f*(1.0f - _84u89yj->_ckeh5sw)*(ran0(&_j3trp0j->_gnzei3z)*2.0f -1.0f);
+                _vwvm4w3[i*16 +0] = ((_p9p9w4j[1]*(_84u89yj->_ckeh5sw+_p9p9w4j[2]))/_p9p9w4j[0]) * _vwvm4w3[i*16 +9];
+                _vwvm4w3[i*16 +1] = ((_p9p9w4j[1]*(_84u89yj->_ckeh5sw+_p9p9w4j[2]))/_p9p9w4j[0]) * _vwvm4w3[i*16 +10];
         } }
     }
     return;

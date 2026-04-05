@@ -9390,1508 +9390,1508 @@ __attribute__((availability(tvos,unavailable))) __attribute__((availability(watc
 int clock_settime(clockid_t __clock_id, const struct timespec *__tp);
 __attribute__((availability(macos,introduced=10.15))) __attribute__((availability(ios,introduced=13.0))) __attribute__((availability(tvos,introduced=13.0))) __attribute__((availability(watchos,introduced=6.0)))
 int timespec_get(struct timespec *ts, int base);
-struct _r1yxr2d
-{ long _k5ogz2u;
-    double _q30o30u;
-    float _xpbwhvn;
-    float _dntcagr;
-    float _pkxvhag;
-    float _uug95rl;
-    float _9dde3cu;
-    float _4yfds0d;
-    float _gfu8iog;
-    float _at9mx2x;
-    float _rtj5pht;
-    float _ktakpux;
-    unsigned int _148p0tv;
-};
-struct _q0oxfq8
-{ float _yj9boq0;
-    float _p2u4dtb;
+struct _43d5iqv
+{ long _gnzei3z;
+    double _zle6kwh;
+    float _wd1xmxb;
+    float _rg2gzr7;
     float _x5qjicj;
-    float _e9ftaxp;
-    float _6snglh6;
-    float _3ac6pe6;
-    unsigned int _jp61lfc;
-    unsigned int _urvqt3g;
-    unsigned int _o31yhxs;
-    unsigned int _l9ue421;
-    unsigned int _2h2p39y;
-    unsigned short int _nwngucz;
-    unsigned short int _zk94yxf;
-    unsigned short int _qsq0p82;
+    float _5bwikot;
+    float _plozjcn;
+    float _g87oi0e;
+    float _7yt2m6t;
+    float _fqewaou;
+    float _8drc11e;
+    float _z0yncxl;
+    unsigned int _jlteiyz;
 };
-struct _wrdmly4
-{ float _n8la100;
-    float _lw2lm34;
-    float _6fokzix;
-    float _jssuuqo;
-    float _q01tee1;
-    float _8o1bj9r;
-    float _rdihsa7;
-    float _ihair4c;
-    float _owgzrix;
-    float _a11dpg8;
-    unsigned int _3ru7myo;
-    unsigned int _5izolnn;
-    unsigned short int _hx6zdcu;
-    unsigned short int _fftouhy;
-    unsigned short int _aq15o2n;
-    unsigned short int _cs4kek4;
-    unsigned short int _2qgv3dr;
-    unsigned short int _26q3xlr;
+struct _gzui1b0
+{ float _0dtirc9;
+    float _txcb48y;
+    float _hez74la;
+    float _hj3muur;
+    float _iq2fa39;
+    float _p8ijl2z;
+    unsigned int _otn9uze;
+    unsigned int _y25m8kb;
+    unsigned int _1nlc8jp;
+    unsigned int _d7x48wz;
+    unsigned int _mygty3a;
+    unsigned short int _w2maiet;
+    unsigned short int _k00ilu6;
+    unsigned short int _25qbrmq;
 };
-extern void SubtractVect3(float *restrict _zh13cd5, const float *restrict _3lbqgu3, const float *restrict _li076a3);
-extern float VectorLength(const float *restrict _nvg3kk0);
-extern void NrmlzeVect(float *restrict _nvg3kk0);
-extern void GetStkAndDipVect(const float *restrict _5bwikot, float *restrict _pt5r5rc, float *restrict _glqj5sx);
-extern void RotStressG2L(float *restrict _2292mtr, const float *restrict _088o98b, const float *restrict _kkrzd5e);
-extern void ScaleStress6(float *restrict _e1g983e, float _wrb7f6f);
-extern float ran0(long *_e05qmkt);
-extern long int GetByteSize(int _6zx1tv1, int _tk63n2q, int _qtkcd0r);
-extern void ReAssignElemVals(struct _r1yxr2d *restrict _5zja8dz, const struct _q0oxfq8 *restrict _z3nx39r, unsigned int i, unsigned int *restrict _6zjq7w7, float *restrict _3n3bzt9, float *restrict _mzwffhh, unsigned int _7qqyzqi);
-extern void StrainHS_Nikkhoo(float _d5eqy08[6], float _82n2atq[6], float X, float Y, float Z, float _atj9tze[3], float _b7r3ocw[3], float _v2isqp4[3], float _790pdw5, float _frhocn9, float _yrybova, const float _r965r96, const float _xj4pnjy);
-extern void StrainFS_Nikkhoo(float _d5eqy08[6], float _82n2atq[6], float X, float Y, float Z, float _atj9tze[3], float _b7r3ocw[3], float _v2isqp4[3], float _790pdw5, float _frhocn9, float _yrybova, const float _r965r96, const float _xj4pnjy);
-void _8ozcywd(float _g87oi0e, unsigned int _pj8t22c, const float *restrict _dhgzz0j, unsigned int _qy8yb7w, const unsigned int *restrict _06ftlo4, const float *restrict _wkxxjve, unsigned int ***restrict _iua08ek, unsigned int ***restrict _yce4qgm, unsigned int *restrict _iblejgu);
-void _qjiujv6(unsigned int _qy8yb7w, const unsigned int *restrict _06ftlo4, const float *restrict _wkxxjve, const float *restrict _ypntrfz, unsigned int **restrict _1btr23q, unsigned int _iblejgu, float ***restrict _t8qzpky);
-void _ja2m0w1(const char *restrict _8dalfyo, unsigned int _e4ex6u8, const float *restrict _31yrujo, unsigned int **restrict _r7vgrf1, unsigned int _jq6fx7x, float **restrict _cb1kjtg, unsigned int _p2tixc7, const float *restrict _69ugnek, unsigned int **restrict _xd356wa, unsigned int _lu6k7p9, float **restrict _s9bp4m1);
-void MakeNew_Khmatrix(int _avt8k06, int _20n8tte, const char *restrict _8dalfyo, struct _r1yxr2d *_5zja8dz, struct _q0oxfq8 *restrict _z3nx39r, const struct _wrdmly4 *restrict _lyk83tq, const int *restrict _b6gs8g8, const int *restrict _zfflb7w, const unsigned int *restrict _xo100vh, const unsigned int *restrict _g1ved32, const float *restrict _cmktlzk, const float *restrict _ldalmje, const unsigned int *restrict _t4q9bc2, const unsigned int *restrict _mgvu4is, const float *restrict _qw5dsk7, const float *restrict _rcpprcj, const float *restrict _z39pecn, const float *restrict _8e7flqh, unsigned int *restrict _6zjq7w7, float *restrict _3n3bzt9, float *restrict _mzwffhh, float *restrict _m7pyxdw, unsigned short int *restrict _iob0nlw, unsigned short int *restrict _iymyrsv, unsigned short int *restrict _btkf6xd, unsigned short int *restrict _9f77lu8, unsigned short int ***restrict _3b9so0u, unsigned short int ***restrict _1ajo091, unsigned short int ***restrict _86lthet, unsigned short int ***restrict _op767j2, float ***restrict _0dtirc9, float ***restrict _qk4ltah, float ***restrict _h61iaoi, float ***restrict _nf74t60, float ***restrict _mrunjdu, float ***restrict _jbc2sws, float ***restrict _4xkss0k, float ***restrict _t997e4u, float ***restrict _ge2j51b, float ***restrict _sh3tow4, float ***restrict _pqvl00e)
+struct _rcbpljd
+{ float _d31k9qm;
+    float _m7pyxdw;
+    float _31yrujo;
+    float _8kzruin;
+    float _glqj5sx;
+    float _9iy4x41;
+    float _ckeh5sw;
+    float _ktakpux;
+    float _qphr62g;
+    float _dswm31y;
+    unsigned int _cs4kek4;
+    unsigned int _7yvdqbs;
+    unsigned short int _cw2lbm2;
+    unsigned short int _q8hke22;
+    unsigned short int _p7bd4w1;
+    unsigned short int _t9nm3v2;
+    unsigned short int _xo100vh;
+    unsigned short int _fhv1xg1;
+};
+extern void SubtractVect3(float *restrict _9yo18pa, const float *restrict _0ljch2v, const float *restrict _6zs62yw);
+extern float VectorLength(const float *restrict _2ljk4q5);
+extern void NrmlzeVect(float *restrict _2ljk4q5);
+extern void GetStkAndDipVect(const float *restrict _ljefy3z, float *restrict _wrb7f6f, float *restrict _jssuuqo);
+extern void RotStressG2L(float *restrict _yj9boq0, const float *restrict _v3z6bz8, const float *restrict _e1g983e);
+extern void ScaleStress6(float *restrict _kibu4fm, float _088o98b);
+extern float ran0(long *_1poxrte);
+extern long int GetByteSize(int _eoz0kz4, int _tajw253, int _0fqldb2);
+extern void ReAssignElemVals(struct _43d5iqv *restrict _j3trp0j, const struct _gzui1b0 *restrict _s3kkv9r, unsigned int i, unsigned int *restrict _mgvu4is, float *restrict _vwvm4w3, float *restrict _wyx9trf, unsigned int _gvz9aaw);
+extern void StrainHS_Nikkhoo(float _e8f8409[6], float _wyzx4w6[6], float X, float Y, float Z, float _0lzjjeg[3], float _9skdgig[3], float _5r5uqpg[3], float _q0oxfq8, float _tb94874, float _3jgzlma, const float _9wszv83, const float _ufwbucj);
+extern void StrainFS_Nikkhoo(float _e8f8409[6], float _wyzx4w6[6], float X, float Y, float Z, float _0lzjjeg[3], float _9skdgig[3], float _5r5uqpg[3], float _q0oxfq8, float _tb94874, float _3jgzlma, const float _9wszv83, const float _ufwbucj);
+void _18hafey(float _kb4ehou, unsigned int _o31yhxs, const float *restrict _v78hu7f, unsigned int _mda9oek, const unsigned int *restrict _qw4c6lb, const float *restrict _nbhnal3, unsigned int ***restrict _l9ue421, unsigned int ***restrict _t4q9bc2, unsigned int *restrict _vfua9bq);
+void _h75lxo6(unsigned int _mda9oek, const unsigned int *restrict _qw4c6lb, const float *restrict _nbhnal3, const float *restrict _r1dwwo8, unsigned int **restrict _2h2p39y, unsigned int _vfua9bq, float ***restrict _vlnknd6);
+void _j4t0sek(const char *restrict _slwf90k, unsigned int _2vpgstq, const float *restrict _q01tee1, unsigned int **restrict _qc6dr08, unsigned int _qsq0p82, float **restrict _zh13cd5, unsigned int _04k0lth, const float *restrict _o6l1f90, unsigned int **restrict _1zlbori, unsigned int _6parsg7, float **restrict _s3jonou);
+void MakeNew_Khmatrix(int _b6gs8g8, int _tk63n2q, const char *restrict _slwf90k, struct _43d5iqv *_j3trp0j, struct _gzui1b0 *restrict _s3kkv9r, const struct _rcbpljd *restrict _84u89yj, const int *restrict _6zx1tv1, const int *restrict _emruyp0, const unsigned int *restrict _5izolnn, const unsigned int *restrict _laym0wb, const float *restrict _lqbmae3, const float *restrict _h55rbc7, const unsigned int *restrict _egok01t, const unsigned int *restrict _qydbpgv, const float *restrict _3n3bzt9, const float *restrict _s9bp4m1, const float *restrict _n8la100, const float *restrict _t8qzpky, unsigned int *restrict _mgvu4is, float *restrict _vwvm4w3, float *restrict _wyx9trf, float *restrict _dntcagr, unsigned short int *restrict _hthsjr0, unsigned short int *restrict _pmlvak9, unsigned short int *restrict _vk0ucc1, unsigned short int *restrict _vshkoec, unsigned short int ***restrict _k2wbxan, unsigned short int ***restrict _n14eb87, unsigned short int ***restrict _va1nkbt, unsigned short int ***restrict _eurxhw0, float ***restrict _0isb5iq, float ***restrict _zzf8s2z, float ***restrict _3jczucq, float ***restrict _sh3tow4, float ***restrict _jbc2sws, float ***restrict _e9ftaxp, float ***restrict _6fokzix, float ***restrict _z39pecn, float ***restrict _t997e4u, float ***restrict _d1vn8lf, float ***restrict _4xkss0k)
 {
-    struct timespec _7dknncp, _6nouhfj;
-    double _6parsg7;
-    unsigned int _gzvrctl = 0u;
-    unsigned int _2vpgstq = 0u;
-    unsigned int **_6wmdw0f = ((void *)0), **_rp9dxoq = ((void *)0), **_1xgbngz = ((void *)0), **_f9yecaz = ((void *)0);
-    float **_s6g298c = ((void *)0), **_jdtvv2y = ((void *)0);
-    clock_gettime(_CLOCK_REALTIME, &_7dknncp);
-    _8ozcywd( _lyk83tq->_n8la100, _lyk83tq->_hx6zdcu, _cmktlzk, _z3nx39r->_jp61lfc, _t4q9bc2, _qw5dsk7, &_6wmdw0f, &_1xgbngz, &_gzvrctl);
-    if (_z3nx39r->_urvqt3g > 0u)
-    { _8ozcywd(_lyk83tq->_lw2lm34, _lyk83tq->_fftouhy, _ldalmje, _z3nx39r->_urvqt3g, _mgvu4is, _rcpprcj, &_rp9dxoq, &_f9yecaz, &_2vpgstq);
+    struct timespec _zn4regb, _ofn1r4k;
+    double _weehwjq;
+    unsigned int _pwh0mx1 = 0u;
+    unsigned int _kicwmpe = 0u;
+    unsigned int **_f7fr91i = ((void *)0), **_wshmlfz = ((void *)0), **_jzr25md = ((void *)0), **_jlpefja = ((void *)0);
+    float **_pqvl00e = ((void *)0), **_xf7jxjn = ((void *)0);
+    clock_gettime(_CLOCK_REALTIME, &_zn4regb);
+    _18hafey( _84u89yj->_d31k9qm, _84u89yj->_cw2lbm2, _lqbmae3, _s3kkv9r->_otn9uze, _egok01t, _3n3bzt9, &_f7fr91i, &_jzr25md, &_pwh0mx1);
+    if (_s3kkv9r->_y25m8kb > 0u)
+    { _18hafey(_84u89yj->_m7pyxdw, _84u89yj->_q8hke22, _h55rbc7, _s3kkv9r->_y25m8kb, _qydbpgv, _s9bp4m1, &_wshmlfz, &_jlpefja, &_kicwmpe);
     }
     MPI_Barrier( ((MPI_Comm)0x44000000) );
-    clock_gettime(_CLOCK_REALTIME, &_6nouhfj);
-    _6parsg7 = (_6nouhfj.tv_sec - _7dknncp.tv_sec) + (_6nouhfj.tv_nsec - _7dknncp.tv_nsec)/1.0E+9;
-    if (_20n8tte == 0) { fprintf(__stdoutp,"BranchCountF: %7u\nTime taken (in seconds): %lf\n", _gzvrctl, _6parsg7); }
-    _qjiujv6( _z3nx39r->_jp61lfc, _t4q9bc2, _qw5dsk7, _z39pecn, _6wmdw0f, _gzvrctl, &_s6g298c);
-    if (_z3nx39r->_urvqt3g > 0u)
-    { _qjiujv6(_z3nx39r->_urvqt3g, _mgvu4is, _rcpprcj, _8e7flqh, _rp9dxoq, _2vpgstq, &_jdtvv2y);
+    clock_gettime(_CLOCK_REALTIME, &_ofn1r4k);
+    _weehwjq = (_ofn1r4k.tv_sec - _zn4regb.tv_sec) + (_ofn1r4k.tv_nsec - _zn4regb.tv_nsec)/1.0E+9;
+    if (_tk63n2q == 0) { fprintf(__stdoutp,"BranchCountF: %7u\nTime taken (in seconds): %lf\n", _pwh0mx1, _weehwjq); }
+    _h75lxo6( _s3kkv9r->_otn9uze, _egok01t, _3n3bzt9, _n8la100, _f7fr91i, _pwh0mx1, &_pqvl00e);
+    if (_s3kkv9r->_y25m8kb > 0u)
+    { _h75lxo6(_s3kkv9r->_y25m8kb, _qydbpgv, _s9bp4m1, _t8qzpky, _wshmlfz, _kicwmpe, &_xf7jxjn);
     }
     MPI_Barrier( ((MPI_Comm)0x44000000) );
-    clock_gettime(_CLOCK_REALTIME, &_7dknncp);
+    clock_gettime(_CLOCK_REALTIME, &_zn4regb);
     { unsigned int i, j;
-        unsigned int _09lzrk7, _4d4r9v4, _5v2wwg8, _7orfqla, _xdrkz40, _50b8y5d, _8h0imjy, _jcmrsez, _ytkw283;
-        float _h30153s, _flse45b, _g34iq7z, _zkwdeek, _vwvm4w3;
-        float _v78hu7f[3], _kc4lorx[3], _2c9t199[3], _dxj37c9[3], _h42m44g[3], _v3z6bz8[3], _nvg3kk0[3];
-        float _ktmonrv[6], _p9p9w4j[6], _q52wspo[6], _bjfvyb6[6], _66cnolj[6], _fv177ud[6], _6zs62yw[6], _dan085r[9], _hez74la[9], _jtb9xxa[9];
-        long int _39ayq6w;
-        unsigned int *_p422ta8 = ((void *)0), *_jz6us7r = ((void *)0), *_ntbz3m5 = ((void *)0), *_mda9oek = ((void *)0);
-        float *_zd76szn = ((void *)0), *_ukwqvr1 = ((void *)0), *_m458ax4 = ((void *)0), *_plozjcn = ((void *)0), *_0isb5iq = ((void *)0);
-        float *_ozctwjl = ((void *)0), *_b68rerv = ((void *)0), *_ny181ac = ((void *)0), *_3jczucq = ((void *)0), *_ycz04cd = ((void *)0), *_zzf8s2z = ((void *)0);
-        _p422ta8 = malloc(_z3nx39r->_jp61lfc *sizeof(unsigned int));
-        _jz6us7r = malloc(_gzvrctl *sizeof(unsigned int));
-        _39ayq6w = GetByteSize(64, 2*_z3nx39r->_jp61lfc, sizeof(float));
-        _zd76szn = aligned_alloc(64, _39ayq6w);
-        _ukwqvr1 = aligned_alloc(64, _39ayq6w);
-        _m458ax4 = aligned_alloc(64, _39ayq6w);
-        if (_z3nx39r->_urvqt3g > 0u)
-        { _ntbz3m5 = malloc(_z3nx39r->_urvqt3g *sizeof(unsigned int));
-            _mda9oek = malloc(_2vpgstq *sizeof(unsigned int));
-            _39ayq6w = GetByteSize(64, 3*_z3nx39r->_urvqt3g, sizeof(float));
-            _plozjcn = aligned_alloc(64, _39ayq6w);
-            _0isb5iq = aligned_alloc(64, _39ayq6w);
+        unsigned int _xdrkz40, _fu7bfxq, _be3yqy5, _iua08ek, _vmefozt, _o7vbgr8, _jg2y8rg, _ybxkpm2, _1b07g2r;
+        float _66cnolj, _q52wspo, _fv177ud, _8e7flqh, _1vsmado;
+        float _uug95rl[3], _dan085r[3], _e3nwxuj[3], _3ac6pe6[3], _3lbqgu3[3], _obyghgk[3], _2ljk4q5[3];
+        float _mt8vt43[6], _pkxvhag[6], _dtg5nqj[6], _pt5r5rc[6], _kc4lorx[6], _qijc1yd[6], _dhgzz0j[6], _v71448n[9], _2292mtr[9], _gwaj1g1[9];
+        long int _050ui22;
+        unsigned int *_rgb93wk = ((void *)0), *_kb700uc = ((void *)0), *_ye0qzsa = ((void *)0), *_0s1f537 = ((void *)0);
+        float *_nf74t60 = ((void *)0), *_ge2j51b = ((void *)0), *_mrunjdu = ((void *)0), *_ycz04cd = ((void *)0), *_ozctwjl = ((void *)0);
+        float *_0wfoy4d = ((void *)0), *_zareiya = ((void *)0), *_0dl5e11 = ((void *)0), *_ny181ac = ((void *)0), *_jdtvv2y = ((void *)0), *_b68rerv = ((void *)0);
+        _rgb93wk = malloc(_s3kkv9r->_otn9uze *sizeof(unsigned int));
+        _kb700uc = malloc(_pwh0mx1 *sizeof(unsigned int));
+        _050ui22 = GetByteSize(64, 2*_s3kkv9r->_otn9uze, sizeof(float));
+        _nf74t60 = aligned_alloc(64, _050ui22);
+        _ge2j51b = aligned_alloc(64, _050ui22);
+        _mrunjdu = aligned_alloc(64, _050ui22);
+        if (_s3kkv9r->_y25m8kb > 0u)
+        { _ye0qzsa = malloc(_s3kkv9r->_y25m8kb *sizeof(unsigned int));
+            _0s1f537 = malloc(_kicwmpe *sizeof(unsigned int));
+            _050ui22 = GetByteSize(64, 3*_s3kkv9r->_y25m8kb, sizeof(float));
+            _ycz04cd = aligned_alloc(64, _050ui22);
+            _ozctwjl = aligned_alloc(64, _050ui22);
         }
-        _39ayq6w = GetByteSize(64, _b6gs8g8[_20n8tte], sizeof(unsigned short int *));
-        *_3b9so0u = aligned_alloc(64, _39ayq6w);
-        _39ayq6w = GetByteSize(64, _z3nx39r->_jp61lfc, sizeof(unsigned short int));
-        for (i = 0u; i < _b6gs8g8[_20n8tte]; i++)
-        { (*_3b9so0u)[i] = aligned_alloc(64, _39ayq6w); __builtin___memset_chk ((*_3b9so0u)[i], 0, _39ayq6w, __builtin_object_size ((*_3b9so0u)[i], 0));
+        _050ui22 = GetByteSize(64, _6zx1tv1[_tk63n2q], sizeof(unsigned short int *));
+        *_k2wbxan = aligned_alloc(64, _050ui22);
+        _050ui22 = GetByteSize(64, _s3kkv9r->_otn9uze, sizeof(unsigned short int));
+        for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++)
+        { (*_k2wbxan)[i] = aligned_alloc(64, _050ui22); __builtin___memset_chk ((*_k2wbxan)[i], 0, _050ui22, __builtin_object_size ((*_k2wbxan)[i], 0));
         }
-        if (_z3nx39r->_urvqt3g > 0u)
-        { _39ayq6w = GetByteSize(64, _b6gs8g8[_20n8tte], sizeof(unsigned short int *));
-            *_1ajo091 = aligned_alloc(64, _39ayq6w);
-            _39ayq6w = GetByteSize(64, _z3nx39r->_urvqt3g, sizeof(unsigned short int));
-            for (i = 0u; i < _b6gs8g8[_20n8tte]; i++)
-            { (*_1ajo091)[i] = aligned_alloc(64, _39ayq6w); __builtin___memset_chk ((*_1ajo091)[i], 0, _39ayq6w, __builtin_object_size ((*_1ajo091)[i], 0));
+        if (_s3kkv9r->_y25m8kb > 0u)
+        { _050ui22 = GetByteSize(64, _6zx1tv1[_tk63n2q], sizeof(unsigned short int *));
+            *_n14eb87 = aligned_alloc(64, _050ui22);
+            _050ui22 = GetByteSize(64, _s3kkv9r->_y25m8kb, sizeof(unsigned short int));
+            for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++)
+            { (*_n14eb87)[i] = aligned_alloc(64, _050ui22); __builtin___memset_chk ((*_n14eb87)[i], 0, _050ui22, __builtin_object_size ((*_n14eb87)[i], 0));
             }
         }
-        _39ayq6w = GetByteSize(64, _b6gs8g8[_20n8tte], sizeof(float *));
-        *_0dtirc9 = aligned_alloc(64, _39ayq6w);
-        *_qk4ltah = aligned_alloc(64, _39ayq6w);
-        *_h61iaoi = aligned_alloc(64, _39ayq6w);
-        if (_z3nx39r->_urvqt3g > 0u)
-        { *_nf74t60 = aligned_alloc(64, _39ayq6w);
-            *_mrunjdu = aligned_alloc(64, _39ayq6w);
+        _050ui22 = GetByteSize(64, _6zx1tv1[_tk63n2q], sizeof(float *));
+        *_0isb5iq = aligned_alloc(64, _050ui22);
+        *_zzf8s2z = aligned_alloc(64, _050ui22);
+        *_3jczucq = aligned_alloc(64, _050ui22);
+        if (_s3kkv9r->_y25m8kb > 0u)
+        { *_sh3tow4 = aligned_alloc(64, _050ui22);
+            *_jbc2sws = aligned_alloc(64, _050ui22);
         }
-        for (i = 0; i < _b6gs8g8[_20n8tte]; i++)
-        { _xdrkz40 = _xo100vh[i];
-            _39ayq6w = GetByteSize(64, 2*_z3nx39r->_jp61lfc, sizeof(float));
-            __builtin___memset_chk (_zd76szn, 0, _39ayq6w, __builtin_object_size (_zd76szn, 0));
-            __builtin___memset_chk (_ukwqvr1, 0, _39ayq6w, __builtin_object_size (_ukwqvr1, 0));
-            __builtin___memset_chk (_m458ax4, 0, _39ayq6w, __builtin_object_size (_m458ax4, 0));
-            __builtin___memcpy_chk (_v78hu7f, &_qw5dsk7[_xdrkz40*16 +0], 3*sizeof(float), __builtin_object_size (_v78hu7f, 0));
-            __builtin___memcpy_chk (_dan085r, &_qw5dsk7[_xdrkz40*16 +6], 9*sizeof(float), __builtin_object_size (_dan085r, 0));
-            __builtin___memset_chk (_p422ta8, 0, _z3nx39r->_jp61lfc*sizeof(unsigned int), __builtin_object_size (_p422ta8, 0));
-            __builtin___memset_chk (_jz6us7r, 0, _gzvrctl*sizeof(unsigned int), __builtin_object_size (_jz6us7r, 0));
-            _09lzrk7 = 0u;
-            while (_09lzrk7 < _z3nx39r->_jp61lfc)
+        for (i = 0; i < _6zx1tv1[_tk63n2q]; i++)
+        { _vmefozt = _5izolnn[i];
+            _050ui22 = GetByteSize(64, 2*_s3kkv9r->_otn9uze, sizeof(float));
+            __builtin___memset_chk (_nf74t60, 0, _050ui22, __builtin_object_size (_nf74t60, 0));
+            __builtin___memset_chk (_ge2j51b, 0, _050ui22, __builtin_object_size (_ge2j51b, 0));
+            __builtin___memset_chk (_mrunjdu, 0, _050ui22, __builtin_object_size (_mrunjdu, 0));
+            __builtin___memcpy_chk (_uug95rl, &_3n3bzt9[_vmefozt*16 +0], 3*sizeof(float), __builtin_object_size (_uug95rl, 0));
+            __builtin___memcpy_chk (_v71448n, &_3n3bzt9[_vmefozt*16 +6], 9*sizeof(float), __builtin_object_size (_v71448n, 0));
+            __builtin___memset_chk (_rgb93wk, 0, _s3kkv9r->_otn9uze*sizeof(unsigned int), __builtin_object_size (_rgb93wk, 0));
+            __builtin___memset_chk (_kb700uc, 0, _pwh0mx1*sizeof(unsigned int), __builtin_object_size (_kb700uc, 0));
+            _xdrkz40 = 0u;
+            while (_xdrkz40 < _s3kkv9r->_otn9uze)
             {
-                for (j = 0u; j < _z3nx39r->_jp61lfc; j++) { if (_p422ta8[j] == 0u) { _50b8y5d = j; break; } }
-                __builtin___memcpy_chk (_kc4lorx, &_qw5dsk7[_50b8y5d*16 +0], 3*sizeof(float), __builtin_object_size (_kc4lorx, 0));
-                SubtractVect3(_nvg3kk0, _v78hu7f, _kc4lorx); _vwvm4w3 = VectorLength(_nvg3kk0);
-                _zkwdeek = (_vwvm4w3 >= 1.75f*_lyk83tq->_n8la100)*1.0f + (_vwvm4w3 < 1.75f*_lyk83tq->_n8la100)*0.0f;
-                _zkwdeek = (_t4q9bc2[_xdrkz40*8 +4] == _t4q9bc2[_50b8y5d*8 +4])*1.0f + (_t4q9bc2[_xdrkz40*8 +4] != _t4q9bc2[_50b8y5d*8 +4])*_zkwdeek;
-                _8h0imjy = _6wmdw0f[_50b8y5d][0];
-                _4d4r9v4 = 0;
-                _jcmrsez = 1u;
-                while (_jcmrsez == 1u)
+                for (j = 0u; j < _s3kkv9r->_otn9uze; j++) { if (_rgb93wk[j] == 0u) { _o7vbgr8 = j; break; } }
+                __builtin___memcpy_chk (_dan085r, &_3n3bzt9[_o7vbgr8*16 +0], 3*sizeof(float), __builtin_object_size (_dan085r, 0));
+                SubtractVect3(_2ljk4q5, _uug95rl, _dan085r); _1vsmado = VectorLength(_2ljk4q5);
+                _8e7flqh = (_1vsmado >= 1.75f*_84u89yj->_d31k9qm)*1.0f + (_1vsmado < 1.75f*_84u89yj->_d31k9qm)*0.0f;
+                _8e7flqh = (_egok01t[_vmefozt*8 +4] == _egok01t[_o7vbgr8*8 +4])*1.0f + (_egok01t[_vmefozt*8 +4] != _egok01t[_o7vbgr8*8 +4])*_8e7flqh;
+                _jg2y8rg = _f7fr91i[_o7vbgr8][0];
+                _fu7bfxq = 0;
+                _ybxkpm2 = 1u;
+                while (_ybxkpm2 == 1u)
                 {
-                    _ytkw283 = 0u;
-                    while (_4d4r9v4 < _8h0imjy-1)
-                    { _5v2wwg8 = _6wmdw0f[_50b8y5d][16 -_8h0imjy +_4d4r9v4];
-                        __builtin___memcpy_chk (_kc4lorx, &_s6g298c[_5v2wwg8][0], 3*sizeof(float), __builtin_object_size (_kc4lorx, 0));
-                        SubtractVect3(_nvg3kk0, _v78hu7f, _kc4lorx); _vwvm4w3 = VectorLength(_nvg3kk0);
-                        _ytkw283 = (_jz6us7r[_5v2wwg8] == 0u)*1u + (_jz6us7r[_5v2wwg8] != 0u)*0u;
-                        _ytkw283 = (_1xgbngz[_5v2wwg8][0] > 1u)*_ytkw283 + (_1xgbngz[_5v2wwg8][0] <= 1u)*0u;
-                        _ytkw283 = (_6wmdw0f[_xdrkz40][16 -_8h0imjy +_4d4r9v4] != _5v2wwg8)*_ytkw283 + (_6wmdw0f[_xdrkz40][16 -_8h0imjy +_4d4r9v4] == _5v2wwg8)*0u;
-                        _ytkw283 = (_vwvm4w3 > (_s6g298c[_5v2wwg8][5] +_lyk83tq->_ihair4c*_lyk83tq->_n8la100))*_ytkw283 + (_vwvm4w3 <= (_s6g298c[_5v2wwg8][5] +_lyk83tq->_ihair4c*_lyk83tq->_n8la100))*0u;
-                        if (_ytkw283 == 1u) { break; }
-                        _4d4r9v4 += 1u;
+                    _1b07g2r = 0u;
+                    while (_fu7bfxq < _jg2y8rg-1)
+                    { _be3yqy5 = _f7fr91i[_o7vbgr8][16 -_jg2y8rg +_fu7bfxq];
+                        __builtin___memcpy_chk (_dan085r, &_pqvl00e[_be3yqy5][0], 3*sizeof(float), __builtin_object_size (_dan085r, 0));
+                        SubtractVect3(_2ljk4q5, _uug95rl, _dan085r); _1vsmado = VectorLength(_2ljk4q5);
+                        _1b07g2r = (_kb700uc[_be3yqy5] == 0u)*1u + (_kb700uc[_be3yqy5] != 0u)*0u;
+                        _1b07g2r = (_jzr25md[_be3yqy5][0] > 1u)*_1b07g2r + (_jzr25md[_be3yqy5][0] <= 1u)*0u;
+                        _1b07g2r = (_f7fr91i[_vmefozt][16 -_jg2y8rg +_fu7bfxq] != _be3yqy5)*_1b07g2r + (_f7fr91i[_vmefozt][16 -_jg2y8rg +_fu7bfxq] == _be3yqy5)*0u;
+                        _1b07g2r = (_1vsmado > (_pqvl00e[_be3yqy5][5] +_84u89yj->_ktakpux*_84u89yj->_d31k9qm))*_1b07g2r + (_1vsmado <= (_pqvl00e[_be3yqy5][5] +_84u89yj->_ktakpux*_84u89yj->_d31k9qm))*0u;
+                        if (_1b07g2r == 1u) { break; }
+                        _fu7bfxq += 1u;
                     }
-                    if (_ytkw283 == 0u)
-                    { __builtin___memcpy_chk (_2c9t199, &_z39pecn[_t4q9bc2[_50b8y5d*8 +0]*4 +0], 3*sizeof(float), __builtin_object_size (_2c9t199, 0));
-                        __builtin___memcpy_chk (_dxj37c9, &_z39pecn[_t4q9bc2[_50b8y5d*8 +1]*4 +0], 3*sizeof(float), __builtin_object_size (_dxj37c9, 0));
-                        __builtin___memcpy_chk (_h42m44g, &_z39pecn[_t4q9bc2[_50b8y5d*8 +2]*4 +0], 3*sizeof(float), __builtin_object_size (_h42m44g, 0));
-                        if (_lyk83tq->_26q3xlr == 1u)
-                        { StrainHS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, _lyk83tq->_6fokzix, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                            StrainHS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, 0.0f, _lyk83tq->_6fokzix, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                            StrainHS_Nikkhoo(_q52wspo, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, 0.0f, 0.0f, _lyk83tq->_6fokzix, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
+                    if (_1b07g2r == 0u)
+                    { __builtin___memcpy_chk (_e3nwxuj, &_n8la100[_egok01t[_o7vbgr8*8 +0]*4 +0], 3*sizeof(float), __builtin_object_size (_e3nwxuj, 0));
+                        __builtin___memcpy_chk (_3ac6pe6, &_n8la100[_egok01t[_o7vbgr8*8 +1]*4 +0], 3*sizeof(float), __builtin_object_size (_3ac6pe6, 0));
+                        __builtin___memcpy_chk (_3lbqgu3, &_n8la100[_egok01t[_o7vbgr8*8 +2]*4 +0], 3*sizeof(float), __builtin_object_size (_3lbqgu3, 0));
+                        if (_84u89yj->_fhv1xg1 == 1u)
+                        { StrainHS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, _84u89yj->_31yrujo, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                            StrainHS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, 0.0f, _84u89yj->_31yrujo, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                            StrainHS_Nikkhoo(_dtg5nqj, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, 0.0f, 0.0f, _84u89yj->_31yrujo, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
                         }
                         else
-                        { StrainFS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, _lyk83tq->_6fokzix, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                            StrainFS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, 0.0f, _lyk83tq->_6fokzix, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                            StrainFS_Nikkhoo(_q52wspo, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, 0.0f, 0.0f, _lyk83tq->_6fokzix, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
+                        { StrainFS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, _84u89yj->_31yrujo, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                            StrainFS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, 0.0f, _84u89yj->_31yrujo, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                            StrainFS_Nikkhoo(_dtg5nqj, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, 0.0f, 0.0f, _84u89yj->_31yrujo, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
                         }
-                        ScaleStress6(_ktmonrv, (_zkwdeek/(_lyk83tq->_6fokzix*_qw5dsk7[_50b8y5d*16 +15]))); RotStressG2L(&_hez74la[0], _dan085r, _ktmonrv);
-                        ScaleStress6(_p9p9w4j, (_zkwdeek/(_lyk83tq->_6fokzix*_qw5dsk7[_50b8y5d*16 +15]))); RotStressG2L(&_hez74la[3], _dan085r, _p9p9w4j);
-                        ScaleStress6(_q52wspo, (_zkwdeek/(_lyk83tq->_6fokzix*_qw5dsk7[_50b8y5d*16 +15]))); RotStressG2L(&_hez74la[6], _dan085r, _q52wspo);
-                        if (_xdrkz40 == _50b8y5d)
-                        { _3n3bzt9[i*16 +5] = _hez74la[0]*_qw5dsk7[_50b8y5d*16 +15];
-                            _3n3bzt9[i*16 +6] = _hez74la[4]*_qw5dsk7[_50b8y5d*16 +15];
-                            _3n3bzt9[i*16 +7] = _hez74la[8]*_qw5dsk7[_50b8y5d*16 +15];
-                            _mzwffhh[i*16 +1] = ( ((fabsf(_3n3bzt9[i*16 +5])) > (fabsf(_3n3bzt9[i*16 +6]))) *(fabsf(_3n3bzt9[i*16 +5])) + ((fabsf(_3n3bzt9[i*16 +5])) <= (fabsf(_3n3bzt9[i*16 +6]))) *(fabsf(_3n3bzt9[i*16 +6])) );
-                            _mzwffhh[i*16 +1] = ( ((_mzwffhh[i*16 +1]) > (fabsf(_3n3bzt9[i*16 +7]))) *(_mzwffhh[i*16 +1]) + ((_mzwffhh[i*16 +1]) <= (fabsf(_3n3bzt9[i*16 +7]))) *(fabsf(_3n3bzt9[i*16 +7])) );
-                            ReAssignElemVals(_5zja8dz, _z3nx39r, i, _6zjq7w7, _3n3bzt9, _mzwffhh, 1);
+                        ScaleStress6(_mt8vt43, (_8e7flqh/(_84u89yj->_31yrujo*_3n3bzt9[_o7vbgr8*16 +15]))); RotStressG2L(&_2292mtr[0], _v71448n, _mt8vt43);
+                        ScaleStress6(_pkxvhag, (_8e7flqh/(_84u89yj->_31yrujo*_3n3bzt9[_o7vbgr8*16 +15]))); RotStressG2L(&_2292mtr[3], _v71448n, _pkxvhag);
+                        ScaleStress6(_dtg5nqj, (_8e7flqh/(_84u89yj->_31yrujo*_3n3bzt9[_o7vbgr8*16 +15]))); RotStressG2L(&_2292mtr[6], _v71448n, _dtg5nqj);
+                        if (_vmefozt == _o7vbgr8)
+                        { _vwvm4w3[i*16 +5] = _2292mtr[0]*_3n3bzt9[_o7vbgr8*16 +15];
+                            _vwvm4w3[i*16 +6] = _2292mtr[4]*_3n3bzt9[_o7vbgr8*16 +15];
+                            _vwvm4w3[i*16 +7] = _2292mtr[8]*_3n3bzt9[_o7vbgr8*16 +15];
+                            _wyx9trf[i*16 +1] = ( ((fabsf(_vwvm4w3[i*16 +5])) > (fabsf(_vwvm4w3[i*16 +6]))) *(fabsf(_vwvm4w3[i*16 +5])) + ((fabsf(_vwvm4w3[i*16 +5])) <= (fabsf(_vwvm4w3[i*16 +6]))) *(fabsf(_vwvm4w3[i*16 +6])) );
+                            _wyx9trf[i*16 +1] = ( ((_wyx9trf[i*16 +1]) > (fabsf(_vwvm4w3[i*16 +7]))) *(_wyx9trf[i*16 +1]) + ((_wyx9trf[i*16 +1]) <= (fabsf(_vwvm4w3[i*16 +7]))) *(fabsf(_vwvm4w3[i*16 +7])) );
+                            ReAssignElemVals(_j3trp0j, _s3kkv9r, i, _mgvu4is, _vwvm4w3, _wyx9trf, 1);
                         }
-                        _zd76szn[_iob0nlw[i]*2 +0] = _hez74la[0]; _zd76szn[_iob0nlw[i]*2 +1] = _hez74la[3];
-                        _ukwqvr1[_iob0nlw[i]*2 +0] = _hez74la[1]; _ukwqvr1[_iob0nlw[i]*2 +1] = _hez74la[4];
-                        _m458ax4[_iob0nlw[i]*2 +0] = _hez74la[2]; _m458ax4[_iob0nlw[i]*2 +1] = _hez74la[5];
-                        (*_3b9so0u)[i][_50b8y5d] = _iob0nlw[i];
-                        _iob0nlw[i] += 1u;
-                        _p422ta8[_50b8y5d] = 1u;
-                        _09lzrk7 = 0u;
-                        for (j = 0u; j < _z3nx39r->_jp61lfc; j++) { _09lzrk7 += _p422ta8[j]; }
-                        for (j = 1u; j < _8h0imjy; j++) { _jz6us7r[ _6wmdw0f[_50b8y5d][16 -_8h0imjy +j] ] = 1u; }
-                        _jcmrsez = 0u;
+                        _nf74t60[_hthsjr0[i]*2 +0] = _2292mtr[0]; _nf74t60[_hthsjr0[i]*2 +1] = _2292mtr[3];
+                        _ge2j51b[_hthsjr0[i]*2 +0] = _2292mtr[1]; _ge2j51b[_hthsjr0[i]*2 +1] = _2292mtr[4];
+                        _mrunjdu[_hthsjr0[i]*2 +0] = _2292mtr[2]; _mrunjdu[_hthsjr0[i]*2 +1] = _2292mtr[5];
+                        (*_k2wbxan)[i][_o7vbgr8] = _hthsjr0[i];
+                        _hthsjr0[i] += 1u;
+                        _rgb93wk[_o7vbgr8] = 1u;
+                        _xdrkz40 = 0u;
+                        for (j = 0u; j < _s3kkv9r->_otn9uze; j++) { _xdrkz40 += _rgb93wk[j]; }
+                        for (j = 1u; j < _jg2y8rg; j++) { _kb700uc[ _f7fr91i[_o7vbgr8][16 -_jg2y8rg +j] ] = 1u; }
+                        _ybxkpm2 = 0u;
                     }
                     else
-                    { _5v2wwg8 = _6wmdw0f[_50b8y5d][16 -_8h0imjy +_4d4r9v4];
-                        __builtin___memcpy_chk (_2c9t199, &_s6g298c[_5v2wwg8][9], 3*sizeof(float), __builtin_object_size (_2c9t199, 0));
-                        __builtin___memcpy_chk (_dxj37c9, &_s6g298c[_5v2wwg8][12], 3*sizeof(float), __builtin_object_size (_dxj37c9, 0));
-                        __builtin___memcpy_chk (_h42m44g, &_s6g298c[_5v2wwg8][15], 3*sizeof(float), __builtin_object_size (_h42m44g, 0));
-                        __builtin___memcpy_chk (_v3z6bz8, &_s6g298c[_5v2wwg8][18], 3*sizeof(float), __builtin_object_size (_v3z6bz8, 0));
-                        if (_lyk83tq->_26q3xlr == 1u)
-                        { StrainHS_Nikkhoo(_bjfvyb6, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, _lyk83tq->_6fokzix, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                            StrainHS_Nikkhoo(_66cnolj, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, _lyk83tq->_6fokzix, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                            StrainHS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, _lyk83tq->_6fokzix, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                            StrainHS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, _lyk83tq->_6fokzix, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                            _ktmonrv[0] += _bjfvyb6[0]; _ktmonrv[1] += _bjfvyb6[1]; _ktmonrv[2] += _bjfvyb6[2];
-                            _ktmonrv[3] += _bjfvyb6[3]; _ktmonrv[4] += _bjfvyb6[4]; _ktmonrv[5] += _bjfvyb6[5];
-                            _p9p9w4j[0] += _66cnolj[0]; _p9p9w4j[1] += _66cnolj[1]; _p9p9w4j[2] += _66cnolj[2];
-                            _p9p9w4j[3] += _66cnolj[3]; _p9p9w4j[4] += _66cnolj[4]; _p9p9w4j[5] += _66cnolj[5];
+                    { _be3yqy5 = _f7fr91i[_o7vbgr8][16 -_jg2y8rg +_fu7bfxq];
+                        __builtin___memcpy_chk (_e3nwxuj, &_pqvl00e[_be3yqy5][9], 3*sizeof(float), __builtin_object_size (_e3nwxuj, 0));
+                        __builtin___memcpy_chk (_3ac6pe6, &_pqvl00e[_be3yqy5][12], 3*sizeof(float), __builtin_object_size (_3ac6pe6, 0));
+                        __builtin___memcpy_chk (_3lbqgu3, &_pqvl00e[_be3yqy5][15], 3*sizeof(float), __builtin_object_size (_3lbqgu3, 0));
+                        __builtin___memcpy_chk (_obyghgk, &_pqvl00e[_be3yqy5][18], 3*sizeof(float), __builtin_object_size (_obyghgk, 0));
+                        if (_84u89yj->_fhv1xg1 == 1u)
+                        { StrainHS_Nikkhoo(_pt5r5rc, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, _84u89yj->_31yrujo, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                            StrainHS_Nikkhoo(_kc4lorx, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, _84u89yj->_31yrujo, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                            StrainHS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, _84u89yj->_31yrujo, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                            StrainHS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, _84u89yj->_31yrujo, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                            _mt8vt43[0] += _pt5r5rc[0]; _mt8vt43[1] += _pt5r5rc[1]; _mt8vt43[2] += _pt5r5rc[2];
+                            _mt8vt43[3] += _pt5r5rc[3]; _mt8vt43[4] += _pt5r5rc[4]; _mt8vt43[5] += _pt5r5rc[5];
+                            _pkxvhag[0] += _kc4lorx[0]; _pkxvhag[1] += _kc4lorx[1]; _pkxvhag[2] += _kc4lorx[2];
+                            _pkxvhag[3] += _kc4lorx[3]; _pkxvhag[4] += _kc4lorx[4]; _pkxvhag[5] += _kc4lorx[5];
                         }
                         else
-                        { StrainFS_Nikkhoo(_bjfvyb6, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, _lyk83tq->_6fokzix, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                            StrainFS_Nikkhoo(_66cnolj, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, _lyk83tq->_6fokzix, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                            StrainFS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, _lyk83tq->_6fokzix, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                            StrainFS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, _lyk83tq->_6fokzix, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                            _ktmonrv[0] += _bjfvyb6[0]; _ktmonrv[1] += _bjfvyb6[1]; _ktmonrv[2] += _bjfvyb6[2];
-                            _ktmonrv[3] += _bjfvyb6[3]; _ktmonrv[4] += _bjfvyb6[4]; _ktmonrv[5] += _bjfvyb6[5];
-                            _p9p9w4j[0] += _66cnolj[0]; _p9p9w4j[1] += _66cnolj[1]; _p9p9w4j[2] += _66cnolj[2];
-                            _p9p9w4j[3] += _66cnolj[3]; _p9p9w4j[4] += _66cnolj[4]; _p9p9w4j[5] += _66cnolj[5];
+                        { StrainFS_Nikkhoo(_pt5r5rc, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, _84u89yj->_31yrujo, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                            StrainFS_Nikkhoo(_kc4lorx, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, _84u89yj->_31yrujo, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                            StrainFS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, _84u89yj->_31yrujo, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                            StrainFS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, _84u89yj->_31yrujo, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                            _mt8vt43[0] += _pt5r5rc[0]; _mt8vt43[1] += _pt5r5rc[1]; _mt8vt43[2] += _pt5r5rc[2];
+                            _mt8vt43[3] += _pt5r5rc[3]; _mt8vt43[4] += _pt5r5rc[4]; _mt8vt43[5] += _pt5r5rc[5];
+                            _pkxvhag[0] += _kc4lorx[0]; _pkxvhag[1] += _kc4lorx[1]; _pkxvhag[2] += _kc4lorx[2];
+                            _pkxvhag[3] += _kc4lorx[3]; _pkxvhag[4] += _kc4lorx[4]; _pkxvhag[5] += _kc4lorx[5];
                         }
-                        ScaleStress6(_ktmonrv, (_zkwdeek/(_lyk83tq->_6fokzix*_s6g298c[_5v2wwg8][3]))); RotStressG2L(&_hez74la[0], _dan085r, _ktmonrv);
-                        ScaleStress6(_p9p9w4j, (_zkwdeek/(_lyk83tq->_6fokzix*_s6g298c[_5v2wwg8][3]))); RotStressG2L(&_hez74la[3], _dan085r, _p9p9w4j);
-                        _ytkw283 = 1u;
-                        for (j = 0; j < _1xgbngz[_5v2wwg8][0]; j++)
-                        { _7orfqla = _1xgbngz[_5v2wwg8][(j+1)];
-                            __builtin___memcpy_chk (_2c9t199, &_s6g298c[_7orfqla][9], 3*sizeof(float), __builtin_object_size (_2c9t199, 0));
-                            __builtin___memcpy_chk (_dxj37c9, &_s6g298c[_7orfqla][12], 3*sizeof(float), __builtin_object_size (_dxj37c9, 0));
-                            __builtin___memcpy_chk (_h42m44g, &_s6g298c[_7orfqla][15], 3*sizeof(float), __builtin_object_size (_h42m44g, 0));
-                            __builtin___memcpy_chk (_v3z6bz8, &_s6g298c[_7orfqla][18], 3*sizeof(float), __builtin_object_size (_v3z6bz8, 0));
-                            if (_lyk83tq->_26q3xlr == 1u)
-                            { StrainHS_Nikkhoo(_bjfvyb6, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, _lyk83tq->_6fokzix, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainHS_Nikkhoo(_66cnolj, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, _lyk83tq->_6fokzix, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainHS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, _lyk83tq->_6fokzix, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainHS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, _lyk83tq->_6fokzix, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                _ktmonrv[0] += _bjfvyb6[0]; _ktmonrv[1] += _bjfvyb6[1]; _ktmonrv[2] += _bjfvyb6[2];
-                                _ktmonrv[3] += _bjfvyb6[3]; _ktmonrv[4] += _bjfvyb6[4]; _ktmonrv[5] += _bjfvyb6[5];
-                                _p9p9w4j[0] += _66cnolj[0]; _p9p9w4j[1] += _66cnolj[1]; _p9p9w4j[2] += _66cnolj[2];
-                                _p9p9w4j[3] += _66cnolj[3]; _p9p9w4j[4] += _66cnolj[4]; _p9p9w4j[5] += _66cnolj[5];
+                        ScaleStress6(_mt8vt43, (_8e7flqh/(_84u89yj->_31yrujo*_pqvl00e[_be3yqy5][3]))); RotStressG2L(&_2292mtr[0], _v71448n, _mt8vt43);
+                        ScaleStress6(_pkxvhag, (_8e7flqh/(_84u89yj->_31yrujo*_pqvl00e[_be3yqy5][3]))); RotStressG2L(&_2292mtr[3], _v71448n, _pkxvhag);
+                        _1b07g2r = 1u;
+                        for (j = 0; j < _jzr25md[_be3yqy5][0]; j++)
+                        { _iua08ek = _jzr25md[_be3yqy5][(j+1)];
+                            __builtin___memcpy_chk (_e3nwxuj, &_pqvl00e[_iua08ek][9], 3*sizeof(float), __builtin_object_size (_e3nwxuj, 0));
+                            __builtin___memcpy_chk (_3ac6pe6, &_pqvl00e[_iua08ek][12], 3*sizeof(float), __builtin_object_size (_3ac6pe6, 0));
+                            __builtin___memcpy_chk (_3lbqgu3, &_pqvl00e[_iua08ek][15], 3*sizeof(float), __builtin_object_size (_3lbqgu3, 0));
+                            __builtin___memcpy_chk (_obyghgk, &_pqvl00e[_iua08ek][18], 3*sizeof(float), __builtin_object_size (_obyghgk, 0));
+                            if (_84u89yj->_fhv1xg1 == 1u)
+                            { StrainHS_Nikkhoo(_pt5r5rc, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, _84u89yj->_31yrujo, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainHS_Nikkhoo(_kc4lorx, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, _84u89yj->_31yrujo, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainHS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, _84u89yj->_31yrujo, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainHS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, _84u89yj->_31yrujo, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                _mt8vt43[0] += _pt5r5rc[0]; _mt8vt43[1] += _pt5r5rc[1]; _mt8vt43[2] += _pt5r5rc[2];
+                                _mt8vt43[3] += _pt5r5rc[3]; _mt8vt43[4] += _pt5r5rc[4]; _mt8vt43[5] += _pt5r5rc[5];
+                                _pkxvhag[0] += _kc4lorx[0]; _pkxvhag[1] += _kc4lorx[1]; _pkxvhag[2] += _kc4lorx[2];
+                                _pkxvhag[3] += _kc4lorx[3]; _pkxvhag[4] += _kc4lorx[4]; _pkxvhag[5] += _kc4lorx[5];
                             }
                             else
-                            { StrainFS_Nikkhoo(_bjfvyb6, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, _lyk83tq->_6fokzix, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainFS_Nikkhoo(_66cnolj, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, _lyk83tq->_6fokzix, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainFS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, _lyk83tq->_6fokzix, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainFS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, _lyk83tq->_6fokzix, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                _ktmonrv[0] += _bjfvyb6[0]; _ktmonrv[1] += _bjfvyb6[1]; _ktmonrv[2] += _bjfvyb6[2];
-                                _ktmonrv[3] += _bjfvyb6[3]; _ktmonrv[4] += _bjfvyb6[4]; _ktmonrv[5] += _bjfvyb6[5];
-                                _p9p9w4j[0] += _66cnolj[0]; _p9p9w4j[1] += _66cnolj[1]; _p9p9w4j[2] += _66cnolj[2];
-                                _p9p9w4j[3] += _66cnolj[3]; _p9p9w4j[4] += _66cnolj[4]; _p9p9w4j[5] += _66cnolj[5];
+                            { StrainFS_Nikkhoo(_pt5r5rc, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, _84u89yj->_31yrujo, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainFS_Nikkhoo(_kc4lorx, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, _84u89yj->_31yrujo, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainFS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, _84u89yj->_31yrujo, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainFS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, _84u89yj->_31yrujo, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                _mt8vt43[0] += _pt5r5rc[0]; _mt8vt43[1] += _pt5r5rc[1]; _mt8vt43[2] += _pt5r5rc[2];
+                                _mt8vt43[3] += _pt5r5rc[3]; _mt8vt43[4] += _pt5r5rc[4]; _mt8vt43[5] += _pt5r5rc[5];
+                                _pkxvhag[0] += _kc4lorx[0]; _pkxvhag[1] += _kc4lorx[1]; _pkxvhag[2] += _kc4lorx[2];
+                                _pkxvhag[3] += _kc4lorx[3]; _pkxvhag[4] += _kc4lorx[4]; _pkxvhag[5] += _kc4lorx[5];
                             }
-                            ScaleStress6(_ktmonrv, (_zkwdeek/(_lyk83tq->_6fokzix*_s6g298c[_7orfqla][3]))); RotStressG2L(&_jtb9xxa[0], _dan085r, _ktmonrv);
-                            ScaleStress6(_p9p9w4j, (_zkwdeek/(_lyk83tq->_6fokzix*_s6g298c[_7orfqla][3]))); RotStressG2L(&_jtb9xxa[3], _dan085r, _p9p9w4j);
-                            __builtin___memcpy_chk (_kc4lorx, &_s6g298c[_7orfqla][0], 3*sizeof(float), __builtin_object_size (_kc4lorx, 0));
-                            SubtractVect3(_nvg3kk0, _v78hu7f, _kc4lorx); _vwvm4w3 = VectorLength(_nvg3kk0);
-                            _g34iq7z = (_vwvm4w3/_lyk83tq->_n8la100 - _lyk83tq->_ihair4c)/(_lyk83tq->_owgzrix - _lyk83tq->_ihair4c);
-                            _g34iq7z = (_g34iq7z >= 0.0f)*_g34iq7z + (_g34iq7z < 0.0f)*0.0f;
-                            _g34iq7z = (_g34iq7z <= 1.0f)*_g34iq7z + (_g34iq7z > 1.0f)*1.0f;
-                            _g34iq7z = _lyk83tq->_a11dpg8*_g34iq7z;
-                            _h30153s = sqrtf( (_jtb9xxa[0]-_hez74la[0])*(_jtb9xxa[0]-_hez74la[0]) + (_jtb9xxa[1]-_hez74la[1])*(_jtb9xxa[1]-_hez74la[1]) + (_jtb9xxa[2]-_hez74la[2])*(_jtb9xxa[2]-_hez74la[2]) + (_jtb9xxa[3]-_hez74la[3])*(_jtb9xxa[3]-_hez74la[3]) + (_jtb9xxa[4]-_hez74la[4])*(_jtb9xxa[4]-_hez74la[4]) + (_jtb9xxa[5]-_hez74la[5])*(_jtb9xxa[5]-_hez74la[5]) );
-                            _flse45b = sqrtf( _hez74la[0] *_hez74la[0] + _hez74la[1] *_hez74la[1] + _hez74la[2] *_hez74la[2] + _hez74la[3] *_hez74la[3] + _hez74la[4] *_hez74la[4] + _hez74la[5] *_hez74la[5] );
-                            _ytkw283 = ((_h30153s/_flse45b) <= _g34iq7z)*_ytkw283 + ((_h30153s/_flse45b) > _g34iq7z)*0u;
+                            ScaleStress6(_mt8vt43, (_8e7flqh/(_84u89yj->_31yrujo*_pqvl00e[_iua08ek][3]))); RotStressG2L(&_gwaj1g1[0], _v71448n, _mt8vt43);
+                            ScaleStress6(_pkxvhag, (_8e7flqh/(_84u89yj->_31yrujo*_pqvl00e[_iua08ek][3]))); RotStressG2L(&_gwaj1g1[3], _v71448n, _pkxvhag);
+                            __builtin___memcpy_chk (_dan085r, &_pqvl00e[_iua08ek][0], 3*sizeof(float), __builtin_object_size (_dan085r, 0));
+                            SubtractVect3(_2ljk4q5, _uug95rl, _dan085r); _1vsmado = VectorLength(_2ljk4q5);
+                            _fv177ud = (_1vsmado/_84u89yj->_d31k9qm - _84u89yj->_ktakpux)/(_84u89yj->_qphr62g - _84u89yj->_ktakpux);
+                            _fv177ud = (_fv177ud >= 0.0f)*_fv177ud + (_fv177ud < 0.0f)*0.0f;
+                            _fv177ud = (_fv177ud <= 1.0f)*_fv177ud + (_fv177ud > 1.0f)*1.0f;
+                            _fv177ud = _84u89yj->_dswm31y*_fv177ud;
+                            _66cnolj = sqrtf( (_gwaj1g1[0]-_2292mtr[0])*(_gwaj1g1[0]-_2292mtr[0]) + (_gwaj1g1[1]-_2292mtr[1])*(_gwaj1g1[1]-_2292mtr[1]) + (_gwaj1g1[2]-_2292mtr[2])*(_gwaj1g1[2]-_2292mtr[2]) + (_gwaj1g1[3]-_2292mtr[3])*(_gwaj1g1[3]-_2292mtr[3]) + (_gwaj1g1[4]-_2292mtr[4])*(_gwaj1g1[4]-_2292mtr[4]) + (_gwaj1g1[5]-_2292mtr[5])*(_gwaj1g1[5]-_2292mtr[5]) );
+                            _q52wspo = sqrtf( _2292mtr[0] *_2292mtr[0] + _2292mtr[1] *_2292mtr[1] + _2292mtr[2] *_2292mtr[2] + _2292mtr[3] *_2292mtr[3] + _2292mtr[4] *_2292mtr[4] + _2292mtr[5] *_2292mtr[5] );
+                            _1b07g2r = ((_66cnolj/_q52wspo) <= _fv177ud)*_1b07g2r + ((_66cnolj/_q52wspo) > _fv177ud)*0u;
                         }
-                        if (_ytkw283 == 1u)
-                        { _zd76szn[_iob0nlw[i]*2 +0] = _hez74la[0]; _zd76szn[_iob0nlw[i]*2 +1] = _hez74la[3];
-                            _ukwqvr1[_iob0nlw[i]*2 +0] = _hez74la[1]; _ukwqvr1[_iob0nlw[i]*2 +1] = _hez74la[4];
-                            _m458ax4[_iob0nlw[i]*2 +0] = _hez74la[2]; _m458ax4[_iob0nlw[i]*2 +1] = _hez74la[5];
-                            _09lzrk7 = 0u;
-                            for (j = 0u; j < _z3nx39r->_jp61lfc; j++)
-                            { _p422ta8[j] = (_6wmdw0f[j][16 -_8h0imjy +_4d4r9v4] == _5v2wwg8)*1u + (_6wmdw0f[j][16 -_8h0imjy +_4d4r9v4] != _5v2wwg8)*_p422ta8[j];
-                                (*_3b9so0u)[i][j] = (_6wmdw0f[j][16 -_8h0imjy +_4d4r9v4] == _5v2wwg8)*_iob0nlw[i] + (_6wmdw0f[j][16 -_8h0imjy +_4d4r9v4] != _5v2wwg8)*(*_3b9so0u)[i][j];
-                                _09lzrk7 += _p422ta8[j];
+                        if (_1b07g2r == 1u)
+                        { _nf74t60[_hthsjr0[i]*2 +0] = _2292mtr[0]; _nf74t60[_hthsjr0[i]*2 +1] = _2292mtr[3];
+                            _ge2j51b[_hthsjr0[i]*2 +0] = _2292mtr[1]; _ge2j51b[_hthsjr0[i]*2 +1] = _2292mtr[4];
+                            _mrunjdu[_hthsjr0[i]*2 +0] = _2292mtr[2]; _mrunjdu[_hthsjr0[i]*2 +1] = _2292mtr[5];
+                            _xdrkz40 = 0u;
+                            for (j = 0u; j < _s3kkv9r->_otn9uze; j++)
+                            { _rgb93wk[j] = (_f7fr91i[j][16 -_jg2y8rg +_fu7bfxq] == _be3yqy5)*1u + (_f7fr91i[j][16 -_jg2y8rg +_fu7bfxq] != _be3yqy5)*_rgb93wk[j];
+                                (*_k2wbxan)[i][j] = (_f7fr91i[j][16 -_jg2y8rg +_fu7bfxq] == _be3yqy5)*_hthsjr0[i] + (_f7fr91i[j][16 -_jg2y8rg +_fu7bfxq] != _be3yqy5)*(*_k2wbxan)[i][j];
+                                _xdrkz40 += _rgb93wk[j];
                             }
-                            _iob0nlw[i] += 1u;
-                            for (j = 0u; j < _8h0imjy; j++) { _jz6us7r[ _6wmdw0f[_50b8y5d][16 -_8h0imjy +j] ] = 1u; }
-                            _jcmrsez = 0u;
+                            _hthsjr0[i] += 1u;
+                            for (j = 0u; j < _jg2y8rg; j++) { _kb700uc[ _f7fr91i[_o7vbgr8][16 -_jg2y8rg +j] ] = 1u; }
+                            _ybxkpm2 = 0u;
                         }
-                    _4d4r9v4 += 1u;
+                    _fu7bfxq += 1u;
             } } }
-            _39ayq6w = GetByteSize(64, 2*_iob0nlw[i], sizeof(float));
-            (*_0dtirc9)[i] = aligned_alloc(64, _39ayq6w); __builtin___memcpy_chk ((*_0dtirc9)[i], _zd76szn, 2*_iob0nlw[i]* sizeof(float), __builtin_object_size ((*_0dtirc9)[i], 0));
-            (*_qk4ltah)[i] = aligned_alloc(64, _39ayq6w); __builtin___memcpy_chk ((*_qk4ltah)[i], _ukwqvr1, 2*_iob0nlw[i]* sizeof(float), __builtin_object_size ((*_qk4ltah)[i], 0));
-            (*_h61iaoi)[i] = aligned_alloc(64, _39ayq6w); __builtin___memcpy_chk ((*_h61iaoi)[i], _m458ax4, 2*_iob0nlw[i]* sizeof(float), __builtin_object_size ((*_h61iaoi)[i], 0));
-            if ((_z3nx39r->_zk94yxf == 1)&&(_20n8tte == 0)) { fprintf(__stdoutp,"\nElement %d of %d    with   Src_resolved of Src_total:    %u of %u", i, _b6gs8g8[_20n8tte], _iob0nlw[i], _z3nx39r->_jp61lfc); }
-            if (_z3nx39r->_urvqt3g > 0u)
-            { _39ayq6w = GetByteSize(64, 3*_z3nx39r->_urvqt3g, sizeof(float));
-                __builtin___memset_chk (_plozjcn, 0, _39ayq6w, __builtin_object_size (_plozjcn, 0));
-                __builtin___memset_chk (_0isb5iq, 0, _39ayq6w, __builtin_object_size (_0isb5iq, 0));
-                __builtin___memset_chk (_ntbz3m5, 0, _z3nx39r->_urvqt3g*sizeof(unsigned int), __builtin_object_size (_ntbz3m5, 0));
-                __builtin___memset_chk (_mda9oek, 0, _2vpgstq*sizeof(unsigned int), __builtin_object_size (_mda9oek, 0));
-                _09lzrk7 = 0u;
-                while (_09lzrk7 < _z3nx39r->_urvqt3g)
+            _050ui22 = GetByteSize(64, 2*_hthsjr0[i], sizeof(float));
+            (*_0isb5iq)[i] = aligned_alloc(64, _050ui22); __builtin___memcpy_chk ((*_0isb5iq)[i], _nf74t60, 2*_hthsjr0[i]* sizeof(float), __builtin_object_size ((*_0isb5iq)[i], 0));
+            (*_zzf8s2z)[i] = aligned_alloc(64, _050ui22); __builtin___memcpy_chk ((*_zzf8s2z)[i], _ge2j51b, 2*_hthsjr0[i]* sizeof(float), __builtin_object_size ((*_zzf8s2z)[i], 0));
+            (*_3jczucq)[i] = aligned_alloc(64, _050ui22); __builtin___memcpy_chk ((*_3jczucq)[i], _mrunjdu, 2*_hthsjr0[i]* sizeof(float), __builtin_object_size ((*_3jczucq)[i], 0));
+            if ((_s3kkv9r->_k00ilu6 == 1)&&(_tk63n2q == 0)) { fprintf(__stdoutp,"\nElement %d of %d    with     %10u resolved sources", i, _6zx1tv1[_tk63n2q], _hthsjr0[i]); }
+            if (_s3kkv9r->_y25m8kb > 0u)
+            { _050ui22 = GetByteSize(64, 3*_s3kkv9r->_y25m8kb, sizeof(float));
+                __builtin___memset_chk (_ycz04cd, 0, _050ui22, __builtin_object_size (_ycz04cd, 0));
+                __builtin___memset_chk (_ozctwjl, 0, _050ui22, __builtin_object_size (_ozctwjl, 0));
+                __builtin___memset_chk (_ye0qzsa, 0, _s3kkv9r->_y25m8kb*sizeof(unsigned int), __builtin_object_size (_ye0qzsa, 0));
+                __builtin___memset_chk (_0s1f537, 0, _kicwmpe*sizeof(unsigned int), __builtin_object_size (_0s1f537, 0));
+                _xdrkz40 = 0u;
+                while (_xdrkz40 < _s3kkv9r->_y25m8kb)
                 {
-                    for (j = 0u; j < _z3nx39r->_urvqt3g; j++) { if (_ntbz3m5[j] == 0u) { _50b8y5d = j; break; } }
-                    __builtin___memcpy_chk (_kc4lorx, &_rcpprcj[_50b8y5d*16 +0], 3u*sizeof(float), __builtin_object_size (_kc4lorx, 0));
-                    SubtractVect3(_nvg3kk0, _v78hu7f, _kc4lorx); _vwvm4w3 = VectorLength(_nvg3kk0);
-                    _zkwdeek = (_vwvm4w3 >= 1.75f*_lyk83tq->_lw2lm34)*1.0f + (_vwvm4w3 < 1.75f*_lyk83tq->_lw2lm34)*0.0f;
-                    _8h0imjy = _rp9dxoq[_50b8y5d][0];
-                    _4d4r9v4 = 0;
-                    _jcmrsez = 1u;
-                    while (_jcmrsez == 1u)
+                    for (j = 0u; j < _s3kkv9r->_y25m8kb; j++) { if (_ye0qzsa[j] == 0u) { _o7vbgr8 = j; break; } }
+                    __builtin___memcpy_chk (_dan085r, &_s9bp4m1[_o7vbgr8*16 +0], 3u*sizeof(float), __builtin_object_size (_dan085r, 0));
+                    SubtractVect3(_2ljk4q5, _uug95rl, _dan085r); _1vsmado = VectorLength(_2ljk4q5);
+                    _8e7flqh = (_1vsmado >= 1.75f*_84u89yj->_m7pyxdw)*1.0f + (_1vsmado < 1.75f*_84u89yj->_m7pyxdw)*0.0f;
+                    _jg2y8rg = _wshmlfz[_o7vbgr8][0];
+                    _fu7bfxq = 0;
+                    _ybxkpm2 = 1u;
+                    while (_ybxkpm2 == 1u)
                     {
-                        _ytkw283 = 0u;
-                        while (_4d4r9v4 < _8h0imjy-1)
-                        { _5v2wwg8 = _rp9dxoq[_50b8y5d][16 -_8h0imjy +_4d4r9v4];
-                            __builtin___memcpy_chk (_kc4lorx, &_jdtvv2y[_5v2wwg8][0], 3*sizeof(float), __builtin_object_size (_kc4lorx, 0));
-                            SubtractVect3(_nvg3kk0, _v78hu7f, _kc4lorx); _vwvm4w3 = VectorLength(_nvg3kk0);
-                            _ytkw283 = (_mda9oek[_5v2wwg8] == 0u)*1u + (_mda9oek[_5v2wwg8] != 0u)*0u;
-                            _ytkw283 = (_f9yecaz[_5v2wwg8][0] > 1u)*_ytkw283 + (_f9yecaz[_5v2wwg8][0] <= 1u)*0u;
-                            _ytkw283 = (_vwvm4w3 > (_jdtvv2y[_5v2wwg8][5] +_lyk83tq->_ihair4c*_lyk83tq->_lw2lm34))*_ytkw283 + (_vwvm4w3 <= (_jdtvv2y[_5v2wwg8][5] +_lyk83tq->_ihair4c*_lyk83tq->_lw2lm34))*0u;
-                            if (_ytkw283 == 1u) { break; }
-                            _4d4r9v4 += 1u;
+                        _1b07g2r = 0u;
+                        while (_fu7bfxq < _jg2y8rg-1)
+                        { _be3yqy5 = _wshmlfz[_o7vbgr8][16 -_jg2y8rg +_fu7bfxq];
+                            __builtin___memcpy_chk (_dan085r, &_xf7jxjn[_be3yqy5][0], 3*sizeof(float), __builtin_object_size (_dan085r, 0));
+                            SubtractVect3(_2ljk4q5, _uug95rl, _dan085r); _1vsmado = VectorLength(_2ljk4q5);
+                            _1b07g2r = (_0s1f537[_be3yqy5] == 0u)*1u + (_0s1f537[_be3yqy5] != 0u)*0u;
+                            _1b07g2r = (_jlpefja[_be3yqy5][0] > 1u)*_1b07g2r + (_jlpefja[_be3yqy5][0] <= 1u)*0u;
+                            _1b07g2r = (_1vsmado > (_xf7jxjn[_be3yqy5][5] +_84u89yj->_ktakpux*_84u89yj->_m7pyxdw))*_1b07g2r + (_1vsmado <= (_xf7jxjn[_be3yqy5][5] +_84u89yj->_ktakpux*_84u89yj->_m7pyxdw))*0u;
+                            if (_1b07g2r == 1u) { break; }
+                            _fu7bfxq += 1u;
                         }
-                        if (_ytkw283 == 0u)
-                        { __builtin___memcpy_chk (_2c9t199, &_8e7flqh[_mgvu4is[_50b8y5d*8 +0]*4 +0], 3*sizeof(float), __builtin_object_size (_2c9t199, 0));
-                            __builtin___memcpy_chk (_dxj37c9, &_8e7flqh[_mgvu4is[_50b8y5d*8 +1]*4 +0], 3*sizeof(float), __builtin_object_size (_dxj37c9, 0));
-                            __builtin___memcpy_chk (_h42m44g, &_8e7flqh[_mgvu4is[_50b8y5d*8 +2]*4 +0], 3*sizeof(float), __builtin_object_size (_h42m44g, 0));
-                            if (_lyk83tq->_26q3xlr == 1u)
-                            { StrainHS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, _lyk83tq->_jssuuqo, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainHS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, 0.0f, _lyk83tq->_jssuuqo, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainHS_Nikkhoo(_q52wspo, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, 0.0f, 0.0f, _lyk83tq->_jssuuqo, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
+                        if (_1b07g2r == 0u)
+                        { __builtin___memcpy_chk (_e3nwxuj, &_t8qzpky[_qydbpgv[_o7vbgr8*8 +0]*4 +0], 3*sizeof(float), __builtin_object_size (_e3nwxuj, 0));
+                            __builtin___memcpy_chk (_3ac6pe6, &_t8qzpky[_qydbpgv[_o7vbgr8*8 +1]*4 +0], 3*sizeof(float), __builtin_object_size (_3ac6pe6, 0));
+                            __builtin___memcpy_chk (_3lbqgu3, &_t8qzpky[_qydbpgv[_o7vbgr8*8 +2]*4 +0], 3*sizeof(float), __builtin_object_size (_3lbqgu3, 0));
+                            if (_84u89yj->_fhv1xg1 == 1u)
+                            { StrainHS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, _84u89yj->_8kzruin, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainHS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, 0.0f, _84u89yj->_8kzruin, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainHS_Nikkhoo(_dtg5nqj, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, 0.0f, 0.0f, _84u89yj->_8kzruin, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
                             }
                             else
-                            { StrainFS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, _lyk83tq->_jssuuqo, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainFS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, 0.0f, _lyk83tq->_jssuuqo, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainFS_Nikkhoo(_q52wspo, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, 0.0f, 0.0f, _lyk83tq->_jssuuqo, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
+                            { StrainFS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, _84u89yj->_8kzruin, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainFS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, 0.0f, _84u89yj->_8kzruin, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainFS_Nikkhoo(_dtg5nqj, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, 0.0f, 0.0f, _84u89yj->_8kzruin, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
                             }
-                            ScaleStress6(_ktmonrv, (_zkwdeek/(_lyk83tq->_jssuuqo*_rcpprcj[_50b8y5d*16 +15]))); RotStressG2L(&_hez74la[0], _dan085r, _ktmonrv);
-                            ScaleStress6(_p9p9w4j, (_zkwdeek/(_lyk83tq->_jssuuqo*_rcpprcj[_50b8y5d*16 +15]))); RotStressG2L(&_hez74la[3], _dan085r, _p9p9w4j);
-                            ScaleStress6(_q52wspo, (_zkwdeek/(_lyk83tq->_jssuuqo*_rcpprcj[_50b8y5d*16 +15]))); RotStressG2L(&_hez74la[6], _dan085r, _q52wspo);
-                            _plozjcn[_iymyrsv[i]*3 +0] = _hez74la[0]; _plozjcn[_iymyrsv[i]*3 +1] = _hez74la[3]; _plozjcn[_iymyrsv[i]*3 +2] = _hez74la[6];
-                            _0isb5iq[_iymyrsv[i]*3 +0] = _hez74la[1]; _0isb5iq[_iymyrsv[i]*3 +1] = _hez74la[4]; _0isb5iq[_iymyrsv[i]*3 +2] = _hez74la[7];
-                            (*_1ajo091)[i][_50b8y5d] = _iymyrsv[i];
-                            _iymyrsv[i] += 1u;
-                            _ntbz3m5[_50b8y5d] = 1u;
-                            _09lzrk7 = 0u;
-                            for (j = 0u; j < _z3nx39r->_urvqt3g; j++) { _09lzrk7 += _ntbz3m5[j]; }
-                            for (j = 0u; j < _8h0imjy; j++) { _mda9oek[ _rp9dxoq[_50b8y5d][16 -_8h0imjy +j] ] = 1u; }
-                            _jcmrsez = 0u;
+                            ScaleStress6(_mt8vt43, (_8e7flqh/(_84u89yj->_8kzruin*_s9bp4m1[_o7vbgr8*16 +15]))); RotStressG2L(&_2292mtr[0], _v71448n, _mt8vt43);
+                            ScaleStress6(_pkxvhag, (_8e7flqh/(_84u89yj->_8kzruin*_s9bp4m1[_o7vbgr8*16 +15]))); RotStressG2L(&_2292mtr[3], _v71448n, _pkxvhag);
+                            ScaleStress6(_dtg5nqj, (_8e7flqh/(_84u89yj->_8kzruin*_s9bp4m1[_o7vbgr8*16 +15]))); RotStressG2L(&_2292mtr[6], _v71448n, _dtg5nqj);
+                            _ycz04cd[_pmlvak9[i]*3 +0] = _2292mtr[0]; _ycz04cd[_pmlvak9[i]*3 +1] = _2292mtr[3]; _ycz04cd[_pmlvak9[i]*3 +2] = _2292mtr[6];
+                            _ozctwjl[_pmlvak9[i]*3 +0] = _2292mtr[1]; _ozctwjl[_pmlvak9[i]*3 +1] = _2292mtr[4]; _ozctwjl[_pmlvak9[i]*3 +2] = _2292mtr[7];
+                            (*_n14eb87)[i][_o7vbgr8] = _pmlvak9[i];
+                            _pmlvak9[i] += 1u;
+                            _ye0qzsa[_o7vbgr8] = 1u;
+                            _xdrkz40 = 0u;
+                            for (j = 0u; j < _s3kkv9r->_y25m8kb; j++) { _xdrkz40 += _ye0qzsa[j]; }
+                            for (j = 0u; j < _jg2y8rg; j++) { _0s1f537[ _wshmlfz[_o7vbgr8][16 -_jg2y8rg +j] ] = 1u; }
+                            _ybxkpm2 = 0u;
                         }
                         else
-                        { _5v2wwg8 = _rp9dxoq[_50b8y5d][16 -_8h0imjy +_4d4r9v4];
-                            __builtin___memcpy_chk (_2c9t199, &_jdtvv2y[_5v2wwg8][9], 3*sizeof(float), __builtin_object_size (_2c9t199, 0));
-                            __builtin___memcpy_chk (_dxj37c9, &_jdtvv2y[_5v2wwg8][12], 3*sizeof(float), __builtin_object_size (_dxj37c9, 0));
-                            __builtin___memcpy_chk (_h42m44g, &_jdtvv2y[_5v2wwg8][15], 3*sizeof(float), __builtin_object_size (_h42m44g, 0));
-                            __builtin___memcpy_chk (_v3z6bz8, &_jdtvv2y[_5v2wwg8][18], 3*sizeof(float), __builtin_object_size (_v3z6bz8, 0));
-                            if (_lyk83tq->_26q3xlr == 1u)
-                            { StrainHS_Nikkhoo(_bjfvyb6, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, _lyk83tq->_jssuuqo, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainHS_Nikkhoo(_66cnolj, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, _lyk83tq->_jssuuqo, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainHS_Nikkhoo(_fv177ud, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, 0.0f, _lyk83tq->_jssuuqo, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainHS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, _lyk83tq->_jssuuqo, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainHS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, _lyk83tq->_jssuuqo, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainHS_Nikkhoo(_q52wspo, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, 0.0f, _lyk83tq->_jssuuqo, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                _ktmonrv[0] += _bjfvyb6[0]; _ktmonrv[1] += _bjfvyb6[1]; _ktmonrv[2] += _bjfvyb6[2];
-                                _ktmonrv[3] += _bjfvyb6[3]; _ktmonrv[4] += _bjfvyb6[4]; _ktmonrv[5] += _bjfvyb6[5];
-                                _p9p9w4j[0] += _66cnolj[0]; _p9p9w4j[1] += _66cnolj[1]; _p9p9w4j[2] += _66cnolj[2];
-                                _p9p9w4j[3] += _66cnolj[3]; _p9p9w4j[4] += _66cnolj[4]; _p9p9w4j[5] += _66cnolj[5];
-                                _q52wspo[0] += _fv177ud[0]; _q52wspo[1] += _fv177ud[1]; _q52wspo[2] += _fv177ud[2];
-                                _q52wspo[3] += _fv177ud[3]; _q52wspo[4] += _fv177ud[4]; _q52wspo[5] += _fv177ud[5];
+                        { _be3yqy5 = _wshmlfz[_o7vbgr8][16 -_jg2y8rg +_fu7bfxq];
+                            __builtin___memcpy_chk (_e3nwxuj, &_xf7jxjn[_be3yqy5][9], 3*sizeof(float), __builtin_object_size (_e3nwxuj, 0));
+                            __builtin___memcpy_chk (_3ac6pe6, &_xf7jxjn[_be3yqy5][12], 3*sizeof(float), __builtin_object_size (_3ac6pe6, 0));
+                            __builtin___memcpy_chk (_3lbqgu3, &_xf7jxjn[_be3yqy5][15], 3*sizeof(float), __builtin_object_size (_3lbqgu3, 0));
+                            __builtin___memcpy_chk (_obyghgk, &_xf7jxjn[_be3yqy5][18], 3*sizeof(float), __builtin_object_size (_obyghgk, 0));
+                            if (_84u89yj->_fhv1xg1 == 1u)
+                            { StrainHS_Nikkhoo(_pt5r5rc, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, _84u89yj->_8kzruin, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainHS_Nikkhoo(_kc4lorx, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, _84u89yj->_8kzruin, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainHS_Nikkhoo(_qijc1yd, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, 0.0f, _84u89yj->_8kzruin, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainHS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, _84u89yj->_8kzruin, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainHS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, _84u89yj->_8kzruin, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainHS_Nikkhoo(_dtg5nqj, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, 0.0f, _84u89yj->_8kzruin, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                _mt8vt43[0] += _pt5r5rc[0]; _mt8vt43[1] += _pt5r5rc[1]; _mt8vt43[2] += _pt5r5rc[2];
+                                _mt8vt43[3] += _pt5r5rc[3]; _mt8vt43[4] += _pt5r5rc[4]; _mt8vt43[5] += _pt5r5rc[5];
+                                _pkxvhag[0] += _kc4lorx[0]; _pkxvhag[1] += _kc4lorx[1]; _pkxvhag[2] += _kc4lorx[2];
+                                _pkxvhag[3] += _kc4lorx[3]; _pkxvhag[4] += _kc4lorx[4]; _pkxvhag[5] += _kc4lorx[5];
+                                _dtg5nqj[0] += _qijc1yd[0]; _dtg5nqj[1] += _qijc1yd[1]; _dtg5nqj[2] += _qijc1yd[2];
+                                _dtg5nqj[3] += _qijc1yd[3]; _dtg5nqj[4] += _qijc1yd[4]; _dtg5nqj[5] += _qijc1yd[5];
                             }
                             else
-                            { StrainFS_Nikkhoo(_bjfvyb6, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, _lyk83tq->_jssuuqo, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainFS_Nikkhoo(_66cnolj, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, _lyk83tq->_jssuuqo, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainFS_Nikkhoo(_fv177ud, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, 0.0f, _lyk83tq->_jssuuqo, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainFS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, _lyk83tq->_jssuuqo, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainFS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, _lyk83tq->_jssuuqo, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainFS_Nikkhoo(_q52wspo, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, 0.0f, _lyk83tq->_jssuuqo, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                _ktmonrv[0] += _bjfvyb6[0]; _ktmonrv[1] += _bjfvyb6[1]; _ktmonrv[2] += _bjfvyb6[2];
-                                _ktmonrv[3] += _bjfvyb6[3]; _ktmonrv[4] += _bjfvyb6[4]; _ktmonrv[5] += _bjfvyb6[5];
-                                _p9p9w4j[0] += _66cnolj[0]; _p9p9w4j[1] += _66cnolj[1]; _p9p9w4j[2] += _66cnolj[2];
-                                _p9p9w4j[3] += _66cnolj[3]; _p9p9w4j[4] += _66cnolj[4]; _p9p9w4j[5] += _66cnolj[5];
-                                _q52wspo[0] += _fv177ud[0]; _q52wspo[1] += _fv177ud[1]; _q52wspo[2] += _fv177ud[2];
-                                _q52wspo[3] += _fv177ud[3]; _q52wspo[4] += _fv177ud[4]; _q52wspo[5] += _fv177ud[5];
+                            { StrainFS_Nikkhoo(_pt5r5rc, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, _84u89yj->_8kzruin, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainFS_Nikkhoo(_kc4lorx, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, _84u89yj->_8kzruin, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainFS_Nikkhoo(_qijc1yd, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, 0.0f, _84u89yj->_8kzruin, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainFS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, _84u89yj->_8kzruin, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainFS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, _84u89yj->_8kzruin, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainFS_Nikkhoo(_dtg5nqj, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, 0.0f, _84u89yj->_8kzruin, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                _mt8vt43[0] += _pt5r5rc[0]; _mt8vt43[1] += _pt5r5rc[1]; _mt8vt43[2] += _pt5r5rc[2];
+                                _mt8vt43[3] += _pt5r5rc[3]; _mt8vt43[4] += _pt5r5rc[4]; _mt8vt43[5] += _pt5r5rc[5];
+                                _pkxvhag[0] += _kc4lorx[0]; _pkxvhag[1] += _kc4lorx[1]; _pkxvhag[2] += _kc4lorx[2];
+                                _pkxvhag[3] += _kc4lorx[3]; _pkxvhag[4] += _kc4lorx[4]; _pkxvhag[5] += _kc4lorx[5];
+                                _dtg5nqj[0] += _qijc1yd[0]; _dtg5nqj[1] += _qijc1yd[1]; _dtg5nqj[2] += _qijc1yd[2];
+                                _dtg5nqj[3] += _qijc1yd[3]; _dtg5nqj[4] += _qijc1yd[4]; _dtg5nqj[5] += _qijc1yd[5];
                             }
-                            ScaleStress6(_ktmonrv, (_zkwdeek/(_lyk83tq->_jssuuqo*_jdtvv2y[_5v2wwg8][3]))); RotStressG2L(&_hez74la[0], _dan085r, _ktmonrv);
-                            ScaleStress6(_p9p9w4j, (_zkwdeek/(_lyk83tq->_jssuuqo*_jdtvv2y[_5v2wwg8][3]))); RotStressG2L(&_hez74la[3], _dan085r, _p9p9w4j);
-                            ScaleStress6(_q52wspo, (_zkwdeek/(_lyk83tq->_jssuuqo*_jdtvv2y[_5v2wwg8][3]))); RotStressG2L(&_hez74la[6], _dan085r, _q52wspo);
-                            _ytkw283 = 1u;
-                            for (j = 0; j < _f9yecaz[_5v2wwg8][0]; j++)
-                            { _7orfqla = _f9yecaz[_5v2wwg8][(j+1)];
-                                __builtin___memcpy_chk (_2c9t199, &_jdtvv2y[_7orfqla][9], 3*sizeof(float), __builtin_object_size (_2c9t199, 0));
-                                __builtin___memcpy_chk (_dxj37c9, &_jdtvv2y[_7orfqla][12], 3*sizeof(float), __builtin_object_size (_dxj37c9, 0));
-                                __builtin___memcpy_chk (_h42m44g, &_jdtvv2y[_7orfqla][15], 3*sizeof(float), __builtin_object_size (_h42m44g, 0));
-                                __builtin___memcpy_chk (_v3z6bz8, &_jdtvv2y[_7orfqla][18], 3*sizeof(float), __builtin_object_size (_v3z6bz8, 0));
-                                if (_lyk83tq->_26q3xlr == 1u)
-                                { StrainHS_Nikkhoo(_bjfvyb6, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, _lyk83tq->_jssuuqo, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainHS_Nikkhoo(_66cnolj, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, _lyk83tq->_jssuuqo, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainHS_Nikkhoo(_fv177ud, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, 0.0f, _lyk83tq->_jssuuqo, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainHS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, _lyk83tq->_jssuuqo, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainHS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, _lyk83tq->_jssuuqo, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainHS_Nikkhoo(_q52wspo, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, 0.0f, _lyk83tq->_jssuuqo, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    _ktmonrv[0] += _bjfvyb6[0]; _ktmonrv[1] += _bjfvyb6[1]; _ktmonrv[2] += _bjfvyb6[2];
-                                    _ktmonrv[3] += _bjfvyb6[3]; _ktmonrv[4] += _bjfvyb6[4]; _ktmonrv[5] += _bjfvyb6[5];
-                                    _p9p9w4j[0] += _66cnolj[0]; _p9p9w4j[1] += _66cnolj[1]; _p9p9w4j[2] += _66cnolj[2];
-                                    _p9p9w4j[3] += _66cnolj[3]; _p9p9w4j[4] += _66cnolj[4]; _p9p9w4j[5] += _66cnolj[5];
-                                    _q52wspo[0] += _fv177ud[0]; _q52wspo[1] += _fv177ud[1]; _q52wspo[2] += _fv177ud[2];
-                                    _q52wspo[3] += _fv177ud[3]; _q52wspo[4] += _fv177ud[4]; _q52wspo[5] += _fv177ud[5];
+                            ScaleStress6(_mt8vt43, (_8e7flqh/(_84u89yj->_8kzruin*_xf7jxjn[_be3yqy5][3]))); RotStressG2L(&_2292mtr[0], _v71448n, _mt8vt43);
+                            ScaleStress6(_pkxvhag, (_8e7flqh/(_84u89yj->_8kzruin*_xf7jxjn[_be3yqy5][3]))); RotStressG2L(&_2292mtr[3], _v71448n, _pkxvhag);
+                            ScaleStress6(_dtg5nqj, (_8e7flqh/(_84u89yj->_8kzruin*_xf7jxjn[_be3yqy5][3]))); RotStressG2L(&_2292mtr[6], _v71448n, _dtg5nqj);
+                            _1b07g2r = 1u;
+                            for (j = 0; j < _jlpefja[_be3yqy5][0]; j++)
+                            { _iua08ek = _jlpefja[_be3yqy5][(j+1)];
+                                __builtin___memcpy_chk (_e3nwxuj, &_xf7jxjn[_iua08ek][9], 3*sizeof(float), __builtin_object_size (_e3nwxuj, 0));
+                                __builtin___memcpy_chk (_3ac6pe6, &_xf7jxjn[_iua08ek][12], 3*sizeof(float), __builtin_object_size (_3ac6pe6, 0));
+                                __builtin___memcpy_chk (_3lbqgu3, &_xf7jxjn[_iua08ek][15], 3*sizeof(float), __builtin_object_size (_3lbqgu3, 0));
+                                __builtin___memcpy_chk (_obyghgk, &_xf7jxjn[_iua08ek][18], 3*sizeof(float), __builtin_object_size (_obyghgk, 0));
+                                if (_84u89yj->_fhv1xg1 == 1u)
+                                { StrainHS_Nikkhoo(_pt5r5rc, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, _84u89yj->_8kzruin, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainHS_Nikkhoo(_kc4lorx, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, _84u89yj->_8kzruin, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainHS_Nikkhoo(_qijc1yd, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, 0.0f, _84u89yj->_8kzruin, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainHS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, _84u89yj->_8kzruin, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainHS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, _84u89yj->_8kzruin, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainHS_Nikkhoo(_dtg5nqj, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, 0.0f, _84u89yj->_8kzruin, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    _mt8vt43[0] += _pt5r5rc[0]; _mt8vt43[1] += _pt5r5rc[1]; _mt8vt43[2] += _pt5r5rc[2];
+                                    _mt8vt43[3] += _pt5r5rc[3]; _mt8vt43[4] += _pt5r5rc[4]; _mt8vt43[5] += _pt5r5rc[5];
+                                    _pkxvhag[0] += _kc4lorx[0]; _pkxvhag[1] += _kc4lorx[1]; _pkxvhag[2] += _kc4lorx[2];
+                                    _pkxvhag[3] += _kc4lorx[3]; _pkxvhag[4] += _kc4lorx[4]; _pkxvhag[5] += _kc4lorx[5];
+                                    _dtg5nqj[0] += _qijc1yd[0]; _dtg5nqj[1] += _qijc1yd[1]; _dtg5nqj[2] += _qijc1yd[2];
+                                    _dtg5nqj[3] += _qijc1yd[3]; _dtg5nqj[4] += _qijc1yd[4]; _dtg5nqj[5] += _qijc1yd[5];
                                 }
                                 else
-                                { StrainFS_Nikkhoo(_bjfvyb6, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, _lyk83tq->_jssuuqo, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainFS_Nikkhoo(_66cnolj, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, _lyk83tq->_jssuuqo, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainFS_Nikkhoo(_fv177ud, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, 0.0f, _lyk83tq->_jssuuqo, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainFS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, _lyk83tq->_jssuuqo, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainFS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, _lyk83tq->_jssuuqo, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainFS_Nikkhoo(_q52wspo, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, 0.0f, _lyk83tq->_jssuuqo, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    _ktmonrv[0] += _bjfvyb6[0]; _ktmonrv[1] += _bjfvyb6[1]; _ktmonrv[2] += _bjfvyb6[2];
-                                    _ktmonrv[3] += _bjfvyb6[3]; _ktmonrv[4] += _bjfvyb6[4]; _ktmonrv[5] += _bjfvyb6[5];
-                                    _p9p9w4j[0] += _66cnolj[0]; _p9p9w4j[1] += _66cnolj[1]; _p9p9w4j[2] += _66cnolj[2];
-                                    _p9p9w4j[3] += _66cnolj[3]; _p9p9w4j[4] += _66cnolj[4]; _p9p9w4j[5] += _66cnolj[5];
-                                    _q52wspo[0] += _fv177ud[0]; _q52wspo[1] += _fv177ud[1]; _q52wspo[2] += _fv177ud[2];
-                                    _q52wspo[3] += _fv177ud[3]; _q52wspo[4] += _fv177ud[4]; _q52wspo[5] += _fv177ud[5];
+                                { StrainFS_Nikkhoo(_pt5r5rc, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, _84u89yj->_8kzruin, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainFS_Nikkhoo(_kc4lorx, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, _84u89yj->_8kzruin, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainFS_Nikkhoo(_qijc1yd, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, 0.0f, _84u89yj->_8kzruin, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainFS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, _84u89yj->_8kzruin, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainFS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, _84u89yj->_8kzruin, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainFS_Nikkhoo(_dtg5nqj, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, 0.0f, _84u89yj->_8kzruin, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    _mt8vt43[0] += _pt5r5rc[0]; _mt8vt43[1] += _pt5r5rc[1]; _mt8vt43[2] += _pt5r5rc[2];
+                                    _mt8vt43[3] += _pt5r5rc[3]; _mt8vt43[4] += _pt5r5rc[4]; _mt8vt43[5] += _pt5r5rc[5];
+                                    _pkxvhag[0] += _kc4lorx[0]; _pkxvhag[1] += _kc4lorx[1]; _pkxvhag[2] += _kc4lorx[2];
+                                    _pkxvhag[3] += _kc4lorx[3]; _pkxvhag[4] += _kc4lorx[4]; _pkxvhag[5] += _kc4lorx[5];
+                                    _dtg5nqj[0] += _qijc1yd[0]; _dtg5nqj[1] += _qijc1yd[1]; _dtg5nqj[2] += _qijc1yd[2];
+                                    _dtg5nqj[3] += _qijc1yd[3]; _dtg5nqj[4] += _qijc1yd[4]; _dtg5nqj[5] += _qijc1yd[5];
                                 }
-                                ScaleStress6(_ktmonrv, (_zkwdeek/(_lyk83tq->_jssuuqo*_jdtvv2y[_7orfqla][3]))); RotStressG2L(&_jtb9xxa[0], _dan085r, _ktmonrv);
-                                ScaleStress6(_p9p9w4j, (_zkwdeek/(_lyk83tq->_jssuuqo*_jdtvv2y[_7orfqla][3]))); RotStressG2L(&_jtb9xxa[3], _dan085r, _p9p9w4j);
-                                ScaleStress6(_q52wspo, (_zkwdeek/(_lyk83tq->_jssuuqo*_jdtvv2y[_7orfqla][3]))); RotStressG2L(&_jtb9xxa[6], _dan085r, _q52wspo);
-                                __builtin___memcpy_chk (_kc4lorx, &_jdtvv2y[_7orfqla][0], 3*sizeof(float), __builtin_object_size (_kc4lorx, 0));
-                                SubtractVect3(_nvg3kk0, _v78hu7f, _kc4lorx); _vwvm4w3 = VectorLength(_nvg3kk0);
-                                _g34iq7z = (_vwvm4w3/_lyk83tq->_lw2lm34 - _lyk83tq->_ihair4c)/(_lyk83tq->_owgzrix - _lyk83tq->_ihair4c);
-                                _g34iq7z = (_g34iq7z >= 0.0f)*_g34iq7z + (_g34iq7z < 0.0f)*0.0f;
-                                _g34iq7z = (_g34iq7z <= 1.0f)*_g34iq7z + (_g34iq7z > 1.0f)*1.0f;
-                                _g34iq7z = _lyk83tq->_a11dpg8*_g34iq7z;
-                                _h30153s = sqrtf( (_jtb9xxa[0]-_hez74la[0])*(_jtb9xxa[0]-_hez74la[0]) + (_jtb9xxa[1]-_hez74la[1])*(_jtb9xxa[1]-_hez74la[1]) + (_jtb9xxa[3]-_hez74la[3])*(_jtb9xxa[3]-_hez74la[3]) + (_jtb9xxa[4]-_hez74la[4])*(_jtb9xxa[4]-_hez74la[4]) + (_jtb9xxa[6]-_hez74la[6])*(_jtb9xxa[6]-_hez74la[6]) + (_jtb9xxa[7]-_hez74la[7])*(_jtb9xxa[7]-_hez74la[7]) );
-                                _flse45b = sqrtf( _hez74la[0] *_hez74la[0] + _hez74la[1] *_hez74la[1] + _hez74la[3] *_hez74la[3] + _hez74la[4] *_hez74la[4] + _hez74la[6] *_hez74la[6] + _hez74la[7] *_hez74la[7] );
-                                _ytkw283 = ((_h30153s/_flse45b) <= _g34iq7z)*_ytkw283 + ((_h30153s/_flse45b) > _g34iq7z)*0u;
+                                ScaleStress6(_mt8vt43, (_8e7flqh/(_84u89yj->_8kzruin*_xf7jxjn[_iua08ek][3]))); RotStressG2L(&_gwaj1g1[0], _v71448n, _mt8vt43);
+                                ScaleStress6(_pkxvhag, (_8e7flqh/(_84u89yj->_8kzruin*_xf7jxjn[_iua08ek][3]))); RotStressG2L(&_gwaj1g1[3], _v71448n, _pkxvhag);
+                                ScaleStress6(_dtg5nqj, (_8e7flqh/(_84u89yj->_8kzruin*_xf7jxjn[_iua08ek][3]))); RotStressG2L(&_gwaj1g1[6], _v71448n, _dtg5nqj);
+                                __builtin___memcpy_chk (_dan085r, &_xf7jxjn[_iua08ek][0], 3*sizeof(float), __builtin_object_size (_dan085r, 0));
+                                SubtractVect3(_2ljk4q5, _uug95rl, _dan085r); _1vsmado = VectorLength(_2ljk4q5);
+                                _fv177ud = (_1vsmado/_84u89yj->_m7pyxdw - _84u89yj->_ktakpux)/(_84u89yj->_qphr62g - _84u89yj->_ktakpux);
+                                _fv177ud = (_fv177ud >= 0.0f)*_fv177ud + (_fv177ud < 0.0f)*0.0f;
+                                _fv177ud = (_fv177ud <= 1.0f)*_fv177ud + (_fv177ud > 1.0f)*1.0f;
+                                _fv177ud = _84u89yj->_dswm31y*_fv177ud;
+                                _66cnolj = sqrtf( (_gwaj1g1[0]-_2292mtr[0])*(_gwaj1g1[0]-_2292mtr[0]) + (_gwaj1g1[1]-_2292mtr[1])*(_gwaj1g1[1]-_2292mtr[1]) + (_gwaj1g1[3]-_2292mtr[3])*(_gwaj1g1[3]-_2292mtr[3]) + (_gwaj1g1[4]-_2292mtr[4])*(_gwaj1g1[4]-_2292mtr[4]) + (_gwaj1g1[6]-_2292mtr[6])*(_gwaj1g1[6]-_2292mtr[6]) + (_gwaj1g1[7]-_2292mtr[7])*(_gwaj1g1[7]-_2292mtr[7]) );
+                                _q52wspo = sqrtf( _2292mtr[0] *_2292mtr[0] + _2292mtr[1] *_2292mtr[1] + _2292mtr[3] *_2292mtr[3] + _2292mtr[4] *_2292mtr[4] + _2292mtr[6] *_2292mtr[6] + _2292mtr[7] *_2292mtr[7] );
+                                _1b07g2r = ((_66cnolj/_q52wspo) <= _fv177ud)*_1b07g2r + ((_66cnolj/_q52wspo) > _fv177ud)*0u;
                             }
-                            if (_ytkw283 == 1u)
-                            { _plozjcn[_iymyrsv[i]*3 +0] = _hez74la[0]; _plozjcn[_iymyrsv[i]*3 +1] = _hez74la[3]; _plozjcn[_iymyrsv[i]*3 +2] = _hez74la[6];
-                                _0isb5iq[_iymyrsv[i]*3 +0] = _hez74la[1]; _0isb5iq[_iymyrsv[i]*3 +1] = _hez74la[4]; _0isb5iq[_iymyrsv[i]*3 +2] = _hez74la[7];
-                                _09lzrk7 = 0u;
-                                for (j = 0u; j < _z3nx39r->_urvqt3g; j++)
-                                { _ntbz3m5[j] = (_rp9dxoq[j][16 -_8h0imjy +_4d4r9v4] == _5v2wwg8)*1u + (_rp9dxoq[j][16 -_8h0imjy +_4d4r9v4] != _5v2wwg8)*_ntbz3m5[j];
-                                    (*_1ajo091)[i][j] = (_rp9dxoq[j][16 -_8h0imjy +_4d4r9v4] == _5v2wwg8)*_iymyrsv[i] + (_rp9dxoq[j][16 -_8h0imjy +_4d4r9v4] != _5v2wwg8)*(*_1ajo091)[i][j];
-                                    _09lzrk7 += _ntbz3m5[j];
+                            if (_1b07g2r == 1u)
+                            { _ycz04cd[_pmlvak9[i]*3 +0] = _2292mtr[0]; _ycz04cd[_pmlvak9[i]*3 +1] = _2292mtr[3]; _ycz04cd[_pmlvak9[i]*3 +2] = _2292mtr[6];
+                                _ozctwjl[_pmlvak9[i]*3 +0] = _2292mtr[1]; _ozctwjl[_pmlvak9[i]*3 +1] = _2292mtr[4]; _ozctwjl[_pmlvak9[i]*3 +2] = _2292mtr[7];
+                                _xdrkz40 = 0u;
+                                for (j = 0u; j < _s3kkv9r->_y25m8kb; j++)
+                                { _ye0qzsa[j] = (_wshmlfz[j][16 -_jg2y8rg +_fu7bfxq] == _be3yqy5)*1u + (_wshmlfz[j][16 -_jg2y8rg +_fu7bfxq] != _be3yqy5)*_ye0qzsa[j];
+                                    (*_n14eb87)[i][j] = (_wshmlfz[j][16 -_jg2y8rg +_fu7bfxq] == _be3yqy5)*_pmlvak9[i] + (_wshmlfz[j][16 -_jg2y8rg +_fu7bfxq] != _be3yqy5)*(*_n14eb87)[i][j];
+                                    _xdrkz40 += _ye0qzsa[j];
                                 }
-                                _iymyrsv[i] += 1u;
-                                for (j = 0u; j < _8h0imjy; j++) { _mda9oek[ _rp9dxoq[_50b8y5d][16 -_8h0imjy +j] ] = 1u; }
-                                _jcmrsez = 0u;
+                                _pmlvak9[i] += 1u;
+                                for (j = 0u; j < _jg2y8rg; j++) { _0s1f537[ _wshmlfz[_o7vbgr8][16 -_jg2y8rg +j] ] = 1u; }
+                                _ybxkpm2 = 0u;
                             }
-                            _4d4r9v4 += 1u;
+                            _fu7bfxq += 1u;
                 } } }
-                _39ayq6w = GetByteSize(64, 3*_iymyrsv[i], sizeof(float));
-                (*_nf74t60)[i] = aligned_alloc(64, _39ayq6w); __builtin___memcpy_chk ((*_nf74t60)[i], _plozjcn, 3*_iymyrsv[i]* sizeof(float), __builtin_object_size ((*_nf74t60)[i], 0));
-                (*_mrunjdu)[i] = aligned_alloc(64, _39ayq6w); __builtin___memcpy_chk ((*_mrunjdu)[i], _0isb5iq, 3*_iymyrsv[i]* sizeof(float), __builtin_object_size ((*_mrunjdu)[i], 0));
+                _050ui22 = GetByteSize(64, 3*_pmlvak9[i], sizeof(float));
+                (*_sh3tow4)[i] = aligned_alloc(64, _050ui22); __builtin___memcpy_chk ((*_sh3tow4)[i], _ycz04cd, 3*_pmlvak9[i]* sizeof(float), __builtin_object_size ((*_sh3tow4)[i], 0));
+                (*_jbc2sws)[i] = aligned_alloc(64, _050ui22); __builtin___memcpy_chk ((*_jbc2sws)[i], _ozctwjl, 3*_pmlvak9[i]* sizeof(float), __builtin_object_size ((*_jbc2sws)[i], 0));
             }
             else
             {
             }
         }
-        free(_zd76szn); free(_ukwqvr1); free(_m458ax4); free(_plozjcn); free(_0isb5iq);
-        if (_z3nx39r->_urvqt3g > 0u)
-        { _39ayq6w = GetByteSize(64, 3*_z3nx39r->_urvqt3g, sizeof(float));
-            _ozctwjl = aligned_alloc(64, _39ayq6w);
-            _b68rerv = aligned_alloc(64, _39ayq6w);
-            _ny181ac = aligned_alloc(64, _39ayq6w);
-            _39ayq6w = GetByteSize(64, 2*_z3nx39r->_jp61lfc, sizeof(float));
-            _3jczucq = aligned_alloc(64, _39ayq6w);
-            _ycz04cd = aligned_alloc(64, _39ayq6w);
-            _zzf8s2z = aligned_alloc(64, _39ayq6w);
-            _39ayq6w = GetByteSize(64, _zfflb7w[_20n8tte], sizeof(unsigned short int *));
-            *_86lthet = aligned_alloc(64, _39ayq6w);
-            _39ayq6w = GetByteSize(64, _z3nx39r->_urvqt3g, sizeof(unsigned short int));
-            for (i = 0u; i < _zfflb7w[_20n8tte]; i++)
-            { (*_86lthet)[i] = aligned_alloc(64, _39ayq6w); __builtin___memset_chk ((*_86lthet)[i], 0, _39ayq6w, __builtin_object_size ((*_86lthet)[i], 0));
+        free(_nf74t60); free(_ge2j51b); free(_mrunjdu); free(_ycz04cd); free(_ozctwjl);
+        if (_s3kkv9r->_y25m8kb > 0u)
+        { _050ui22 = GetByteSize(64, 3*_s3kkv9r->_y25m8kb, sizeof(float));
+            _0wfoy4d = aligned_alloc(64, _050ui22);
+            _zareiya = aligned_alloc(64, _050ui22);
+            _0dl5e11 = aligned_alloc(64, _050ui22);
+            _050ui22 = GetByteSize(64, 2*_s3kkv9r->_otn9uze, sizeof(float));
+            _ny181ac = aligned_alloc(64, _050ui22);
+            _jdtvv2y = aligned_alloc(64, _050ui22);
+            _b68rerv = aligned_alloc(64, _050ui22);
+            _050ui22 = GetByteSize(64, _emruyp0[_tk63n2q], sizeof(unsigned short int *));
+            *_va1nkbt = aligned_alloc(64, _050ui22);
+            _050ui22 = GetByteSize(64, _s3kkv9r->_y25m8kb, sizeof(unsigned short int));
+            for (i = 0u; i < _emruyp0[_tk63n2q]; i++)
+            { (*_va1nkbt)[i] = aligned_alloc(64, _050ui22); __builtin___memset_chk ((*_va1nkbt)[i], 0, _050ui22, __builtin_object_size ((*_va1nkbt)[i], 0));
             }
-            _39ayq6w = GetByteSize(64, _zfflb7w[_20n8tte], sizeof(unsigned short int *));
-            *_op767j2 = aligned_alloc(64, _39ayq6w);
-            _39ayq6w = GetByteSize(64, _z3nx39r->_jp61lfc, sizeof(unsigned short int));
-            for (i = 0u; i < _zfflb7w[_20n8tte]; i++)
-            { (*_op767j2)[i] = aligned_alloc(64, _39ayq6w); __builtin___memset_chk ((*_op767j2)[i], 0, _39ayq6w, __builtin_object_size ((*_op767j2)[i], 0));
+            _050ui22 = GetByteSize(64, _emruyp0[_tk63n2q], sizeof(unsigned short int *));
+            *_eurxhw0 = aligned_alloc(64, _050ui22);
+            _050ui22 = GetByteSize(64, _s3kkv9r->_otn9uze, sizeof(unsigned short int));
+            for (i = 0u; i < _emruyp0[_tk63n2q]; i++)
+            { (*_eurxhw0)[i] = aligned_alloc(64, _050ui22); __builtin___memset_chk ((*_eurxhw0)[i], 0, _050ui22, __builtin_object_size ((*_eurxhw0)[i], 0));
             }
-            _39ayq6w = GetByteSize(64, _zfflb7w[_20n8tte], sizeof(float *));
-            *_jbc2sws = aligned_alloc(64, _39ayq6w);
-            *_4xkss0k = aligned_alloc(64, _39ayq6w);
-            *_t997e4u = aligned_alloc(64, _39ayq6w);
-            *_ge2j51b = aligned_alloc(64, _39ayq6w);
-            *_sh3tow4 = aligned_alloc(64, _39ayq6w);
-            *_pqvl00e = aligned_alloc(64, _39ayq6w);
-            for (i = 0u; i < _zfflb7w[_20n8tte]; i++)
-            { _xdrkz40 = _g1ved32[i];
-                _39ayq6w = GetByteSize(64, 3*_z3nx39r->_urvqt3g, sizeof(float));
-                __builtin___memset_chk (_ozctwjl, 0, _39ayq6w, __builtin_object_size (_ozctwjl, 0));
-                __builtin___memset_chk (_b68rerv, 0, _39ayq6w, __builtin_object_size (_b68rerv, 0));
-                __builtin___memset_chk (_ny181ac, 0, _39ayq6w, __builtin_object_size (_ny181ac, 0));
-                __builtin___memcpy_chk (_v78hu7f, &_rcpprcj[_xdrkz40*16 +0], 3*sizeof(float), __builtin_object_size (_v78hu7f, 0));
-                __builtin___memcpy_chk (_dan085r, &_rcpprcj[_xdrkz40*16 +6], 9*sizeof(float), __builtin_object_size (_dan085r, 0));
-                __builtin___memset_chk (_ntbz3m5, 0, _z3nx39r->_urvqt3g*sizeof(unsigned int), __builtin_object_size (_ntbz3m5, 0));
-                __builtin___memset_chk (_mda9oek, 0, _2vpgstq*sizeof(unsigned int), __builtin_object_size (_mda9oek, 0));
-                _09lzrk7 = 0u;
-                while (_09lzrk7 < _z3nx39r->_urvqt3g)
+            _050ui22 = GetByteSize(64, _emruyp0[_tk63n2q], sizeof(float *));
+            *_e9ftaxp = aligned_alloc(64, _050ui22);
+            *_6fokzix = aligned_alloc(64, _050ui22);
+            *_z39pecn = aligned_alloc(64, _050ui22);
+            *_t997e4u = aligned_alloc(64, _050ui22);
+            *_d1vn8lf = aligned_alloc(64, _050ui22);
+            *_4xkss0k = aligned_alloc(64, _050ui22);
+            for (i = 0u; i < _emruyp0[_tk63n2q]; i++)
+            { _vmefozt = _laym0wb[i];
+                _050ui22 = GetByteSize(64, 3*_s3kkv9r->_y25m8kb, sizeof(float));
+                __builtin___memset_chk (_0wfoy4d, 0, _050ui22, __builtin_object_size (_0wfoy4d, 0));
+                __builtin___memset_chk (_zareiya, 0, _050ui22, __builtin_object_size (_zareiya, 0));
+                __builtin___memset_chk (_0dl5e11, 0, _050ui22, __builtin_object_size (_0dl5e11, 0));
+                __builtin___memcpy_chk (_uug95rl, &_s9bp4m1[_vmefozt*16 +0], 3*sizeof(float), __builtin_object_size (_uug95rl, 0));
+                __builtin___memcpy_chk (_v71448n, &_s9bp4m1[_vmefozt*16 +6], 9*sizeof(float), __builtin_object_size (_v71448n, 0));
+                __builtin___memset_chk (_ye0qzsa, 0, _s3kkv9r->_y25m8kb*sizeof(unsigned int), __builtin_object_size (_ye0qzsa, 0));
+                __builtin___memset_chk (_0s1f537, 0, _kicwmpe*sizeof(unsigned int), __builtin_object_size (_0s1f537, 0));
+                _xdrkz40 = 0u;
+                while (_xdrkz40 < _s3kkv9r->_y25m8kb)
                 {
-                    for (j = 0u; j < _z3nx39r->_urvqt3g; j++) { if (_ntbz3m5[j] == 0u) { _50b8y5d = j; break; } }
-                    __builtin___memcpy_chk (_kc4lorx, &_rcpprcj[_50b8y5d*16 +0], 3*sizeof(float), __builtin_object_size (_kc4lorx, 0));
-                    SubtractVect3(_nvg3kk0, _v78hu7f, _kc4lorx); _vwvm4w3 = VectorLength(_nvg3kk0);
-                    _zkwdeek = (_vwvm4w3 >= 1.75f*_lyk83tq->_lw2lm34)*1.0f + (_vwvm4w3 < 1.75f*_lyk83tq->_lw2lm34)*0.0f;
-                    _zkwdeek = (_mgvu4is[_xdrkz40*8 +3] == _mgvu4is[_50b8y5d*8 +3])*1.0f + (_mgvu4is[_xdrkz40*8 +3] != _mgvu4is[_50b8y5d*8 +3])*_zkwdeek;
-                    _8h0imjy = _rp9dxoq[_50b8y5d][0];
-                    _4d4r9v4 = 0;
-                    _jcmrsez = 1u;
-                    while (_jcmrsez == 1u)
+                    for (j = 0u; j < _s3kkv9r->_y25m8kb; j++) { if (_ye0qzsa[j] == 0u) { _o7vbgr8 = j; break; } }
+                    __builtin___memcpy_chk (_dan085r, &_s9bp4m1[_o7vbgr8*16 +0], 3*sizeof(float), __builtin_object_size (_dan085r, 0));
+                    SubtractVect3(_2ljk4q5, _uug95rl, _dan085r); _1vsmado = VectorLength(_2ljk4q5);
+                    _8e7flqh = (_1vsmado >= 1.75f*_84u89yj->_m7pyxdw)*1.0f + (_1vsmado < 1.75f*_84u89yj->_m7pyxdw)*0.0f;
+                    _8e7flqh = (_qydbpgv[_vmefozt*8 +3] == _qydbpgv[_o7vbgr8*8 +3])*1.0f + (_qydbpgv[_vmefozt*8 +3] != _qydbpgv[_o7vbgr8*8 +3])*_8e7flqh;
+                    _jg2y8rg = _wshmlfz[_o7vbgr8][0];
+                    _fu7bfxq = 0;
+                    _ybxkpm2 = 1u;
+                    while (_ybxkpm2 == 1u)
                     {
-                        _ytkw283 = 0u;
-                        while (_4d4r9v4 < _8h0imjy-1)
-                        { _5v2wwg8 = _rp9dxoq[_50b8y5d][16 -_8h0imjy +_4d4r9v4];
-                            __builtin___memcpy_chk (_kc4lorx, &_jdtvv2y[_5v2wwg8][0], 3*sizeof(float), __builtin_object_size (_kc4lorx, 0));
-                            SubtractVect3(_nvg3kk0, _v78hu7f, _kc4lorx); _vwvm4w3 = VectorLength(_nvg3kk0);
-                            _ytkw283 = (_mda9oek[_5v2wwg8] == 0u)*1u + (_mda9oek[_5v2wwg8] != 0u)*0u;
-                            _ytkw283 = (_f9yecaz[_5v2wwg8][0] > 1u)*_ytkw283 + (_f9yecaz[_5v2wwg8][0] <= 1u)*0u;
-                            _ytkw283 = (_rp9dxoq[_xdrkz40][16 -_8h0imjy +_4d4r9v4] != _5v2wwg8)*_ytkw283 + (_rp9dxoq[_xdrkz40][16 -_8h0imjy +_4d4r9v4] == _5v2wwg8)*0u;
-                            _ytkw283 = (_vwvm4w3 > (_jdtvv2y[_5v2wwg8][5] +_lyk83tq->_ihair4c*_lyk83tq->_lw2lm34))*_ytkw283 + (_vwvm4w3 <= (_jdtvv2y[_5v2wwg8][5] +_lyk83tq->_ihair4c*_lyk83tq->_lw2lm34))*0u;
-                            if (_ytkw283 == 1u) { break; }
-                            _4d4r9v4 += 1u;
+                        _1b07g2r = 0u;
+                        while (_fu7bfxq < _jg2y8rg-1)
+                        { _be3yqy5 = _wshmlfz[_o7vbgr8][16 -_jg2y8rg +_fu7bfxq];
+                            __builtin___memcpy_chk (_dan085r, &_xf7jxjn[_be3yqy5][0], 3*sizeof(float), __builtin_object_size (_dan085r, 0));
+                            SubtractVect3(_2ljk4q5, _uug95rl, _dan085r); _1vsmado = VectorLength(_2ljk4q5);
+                            _1b07g2r = (_0s1f537[_be3yqy5] == 0u)*1u + (_0s1f537[_be3yqy5] != 0u)*0u;
+                            _1b07g2r = (_jlpefja[_be3yqy5][0] > 1u)*_1b07g2r + (_jlpefja[_be3yqy5][0] <= 1u)*0u;
+                            _1b07g2r = (_wshmlfz[_vmefozt][16 -_jg2y8rg +_fu7bfxq] != _be3yqy5)*_1b07g2r + (_wshmlfz[_vmefozt][16 -_jg2y8rg +_fu7bfxq] == _be3yqy5)*0u;
+                            _1b07g2r = (_1vsmado > (_xf7jxjn[_be3yqy5][5] +_84u89yj->_ktakpux*_84u89yj->_m7pyxdw))*_1b07g2r + (_1vsmado <= (_xf7jxjn[_be3yqy5][5] +_84u89yj->_ktakpux*_84u89yj->_m7pyxdw))*0u;
+                            if (_1b07g2r == 1u) { break; }
+                            _fu7bfxq += 1u;
                         }
-                        if (_ytkw283 == 0u)
-                        { __builtin___memcpy_chk (_2c9t199, &_8e7flqh[_mgvu4is[_50b8y5d*8 +0]*4 +0], 3*sizeof(float), __builtin_object_size (_2c9t199, 0));
-                            __builtin___memcpy_chk (_dxj37c9, &_8e7flqh[_mgvu4is[_50b8y5d*8 +1]*4 +0], 3*sizeof(float), __builtin_object_size (_dxj37c9, 0));
-                            __builtin___memcpy_chk (_h42m44g, &_8e7flqh[_mgvu4is[_50b8y5d*8 +2]*4 +0], 3*sizeof(float), __builtin_object_size (_h42m44g, 0));
-                            if (_lyk83tq->_26q3xlr == 1u)
-                            { StrainHS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, _lyk83tq->_jssuuqo, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainHS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, 0.0f, _lyk83tq->_jssuuqo, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainHS_Nikkhoo(_q52wspo, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, 0.0f, 0.0f, _lyk83tq->_jssuuqo, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
+                        if (_1b07g2r == 0u)
+                        { __builtin___memcpy_chk (_e3nwxuj, &_t8qzpky[_qydbpgv[_o7vbgr8*8 +0]*4 +0], 3*sizeof(float), __builtin_object_size (_e3nwxuj, 0));
+                            __builtin___memcpy_chk (_3ac6pe6, &_t8qzpky[_qydbpgv[_o7vbgr8*8 +1]*4 +0], 3*sizeof(float), __builtin_object_size (_3ac6pe6, 0));
+                            __builtin___memcpy_chk (_3lbqgu3, &_t8qzpky[_qydbpgv[_o7vbgr8*8 +2]*4 +0], 3*sizeof(float), __builtin_object_size (_3lbqgu3, 0));
+                            if (_84u89yj->_fhv1xg1 == 1u)
+                            { StrainHS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, _84u89yj->_8kzruin, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainHS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, 0.0f, _84u89yj->_8kzruin, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainHS_Nikkhoo(_dtg5nqj, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, 0.0f, 0.0f, _84u89yj->_8kzruin, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
                             }
                             else
-                            { StrainFS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, _lyk83tq->_jssuuqo, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainFS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, 0.0f, _lyk83tq->_jssuuqo, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainFS_Nikkhoo(_q52wspo, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, 0.0f, 0.0f, _lyk83tq->_jssuuqo, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
+                            { StrainFS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, _84u89yj->_8kzruin, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainFS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, 0.0f, _84u89yj->_8kzruin, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainFS_Nikkhoo(_dtg5nqj, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, 0.0f, 0.0f, _84u89yj->_8kzruin, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
                             }
-                            ScaleStress6(_ktmonrv, (_zkwdeek/(_lyk83tq->_jssuuqo*_rcpprcj[_50b8y5d*16 +15]))); RotStressG2L(&_hez74la[0], _dan085r, _ktmonrv);
-                            ScaleStress6(_p9p9w4j, (_zkwdeek/(_lyk83tq->_jssuuqo*_rcpprcj[_50b8y5d*16 +15]))); RotStressG2L(&_hez74la[3], _dan085r, _p9p9w4j);
-                            ScaleStress6(_q52wspo, (_zkwdeek/(_lyk83tq->_jssuuqo*_rcpprcj[_50b8y5d*16 +15]))); RotStressG2L(&_hez74la[6], _dan085r, _q52wspo);
-                            if (_xdrkz40 == _50b8y5d)
+                            ScaleStress6(_mt8vt43, (_8e7flqh/(_84u89yj->_8kzruin*_s9bp4m1[_o7vbgr8*16 +15]))); RotStressG2L(&_2292mtr[0], _v71448n, _mt8vt43);
+                            ScaleStress6(_pkxvhag, (_8e7flqh/(_84u89yj->_8kzruin*_s9bp4m1[_o7vbgr8*16 +15]))); RotStressG2L(&_2292mtr[3], _v71448n, _pkxvhag);
+                            ScaleStress6(_dtg5nqj, (_8e7flqh/(_84u89yj->_8kzruin*_s9bp4m1[_o7vbgr8*16 +15]))); RotStressG2L(&_2292mtr[6], _v71448n, _dtg5nqj);
+                            if (_vmefozt == _o7vbgr8)
                             {
-                                _m7pyxdw[i*16 +5] = _hez74la[0]*_rcpprcj[_50b8y5d*16 +15];
-                                _m7pyxdw[i*16 +6] = _hez74la[4]*_rcpprcj[_50b8y5d*16 +15];
-                                _m7pyxdw[i*16 +7] = _hez74la[8]*_rcpprcj[_50b8y5d*16 +15];
+                                _dntcagr[i*16 +5] = _2292mtr[0]*_s9bp4m1[_o7vbgr8*16 +15];
+                                _dntcagr[i*16 +6] = _2292mtr[4]*_s9bp4m1[_o7vbgr8*16 +15];
+                                _dntcagr[i*16 +7] = _2292mtr[8]*_s9bp4m1[_o7vbgr8*16 +15];
                             }
-                            _ozctwjl[_btkf6xd[i]*3 +0] = _hez74la[0]; _ozctwjl[_btkf6xd[i]*3 +1] = _hez74la[3]; _ozctwjl[_btkf6xd[i]*3 +2] = _hez74la[6];
-                            _b68rerv[_btkf6xd[i]*3 +0] = _hez74la[1]; _b68rerv[_btkf6xd[i]*3 +1] = _hez74la[4]; _b68rerv[_btkf6xd[i]*3 +2] = _hez74la[7];
-                            _ny181ac[_btkf6xd[i]*3 +0] = _hez74la[2]; _ny181ac[_btkf6xd[i]*3 +1] = _hez74la[5]; _ny181ac[_btkf6xd[i]*3 +2] = _hez74la[8];
-                            (*_86lthet)[i][_50b8y5d] = _btkf6xd[i];
-                            _btkf6xd[i] += 1u;
-                            _ntbz3m5[_50b8y5d] = 1u;
-                            _09lzrk7 = 0u;
-                            for (j = 0u; j < _z3nx39r->_urvqt3g; j++) { _09lzrk7 += _ntbz3m5[j]; }
-                            for (j = 0u; j < _8h0imjy; j++) { _mda9oek[ _rp9dxoq[_50b8y5d][16 -_8h0imjy +j] ] = 1u; }
-                            _jcmrsez = 0u;
+                            _0wfoy4d[_vk0ucc1[i]*3 +0] = _2292mtr[0]; _0wfoy4d[_vk0ucc1[i]*3 +1] = _2292mtr[3]; _0wfoy4d[_vk0ucc1[i]*3 +2] = _2292mtr[6];
+                            _zareiya[_vk0ucc1[i]*3 +0] = _2292mtr[1]; _zareiya[_vk0ucc1[i]*3 +1] = _2292mtr[4]; _zareiya[_vk0ucc1[i]*3 +2] = _2292mtr[7];
+                            _0dl5e11[_vk0ucc1[i]*3 +0] = _2292mtr[2]; _0dl5e11[_vk0ucc1[i]*3 +1] = _2292mtr[5]; _0dl5e11[_vk0ucc1[i]*3 +2] = _2292mtr[8];
+                            (*_va1nkbt)[i][_o7vbgr8] = _vk0ucc1[i];
+                            _vk0ucc1[i] += 1u;
+                            _ye0qzsa[_o7vbgr8] = 1u;
+                            _xdrkz40 = 0u;
+                            for (j = 0u; j < _s3kkv9r->_y25m8kb; j++) { _xdrkz40 += _ye0qzsa[j]; }
+                            for (j = 0u; j < _jg2y8rg; j++) { _0s1f537[ _wshmlfz[_o7vbgr8][16 -_jg2y8rg +j] ] = 1u; }
+                            _ybxkpm2 = 0u;
                         }
                         else
-                        { _5v2wwg8 = _rp9dxoq[_50b8y5d][16 -_8h0imjy +_4d4r9v4];
-                            __builtin___memcpy_chk (_2c9t199, &_jdtvv2y[_5v2wwg8][9], 3*sizeof(float), __builtin_object_size (_2c9t199, 0));
-                            __builtin___memcpy_chk (_dxj37c9, &_jdtvv2y[_5v2wwg8][12], 3*sizeof(float), __builtin_object_size (_dxj37c9, 0));
-                            __builtin___memcpy_chk (_h42m44g, &_jdtvv2y[_5v2wwg8][15], 3*sizeof(float), __builtin_object_size (_h42m44g, 0));
-                            __builtin___memcpy_chk (_v3z6bz8, &_jdtvv2y[_5v2wwg8][18], 3*sizeof(float), __builtin_object_size (_v3z6bz8, 0));
-                            if (_lyk83tq->_26q3xlr == 1u)
-                            { StrainHS_Nikkhoo(_bjfvyb6, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, _lyk83tq->_jssuuqo, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainHS_Nikkhoo(_66cnolj, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, _lyk83tq->_jssuuqo, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainHS_Nikkhoo(_fv177ud, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, 0.0f, _lyk83tq->_jssuuqo, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainHS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, _lyk83tq->_jssuuqo, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainHS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, _lyk83tq->_jssuuqo, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainHS_Nikkhoo(_q52wspo, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, 0.0f, _lyk83tq->_jssuuqo, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                _ktmonrv[0] += _bjfvyb6[0]; _ktmonrv[1] += _bjfvyb6[1]; _ktmonrv[2] += _bjfvyb6[2];
-                                _ktmonrv[3] += _bjfvyb6[3]; _ktmonrv[4] += _bjfvyb6[4]; _ktmonrv[5] += _bjfvyb6[5];
-                                _p9p9w4j[0] += _66cnolj[0]; _p9p9w4j[1] += _66cnolj[1]; _p9p9w4j[2] += _66cnolj[2];
-                                _p9p9w4j[3] += _66cnolj[3]; _p9p9w4j[4] += _66cnolj[4]; _p9p9w4j[5] += _66cnolj[5];
-                                _q52wspo[0] += _fv177ud[0]; _q52wspo[1] += _fv177ud[1]; _q52wspo[2] += _fv177ud[2];
-                                _q52wspo[3] += _fv177ud[3]; _q52wspo[4] += _fv177ud[4]; _q52wspo[5] += _fv177ud[5];
+                        { _be3yqy5 = _wshmlfz[_o7vbgr8][16 -_jg2y8rg +_fu7bfxq];
+                            __builtin___memcpy_chk (_e3nwxuj, &_xf7jxjn[_be3yqy5][9], 3*sizeof(float), __builtin_object_size (_e3nwxuj, 0));
+                            __builtin___memcpy_chk (_3ac6pe6, &_xf7jxjn[_be3yqy5][12], 3*sizeof(float), __builtin_object_size (_3ac6pe6, 0));
+                            __builtin___memcpy_chk (_3lbqgu3, &_xf7jxjn[_be3yqy5][15], 3*sizeof(float), __builtin_object_size (_3lbqgu3, 0));
+                            __builtin___memcpy_chk (_obyghgk, &_xf7jxjn[_be3yqy5][18], 3*sizeof(float), __builtin_object_size (_obyghgk, 0));
+                            if (_84u89yj->_fhv1xg1 == 1u)
+                            { StrainHS_Nikkhoo(_pt5r5rc, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, _84u89yj->_8kzruin, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainHS_Nikkhoo(_kc4lorx, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, _84u89yj->_8kzruin, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainHS_Nikkhoo(_qijc1yd, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, 0.0f, _84u89yj->_8kzruin, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainHS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, _84u89yj->_8kzruin, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainHS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, _84u89yj->_8kzruin, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainHS_Nikkhoo(_dtg5nqj, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, 0.0f, _84u89yj->_8kzruin, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                _mt8vt43[0] += _pt5r5rc[0]; _mt8vt43[1] += _pt5r5rc[1]; _mt8vt43[2] += _pt5r5rc[2];
+                                _mt8vt43[3] += _pt5r5rc[3]; _mt8vt43[4] += _pt5r5rc[4]; _mt8vt43[5] += _pt5r5rc[5];
+                                _pkxvhag[0] += _kc4lorx[0]; _pkxvhag[1] += _kc4lorx[1]; _pkxvhag[2] += _kc4lorx[2];
+                                _pkxvhag[3] += _kc4lorx[3]; _pkxvhag[4] += _kc4lorx[4]; _pkxvhag[5] += _kc4lorx[5];
+                                _dtg5nqj[0] += _qijc1yd[0]; _dtg5nqj[1] += _qijc1yd[1]; _dtg5nqj[2] += _qijc1yd[2];
+                                _dtg5nqj[3] += _qijc1yd[3]; _dtg5nqj[4] += _qijc1yd[4]; _dtg5nqj[5] += _qijc1yd[5];
                             }
                             else
-                            { StrainFS_Nikkhoo(_bjfvyb6, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, _lyk83tq->_jssuuqo, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainFS_Nikkhoo(_66cnolj, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, _lyk83tq->_jssuuqo, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainFS_Nikkhoo(_fv177ud, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, 0.0f, _lyk83tq->_jssuuqo, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainFS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, _lyk83tq->_jssuuqo, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainFS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, _lyk83tq->_jssuuqo, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainFS_Nikkhoo(_q52wspo, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, 0.0f, _lyk83tq->_jssuuqo, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                _ktmonrv[0] += _bjfvyb6[0]; _ktmonrv[1] += _bjfvyb6[1]; _ktmonrv[2] += _bjfvyb6[2];
-                                _ktmonrv[3] += _bjfvyb6[3]; _ktmonrv[4] += _bjfvyb6[4]; _ktmonrv[5] += _bjfvyb6[5];
-                                _p9p9w4j[0] += _66cnolj[0]; _p9p9w4j[1] += _66cnolj[1]; _p9p9w4j[2] += _66cnolj[2];
-                                _p9p9w4j[3] += _66cnolj[3]; _p9p9w4j[4] += _66cnolj[4]; _p9p9w4j[5] += _66cnolj[5];
-                                _q52wspo[0] += _fv177ud[0]; _q52wspo[1] += _fv177ud[1]; _q52wspo[2] += _fv177ud[2];
-                                _q52wspo[3] += _fv177ud[3]; _q52wspo[4] += _fv177ud[4]; _q52wspo[5] += _fv177ud[5];
+                            { StrainFS_Nikkhoo(_pt5r5rc, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, _84u89yj->_8kzruin, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainFS_Nikkhoo(_kc4lorx, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, _84u89yj->_8kzruin, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainFS_Nikkhoo(_qijc1yd, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, 0.0f, _84u89yj->_8kzruin, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainFS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, _84u89yj->_8kzruin, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainFS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, _84u89yj->_8kzruin, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainFS_Nikkhoo(_dtg5nqj, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, 0.0f, _84u89yj->_8kzruin, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                _mt8vt43[0] += _pt5r5rc[0]; _mt8vt43[1] += _pt5r5rc[1]; _mt8vt43[2] += _pt5r5rc[2];
+                                _mt8vt43[3] += _pt5r5rc[3]; _mt8vt43[4] += _pt5r5rc[4]; _mt8vt43[5] += _pt5r5rc[5];
+                                _pkxvhag[0] += _kc4lorx[0]; _pkxvhag[1] += _kc4lorx[1]; _pkxvhag[2] += _kc4lorx[2];
+                                _pkxvhag[3] += _kc4lorx[3]; _pkxvhag[4] += _kc4lorx[4]; _pkxvhag[5] += _kc4lorx[5];
+                                _dtg5nqj[0] += _qijc1yd[0]; _dtg5nqj[1] += _qijc1yd[1]; _dtg5nqj[2] += _qijc1yd[2];
+                                _dtg5nqj[3] += _qijc1yd[3]; _dtg5nqj[4] += _qijc1yd[4]; _dtg5nqj[5] += _qijc1yd[5];
                             }
-                            ScaleStress6(_ktmonrv, (_zkwdeek/(_lyk83tq->_jssuuqo*_jdtvv2y[_5v2wwg8][3]))); RotStressG2L(&_hez74la[0], _dan085r, _ktmonrv);
-                            ScaleStress6(_p9p9w4j, (_zkwdeek/(_lyk83tq->_jssuuqo*_jdtvv2y[_5v2wwg8][3]))); RotStressG2L(&_hez74la[3], _dan085r, _p9p9w4j);
-                            ScaleStress6(_q52wspo, (_zkwdeek/(_lyk83tq->_jssuuqo*_jdtvv2y[_5v2wwg8][3]))); RotStressG2L(&_hez74la[6], _dan085r, _q52wspo);
-                            _ytkw283 = 1u;
-                            for (j = 0; j < _f9yecaz[_5v2wwg8][0]; j++)
-                            { _7orfqla = _f9yecaz[_5v2wwg8][(j+1)];
-                                __builtin___memcpy_chk (_2c9t199, &_jdtvv2y[_7orfqla][9], 3*sizeof(float), __builtin_object_size (_2c9t199, 0));
-                                __builtin___memcpy_chk (_dxj37c9, &_jdtvv2y[_7orfqla][12], 3*sizeof(float), __builtin_object_size (_dxj37c9, 0));
-                                __builtin___memcpy_chk (_h42m44g, &_jdtvv2y[_7orfqla][15], 3*sizeof(float), __builtin_object_size (_h42m44g, 0));
-                                __builtin___memcpy_chk (_v3z6bz8, &_jdtvv2y[_7orfqla][18], 3*sizeof(float), __builtin_object_size (_v3z6bz8, 0));
-                                if (_lyk83tq->_26q3xlr == 1u)
-                                { StrainHS_Nikkhoo(_bjfvyb6, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, _lyk83tq->_jssuuqo, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainHS_Nikkhoo(_66cnolj, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, _lyk83tq->_jssuuqo, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainHS_Nikkhoo(_fv177ud, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, 0.0f, _lyk83tq->_jssuuqo, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainHS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, _lyk83tq->_jssuuqo, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainHS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, _lyk83tq->_jssuuqo, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainHS_Nikkhoo(_q52wspo, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, 0.0f, _lyk83tq->_jssuuqo, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    _ktmonrv[0] += _bjfvyb6[0]; _ktmonrv[1] += _bjfvyb6[1]; _ktmonrv[2] += _bjfvyb6[2];
-                                    _ktmonrv[3] += _bjfvyb6[3]; _ktmonrv[4] += _bjfvyb6[4]; _ktmonrv[5] += _bjfvyb6[5];
-                                    _p9p9w4j[0] += _66cnolj[0]; _p9p9w4j[1] += _66cnolj[1]; _p9p9w4j[2] += _66cnolj[2];
-                                    _p9p9w4j[3] += _66cnolj[3]; _p9p9w4j[4] += _66cnolj[4]; _p9p9w4j[5] += _66cnolj[5];
-                                    _q52wspo[0] += _fv177ud[0]; _q52wspo[1] += _fv177ud[1]; _q52wspo[2] += _fv177ud[2];
-                                    _q52wspo[3] += _fv177ud[3]; _q52wspo[4] += _fv177ud[4]; _q52wspo[5] += _fv177ud[5];
+                            ScaleStress6(_mt8vt43, (_8e7flqh/(_84u89yj->_8kzruin*_xf7jxjn[_be3yqy5][3]))); RotStressG2L(&_2292mtr[0], _v71448n, _mt8vt43);
+                            ScaleStress6(_pkxvhag, (_8e7flqh/(_84u89yj->_8kzruin*_xf7jxjn[_be3yqy5][3]))); RotStressG2L(&_2292mtr[3], _v71448n, _pkxvhag);
+                            ScaleStress6(_dtg5nqj, (_8e7flqh/(_84u89yj->_8kzruin*_xf7jxjn[_be3yqy5][3]))); RotStressG2L(&_2292mtr[6], _v71448n, _dtg5nqj);
+                            _1b07g2r = 1u;
+                            for (j = 0; j < _jlpefja[_be3yqy5][0]; j++)
+                            { _iua08ek = _jlpefja[_be3yqy5][(j+1)];
+                                __builtin___memcpy_chk (_e3nwxuj, &_xf7jxjn[_iua08ek][9], 3*sizeof(float), __builtin_object_size (_e3nwxuj, 0));
+                                __builtin___memcpy_chk (_3ac6pe6, &_xf7jxjn[_iua08ek][12], 3*sizeof(float), __builtin_object_size (_3ac6pe6, 0));
+                                __builtin___memcpy_chk (_3lbqgu3, &_xf7jxjn[_iua08ek][15], 3*sizeof(float), __builtin_object_size (_3lbqgu3, 0));
+                                __builtin___memcpy_chk (_obyghgk, &_xf7jxjn[_iua08ek][18], 3*sizeof(float), __builtin_object_size (_obyghgk, 0));
+                                if (_84u89yj->_fhv1xg1 == 1u)
+                                { StrainHS_Nikkhoo(_pt5r5rc, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, _84u89yj->_8kzruin, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainHS_Nikkhoo(_kc4lorx, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, _84u89yj->_8kzruin, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainHS_Nikkhoo(_qijc1yd, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, 0.0f, _84u89yj->_8kzruin, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainHS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, _84u89yj->_8kzruin, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainHS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, _84u89yj->_8kzruin, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainHS_Nikkhoo(_dtg5nqj, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, 0.0f, _84u89yj->_8kzruin, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    _mt8vt43[0] += _pt5r5rc[0]; _mt8vt43[1] += _pt5r5rc[1]; _mt8vt43[2] += _pt5r5rc[2];
+                                    _mt8vt43[3] += _pt5r5rc[3]; _mt8vt43[4] += _pt5r5rc[4]; _mt8vt43[5] += _pt5r5rc[5];
+                                    _pkxvhag[0] += _kc4lorx[0]; _pkxvhag[1] += _kc4lorx[1]; _pkxvhag[2] += _kc4lorx[2];
+                                    _pkxvhag[3] += _kc4lorx[3]; _pkxvhag[4] += _kc4lorx[4]; _pkxvhag[5] += _kc4lorx[5];
+                                    _dtg5nqj[0] += _qijc1yd[0]; _dtg5nqj[1] += _qijc1yd[1]; _dtg5nqj[2] += _qijc1yd[2];
+                                    _dtg5nqj[3] += _qijc1yd[3]; _dtg5nqj[4] += _qijc1yd[4]; _dtg5nqj[5] += _qijc1yd[5];
                                 }
                                 else
-                                { StrainFS_Nikkhoo(_bjfvyb6, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, _lyk83tq->_jssuuqo, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainFS_Nikkhoo(_66cnolj, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, _lyk83tq->_jssuuqo, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainFS_Nikkhoo(_fv177ud, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, 0.0f, _lyk83tq->_jssuuqo, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainFS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, _lyk83tq->_jssuuqo, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainFS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, _lyk83tq->_jssuuqo, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainFS_Nikkhoo(_q52wspo, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, 0.0f, _lyk83tq->_jssuuqo, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    _ktmonrv[0] += _bjfvyb6[0]; _ktmonrv[1] += _bjfvyb6[1]; _ktmonrv[2] += _bjfvyb6[2];
-                                    _ktmonrv[3] += _bjfvyb6[3]; _ktmonrv[4] += _bjfvyb6[4]; _ktmonrv[5] += _bjfvyb6[5];
-                                    _p9p9w4j[0] += _66cnolj[0]; _p9p9w4j[1] += _66cnolj[1]; _p9p9w4j[2] += _66cnolj[2];
-                                    _p9p9w4j[3] += _66cnolj[3]; _p9p9w4j[4] += _66cnolj[4]; _p9p9w4j[5] += _66cnolj[5];
-                                    _q52wspo[0] += _fv177ud[0]; _q52wspo[1] += _fv177ud[1]; _q52wspo[2] += _fv177ud[2];
-                                    _q52wspo[3] += _fv177ud[3]; _q52wspo[4] += _fv177ud[4]; _q52wspo[5] += _fv177ud[5];
+                                { StrainFS_Nikkhoo(_pt5r5rc, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, _84u89yj->_8kzruin, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainFS_Nikkhoo(_kc4lorx, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, _84u89yj->_8kzruin, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainFS_Nikkhoo(_qijc1yd, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, 0.0f, _84u89yj->_8kzruin, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainFS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, _84u89yj->_8kzruin, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainFS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, _84u89yj->_8kzruin, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainFS_Nikkhoo(_dtg5nqj, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, 0.0f, _84u89yj->_8kzruin, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    _mt8vt43[0] += _pt5r5rc[0]; _mt8vt43[1] += _pt5r5rc[1]; _mt8vt43[2] += _pt5r5rc[2];
+                                    _mt8vt43[3] += _pt5r5rc[3]; _mt8vt43[4] += _pt5r5rc[4]; _mt8vt43[5] += _pt5r5rc[5];
+                                    _pkxvhag[0] += _kc4lorx[0]; _pkxvhag[1] += _kc4lorx[1]; _pkxvhag[2] += _kc4lorx[2];
+                                    _pkxvhag[3] += _kc4lorx[3]; _pkxvhag[4] += _kc4lorx[4]; _pkxvhag[5] += _kc4lorx[5];
+                                    _dtg5nqj[0] += _qijc1yd[0]; _dtg5nqj[1] += _qijc1yd[1]; _dtg5nqj[2] += _qijc1yd[2];
+                                    _dtg5nqj[3] += _qijc1yd[3]; _dtg5nqj[4] += _qijc1yd[4]; _dtg5nqj[5] += _qijc1yd[5];
                                 }
-                                ScaleStress6(_ktmonrv, (_zkwdeek/(_lyk83tq->_jssuuqo*_jdtvv2y[_7orfqla][3]))); RotStressG2L(&_jtb9xxa[0], _dan085r, _ktmonrv);
-                                ScaleStress6(_p9p9w4j, (_zkwdeek/(_lyk83tq->_jssuuqo*_jdtvv2y[_7orfqla][3]))); RotStressG2L(&_jtb9xxa[3], _dan085r, _p9p9w4j);
-                                ScaleStress6(_q52wspo, (_zkwdeek/(_lyk83tq->_jssuuqo*_jdtvv2y[_7orfqla][3]))); RotStressG2L(&_jtb9xxa[6], _dan085r, _q52wspo);
-                                __builtin___memcpy_chk (_kc4lorx, &_jdtvv2y[_7orfqla][0], 3*sizeof(float), __builtin_object_size (_kc4lorx, 0));
-                                SubtractVect3(_nvg3kk0, _v78hu7f, _kc4lorx); _vwvm4w3 = VectorLength(_nvg3kk0);
-                                _g34iq7z = (_vwvm4w3/_lyk83tq->_lw2lm34 - _lyk83tq->_ihair4c)/(_lyk83tq->_owgzrix - _lyk83tq->_ihair4c);
-                                _g34iq7z = (_g34iq7z >= 0.0f)*_g34iq7z + (_g34iq7z < 0.0f)*0.0f;
-                                _g34iq7z = (_g34iq7z <= 1.0f)*_g34iq7z + (_g34iq7z > 1.0f)*1.0f;
-                                _g34iq7z = _lyk83tq->_a11dpg8*_g34iq7z;
-                                _h30153s = sqrtf( (_jtb9xxa[0]-_hez74la[0])*(_jtb9xxa[0]-_hez74la[0]) + (_jtb9xxa[1]-_hez74la[1])*(_jtb9xxa[1]-_hez74la[1]) + (_jtb9xxa[2]-_hez74la[2])*(_jtb9xxa[2]-_hez74la[2]) + (_jtb9xxa[3]-_hez74la[3])*(_jtb9xxa[3]-_hez74la[3]) + (_jtb9xxa[4]-_hez74la[4])*(_jtb9xxa[4]-_hez74la[4]) + (_jtb9xxa[5]-_hez74la[5])*(_jtb9xxa[5]-_hez74la[5]) + (_jtb9xxa[6]-_hez74la[6])*(_jtb9xxa[6]-_hez74la[6]) + (_jtb9xxa[7]-_hez74la[7])*(_jtb9xxa[7]-_hez74la[7]) + (_jtb9xxa[8]-_hez74la[8])*(_jtb9xxa[8]-_hez74la[8]));
-                                _flse45b = sqrtf( _hez74la[0] *_hez74la[0] + _hez74la[1] *_hez74la[1] + _hez74la[2] *_hez74la[2] + _hez74la[3] *_hez74la[3] + _hez74la[4] *_hez74la[4] + _hez74la[5] *_hez74la[5] + _hez74la[6] *_hez74la[6] + _hez74la[7] *_hez74la[7] + _hez74la[8] *_hez74la[8]);
-                                _ytkw283 = ((_h30153s/_flse45b) <= _g34iq7z)*_ytkw283 + ((_h30153s/_flse45b) > _g34iq7z)*0u;
+                                ScaleStress6(_mt8vt43, (_8e7flqh/(_84u89yj->_8kzruin*_xf7jxjn[_iua08ek][3]))); RotStressG2L(&_gwaj1g1[0], _v71448n, _mt8vt43);
+                                ScaleStress6(_pkxvhag, (_8e7flqh/(_84u89yj->_8kzruin*_xf7jxjn[_iua08ek][3]))); RotStressG2L(&_gwaj1g1[3], _v71448n, _pkxvhag);
+                                ScaleStress6(_dtg5nqj, (_8e7flqh/(_84u89yj->_8kzruin*_xf7jxjn[_iua08ek][3]))); RotStressG2L(&_gwaj1g1[6], _v71448n, _dtg5nqj);
+                                __builtin___memcpy_chk (_dan085r, &_xf7jxjn[_iua08ek][0], 3*sizeof(float), __builtin_object_size (_dan085r, 0));
+                                SubtractVect3(_2ljk4q5, _uug95rl, _dan085r); _1vsmado = VectorLength(_2ljk4q5);
+                                _fv177ud = (_1vsmado/_84u89yj->_m7pyxdw - _84u89yj->_ktakpux)/(_84u89yj->_qphr62g - _84u89yj->_ktakpux);
+                                _fv177ud = (_fv177ud >= 0.0f)*_fv177ud + (_fv177ud < 0.0f)*0.0f;
+                                _fv177ud = (_fv177ud <= 1.0f)*_fv177ud + (_fv177ud > 1.0f)*1.0f;
+                                _fv177ud = _84u89yj->_dswm31y*_fv177ud;
+                                _66cnolj = sqrtf( (_gwaj1g1[0]-_2292mtr[0])*(_gwaj1g1[0]-_2292mtr[0]) + (_gwaj1g1[1]-_2292mtr[1])*(_gwaj1g1[1]-_2292mtr[1]) + (_gwaj1g1[2]-_2292mtr[2])*(_gwaj1g1[2]-_2292mtr[2]) + (_gwaj1g1[3]-_2292mtr[3])*(_gwaj1g1[3]-_2292mtr[3]) + (_gwaj1g1[4]-_2292mtr[4])*(_gwaj1g1[4]-_2292mtr[4]) + (_gwaj1g1[5]-_2292mtr[5])*(_gwaj1g1[5]-_2292mtr[5]) + (_gwaj1g1[6]-_2292mtr[6])*(_gwaj1g1[6]-_2292mtr[6]) + (_gwaj1g1[7]-_2292mtr[7])*(_gwaj1g1[7]-_2292mtr[7]) + (_gwaj1g1[8]-_2292mtr[8])*(_gwaj1g1[8]-_2292mtr[8]));
+                                _q52wspo = sqrtf( _2292mtr[0] *_2292mtr[0] + _2292mtr[1] *_2292mtr[1] + _2292mtr[2] *_2292mtr[2] + _2292mtr[3] *_2292mtr[3] + _2292mtr[4] *_2292mtr[4] + _2292mtr[5] *_2292mtr[5] + _2292mtr[6] *_2292mtr[6] + _2292mtr[7] *_2292mtr[7] + _2292mtr[8] *_2292mtr[8]);
+                                _1b07g2r = ((_66cnolj/_q52wspo) <= _fv177ud)*_1b07g2r + ((_66cnolj/_q52wspo) > _fv177ud)*0u;
                             }
-                            if (_ytkw283 == 1u)
-                            { _ozctwjl[_btkf6xd[i]*3 +0] = _hez74la[0]; _ozctwjl[_btkf6xd[i]*3 +1] = _hez74la[3]; _ozctwjl[_btkf6xd[i]*3 +2] = _hez74la[6];
-                                _b68rerv[_btkf6xd[i]*3 +0] = _hez74la[1]; _b68rerv[_btkf6xd[i]*3 +1] = _hez74la[4]; _b68rerv[_btkf6xd[i]*3 +2] = _hez74la[7];
-                                _ny181ac[_btkf6xd[i]*3 +0] = _hez74la[2]; _ny181ac[_btkf6xd[i]*3 +1] = _hez74la[5]; _ny181ac[_btkf6xd[i]*3 +2] = _hez74la[8];
-                                _09lzrk7 = 0u;
-                                for (j = 0u; j < _z3nx39r->_urvqt3g; j++)
-                                { _ntbz3m5[j] = (_rp9dxoq[j][16 -_8h0imjy +_4d4r9v4] == _5v2wwg8)*1u + (_rp9dxoq[j][16 -_8h0imjy +_4d4r9v4] != _5v2wwg8)*_ntbz3m5[j];
-                                    (*_86lthet)[i][j] = (_rp9dxoq[j][16 -_8h0imjy +_4d4r9v4] == _5v2wwg8)*_btkf6xd[i] + (_rp9dxoq[j][16 -_8h0imjy +_4d4r9v4] != _5v2wwg8)*(*_86lthet)[i][j];
-                                    _09lzrk7 += _ntbz3m5[j];
+                            if (_1b07g2r == 1u)
+                            { _0wfoy4d[_vk0ucc1[i]*3 +0] = _2292mtr[0]; _0wfoy4d[_vk0ucc1[i]*3 +1] = _2292mtr[3]; _0wfoy4d[_vk0ucc1[i]*3 +2] = _2292mtr[6];
+                                _zareiya[_vk0ucc1[i]*3 +0] = _2292mtr[1]; _zareiya[_vk0ucc1[i]*3 +1] = _2292mtr[4]; _zareiya[_vk0ucc1[i]*3 +2] = _2292mtr[7];
+                                _0dl5e11[_vk0ucc1[i]*3 +0] = _2292mtr[2]; _0dl5e11[_vk0ucc1[i]*3 +1] = _2292mtr[5]; _0dl5e11[_vk0ucc1[i]*3 +2] = _2292mtr[8];
+                                _xdrkz40 = 0u;
+                                for (j = 0u; j < _s3kkv9r->_y25m8kb; j++)
+                                { _ye0qzsa[j] = (_wshmlfz[j][16 -_jg2y8rg +_fu7bfxq] == _be3yqy5)*1u + (_wshmlfz[j][16 -_jg2y8rg +_fu7bfxq] != _be3yqy5)*_ye0qzsa[j];
+                                    (*_va1nkbt)[i][j] = (_wshmlfz[j][16 -_jg2y8rg +_fu7bfxq] == _be3yqy5)*_vk0ucc1[i] + (_wshmlfz[j][16 -_jg2y8rg +_fu7bfxq] != _be3yqy5)*(*_va1nkbt)[i][j];
+                                    _xdrkz40 += _ye0qzsa[j];
                                 }
-                                _btkf6xd[i] += 1u;
-                                for (j = 0u; j < _8h0imjy; j++) { _mda9oek[ _rp9dxoq[_50b8y5d][16 -_8h0imjy +j] ] = 1u; }
-                                _jcmrsez = 0u;
+                                _vk0ucc1[i] += 1u;
+                                for (j = 0u; j < _jg2y8rg; j++) { _0s1f537[ _wshmlfz[_o7vbgr8][16 -_jg2y8rg +j] ] = 1u; }
+                                _ybxkpm2 = 0u;
                             }
-                            _4d4r9v4 += 1u;
+                            _fu7bfxq += 1u;
                 } } }
-                _39ayq6w = GetByteSize(64, 3*_btkf6xd[i], sizeof(float));
-                (*_jbc2sws)[i] = aligned_alloc(64, _39ayq6w); __builtin___memcpy_chk ((*_jbc2sws)[i], _ozctwjl, 3*_btkf6xd[i]* sizeof(float), __builtin_object_size ((*_jbc2sws)[i], 0));
-                (*_4xkss0k)[i] = aligned_alloc(64, _39ayq6w); __builtin___memcpy_chk ((*_4xkss0k)[i], _b68rerv, 3*_btkf6xd[i]* sizeof(float), __builtin_object_size ((*_4xkss0k)[i], 0));
-                (*_t997e4u)[i] = aligned_alloc(64, _39ayq6w); __builtin___memcpy_chk ((*_t997e4u)[i], _ny181ac, 3*_btkf6xd[i]* sizeof(float), __builtin_object_size ((*_t997e4u)[i], 0));
-                _39ayq6w = GetByteSize(64, 2*_z3nx39r->_jp61lfc, sizeof(float));
-                __builtin___memset_chk (_3jczucq, 0, _39ayq6w, __builtin_object_size (_3jczucq, 0));
-                __builtin___memset_chk (_ycz04cd, 0, _39ayq6w, __builtin_object_size (_ycz04cd, 0));
-                __builtin___memset_chk (_zzf8s2z, 0, _39ayq6w, __builtin_object_size (_zzf8s2z, 0));
-                __builtin___memset_chk (_p422ta8, 0, _z3nx39r->_jp61lfc*sizeof(unsigned int), __builtin_object_size (_p422ta8, 0));
-                __builtin___memset_chk (_jz6us7r, 0, _gzvrctl*sizeof(unsigned int), __builtin_object_size (_jz6us7r, 0));
-                _09lzrk7 = 0u;
-                while (_09lzrk7 < _z3nx39r->_jp61lfc)
+                _050ui22 = GetByteSize(64, 3*_vk0ucc1[i], sizeof(float));
+                (*_e9ftaxp)[i] = aligned_alloc(64, _050ui22); __builtin___memcpy_chk ((*_e9ftaxp)[i], _0wfoy4d, 3*_vk0ucc1[i]* sizeof(float), __builtin_object_size ((*_e9ftaxp)[i], 0));
+                (*_6fokzix)[i] = aligned_alloc(64, _050ui22); __builtin___memcpy_chk ((*_6fokzix)[i], _zareiya, 3*_vk0ucc1[i]* sizeof(float), __builtin_object_size ((*_6fokzix)[i], 0));
+                (*_z39pecn)[i] = aligned_alloc(64, _050ui22); __builtin___memcpy_chk ((*_z39pecn)[i], _0dl5e11, 3*_vk0ucc1[i]* sizeof(float), __builtin_object_size ((*_z39pecn)[i], 0));
+                _050ui22 = GetByteSize(64, 2*_s3kkv9r->_otn9uze, sizeof(float));
+                __builtin___memset_chk (_ny181ac, 0, _050ui22, __builtin_object_size (_ny181ac, 0));
+                __builtin___memset_chk (_jdtvv2y, 0, _050ui22, __builtin_object_size (_jdtvv2y, 0));
+                __builtin___memset_chk (_b68rerv, 0, _050ui22, __builtin_object_size (_b68rerv, 0));
+                __builtin___memset_chk (_rgb93wk, 0, _s3kkv9r->_otn9uze*sizeof(unsigned int), __builtin_object_size (_rgb93wk, 0));
+                __builtin___memset_chk (_kb700uc, 0, _pwh0mx1*sizeof(unsigned int), __builtin_object_size (_kb700uc, 0));
+                _xdrkz40 = 0u;
+                while (_xdrkz40 < _s3kkv9r->_otn9uze)
                 {
-                    for (j = 0u; j < _z3nx39r->_jp61lfc; j++) { if (_p422ta8[j] == 0u) { _50b8y5d = j; break; } }
-                    __builtin___memcpy_chk (_kc4lorx, &_qw5dsk7[_50b8y5d*16 +0], 3*sizeof(float), __builtin_object_size (_kc4lorx, 0));
-                    SubtractVect3(_nvg3kk0, _v78hu7f, _kc4lorx); _vwvm4w3 = VectorLength(_nvg3kk0);
-                    _zkwdeek = (_vwvm4w3 >= 1.75f*_lyk83tq->_n8la100)*1.0f + (_vwvm4w3 < 1.75f*_lyk83tq->_n8la100)*0.0f;
-                    _8h0imjy = _6wmdw0f[_50b8y5d][0];
-                    _4d4r9v4 = 0;
-                    _jcmrsez = 1u;
-                    while (_jcmrsez == 1u)
+                    for (j = 0u; j < _s3kkv9r->_otn9uze; j++) { if (_rgb93wk[j] == 0u) { _o7vbgr8 = j; break; } }
+                    __builtin___memcpy_chk (_dan085r, &_3n3bzt9[_o7vbgr8*16 +0], 3*sizeof(float), __builtin_object_size (_dan085r, 0));
+                    SubtractVect3(_2ljk4q5, _uug95rl, _dan085r); _1vsmado = VectorLength(_2ljk4q5);
+                    _8e7flqh = (_1vsmado >= 1.75f*_84u89yj->_d31k9qm)*1.0f + (_1vsmado < 1.75f*_84u89yj->_d31k9qm)*0.0f;
+                    _jg2y8rg = _f7fr91i[_o7vbgr8][0];
+                    _fu7bfxq = 0;
+                    _ybxkpm2 = 1u;
+                    while (_ybxkpm2 == 1u)
                     {
-                        _ytkw283 = 0u;
-                        while (_4d4r9v4 < _8h0imjy-1)
-                        { _5v2wwg8 = _6wmdw0f[_50b8y5d][16 -_8h0imjy +_4d4r9v4];
-                            __builtin___memcpy_chk (_kc4lorx, &_s6g298c[_5v2wwg8][0], 3*sizeof(float), __builtin_object_size (_kc4lorx, 0));
-                            SubtractVect3(_nvg3kk0, _v78hu7f, _kc4lorx); _vwvm4w3 = VectorLength(_nvg3kk0);
-                            _ytkw283 = (_jz6us7r[_5v2wwg8] == 0u)*1u + (_jz6us7r[_5v2wwg8] != 0u)*0u;
-                            _ytkw283 = (_1xgbngz[_5v2wwg8][0] > 1u)*_ytkw283 + (_1xgbngz[_5v2wwg8][0] <= 1u)*0u;
-                            _ytkw283 = (_vwvm4w3 > (_s6g298c[_5v2wwg8][5] +_lyk83tq->_ihair4c*_lyk83tq->_n8la100))*_ytkw283 + (_vwvm4w3 <= (_s6g298c[_5v2wwg8][5] +_lyk83tq->_ihair4c*_lyk83tq->_n8la100))*0u;
-                            if (_ytkw283 == 1u) { break; }
-                            _4d4r9v4 += 1u;
+                        _1b07g2r = 0u;
+                        while (_fu7bfxq < _jg2y8rg-1)
+                        { _be3yqy5 = _f7fr91i[_o7vbgr8][16 -_jg2y8rg +_fu7bfxq];
+                            __builtin___memcpy_chk (_dan085r, &_pqvl00e[_be3yqy5][0], 3*sizeof(float), __builtin_object_size (_dan085r, 0));
+                            SubtractVect3(_2ljk4q5, _uug95rl, _dan085r); _1vsmado = VectorLength(_2ljk4q5);
+                            _1b07g2r = (_kb700uc[_be3yqy5] == 0u)*1u + (_kb700uc[_be3yqy5] != 0u)*0u;
+                            _1b07g2r = (_jzr25md[_be3yqy5][0] > 1u)*_1b07g2r + (_jzr25md[_be3yqy5][0] <= 1u)*0u;
+                            _1b07g2r = (_1vsmado > (_pqvl00e[_be3yqy5][5] +_84u89yj->_ktakpux*_84u89yj->_d31k9qm))*_1b07g2r + (_1vsmado <= (_pqvl00e[_be3yqy5][5] +_84u89yj->_ktakpux*_84u89yj->_d31k9qm))*0u;
+                            if (_1b07g2r == 1u) { break; }
+                            _fu7bfxq += 1u;
                         }
-                        if (_ytkw283 == 0u)
-                        { __builtin___memcpy_chk (_2c9t199, &_z39pecn[_t4q9bc2[_50b8y5d*8 +0]*4 +0], 3*sizeof(float), __builtin_object_size (_2c9t199, 0));
-                            __builtin___memcpy_chk (_dxj37c9, &_z39pecn[_t4q9bc2[_50b8y5d*8 +1]*4 +0], 3*sizeof(float), __builtin_object_size (_dxj37c9, 0));
-                            __builtin___memcpy_chk (_h42m44g, &_z39pecn[_t4q9bc2[_50b8y5d*8 +2]*4 +0], 3*sizeof(float), __builtin_object_size (_h42m44g, 0));
-                            if (_lyk83tq->_26q3xlr == 1u)
-                            { StrainHS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, _lyk83tq->_6fokzix, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainHS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, 0.0f, _lyk83tq->_6fokzix, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
+                        if (_1b07g2r == 0u)
+                        { __builtin___memcpy_chk (_e3nwxuj, &_n8la100[_egok01t[_o7vbgr8*8 +0]*4 +0], 3*sizeof(float), __builtin_object_size (_e3nwxuj, 0));
+                            __builtin___memcpy_chk (_3ac6pe6, &_n8la100[_egok01t[_o7vbgr8*8 +1]*4 +0], 3*sizeof(float), __builtin_object_size (_3ac6pe6, 0));
+                            __builtin___memcpy_chk (_3lbqgu3, &_n8la100[_egok01t[_o7vbgr8*8 +2]*4 +0], 3*sizeof(float), __builtin_object_size (_3lbqgu3, 0));
+                            if (_84u89yj->_fhv1xg1 == 1u)
+                            { StrainHS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, _84u89yj->_31yrujo, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainHS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, 0.0f, _84u89yj->_31yrujo, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
                            }
                             else
-                            { StrainFS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, _lyk83tq->_6fokzix, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainFS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _h42m44g, 0.0f, _lyk83tq->_6fokzix, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
+                            { StrainFS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, _84u89yj->_31yrujo, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainFS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _3lbqgu3, 0.0f, _84u89yj->_31yrujo, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
                             }
-                            ScaleStress6(_ktmonrv, (_zkwdeek/(_lyk83tq->_6fokzix*_qw5dsk7[_50b8y5d*16 +15]))); RotStressG2L(&_hez74la[0], _dan085r, _ktmonrv);
-                            ScaleStress6(_p9p9w4j, (_zkwdeek/(_lyk83tq->_6fokzix*_qw5dsk7[_50b8y5d*16 +15]))); RotStressG2L(&_hez74la[3], _dan085r, _p9p9w4j);
-                            _3jczucq[_9f77lu8[i]*2 +0] = _hez74la[0]; _3jczucq[_9f77lu8[i]*2 +1] = _hez74la[3];
-                            _ycz04cd[_9f77lu8[i]*2 +0] = _hez74la[1]; _ycz04cd[_9f77lu8[i]*2 +1] = _hez74la[4];
-                            _zzf8s2z[_9f77lu8[i]*2 +0] = _hez74la[2]; _zzf8s2z[_9f77lu8[i]*2 +1] = _hez74la[5];
-                            (*_op767j2)[i][_50b8y5d] = _9f77lu8[i];
-                            _9f77lu8[i] += 1u;
-                            _p422ta8[_50b8y5d] = 1u;
-                            _09lzrk7 = 0u;
-                            for (j = 0u; j < _z3nx39r->_jp61lfc; j++) { _09lzrk7 += _p422ta8[j]; }
-                            for (j = 0u; j < _8h0imjy; j++) { _jz6us7r[ _6wmdw0f[_50b8y5d][16 -_8h0imjy +j] ] = 1u; }
-                            _jcmrsez = 0u;
+                            ScaleStress6(_mt8vt43, (_8e7flqh/(_84u89yj->_31yrujo*_3n3bzt9[_o7vbgr8*16 +15]))); RotStressG2L(&_2292mtr[0], _v71448n, _mt8vt43);
+                            ScaleStress6(_pkxvhag, (_8e7flqh/(_84u89yj->_31yrujo*_3n3bzt9[_o7vbgr8*16 +15]))); RotStressG2L(&_2292mtr[3], _v71448n, _pkxvhag);
+                            _ny181ac[_vshkoec[i]*2 +0] = _2292mtr[0]; _ny181ac[_vshkoec[i]*2 +1] = _2292mtr[3];
+                            _jdtvv2y[_vshkoec[i]*2 +0] = _2292mtr[1]; _jdtvv2y[_vshkoec[i]*2 +1] = _2292mtr[4];
+                            _b68rerv[_vshkoec[i]*2 +0] = _2292mtr[2]; _b68rerv[_vshkoec[i]*2 +1] = _2292mtr[5];
+                            (*_eurxhw0)[i][_o7vbgr8] = _vshkoec[i];
+                            _vshkoec[i] += 1u;
+                            _rgb93wk[_o7vbgr8] = 1u;
+                            _xdrkz40 = 0u;
+                            for (j = 0u; j < _s3kkv9r->_otn9uze; j++) { _xdrkz40 += _rgb93wk[j]; }
+                            for (j = 0u; j < _jg2y8rg; j++) { _kb700uc[ _f7fr91i[_o7vbgr8][16 -_jg2y8rg +j] ] = 1u; }
+                            _ybxkpm2 = 0u;
                         }
                         else
-                        { _5v2wwg8 = _6wmdw0f[_50b8y5d][16 -_8h0imjy +_4d4r9v4];
-                            __builtin___memcpy_chk (_2c9t199, &_s6g298c[_5v2wwg8][9], 3*sizeof(float), __builtin_object_size (_2c9t199, 0));
-                            __builtin___memcpy_chk (_dxj37c9, &_s6g298c[_5v2wwg8][12], 3*sizeof(float), __builtin_object_size (_dxj37c9, 0));
-                            __builtin___memcpy_chk (_h42m44g, &_s6g298c[_5v2wwg8][15], 3*sizeof(float), __builtin_object_size (_h42m44g, 0));
-                            __builtin___memcpy_chk (_v3z6bz8, &_s6g298c[_5v2wwg8][18], 3*sizeof(float), __builtin_object_size (_v3z6bz8, 0));
-                            if (_lyk83tq->_26q3xlr == 1u)
-                            { StrainHS_Nikkhoo(_bjfvyb6, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, _lyk83tq->_6fokzix, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainHS_Nikkhoo(_66cnolj, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, _lyk83tq->_6fokzix, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainHS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, _lyk83tq->_6fokzix, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainHS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, _lyk83tq->_6fokzix, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                _ktmonrv[0] += _bjfvyb6[0]; _ktmonrv[1] += _bjfvyb6[1]; _ktmonrv[2] += _bjfvyb6[2];
-                                _ktmonrv[3] += _bjfvyb6[3]; _ktmonrv[4] += _bjfvyb6[4]; _ktmonrv[5] += _bjfvyb6[5];
-                                _p9p9w4j[0] += _66cnolj[0]; _p9p9w4j[1] += _66cnolj[1]; _p9p9w4j[2] += _66cnolj[2];
-                                _p9p9w4j[3] += _66cnolj[3]; _p9p9w4j[4] += _66cnolj[4]; _p9p9w4j[5] += _66cnolj[5];
+                        { _be3yqy5 = _f7fr91i[_o7vbgr8][16 -_jg2y8rg +_fu7bfxq];
+                            __builtin___memcpy_chk (_e3nwxuj, &_pqvl00e[_be3yqy5][9], 3*sizeof(float), __builtin_object_size (_e3nwxuj, 0));
+                            __builtin___memcpy_chk (_3ac6pe6, &_pqvl00e[_be3yqy5][12], 3*sizeof(float), __builtin_object_size (_3ac6pe6, 0));
+                            __builtin___memcpy_chk (_3lbqgu3, &_pqvl00e[_be3yqy5][15], 3*sizeof(float), __builtin_object_size (_3lbqgu3, 0));
+                            __builtin___memcpy_chk (_obyghgk, &_pqvl00e[_be3yqy5][18], 3*sizeof(float), __builtin_object_size (_obyghgk, 0));
+                            if (_84u89yj->_fhv1xg1 == 1u)
+                            { StrainHS_Nikkhoo(_pt5r5rc, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, _84u89yj->_31yrujo, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainHS_Nikkhoo(_kc4lorx, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, _84u89yj->_31yrujo, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainHS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, _84u89yj->_31yrujo, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainHS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, _84u89yj->_31yrujo, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                _mt8vt43[0] += _pt5r5rc[0]; _mt8vt43[1] += _pt5r5rc[1]; _mt8vt43[2] += _pt5r5rc[2];
+                                _mt8vt43[3] += _pt5r5rc[3]; _mt8vt43[4] += _pt5r5rc[4]; _mt8vt43[5] += _pt5r5rc[5];
+                                _pkxvhag[0] += _kc4lorx[0]; _pkxvhag[1] += _kc4lorx[1]; _pkxvhag[2] += _kc4lorx[2];
+                                _pkxvhag[3] += _kc4lorx[3]; _pkxvhag[4] += _kc4lorx[4]; _pkxvhag[5] += _kc4lorx[5];
                             }
                             else
-                            { StrainFS_Nikkhoo(_bjfvyb6, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, _lyk83tq->_6fokzix, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainFS_Nikkhoo(_66cnolj, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, _lyk83tq->_6fokzix, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainFS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, _lyk83tq->_6fokzix, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                StrainFS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, _lyk83tq->_6fokzix, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                _ktmonrv[0] += _bjfvyb6[0]; _ktmonrv[1] += _bjfvyb6[1]; _ktmonrv[2] += _bjfvyb6[2];
-                                _ktmonrv[3] += _bjfvyb6[3]; _ktmonrv[4] += _bjfvyb6[4]; _ktmonrv[5] += _bjfvyb6[5];
-                                _p9p9w4j[0] += _66cnolj[0]; _p9p9w4j[1] += _66cnolj[1]; _p9p9w4j[2] += _66cnolj[2];
-                                _p9p9w4j[3] += _66cnolj[3]; _p9p9w4j[4] += _66cnolj[4]; _p9p9w4j[5] += _66cnolj[5];
+                            { StrainFS_Nikkhoo(_pt5r5rc, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, _84u89yj->_31yrujo, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainFS_Nikkhoo(_kc4lorx, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, _84u89yj->_31yrujo, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainFS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, _84u89yj->_31yrujo, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                StrainFS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, _84u89yj->_31yrujo, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                _mt8vt43[0] += _pt5r5rc[0]; _mt8vt43[1] += _pt5r5rc[1]; _mt8vt43[2] += _pt5r5rc[2];
+                                _mt8vt43[3] += _pt5r5rc[3]; _mt8vt43[4] += _pt5r5rc[4]; _mt8vt43[5] += _pt5r5rc[5];
+                                _pkxvhag[0] += _kc4lorx[0]; _pkxvhag[1] += _kc4lorx[1]; _pkxvhag[2] += _kc4lorx[2];
+                                _pkxvhag[3] += _kc4lorx[3]; _pkxvhag[4] += _kc4lorx[4]; _pkxvhag[5] += _kc4lorx[5];
                             }
-                            ScaleStress6(_ktmonrv, (_zkwdeek/(_lyk83tq->_6fokzix*_s6g298c[_5v2wwg8][3]))); RotStressG2L(&_hez74la[0], _dan085r, _ktmonrv);
-                            ScaleStress6(_p9p9w4j, (_zkwdeek/(_lyk83tq->_6fokzix*_s6g298c[_5v2wwg8][3]))); RotStressG2L(&_hez74la[3], _dan085r, _p9p9w4j);
-                            _ytkw283 = 1u;
-                            for (j = 0; j < _1xgbngz[_5v2wwg8][0]; j++)
-                            { _7orfqla = _1xgbngz[_5v2wwg8][(j+1)];
-                                __builtin___memcpy_chk (_2c9t199, &_s6g298c[_7orfqla][9], 3*sizeof(float), __builtin_object_size (_2c9t199, 0));
-                                __builtin___memcpy_chk (_dxj37c9, &_s6g298c[_7orfqla][12], 3*sizeof(float), __builtin_object_size (_dxj37c9, 0));
-                                __builtin___memcpy_chk (_h42m44g, &_s6g298c[_7orfqla][15], 3*sizeof(float), __builtin_object_size (_h42m44g, 0));
-                                __builtin___memcpy_chk (_v3z6bz8, &_s6g298c[_7orfqla][18], 3*sizeof(float), __builtin_object_size (_v3z6bz8, 0));
-                                if (_lyk83tq->_26q3xlr == 1u)
-                                { StrainHS_Nikkhoo(_bjfvyb6, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, _lyk83tq->_6fokzix, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainHS_Nikkhoo(_66cnolj, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, _lyk83tq->_6fokzix, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainHS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, _lyk83tq->_6fokzix, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainHS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, _lyk83tq->_6fokzix, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    _ktmonrv[0] += _bjfvyb6[0]; _ktmonrv[1] += _bjfvyb6[1]; _ktmonrv[2] += _bjfvyb6[2];
-                                    _ktmonrv[3] += _bjfvyb6[3]; _ktmonrv[4] += _bjfvyb6[4]; _ktmonrv[5] += _bjfvyb6[5];
-                                    _p9p9w4j[0] += _66cnolj[0]; _p9p9w4j[1] += _66cnolj[1]; _p9p9w4j[2] += _66cnolj[2];
-                                    _p9p9w4j[3] += _66cnolj[3]; _p9p9w4j[4] += _66cnolj[4]; _p9p9w4j[5] += _66cnolj[5];
+                            ScaleStress6(_mt8vt43, (_8e7flqh/(_84u89yj->_31yrujo*_pqvl00e[_be3yqy5][3]))); RotStressG2L(&_2292mtr[0], _v71448n, _mt8vt43);
+                            ScaleStress6(_pkxvhag, (_8e7flqh/(_84u89yj->_31yrujo*_pqvl00e[_be3yqy5][3]))); RotStressG2L(&_2292mtr[3], _v71448n, _pkxvhag);
+                            _1b07g2r = 1u;
+                            for (j = 0; j < _jzr25md[_be3yqy5][0]; j++)
+                            { _iua08ek = _jzr25md[_be3yqy5][(j+1)];
+                                __builtin___memcpy_chk (_e3nwxuj, &_pqvl00e[_iua08ek][9], 3*sizeof(float), __builtin_object_size (_e3nwxuj, 0));
+                                __builtin___memcpy_chk (_3ac6pe6, &_pqvl00e[_iua08ek][12], 3*sizeof(float), __builtin_object_size (_3ac6pe6, 0));
+                                __builtin___memcpy_chk (_3lbqgu3, &_pqvl00e[_iua08ek][15], 3*sizeof(float), __builtin_object_size (_3lbqgu3, 0));
+                                __builtin___memcpy_chk (_obyghgk, &_pqvl00e[_iua08ek][18], 3*sizeof(float), __builtin_object_size (_obyghgk, 0));
+                                if (_84u89yj->_fhv1xg1 == 1u)
+                                { StrainHS_Nikkhoo(_pt5r5rc, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, _84u89yj->_31yrujo, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainHS_Nikkhoo(_kc4lorx, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, _84u89yj->_31yrujo, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainHS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, _84u89yj->_31yrujo, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainHS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, _84u89yj->_31yrujo, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    _mt8vt43[0] += _pt5r5rc[0]; _mt8vt43[1] += _pt5r5rc[1]; _mt8vt43[2] += _pt5r5rc[2];
+                                    _mt8vt43[3] += _pt5r5rc[3]; _mt8vt43[4] += _pt5r5rc[4]; _mt8vt43[5] += _pt5r5rc[5];
+                                    _pkxvhag[0] += _kc4lorx[0]; _pkxvhag[1] += _kc4lorx[1]; _pkxvhag[2] += _kc4lorx[2];
+                                    _pkxvhag[3] += _kc4lorx[3]; _pkxvhag[4] += _kc4lorx[4]; _pkxvhag[5] += _kc4lorx[5];
                                 }
                                 else
-                                { StrainFS_Nikkhoo(_bjfvyb6, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, _lyk83tq->_6fokzix, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainFS_Nikkhoo(_66cnolj, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _2c9t199, _dxj37c9, _v3z6bz8, 0.0f, _lyk83tq->_6fokzix, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainFS_Nikkhoo(_ktmonrv, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, _lyk83tq->_6fokzix, 0.0f, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    StrainFS_Nikkhoo(_p9p9w4j, _6zs62yw, _v78hu7f[0], _v78hu7f[1], _v78hu7f[2], _dxj37c9, _h42m44g, _v3z6bz8, 0.0f, _lyk83tq->_6fokzix, 0.0f, _5zja8dz->_pkxvhag, _5zja8dz->_9dde3cu);
-                                    _ktmonrv[0] += _bjfvyb6[0]; _ktmonrv[1] += _bjfvyb6[1]; _ktmonrv[2] += _bjfvyb6[2];
-                                    _ktmonrv[3] += _bjfvyb6[3]; _ktmonrv[4] += _bjfvyb6[4]; _ktmonrv[5] += _bjfvyb6[5];
-                                    _p9p9w4j[0] += _66cnolj[0]; _p9p9w4j[1] += _66cnolj[1]; _p9p9w4j[2] += _66cnolj[2];
-                                    _p9p9w4j[3] += _66cnolj[3]; _p9p9w4j[4] += _66cnolj[4]; _p9p9w4j[5] += _66cnolj[5];
+                                { StrainFS_Nikkhoo(_pt5r5rc, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, _84u89yj->_31yrujo, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainFS_Nikkhoo(_kc4lorx, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _e3nwxuj, _3ac6pe6, _obyghgk, 0.0f, _84u89yj->_31yrujo, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainFS_Nikkhoo(_mt8vt43, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, _84u89yj->_31yrujo, 0.0f, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    StrainFS_Nikkhoo(_pkxvhag, _dhgzz0j, _uug95rl[0], _uug95rl[1], _uug95rl[2], _3ac6pe6, _3lbqgu3, _obyghgk, 0.0f, _84u89yj->_31yrujo, 0.0f, _j3trp0j->_x5qjicj, _j3trp0j->_plozjcn);
+                                    _mt8vt43[0] += _pt5r5rc[0]; _mt8vt43[1] += _pt5r5rc[1]; _mt8vt43[2] += _pt5r5rc[2];
+                                    _mt8vt43[3] += _pt5r5rc[3]; _mt8vt43[4] += _pt5r5rc[4]; _mt8vt43[5] += _pt5r5rc[5];
+                                    _pkxvhag[0] += _kc4lorx[0]; _pkxvhag[1] += _kc4lorx[1]; _pkxvhag[2] += _kc4lorx[2];
+                                    _pkxvhag[3] += _kc4lorx[3]; _pkxvhag[4] += _kc4lorx[4]; _pkxvhag[5] += _kc4lorx[5];
                                 }
-                                ScaleStress6(_ktmonrv, (_zkwdeek/(_lyk83tq->_6fokzix*_s6g298c[_7orfqla][3]))); RotStressG2L(&_jtb9xxa[0], _dan085r, _ktmonrv);
-                                ScaleStress6(_p9p9w4j, (_zkwdeek/(_lyk83tq->_6fokzix*_s6g298c[_7orfqla][3]))); RotStressG2L(&_jtb9xxa[3], _dan085r, _p9p9w4j);
-                                __builtin___memcpy_chk (_kc4lorx, &_s6g298c[_7orfqla][0], 3*sizeof(float), __builtin_object_size (_kc4lorx, 0));
-                                SubtractVect3(_nvg3kk0, _v78hu7f, _kc4lorx); _vwvm4w3 = VectorLength(_nvg3kk0);
-                                _g34iq7z = (_vwvm4w3/_lyk83tq->_n8la100 - _lyk83tq->_ihair4c)/(_lyk83tq->_owgzrix - _lyk83tq->_ihair4c);
-                                _g34iq7z = (_g34iq7z >= 0.0f)*_g34iq7z + (_g34iq7z < 0.0f)*0.0f;
-                                _g34iq7z = (_g34iq7z <= 1.0f)*_g34iq7z + (_g34iq7z > 1.0f)*1.0f;
-                                _g34iq7z = _lyk83tq->_a11dpg8*_g34iq7z;
-                                _h30153s = sqrtf( (_jtb9xxa[0]-_hez74la[0])*(_jtb9xxa[0]-_hez74la[0]) + (_jtb9xxa[1]-_hez74la[1])*(_jtb9xxa[1]-_hez74la[1]) + (_jtb9xxa[2]-_hez74la[2])*(_jtb9xxa[2]-_hez74la[2]) + (_jtb9xxa[3]-_hez74la[3])*(_jtb9xxa[3]-_hez74la[3]) + (_jtb9xxa[4]-_hez74la[4])*(_jtb9xxa[4]-_hez74la[4]) + (_jtb9xxa[5]-_hez74la[5])*(_jtb9xxa[5]-_hez74la[5]) );
-                                _flse45b = sqrtf( _hez74la[0] *_hez74la[0] + _hez74la[1] *_hez74la[1] + _hez74la[2] *_hez74la[2] + _hez74la[3] *_hez74la[3] + _hez74la[4] *_hez74la[4] + _hez74la[5] *_hez74la[5] );
-                                _ytkw283 = ((_h30153s/_flse45b) <= _g34iq7z)*_ytkw283 + ((_h30153s/_flse45b) > _g34iq7z)*0u;
+                                ScaleStress6(_mt8vt43, (_8e7flqh/(_84u89yj->_31yrujo*_pqvl00e[_iua08ek][3]))); RotStressG2L(&_gwaj1g1[0], _v71448n, _mt8vt43);
+                                ScaleStress6(_pkxvhag, (_8e7flqh/(_84u89yj->_31yrujo*_pqvl00e[_iua08ek][3]))); RotStressG2L(&_gwaj1g1[3], _v71448n, _pkxvhag);
+                                __builtin___memcpy_chk (_dan085r, &_pqvl00e[_iua08ek][0], 3*sizeof(float), __builtin_object_size (_dan085r, 0));
+                                SubtractVect3(_2ljk4q5, _uug95rl, _dan085r); _1vsmado = VectorLength(_2ljk4q5);
+                                _fv177ud = (_1vsmado/_84u89yj->_d31k9qm - _84u89yj->_ktakpux)/(_84u89yj->_qphr62g - _84u89yj->_ktakpux);
+                                _fv177ud = (_fv177ud >= 0.0f)*_fv177ud + (_fv177ud < 0.0f)*0.0f;
+                                _fv177ud = (_fv177ud <= 1.0f)*_fv177ud + (_fv177ud > 1.0f)*1.0f;
+                                _fv177ud = _84u89yj->_dswm31y*_fv177ud;
+                                _66cnolj = sqrtf( (_gwaj1g1[0]-_2292mtr[0])*(_gwaj1g1[0]-_2292mtr[0]) + (_gwaj1g1[1]-_2292mtr[1])*(_gwaj1g1[1]-_2292mtr[1]) + (_gwaj1g1[2]-_2292mtr[2])*(_gwaj1g1[2]-_2292mtr[2]) + (_gwaj1g1[3]-_2292mtr[3])*(_gwaj1g1[3]-_2292mtr[3]) + (_gwaj1g1[4]-_2292mtr[4])*(_gwaj1g1[4]-_2292mtr[4]) + (_gwaj1g1[5]-_2292mtr[5])*(_gwaj1g1[5]-_2292mtr[5]) );
+                                _q52wspo = sqrtf( _2292mtr[0] *_2292mtr[0] + _2292mtr[1] *_2292mtr[1] + _2292mtr[2] *_2292mtr[2] + _2292mtr[3] *_2292mtr[3] + _2292mtr[4] *_2292mtr[4] + _2292mtr[5] *_2292mtr[5] );
+                                _1b07g2r = ((_66cnolj/_q52wspo) <= _fv177ud)*_1b07g2r + ((_66cnolj/_q52wspo) > _fv177ud)*0u;
                             }
-                            if (_ytkw283 == 1u)
-                            { _3jczucq[_9f77lu8[i]*2 +0] = _hez74la[0]; _3jczucq[_9f77lu8[i]*2 +1] = _hez74la[3];
-                                _ycz04cd[_9f77lu8[i]*2 +0] = _hez74la[1]; _ycz04cd[_9f77lu8[i]*2 +1] = _hez74la[4];
-                                _zzf8s2z[_9f77lu8[i]*2 +0] = _hez74la[2]; _zzf8s2z[_9f77lu8[i]*2 +1] = _hez74la[5];
-                                _09lzrk7 = 0u;
-                                for (j = 0u; j < _z3nx39r->_jp61lfc; j++)
-                                { _p422ta8[j] = (_6wmdw0f[j][16 -_8h0imjy +_4d4r9v4] == _5v2wwg8)*1u + (_6wmdw0f[j][16 -_8h0imjy +_4d4r9v4] != _5v2wwg8)*_p422ta8[j];
-                                    (*_op767j2)[i][j] = (_6wmdw0f[j][16 -_8h0imjy +_4d4r9v4] == _5v2wwg8)*_9f77lu8[i] + (_6wmdw0f[j][16 -_8h0imjy +_4d4r9v4] != _5v2wwg8)*(*_op767j2)[i][j];
-                                    _09lzrk7 += _p422ta8[j];
+                            if (_1b07g2r == 1u)
+                            { _ny181ac[_vshkoec[i]*2 +0] = _2292mtr[0]; _ny181ac[_vshkoec[i]*2 +1] = _2292mtr[3];
+                                _jdtvv2y[_vshkoec[i]*2 +0] = _2292mtr[1]; _jdtvv2y[_vshkoec[i]*2 +1] = _2292mtr[4];
+                                _b68rerv[_vshkoec[i]*2 +0] = _2292mtr[2]; _b68rerv[_vshkoec[i]*2 +1] = _2292mtr[5];
+                                _xdrkz40 = 0u;
+                                for (j = 0u; j < _s3kkv9r->_otn9uze; j++)
+                                { _rgb93wk[j] = (_f7fr91i[j][16 -_jg2y8rg +_fu7bfxq] == _be3yqy5)*1u + (_f7fr91i[j][16 -_jg2y8rg +_fu7bfxq] != _be3yqy5)*_rgb93wk[j];
+                                    (*_eurxhw0)[i][j] = (_f7fr91i[j][16 -_jg2y8rg +_fu7bfxq] == _be3yqy5)*_vshkoec[i] + (_f7fr91i[j][16 -_jg2y8rg +_fu7bfxq] != _be3yqy5)*(*_eurxhw0)[i][j];
+                                    _xdrkz40 += _rgb93wk[j];
                                 }
-                                _9f77lu8[i] += 1u;
-                                for (j = 0u; j < _8h0imjy; j++) { _jz6us7r[ _6wmdw0f[_50b8y5d][16 -_8h0imjy +j] ] = 1u; }
-                                _jcmrsez = 0u;
+                                _vshkoec[i] += 1u;
+                                for (j = 0u; j < _jg2y8rg; j++) { _kb700uc[ _f7fr91i[_o7vbgr8][16 -_jg2y8rg +j] ] = 1u; }
+                                _ybxkpm2 = 0u;
                             }
-                            _4d4r9v4 += 1u;
+                            _fu7bfxq += 1u;
                 } } }
-                _39ayq6w = GetByteSize(64, 2*_9f77lu8[i], sizeof(float));
-                (*_ge2j51b)[i] = aligned_alloc(64, _39ayq6w); __builtin___memcpy_chk ((*_ge2j51b)[i], _3jczucq, 2*_9f77lu8[i]* sizeof(float), __builtin_object_size ((*_ge2j51b)[i], 0));
-                (*_sh3tow4)[i] = aligned_alloc(64, _39ayq6w); __builtin___memcpy_chk ((*_sh3tow4)[i], _ycz04cd, 2*_9f77lu8[i]* sizeof(float), __builtin_object_size ((*_sh3tow4)[i], 0));
-                (*_pqvl00e)[i] = aligned_alloc(64, _39ayq6w); __builtin___memcpy_chk ((*_pqvl00e)[i], _zzf8s2z, 2*_9f77lu8[i]* sizeof(float), __builtin_object_size ((*_pqvl00e)[i], 0));
+                _050ui22 = GetByteSize(64, 2*_vshkoec[i], sizeof(float));
+                (*_t997e4u)[i] = aligned_alloc(64, _050ui22); __builtin___memcpy_chk ((*_t997e4u)[i], _ny181ac, 2*_vshkoec[i]* sizeof(float), __builtin_object_size ((*_t997e4u)[i], 0));
+                (*_d1vn8lf)[i] = aligned_alloc(64, _050ui22); __builtin___memcpy_chk ((*_d1vn8lf)[i], _jdtvv2y, 2*_vshkoec[i]* sizeof(float), __builtin_object_size ((*_d1vn8lf)[i], 0));
+                (*_4xkss0k)[i] = aligned_alloc(64, _050ui22); __builtin___memcpy_chk ((*_4xkss0k)[i], _b68rerv, 2*_vshkoec[i]* sizeof(float), __builtin_object_size ((*_4xkss0k)[i], 0));
             }
         }
-        free(_p422ta8); free(_jz6us7r); free(_ntbz3m5); free(_mda9oek);
-        free(_ozctwjl); free(_b68rerv); free(_ny181ac); free(_3jczucq); free(_ycz04cd); free(_zzf8s2z);
+        free(_rgb93wk); free(_kb700uc); free(_ye0qzsa); free(_0s1f537);
+        free(_0wfoy4d); free(_zareiya); free(_0dl5e11); free(_ny181ac); free(_jdtvv2y); free(_b68rerv);
     }
     MPI_Barrier( ((MPI_Comm)0x44000000) );
-    clock_gettime(_CLOCK_REALTIME, &_6nouhfj);
-    _6parsg7 = (_6nouhfj.tv_sec - _7dknncp.tv_sec) + (_6nouhfj.tv_nsec - _7dknncp.tv_nsec)/1.0E+9;
-    if (_20n8tte == 0) { fprintf(__stdoutp,"\nTime taken for Kh_matrix(in seconds): %lf\n", _6parsg7); }
-    for (int i = 0; i < _gzvrctl; i++) { free(_s6g298c[i]); }
-    for (int i = 0; i < _z3nx39r->_jp61lfc; i++) { free(_6wmdw0f[i]); }
-    for (int i = 0; i < _z3nx39r->_jp61lfc*4; i++) { free(_1xgbngz[i]); }
-    for (int i = 0; i < _2vpgstq; i++) { free(_jdtvv2y[i]); }
-    for (int i = 0; i < _z3nx39r->_urvqt3g; i++) { free(_rp9dxoq[i]); }
-    for (int i = 0; i < _z3nx39r->_urvqt3g*4; i++) { free(_f9yecaz[i]); }
-    free(_s6g298c); free(_jdtvv2y); free(_6wmdw0f); free(_rp9dxoq); free(_1xgbngz); free(_f9yecaz);
-    unsigned int i, _aragdx5[4], _o7vbgr8[4], _p7bd4w1[4], _vmefozt[4];
-    __builtin___memset_chk (_aragdx5, 0, 4*sizeof(unsigned int), __builtin_object_size (_aragdx5, 0));
-    __builtin___memset_chk (_o7vbgr8, 0, 4*sizeof(unsigned int), __builtin_object_size (_o7vbgr8, 0));
-    __builtin___memset_chk (_p7bd4w1, 0, 4*sizeof(unsigned int), __builtin_object_size (_p7bd4w1, 0));
-    __builtin___memset_chk (_vmefozt, 0, 4*sizeof(unsigned int), __builtin_object_size (_vmefozt, 0));
-    for (i = 0u; i < _b6gs8g8[_20n8tte]; i++)
-    { _aragdx5[0] += _iob0nlw[i]; _vmefozt[0] = (_vmefozt[0] >= _iob0nlw[i])*_vmefozt[0] + (_vmefozt[0] < _iob0nlw[i])*_iob0nlw[i];
+    clock_gettime(_CLOCK_REALTIME, &_ofn1r4k);
+    _weehwjq = (_ofn1r4k.tv_sec - _zn4regb.tv_sec) + (_ofn1r4k.tv_nsec - _zn4regb.tv_nsec)/1.0E+9;
+    if (_tk63n2q == 0) { fprintf(__stdoutp,"\nTime taken for Kh_matrix(in seconds): %lf\n", _weehwjq); }
+    for (int i = 0; i < _pwh0mx1; i++) { free(_pqvl00e[i]); }
+    for (int i = 0; i < _s3kkv9r->_otn9uze; i++) { free(_f7fr91i[i]); }
+    for (int i = 0; i < _s3kkv9r->_otn9uze*4; i++) { free(_jzr25md[i]); }
+    for (int i = 0; i < _kicwmpe; i++) { free(_xf7jxjn[i]); }
+    for (int i = 0; i < _s3kkv9r->_y25m8kb; i++) { free(_wshmlfz[i]); }
+    for (int i = 0; i < _s3kkv9r->_y25m8kb*4; i++) { free(_jlpefja[i]); }
+    free(_pqvl00e); free(_xf7jxjn); free(_f7fr91i); free(_wshmlfz); free(_jzr25md); free(_jlpefja);
+    unsigned int i, _jp61lfc[4], _r7vgrf1[4], _6zjq7w7[4], _e4ex6u8[4];
+    __builtin___memset_chk (_jp61lfc, 0, 4*sizeof(unsigned int), __builtin_object_size (_jp61lfc, 0));
+    __builtin___memset_chk (_r7vgrf1, 0, 4*sizeof(unsigned int), __builtin_object_size (_r7vgrf1, 0));
+    __builtin___memset_chk (_6zjq7w7, 0, 4*sizeof(unsigned int), __builtin_object_size (_6zjq7w7, 0));
+    __builtin___memset_chk (_e4ex6u8, 0, 4*sizeof(unsigned int), __builtin_object_size (_e4ex6u8, 0));
+    for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++)
+    { _jp61lfc[0] += _hthsjr0[i]; _e4ex6u8[0] = (_e4ex6u8[0] >= _hthsjr0[i])*_e4ex6u8[0] + (_e4ex6u8[0] < _hthsjr0[i])*_hthsjr0[i];
     }
-    if (_z3nx39r->_urvqt3g > 0u)
-    { for (i = 0u; i < _b6gs8g8[_20n8tte]; i++)
-        { _aragdx5[1] += _iymyrsv[i]; _vmefozt[1] = (_vmefozt[1] >= _iymyrsv[i])*_vmefozt[1] + (_vmefozt[1] < _iymyrsv[i])*_iymyrsv[i];
+    if (_s3kkv9r->_y25m8kb > 0u)
+    { for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++)
+        { _jp61lfc[1] += _pmlvak9[i]; _e4ex6u8[1] = (_e4ex6u8[1] >= _pmlvak9[i])*_e4ex6u8[1] + (_e4ex6u8[1] < _pmlvak9[i])*_pmlvak9[i];
         }
     }
-    for (i = 0u; i < _zfflb7w[_20n8tte]; i++)
-    { _aragdx5[2] += _btkf6xd[i]; _vmefozt[2] = (_vmefozt[2] >= _btkf6xd[i])*_vmefozt[2] + (_vmefozt[2] < _btkf6xd[i])*_btkf6xd[i];
-        _aragdx5[3] += _9f77lu8[i]; _vmefozt[3] = (_vmefozt[3] >= _9f77lu8[i])*_vmefozt[3] + (_vmefozt[3] < _9f77lu8[i])*_9f77lu8[i];
+    for (i = 0u; i < _emruyp0[_tk63n2q]; i++)
+    { _jp61lfc[2] += _vk0ucc1[i]; _e4ex6u8[2] = (_e4ex6u8[2] >= _vk0ucc1[i])*_e4ex6u8[2] + (_e4ex6u8[2] < _vk0ucc1[i])*_vk0ucc1[i];
+        _jp61lfc[3] += _vshkoec[i]; _e4ex6u8[3] = (_e4ex6u8[3] >= _vshkoec[i])*_e4ex6u8[3] + (_e4ex6u8[3] < _vshkoec[i])*_vshkoec[i];
     }
-    MPI_Allreduce((void *) -1, _vmefozt, 4, ((MPI_Datatype)0x4c000406), (MPI_Op)(0x58000001), ((MPI_Comm)0x44000000));
-    _z3nx39r->_l9ue421 = ( ((_vmefozt[0]) > (_vmefozt[3])) *(_vmefozt[0]) + ((_vmefozt[0]) <= (_vmefozt[3])) *(_vmefozt[3]) );
-    _z3nx39r->_2h2p39y = ( ((_vmefozt[1]) > (_vmefozt[2])) *(_vmefozt[1]) + ((_vmefozt[1]) <= (_vmefozt[2])) *(_vmefozt[2]) );
-    _aragdx5[0] = _aragdx5[0]/_b6gs8g8[_20n8tte];
-    _aragdx5[1] = _aragdx5[1]/_b6gs8g8[_20n8tte];
-    _aragdx5[2] = (_zfflb7w[_20n8tte] > 0u) ? (_aragdx5[2]/_zfflb7w[_20n8tte]) : 0u;
-    _aragdx5[3] = (_zfflb7w[_20n8tte] > 0u) ? (_aragdx5[3]/_zfflb7w[_20n8tte]) : 0u;
-    __builtin___memcpy_chk (_o7vbgr8, _aragdx5, 4*sizeof(unsigned int), __builtin_object_size (_o7vbgr8, 0));
-    __builtin___memcpy_chk (_p7bd4w1, _aragdx5, 4*sizeof(unsigned int), __builtin_object_size (_p7bd4w1, 0));
-    MPI_Allreduce((void *) -1, _o7vbgr8, 4, ((MPI_Datatype)0x4c000406), (MPI_Op)(0x58000002), ((MPI_Comm)0x44000000));
-    MPI_Allreduce((void *) -1, _p7bd4w1, 4, ((MPI_Datatype)0x4c000406), (MPI_Op)(0x58000001), ((MPI_Comm)0x44000000));
-    MPI_Allreduce((void *) -1, _aragdx5, 4, ((MPI_Datatype)0x4c000406), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
-    _aragdx5[0] /= _avt8k06; _aragdx5[1] /= _avt8k06; _aragdx5[2] /= _avt8k06; _aragdx5[3] /= _avt8k06;
-    if (_20n8tte == 0)
+    MPI_Allreduce((void *) -1, _e4ex6u8, 4, ((MPI_Datatype)0x4c000406), (MPI_Op)(0x58000001), ((MPI_Comm)0x44000000));
+    _s3kkv9r->_d7x48wz = ( ((_e4ex6u8[0]) > (_e4ex6u8[3])) *(_e4ex6u8[0]) + ((_e4ex6u8[0]) <= (_e4ex6u8[3])) *(_e4ex6u8[3]) );
+    _s3kkv9r->_mygty3a = ( ((_e4ex6u8[1]) > (_e4ex6u8[2])) *(_e4ex6u8[1]) + ((_e4ex6u8[1]) <= (_e4ex6u8[2])) *(_e4ex6u8[2]) );
+    _jp61lfc[0] = _jp61lfc[0]/_6zx1tv1[_tk63n2q];
+    _jp61lfc[1] = _jp61lfc[1]/_6zx1tv1[_tk63n2q];
+    _jp61lfc[2] = (_emruyp0[_tk63n2q] > 0u) ? (_jp61lfc[2]/_emruyp0[_tk63n2q]) : 0u;
+    _jp61lfc[3] = (_emruyp0[_tk63n2q] > 0u) ? (_jp61lfc[3]/_emruyp0[_tk63n2q]) : 0u;
+    __builtin___memcpy_chk (_r7vgrf1, _jp61lfc, 4*sizeof(unsigned int), __builtin_object_size (_r7vgrf1, 0));
+    __builtin___memcpy_chk (_6zjq7w7, _jp61lfc, 4*sizeof(unsigned int), __builtin_object_size (_6zjq7w7, 0));
+    MPI_Allreduce((void *) -1, _r7vgrf1, 4, ((MPI_Datatype)0x4c000406), (MPI_Op)(0x58000002), ((MPI_Comm)0x44000000));
+    MPI_Allreduce((void *) -1, _6zjq7w7, 4, ((MPI_Datatype)0x4c000406), (MPI_Op)(0x58000001), ((MPI_Comm)0x44000000));
+    MPI_Allreduce((void *) -1, _jp61lfc, 4, ((MPI_Datatype)0x4c000406), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
+    _jp61lfc[0] /= _b6gs8g8; _jp61lfc[1] /= _b6gs8g8; _jp61lfc[2] /= _b6gs8g8; _jp61lfc[3] /= _b6gs8g8;
+    if (_tk63n2q == 0)
     { fprintf(__stdoutp,"Kh_lengths (average and range) across RANKs\n");
-        fprintf(__stdoutp,"Minimum:         %u\n", _o7vbgr8[0]);
-        fprintf(__stdoutp,"Average:         %u\n", _aragdx5[0]);
-        fprintf(__stdoutp,"Maximum:         %u\n", _p7bd4w1[0]);
+        fprintf(__stdoutp,"Minimum:         %u\n", _r7vgrf1[0]);
+        fprintf(__stdoutp,"Average:         %u\n", _jp61lfc[0]);
+        fprintf(__stdoutp,"Maximum:         %u\n", _6zjq7w7[0]);
     }
     MPI_Barrier( ((MPI_Comm)0x44000000) );
     return;
 }
-void Save_Khmatrix(int _20n8tte, const char *restrict _slwf90k, const struct _q0oxfq8 *restrict _z3nx39r, const struct _wrdmly4 *restrict _lyk83tq, const int *restrict _dtz91x7, const int *restrict _gcsotdh, const int *restrict _b6gs8g8, const int *restrict _zfflb7w, const unsigned int *restrict _xo100vh, const unsigned int *restrict _g1ved32, const float *restrict _3n3bzt9, const float *restrict _m7pyxdw, unsigned short int *restrict _iob0nlw, unsigned short int *restrict _iymyrsv, unsigned short int *restrict _btkf6xd, unsigned short int *restrict _9f77lu8, unsigned short int **restrict _3b9so0u, unsigned short int **restrict _1ajo091, unsigned short int **restrict _86lthet, unsigned short int **restrict _op767j2, float **restrict _0dtirc9, float **restrict _qk4ltah, float **restrict _h61iaoi, float **restrict _nf74t60, float **restrict _mrunjdu, float **restrict _jbc2sws, float **restrict _4xkss0k, float **restrict _t997e4u, float **restrict _ge2j51b, float **restrict _sh3tow4, float **restrict _pqvl00e)
+void Save_Khmatrix(int _tk63n2q, const char *restrict _xqt4p50, const struct _gzui1b0 *restrict _s3kkv9r, const struct _rcbpljd *restrict _84u89yj, const int *restrict _npuevjl, const int *restrict _yh1fkj4, const int *restrict _6zx1tv1, const int *restrict _emruyp0, const unsigned int *restrict _5izolnn, const unsigned int *restrict _laym0wb, const float *restrict _vwvm4w3, const float *restrict _dntcagr, unsigned short int *restrict _hthsjr0, unsigned short int *restrict _pmlvak9, unsigned short int *restrict _vk0ucc1, unsigned short int *restrict _vshkoec, unsigned short int **restrict _k2wbxan, unsigned short int **restrict _n14eb87, unsigned short int **restrict _va1nkbt, unsigned short int **restrict _eurxhw0, float **restrict _0isb5iq, float **restrict _zzf8s2z, float **restrict _3jczucq, float **restrict _sh3tow4, float **restrict _jbc2sws, float **restrict _e9ftaxp, float **restrict _6fokzix, float **restrict _z39pecn, float **restrict _t997e4u, float **restrict _d1vn8lf, float **restrict _4xkss0k)
 {
-    MPI_Status _py6b2kn;
-    MPI_Offset _et1ghr0;
-    MPI_File _dvg7oq2;
+    MPI_Status _myx444n;
+    MPI_Offset _r1yxr2d;
+    MPI_File _f445cri;
     unsigned int i;
-    unsigned long long _b2serev;
-    unsigned short int *_9s3w563 = ((void *)0), *_mofmmwi = ((void *)0), *_in9dl5t = ((void *)0), *_gsq7ait = ((void *)0);
-    unsigned long long *_4spfdrw = ((void *)0), *_mqvindh = ((void *)0), *_kdq95g3 = ((void *)0), *_v23gxj0 = ((void *)0);
-    float *_j49yd82 = ((void *)0), *_gqtoamd = ((void *)0);
-    _9s3w563 = malloc(_z3nx39r->_jp61lfc *sizeof(unsigned short int)); __builtin___memset_chk (_9s3w563, 0, _z3nx39r->_jp61lfc *sizeof(unsigned short int), __builtin_object_size (_9s3w563, 0));
-    _4spfdrw = malloc(_z3nx39r->_jp61lfc *sizeof(unsigned long long)); __builtin___memset_chk (_4spfdrw, 0, _z3nx39r->_jp61lfc *sizeof(unsigned long long), __builtin_object_size (_4spfdrw, 0));
-    _j49yd82 = malloc((3*_z3nx39r->_jp61lfc) *sizeof(float)); __builtin___memset_chk (_j49yd82, 0,(3*_z3nx39r->_jp61lfc) *sizeof(float), __builtin_object_size (_j49yd82, 0));
-    if (_z3nx39r->_urvqt3g > 0u)
-    { _mofmmwi = malloc(_z3nx39r->_jp61lfc *sizeof(unsigned short int)); __builtin___memset_chk (_mofmmwi, 0, _z3nx39r->_jp61lfc *sizeof(unsigned short int), __builtin_object_size (_mofmmwi, 0));
-        _mqvindh = malloc(_z3nx39r->_jp61lfc *sizeof(unsigned long long)); __builtin___memset_chk (_mqvindh, 0, _z3nx39r->_jp61lfc *sizeof(unsigned long long), __builtin_object_size (_mqvindh, 0));
-        _in9dl5t = malloc(_z3nx39r->_urvqt3g *sizeof(unsigned short int)); __builtin___memset_chk (_in9dl5t, 0, _z3nx39r->_urvqt3g *sizeof(unsigned short int), __builtin_object_size (_in9dl5t, 0));
-        _kdq95g3 = malloc(_z3nx39r->_urvqt3g *sizeof(unsigned long long)); __builtin___memset_chk (_kdq95g3, 0, _z3nx39r->_urvqt3g *sizeof(unsigned long long), __builtin_object_size (_kdq95g3, 0));
-        _gsq7ait = malloc(_z3nx39r->_urvqt3g *sizeof(unsigned short int)); __builtin___memset_chk (_gsq7ait, 0, _z3nx39r->_urvqt3g *sizeof(unsigned short int), __builtin_object_size (_gsq7ait, 0));
-        _v23gxj0 = malloc(_z3nx39r->_urvqt3g *sizeof(unsigned long long)); __builtin___memset_chk (_v23gxj0, 0, _z3nx39r->_urvqt3g *sizeof(unsigned long long), __builtin_object_size (_v23gxj0, 0));
-        _gqtoamd = malloc((3*_z3nx39r->_urvqt3g) *sizeof(float)); __builtin___memset_chk (_gqtoamd, 0,(3*_z3nx39r->_urvqt3g) *sizeof(float), __builtin_object_size (_gqtoamd, 0));
+    unsigned long long _9lzs34j;
+    unsigned short int *_02g3yu6 = ((void *)0), *_ui3do70 = ((void *)0), *_h4a3yjt = ((void *)0), *_u7fbmen = ((void *)0);
+    unsigned long long *_bh6nqqb = ((void *)0), *_0rmhrcn = ((void *)0), *_sosx43w = ((void *)0), *_fsqg8x8 = ((void *)0);
+    float *_8sryo4r = ((void *)0), *_6ub7l8v = ((void *)0);
+    _02g3yu6 = malloc(_s3kkv9r->_otn9uze *sizeof(unsigned short int)); __builtin___memset_chk (_02g3yu6, 0, _s3kkv9r->_otn9uze *sizeof(unsigned short int), __builtin_object_size (_02g3yu6, 0));
+    _bh6nqqb = malloc(_s3kkv9r->_otn9uze *sizeof(unsigned long long)); __builtin___memset_chk (_bh6nqqb, 0, _s3kkv9r->_otn9uze *sizeof(unsigned long long), __builtin_object_size (_bh6nqqb, 0));
+    _8sryo4r = malloc((3*_s3kkv9r->_otn9uze) *sizeof(float)); __builtin___memset_chk (_8sryo4r, 0,(3*_s3kkv9r->_otn9uze) *sizeof(float), __builtin_object_size (_8sryo4r, 0));
+    if (_s3kkv9r->_y25m8kb > 0u)
+    { _ui3do70 = malloc(_s3kkv9r->_otn9uze *sizeof(unsigned short int)); __builtin___memset_chk (_ui3do70, 0, _s3kkv9r->_otn9uze *sizeof(unsigned short int), __builtin_object_size (_ui3do70, 0));
+        _0rmhrcn = malloc(_s3kkv9r->_otn9uze *sizeof(unsigned long long)); __builtin___memset_chk (_0rmhrcn, 0, _s3kkv9r->_otn9uze *sizeof(unsigned long long), __builtin_object_size (_0rmhrcn, 0));
+        _h4a3yjt = malloc(_s3kkv9r->_y25m8kb *sizeof(unsigned short int)); __builtin___memset_chk (_h4a3yjt, 0, _s3kkv9r->_y25m8kb *sizeof(unsigned short int), __builtin_object_size (_h4a3yjt, 0));
+        _sosx43w = malloc(_s3kkv9r->_y25m8kb *sizeof(unsigned long long)); __builtin___memset_chk (_sosx43w, 0, _s3kkv9r->_y25m8kb *sizeof(unsigned long long), __builtin_object_size (_sosx43w, 0));
+        _u7fbmen = malloc(_s3kkv9r->_y25m8kb *sizeof(unsigned short int)); __builtin___memset_chk (_u7fbmen, 0, _s3kkv9r->_y25m8kb *sizeof(unsigned short int), __builtin_object_size (_u7fbmen, 0));
+        _fsqg8x8 = malloc(_s3kkv9r->_y25m8kb *sizeof(unsigned long long)); __builtin___memset_chk (_fsqg8x8, 0, _s3kkv9r->_y25m8kb *sizeof(unsigned long long), __builtin_object_size (_fsqg8x8, 0));
+        _6ub7l8v = malloc((3*_s3kkv9r->_y25m8kb) *sizeof(float)); __builtin___memset_chk (_6ub7l8v, 0,(3*_s3kkv9r->_y25m8kb) *sizeof(float), __builtin_object_size (_6ub7l8v, 0));
     }
-    for (i = 0u; i < _b6gs8g8[_20n8tte]; i++) { _9s3w563[_xo100vh[i]] = _iob0nlw[i]; }
-    MPI_Allreduce((void *) -1, _9s3w563, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c000204), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
-    for (i = 1u; i < _z3nx39r->_jp61lfc; i++)
-    { _4spfdrw[i] = _4spfdrw[i-1] + (_z3nx39r->_jp61lfc*sizeof(unsigned short int) + _9s3w563[i-1]*6*sizeof(float));
+    for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++) { _02g3yu6[_5izolnn[i]] = _hthsjr0[i]; }
+    MPI_Allreduce((void *) -1, _02g3yu6, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c000204), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
+    for (i = 1u; i < _s3kkv9r->_otn9uze; i++)
+    { _bh6nqqb[i] = _bh6nqqb[i-1] + (_s3kkv9r->_otn9uze*sizeof(unsigned short int) + _02g3yu6[i-1]*6*sizeof(float));
     }
-    for (i = 0u; i < _b6gs8g8[_20n8tte]; i++) { _j49yd82[_xo100vh[i] +0*_z3nx39r->_jp61lfc] = _3n3bzt9[i*16 +5]; _j49yd82[_xo100vh[i] +1*_z3nx39r->_jp61lfc] = _3n3bzt9[i*16 +6]; _j49yd82[_xo100vh[i] +2*_z3nx39r->_jp61lfc] = _3n3bzt9[i*16 +7]; }
-    MPI_Allreduce((void *) -1, _j49yd82, (3*_z3nx39r->_jp61lfc), ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
-    if (_z3nx39r->_urvqt3g > 0u)
-    { for (i = 0u; i < _b6gs8g8[_20n8tte]; i++) { _mofmmwi[_xo100vh[i]] = _iymyrsv[i]; }
-        for (i = 0u; i < _zfflb7w[_20n8tte]; i++) { _in9dl5t[_g1ved32[i]] = _btkf6xd[i]; _gsq7ait[_g1ved32[i]] = _9f77lu8[i]; }
-        MPI_Allreduce((void *) -1, _mofmmwi, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c000204), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
-        MPI_Allreduce((void *) -1, _in9dl5t, _z3nx39r->_urvqt3g, ((MPI_Datatype)0x4c000204), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
-        MPI_Allreduce((void *) -1, _gsq7ait, _z3nx39r->_urvqt3g, ((MPI_Datatype)0x4c000204), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
-        for (i = 1u; i < _z3nx39r->_jp61lfc; i++)
-        { _mqvindh[i] = _mqvindh[i-1] + (_z3nx39r->_urvqt3g*sizeof(unsigned short int) + _mofmmwi[i-1]*6*sizeof(float));
+    for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++) { _8sryo4r[_5izolnn[i] +0*_s3kkv9r->_otn9uze] = _vwvm4w3[i*16 +5]; _8sryo4r[_5izolnn[i] +1*_s3kkv9r->_otn9uze] = _vwvm4w3[i*16 +6]; _8sryo4r[_5izolnn[i] +2*_s3kkv9r->_otn9uze] = _vwvm4w3[i*16 +7]; }
+    MPI_Allreduce((void *) -1, _8sryo4r, (3*_s3kkv9r->_otn9uze), ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
+    if (_s3kkv9r->_y25m8kb > 0u)
+    { for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++) { _ui3do70[_5izolnn[i]] = _pmlvak9[i]; }
+        for (i = 0u; i < _emruyp0[_tk63n2q]; i++) { _h4a3yjt[_laym0wb[i]] = _vk0ucc1[i]; _u7fbmen[_laym0wb[i]] = _vshkoec[i]; }
+        MPI_Allreduce((void *) -1, _ui3do70, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c000204), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
+        MPI_Allreduce((void *) -1, _h4a3yjt, _s3kkv9r->_y25m8kb, ((MPI_Datatype)0x4c000204), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
+        MPI_Allreduce((void *) -1, _u7fbmen, _s3kkv9r->_y25m8kb, ((MPI_Datatype)0x4c000204), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
+        for (i = 1u; i < _s3kkv9r->_otn9uze; i++)
+        { _0rmhrcn[i] = _0rmhrcn[i-1] + (_s3kkv9r->_y25m8kb*sizeof(unsigned short int) + _ui3do70[i-1]*6*sizeof(float));
         }
-        for (i = 1u; i < _z3nx39r->_urvqt3g; i++)
-        { _kdq95g3[i] = _kdq95g3[i-1] + (_z3nx39r->_urvqt3g*sizeof(unsigned short int) + _in9dl5t[i-1]*9*sizeof(float));
-            _v23gxj0[i] = _v23gxj0[i-1] + (_z3nx39r->_jp61lfc*sizeof(unsigned short int) + _gsq7ait[i-1]*6*sizeof(float));
+        for (i = 1u; i < _s3kkv9r->_y25m8kb; i++)
+        { _sosx43w[i] = _sosx43w[i-1] + (_s3kkv9r->_y25m8kb*sizeof(unsigned short int) + _h4a3yjt[i-1]*9*sizeof(float));
+            _fsqg8x8[i] = _fsqg8x8[i-1] + (_s3kkv9r->_otn9uze*sizeof(unsigned short int) + _u7fbmen[i-1]*6*sizeof(float));
         }
-        for (i = 0u; i < _zfflb7w[_20n8tte]; i++) { _gqtoamd[_g1ved32[i] +0*_z3nx39r->_urvqt3g] = _m7pyxdw[i*16 +5]; _gqtoamd[_g1ved32[i] +1*_z3nx39r->_urvqt3g] = _m7pyxdw[i*16 +6]; _gqtoamd[_g1ved32[i] +2*_z3nx39r->_urvqt3g] = _m7pyxdw[i*16 +7]; }
-        MPI_Allreduce((void *) -1, _gqtoamd, (3*_z3nx39r->_urvqt3g), ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
+        for (i = 0u; i < _emruyp0[_tk63n2q]; i++) { _6ub7l8v[_laym0wb[i] +0*_s3kkv9r->_y25m8kb] = _dntcagr[i*16 +5]; _6ub7l8v[_laym0wb[i] +1*_s3kkv9r->_y25m8kb] = _dntcagr[i*16 +6]; _6ub7l8v[_laym0wb[i] +2*_s3kkv9r->_y25m8kb] = _dntcagr[i*16 +7]; }
+        MPI_Allreduce((void *) -1, _6ub7l8v, (3*_s3kkv9r->_y25m8kb), ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
     }
-    MPI_File_delete(_slwf90k, ((MPI_Info)0x1c000000));
-    MPI_File_open(((MPI_Comm)0x44000000), _slwf90k, 1|4, ((MPI_Info)0x1c000000), &_dvg7oq2);
-    if (_20n8tte == 0)
-    { MPI_File_write(_dvg7oq2, &_z3nx39r->_jp61lfc, 1, ((MPI_Datatype)0x4c000406), &_py6b2kn); MPI_File_write(_dvg7oq2, &_lyk83tq->_3ru7myo, 1, ((MPI_Datatype)0x4c000406), &_py6b2kn);
-        MPI_File_write(_dvg7oq2, &_z3nx39r->_urvqt3g, 1, ((MPI_Datatype)0x4c000406), &_py6b2kn); MPI_File_write(_dvg7oq2, &_lyk83tq->_5izolnn, 1, ((MPI_Datatype)0x4c000406), &_py6b2kn);
+    MPI_File_delete(_xqt4p50, ((MPI_Info)0x1c000000));
+    MPI_File_open(((MPI_Comm)0x44000000), _xqt4p50, 1|4, ((MPI_Info)0x1c000000), &_f445cri);
+    if (_tk63n2q == 0)
+    { MPI_File_write(_f445cri, &_s3kkv9r->_otn9uze, 1, ((MPI_Datatype)0x4c000406), &_myx444n); MPI_File_write(_f445cri, &_84u89yj->_cs4kek4, 1, ((MPI_Datatype)0x4c000406), &_myx444n);
+        MPI_File_write(_f445cri, &_s3kkv9r->_y25m8kb, 1, ((MPI_Datatype)0x4c000406), &_myx444n); MPI_File_write(_f445cri, &_84u89yj->_7yvdqbs, 1, ((MPI_Datatype)0x4c000406), &_myx444n);
     }
-    _et1ghr0 = (4 * sizeof(unsigned int));
-    MPI_File_write_at(_dvg7oq2, (_et1ghr0 + _dtz91x7[_20n8tte]*sizeof(unsigned short int)), &_9s3w563[_dtz91x7[_20n8tte]], _b6gs8g8[_20n8tte], ((MPI_Datatype)0x4c000204), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc * sizeof(unsigned short int));
-    if (_z3nx39r->_urvqt3g > 0u)
-    { MPI_File_write_at(_dvg7oq2, (_et1ghr0 + _dtz91x7[_20n8tte]*sizeof(unsigned short int)), &_mofmmwi[_dtz91x7[_20n8tte]], _b6gs8g8[_20n8tte], ((MPI_Datatype)0x4c000204), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc * sizeof(unsigned short int));
-        MPI_File_write_at(_dvg7oq2, (_et1ghr0 + _gcsotdh[_20n8tte]*sizeof(unsigned short int)), &_in9dl5t[_gcsotdh[_20n8tte]], _zfflb7w[_20n8tte], ((MPI_Datatype)0x4c000204), &_py6b2kn); _et1ghr0 += (_z3nx39r->_urvqt3g * sizeof(unsigned short int));
-        MPI_File_write_at(_dvg7oq2, (_et1ghr0 + _gcsotdh[_20n8tte]*sizeof(unsigned short int)), &_gsq7ait[_gcsotdh[_20n8tte]], _zfflb7w[_20n8tte], ((MPI_Datatype)0x4c000204), &_py6b2kn); _et1ghr0 += (_z3nx39r->_urvqt3g * sizeof(unsigned short int));
+    _r1yxr2d = (4 * sizeof(unsigned int));
+    MPI_File_write_at(_f445cri, (_r1yxr2d + _npuevjl[_tk63n2q]*sizeof(unsigned short int)), &_02g3yu6[_npuevjl[_tk63n2q]], _6zx1tv1[_tk63n2q], ((MPI_Datatype)0x4c000204), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze * sizeof(unsigned short int));
+    if (_s3kkv9r->_y25m8kb > 0u)
+    { MPI_File_write_at(_f445cri, (_r1yxr2d + _npuevjl[_tk63n2q]*sizeof(unsigned short int)), &_ui3do70[_npuevjl[_tk63n2q]], _6zx1tv1[_tk63n2q], ((MPI_Datatype)0x4c000204), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze * sizeof(unsigned short int));
+        MPI_File_write_at(_f445cri, (_r1yxr2d + _yh1fkj4[_tk63n2q]*sizeof(unsigned short int)), &_h4a3yjt[_yh1fkj4[_tk63n2q]], _emruyp0[_tk63n2q], ((MPI_Datatype)0x4c000204), &_myx444n); _r1yxr2d += (_s3kkv9r->_y25m8kb * sizeof(unsigned short int));
+        MPI_File_write_at(_f445cri, (_r1yxr2d + _yh1fkj4[_tk63n2q]*sizeof(unsigned short int)), &_u7fbmen[_yh1fkj4[_tk63n2q]], _emruyp0[_tk63n2q], ((MPI_Datatype)0x4c000204), &_myx444n); _r1yxr2d += (_s3kkv9r->_y25m8kb * sizeof(unsigned short int));
     }
-    MPI_File_write_at(_dvg7oq2, (_et1ghr0 + _dtz91x7[_20n8tte]*sizeof(float)), &_j49yd82[0*_z3nx39r->_jp61lfc +_dtz91x7[_20n8tte]], _b6gs8g8[_20n8tte], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc * sizeof(float));
-    MPI_File_write_at(_dvg7oq2, (_et1ghr0 + _dtz91x7[_20n8tte]*sizeof(float)), &_j49yd82[1*_z3nx39r->_jp61lfc +_dtz91x7[_20n8tte]], _b6gs8g8[_20n8tte], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc * sizeof(float));
-    MPI_File_write_at(_dvg7oq2, (_et1ghr0 + _dtz91x7[_20n8tte]*sizeof(float)), &_j49yd82[2*_z3nx39r->_jp61lfc +_dtz91x7[_20n8tte]], _b6gs8g8[_20n8tte], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc * sizeof(float));
-    if (_z3nx39r->_urvqt3g > 0u)
-    { MPI_File_write_at(_dvg7oq2, (_et1ghr0 + _gcsotdh[_20n8tte]*sizeof(float)), &_gqtoamd[0*_z3nx39r->_urvqt3g +_gcsotdh[_20n8tte]], _zfflb7w[_20n8tte], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_urvqt3g * sizeof(float));
-        MPI_File_write_at(_dvg7oq2, (_et1ghr0 + _gcsotdh[_20n8tte]*sizeof(float)), &_gqtoamd[1*_z3nx39r->_urvqt3g +_gcsotdh[_20n8tte]], _zfflb7w[_20n8tte], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_urvqt3g * sizeof(float));
-        MPI_File_write_at(_dvg7oq2, (_et1ghr0 + _gcsotdh[_20n8tte]*sizeof(float)), &_gqtoamd[2*_z3nx39r->_urvqt3g +_gcsotdh[_20n8tte]], _zfflb7w[_20n8tte], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_urvqt3g * sizeof(float));
+    MPI_File_write_at(_f445cri, (_r1yxr2d + _npuevjl[_tk63n2q]*sizeof(float)), &_8sryo4r[0*_s3kkv9r->_otn9uze +_npuevjl[_tk63n2q]], _6zx1tv1[_tk63n2q], ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze * sizeof(float));
+    MPI_File_write_at(_f445cri, (_r1yxr2d + _npuevjl[_tk63n2q]*sizeof(float)), &_8sryo4r[1*_s3kkv9r->_otn9uze +_npuevjl[_tk63n2q]], _6zx1tv1[_tk63n2q], ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze * sizeof(float));
+    MPI_File_write_at(_f445cri, (_r1yxr2d + _npuevjl[_tk63n2q]*sizeof(float)), &_8sryo4r[2*_s3kkv9r->_otn9uze +_npuevjl[_tk63n2q]], _6zx1tv1[_tk63n2q], ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze * sizeof(float));
+    if (_s3kkv9r->_y25m8kb > 0u)
+    { MPI_File_write_at(_f445cri, (_r1yxr2d + _yh1fkj4[_tk63n2q]*sizeof(float)), &_6ub7l8v[0*_s3kkv9r->_y25m8kb +_yh1fkj4[_tk63n2q]], _emruyp0[_tk63n2q], ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_y25m8kb * sizeof(float));
+        MPI_File_write_at(_f445cri, (_r1yxr2d + _yh1fkj4[_tk63n2q]*sizeof(float)), &_6ub7l8v[1*_s3kkv9r->_y25m8kb +_yh1fkj4[_tk63n2q]], _emruyp0[_tk63n2q], ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_y25m8kb * sizeof(float));
+        MPI_File_write_at(_f445cri, (_r1yxr2d + _yh1fkj4[_tk63n2q]*sizeof(float)), &_6ub7l8v[2*_s3kkv9r->_y25m8kb +_yh1fkj4[_tk63n2q]], _emruyp0[_tk63n2q], ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_y25m8kb * sizeof(float));
     }
-    for (i = 0u; i < _b6gs8g8[_20n8tte]; i++)
-    { _b2serev = 0;
-        MPI_File_write_at(_dvg7oq2, (_et1ghr0 +_4spfdrw[_xo100vh[i]] +_b2serev), _3b9so0u[i], _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c000204), &_py6b2kn); _b2serev += _z3nx39r->_jp61lfc *sizeof(unsigned short int);
-        MPI_File_write_at(_dvg7oq2, (_et1ghr0 +_4spfdrw[_xo100vh[i]] +_b2serev), _0dtirc9[i], 2*_iob0nlw[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_iob0nlw[i]*2*sizeof(float));
-        MPI_File_write_at(_dvg7oq2, (_et1ghr0 +_4spfdrw[_xo100vh[i]] +_b2serev), _qk4ltah[i], 2*_iob0nlw[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_iob0nlw[i]*2*sizeof(float));
-        MPI_File_write_at(_dvg7oq2, (_et1ghr0 +_4spfdrw[_xo100vh[i]] +_b2serev), _h61iaoi[i], 2*_iob0nlw[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_iob0nlw[i]*2*sizeof(float));
+    for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++)
+    { _9lzs34j = 0;
+        MPI_File_write_at(_f445cri, (_r1yxr2d +_bh6nqqb[_5izolnn[i]] +_9lzs34j), _k2wbxan[i], _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c000204), &_myx444n); _9lzs34j += _s3kkv9r->_otn9uze *sizeof(unsigned short int);
+        MPI_File_write_at(_f445cri, (_r1yxr2d +_bh6nqqb[_5izolnn[i]] +_9lzs34j), _0isb5iq[i], 2*_hthsjr0[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_hthsjr0[i]*2*sizeof(float));
+        MPI_File_write_at(_f445cri, (_r1yxr2d +_bh6nqqb[_5izolnn[i]] +_9lzs34j), _zzf8s2z[i], 2*_hthsjr0[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_hthsjr0[i]*2*sizeof(float));
+        MPI_File_write_at(_f445cri, (_r1yxr2d +_bh6nqqb[_5izolnn[i]] +_9lzs34j), _3jczucq[i], 2*_hthsjr0[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_hthsjr0[i]*2*sizeof(float));
     }
-    _et1ghr0 += (_4spfdrw[_z3nx39r->_jp61lfc-1] + _z3nx39r->_jp61lfc*sizeof(unsigned short int) + 6*_9s3w563[_z3nx39r->_jp61lfc-1]*sizeof(float) );
-    if (_z3nx39r->_urvqt3g > 0u)
-    { for (i = 0u; i < _b6gs8g8[_20n8tte]; i++)
-        { _b2serev = 0;
-            MPI_File_write_at(_dvg7oq2, (_et1ghr0 +_mqvindh[_xo100vh[i]] +_b2serev), _1ajo091[i], _z3nx39r->_urvqt3g, ((MPI_Datatype)0x4c000204), &_py6b2kn); _b2serev += _z3nx39r->_urvqt3g *sizeof(unsigned short int);
-            MPI_File_write_at(_dvg7oq2, (_et1ghr0 +_mqvindh[_xo100vh[i]] +_b2serev), _nf74t60[i], 3*_iymyrsv[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_iymyrsv[i]*3*sizeof(float));
-            MPI_File_write_at(_dvg7oq2, (_et1ghr0 +_mqvindh[_xo100vh[i]] +_b2serev), _mrunjdu[i], 3*_iymyrsv[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_iymyrsv[i]*3*sizeof(float));
+    _r1yxr2d += (_bh6nqqb[_s3kkv9r->_otn9uze-1] + _s3kkv9r->_otn9uze*sizeof(unsigned short int) + 6*_02g3yu6[_s3kkv9r->_otn9uze-1]*sizeof(float) );
+    if (_s3kkv9r->_y25m8kb > 0u)
+    { for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++)
+        { _9lzs34j = 0;
+            MPI_File_write_at(_f445cri, (_r1yxr2d +_0rmhrcn[_5izolnn[i]] +_9lzs34j), _n14eb87[i], _s3kkv9r->_y25m8kb, ((MPI_Datatype)0x4c000204), &_myx444n); _9lzs34j += _s3kkv9r->_y25m8kb *sizeof(unsigned short int);
+            MPI_File_write_at(_f445cri, (_r1yxr2d +_0rmhrcn[_5izolnn[i]] +_9lzs34j), _sh3tow4[i], 3*_pmlvak9[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_pmlvak9[i]*3*sizeof(float));
+            MPI_File_write_at(_f445cri, (_r1yxr2d +_0rmhrcn[_5izolnn[i]] +_9lzs34j), _jbc2sws[i], 3*_pmlvak9[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_pmlvak9[i]*3*sizeof(float));
         }
-        _et1ghr0 += (_mqvindh[_z3nx39r->_jp61lfc-1] + _z3nx39r->_urvqt3g*sizeof(unsigned short int) + 6*_mofmmwi[_z3nx39r->_jp61lfc-1]*sizeof(float) );
-        if (_z3nx39r->_urvqt3g > 0)
-        { for (i = 0u; i < _zfflb7w[_20n8tte]; i++)
-            { _b2serev = 0;
-                MPI_File_write_at(_dvg7oq2, (_et1ghr0 +_kdq95g3[_g1ved32[i]] +_b2serev), _86lthet[i], _z3nx39r->_urvqt3g, ((MPI_Datatype)0x4c000204), &_py6b2kn); _b2serev += _z3nx39r->_urvqt3g *sizeof(unsigned short int);
-                MPI_File_write_at(_dvg7oq2, (_et1ghr0 +_kdq95g3[_g1ved32[i]] +_b2serev), _jbc2sws[i], 3*_btkf6xd[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_btkf6xd[i]*3*sizeof(float));
-                MPI_File_write_at(_dvg7oq2, (_et1ghr0 +_kdq95g3[_g1ved32[i]] +_b2serev), _4xkss0k[i], 3*_btkf6xd[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_btkf6xd[i]*3*sizeof(float));
-                MPI_File_write_at(_dvg7oq2, (_et1ghr0 +_kdq95g3[_g1ved32[i]] +_b2serev), _t997e4u[i], 3*_btkf6xd[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_btkf6xd[i]*3*sizeof(float));
+        _r1yxr2d += (_0rmhrcn[_s3kkv9r->_otn9uze-1] + _s3kkv9r->_y25m8kb*sizeof(unsigned short int) + 6*_ui3do70[_s3kkv9r->_otn9uze-1]*sizeof(float) );
+        if (_s3kkv9r->_y25m8kb > 0)
+        { for (i = 0u; i < _emruyp0[_tk63n2q]; i++)
+            { _9lzs34j = 0;
+                MPI_File_write_at(_f445cri, (_r1yxr2d +_sosx43w[_laym0wb[i]] +_9lzs34j), _va1nkbt[i], _s3kkv9r->_y25m8kb, ((MPI_Datatype)0x4c000204), &_myx444n); _9lzs34j += _s3kkv9r->_y25m8kb *sizeof(unsigned short int);
+                MPI_File_write_at(_f445cri, (_r1yxr2d +_sosx43w[_laym0wb[i]] +_9lzs34j), _e9ftaxp[i], 3*_vk0ucc1[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_vk0ucc1[i]*3*sizeof(float));
+                MPI_File_write_at(_f445cri, (_r1yxr2d +_sosx43w[_laym0wb[i]] +_9lzs34j), _6fokzix[i], 3*_vk0ucc1[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_vk0ucc1[i]*3*sizeof(float));
+                MPI_File_write_at(_f445cri, (_r1yxr2d +_sosx43w[_laym0wb[i]] +_9lzs34j), _z39pecn[i], 3*_vk0ucc1[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_vk0ucc1[i]*3*sizeof(float));
             }
-            _et1ghr0 += (_kdq95g3[_z3nx39r->_urvqt3g-1] + _z3nx39r->_urvqt3g*sizeof(unsigned short int) + 9*_in9dl5t[_z3nx39r->_urvqt3g-1]*sizeof(float) );
-            for (i = 0u; i < _zfflb7w[_20n8tte]; i++)
-            { _b2serev = 0;
-                MPI_File_write_at(_dvg7oq2, (_et1ghr0 +_v23gxj0[_g1ved32[i]] +_b2serev), _op767j2[i], _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c000204), &_py6b2kn); _b2serev += _z3nx39r->_jp61lfc *sizeof(unsigned short int);
-                MPI_File_write_at(_dvg7oq2, (_et1ghr0 +_v23gxj0[_g1ved32[i]] +_b2serev), _ge2j51b[i], 2*_9f77lu8[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_9f77lu8[i]*2*sizeof(float));
-                MPI_File_write_at(_dvg7oq2, (_et1ghr0 +_v23gxj0[_g1ved32[i]] +_b2serev), _sh3tow4[i], 2*_9f77lu8[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_9f77lu8[i]*2*sizeof(float));
-                MPI_File_write_at(_dvg7oq2, (_et1ghr0 +_v23gxj0[_g1ved32[i]] +_b2serev), _pqvl00e[i], 2*_9f77lu8[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_9f77lu8[i]*2*sizeof(float));
+            _r1yxr2d += (_sosx43w[_s3kkv9r->_y25m8kb-1] + _s3kkv9r->_y25m8kb*sizeof(unsigned short int) + 9*_h4a3yjt[_s3kkv9r->_y25m8kb-1]*sizeof(float) );
+            for (i = 0u; i < _emruyp0[_tk63n2q]; i++)
+            { _9lzs34j = 0;
+                MPI_File_write_at(_f445cri, (_r1yxr2d +_fsqg8x8[_laym0wb[i]] +_9lzs34j), _eurxhw0[i], _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c000204), &_myx444n); _9lzs34j += _s3kkv9r->_otn9uze *sizeof(unsigned short int);
+                MPI_File_write_at(_f445cri, (_r1yxr2d +_fsqg8x8[_laym0wb[i]] +_9lzs34j), _t997e4u[i], 2*_vshkoec[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_vshkoec[i]*2*sizeof(float));
+                MPI_File_write_at(_f445cri, (_r1yxr2d +_fsqg8x8[_laym0wb[i]] +_9lzs34j), _d1vn8lf[i], 2*_vshkoec[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_vshkoec[i]*2*sizeof(float));
+                MPI_File_write_at(_f445cri, (_r1yxr2d +_fsqg8x8[_laym0wb[i]] +_9lzs34j), _4xkss0k[i], 2*_vshkoec[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_vshkoec[i]*2*sizeof(float));
             }
         }
     }
     MPI_Barrier( ((MPI_Comm)0x44000000) );
-    MPI_File_close(&_dvg7oq2);
-    free(_9s3w563); free(_mofmmwi); free(_in9dl5t); free(_gsq7ait); free(_4spfdrw); free(_mqvindh); free(_kdq95g3); free(_v23gxj0); free(_j49yd82); free(_gqtoamd);
+    MPI_File_close(&_f445cri);
+    free(_02g3yu6); free(_ui3do70); free(_h4a3yjt); free(_u7fbmen); free(_bh6nqqb); free(_0rmhrcn); free(_sosx43w); free(_fsqg8x8); free(_8sryo4r); free(_6ub7l8v);
     return;
 }
-void Load_Khmatrix(int _avt8k06, int _20n8tte, const char *restrict _slwf90k, struct _r1yxr2d *restrict _5zja8dz, struct _q0oxfq8 *restrict _z3nx39r, const struct _wrdmly4 *restrict _lyk83tq, const int *restrict _dtz91x7, const int *restrict _gcsotdh, const int *restrict _b6gs8g8, const int *restrict _zfflb7w, const unsigned int *restrict _xo100vh, unsigned int *restrict _6zjq7w7, float *restrict _3n3bzt9, float *restrict _mzwffhh, const unsigned int *restrict _g1ved32, float *restrict _m7pyxdw, unsigned short int *restrict _iob0nlw, unsigned short int *restrict _iymyrsv, unsigned short int *restrict _btkf6xd, unsigned short int *restrict _9f77lu8, unsigned short int ***restrict _3b9so0u, unsigned short int ***restrict _1ajo091, unsigned short int ***restrict _86lthet, unsigned short int ***restrict _op767j2, float ***restrict _0dtirc9, float ***restrict _qk4ltah, float ***restrict _h61iaoi, float ***restrict _nf74t60, float ***restrict _mrunjdu, float ***restrict _jbc2sws, float ***restrict _4xkss0k, float ***restrict _t997e4u, float ***restrict _ge2j51b, float ***restrict _sh3tow4, float ***restrict _pqvl00e)
+void Load_Khmatrix(int _b6gs8g8, int _tk63n2q, const char *restrict _xqt4p50, struct _43d5iqv *restrict _j3trp0j, struct _gzui1b0 *restrict _s3kkv9r, const struct _rcbpljd *restrict _84u89yj, const int *restrict _npuevjl, const int *restrict _yh1fkj4, const int *restrict _6zx1tv1, const int *restrict _emruyp0, const unsigned int *restrict _5izolnn, unsigned int *restrict _mgvu4is, float *restrict _vwvm4w3, float *restrict _wyx9trf, const unsigned int *restrict _laym0wb, float *restrict _dntcagr, unsigned short int *restrict _hthsjr0, unsigned short int *restrict _pmlvak9, unsigned short int *restrict _vk0ucc1, unsigned short int *restrict _vshkoec, unsigned short int ***restrict _k2wbxan, unsigned short int ***restrict _n14eb87, unsigned short int ***restrict _va1nkbt, unsigned short int ***restrict _eurxhw0, float ***restrict _0isb5iq, float ***restrict _zzf8s2z, float ***restrict _3jczucq, float ***restrict _sh3tow4, float ***restrict _jbc2sws, float ***restrict _e9ftaxp, float ***restrict _6fokzix, float ***restrict _z39pecn, float ***restrict _t997e4u, float ***restrict _d1vn8lf, float ***restrict _4xkss0k)
 {
     unsigned int i;
-    unsigned int _1nlc8jp, _8cd31nr, _w8dt8cq, _txrgn74;
-    long int _39ayq6w;
-    MPI_Status _py6b2kn;
-    MPI_Offset _et1ghr0;
-    MPI_File _dvg7oq2;
-    MPI_File_open(((MPI_Comm)0x44000000), _slwf90k, 2, ((MPI_Info)0x1c000000), &_dvg7oq2);
-    MPI_File_read(_dvg7oq2, &_1nlc8jp, 1, ((MPI_Datatype)0x4c000406), &_py6b2kn); MPI_File_read(_dvg7oq2, &_w8dt8cq, 1, ((MPI_Datatype)0x4c000406), &_py6b2kn);
-    MPI_File_read(_dvg7oq2, &_8cd31nr, 1, ((MPI_Datatype)0x4c000406), &_py6b2kn); MPI_File_read(_dvg7oq2, &_txrgn74, 1, ((MPI_Datatype)0x4c000406), &_py6b2kn);
-    if ((_1nlc8jp != _z3nx39r->_jp61lfc) || (_8cd31nr != _z3nx39r->_urvqt3g) || (_w8dt8cq != _lyk83tq->_3ru7myo) || (_txrgn74 != _lyk83tq->_5izolnn))
+    unsigned int _ryf0992, _9w4uov5, _aegvfq3, _xlul6lg;
+    long int _050ui22;
+    MPI_Status _myx444n;
+    MPI_Offset _r1yxr2d;
+    MPI_File _f445cri;
+    MPI_File_open(((MPI_Comm)0x44000000), _xqt4p50, 2, ((MPI_Info)0x1c000000), &_f445cri);
+    MPI_File_read(_f445cri, &_ryf0992, 1, ((MPI_Datatype)0x4c000406), &_myx444n); MPI_File_read(_f445cri, &_aegvfq3, 1, ((MPI_Datatype)0x4c000406), &_myx444n);
+    MPI_File_read(_f445cri, &_9w4uov5, 1, ((MPI_Datatype)0x4c000406), &_myx444n); MPI_File_read(_f445cri, &_xlul6lg, 1, ((MPI_Datatype)0x4c000406), &_myx444n);
+    if ((_ryf0992 != _s3kkv9r->_otn9uze) || (_9w4uov5 != _s3kkv9r->_y25m8kb) || (_aegvfq3 != _84u89yj->_cs4kek4) || (_xlul6lg != _84u89yj->_7yvdqbs))
     { perror("Kh_matrix file was openend, but fault/boundary element numbers not matching => exit\n"); exit(10); }
-    _39ayq6w = GetByteSize(64, _b6gs8g8[_20n8tte], sizeof(unsigned short int *));
-    *_3b9so0u = aligned_alloc(64, _39ayq6w);
-    _39ayq6w = GetByteSize(64, _b6gs8g8[_20n8tte], sizeof(float *));
-    *_0dtirc9 = aligned_alloc(64, _39ayq6w);
-    *_qk4ltah = aligned_alloc(64, _39ayq6w);
-    *_h61iaoi = aligned_alloc(64, _39ayq6w);
-    if (_z3nx39r->_urvqt3g > 0u)
-    { _39ayq6w = GetByteSize(64, _b6gs8g8[_20n8tte], sizeof(unsigned short int *));
-        *_1ajo091 = aligned_alloc(64, _39ayq6w);
-        _39ayq6w = GetByteSize(64, _zfflb7w[_20n8tte], sizeof(unsigned short int *));
-        *_86lthet = aligned_alloc(64, _39ayq6w);
-        *_op767j2 = aligned_alloc(64, _39ayq6w);
-        _39ayq6w = GetByteSize(64, _b6gs8g8[_20n8tte], sizeof(float *));
-        *_nf74t60 = aligned_alloc(64, _39ayq6w);
-        *_mrunjdu = aligned_alloc(64, _39ayq6w);
-        _39ayq6w = GetByteSize(64, _zfflb7w[_20n8tte], sizeof(float *));
-        *_jbc2sws = aligned_alloc(64, _39ayq6w);
-        *_4xkss0k = aligned_alloc(64, _39ayq6w);
-        *_t997e4u = aligned_alloc(64, _39ayq6w);
-        *_ge2j51b = aligned_alloc(64, _39ayq6w);
-        *_sh3tow4 = aligned_alloc(64, _39ayq6w);
-        *_pqvl00e = aligned_alloc(64, _39ayq6w);
+    _050ui22 = GetByteSize(64, _6zx1tv1[_tk63n2q], sizeof(unsigned short int *));
+    *_k2wbxan = aligned_alloc(64, _050ui22);
+    _050ui22 = GetByteSize(64, _6zx1tv1[_tk63n2q], sizeof(float *));
+    *_0isb5iq = aligned_alloc(64, _050ui22);
+    *_zzf8s2z = aligned_alloc(64, _050ui22);
+    *_3jczucq = aligned_alloc(64, _050ui22);
+    if (_s3kkv9r->_y25m8kb > 0u)
+    { _050ui22 = GetByteSize(64, _6zx1tv1[_tk63n2q], sizeof(unsigned short int *));
+        *_n14eb87 = aligned_alloc(64, _050ui22);
+        _050ui22 = GetByteSize(64, _emruyp0[_tk63n2q], sizeof(unsigned short int *));
+        *_va1nkbt = aligned_alloc(64, _050ui22);
+        *_eurxhw0 = aligned_alloc(64, _050ui22);
+        _050ui22 = GetByteSize(64, _6zx1tv1[_tk63n2q], sizeof(float *));
+        *_sh3tow4 = aligned_alloc(64, _050ui22);
+        *_jbc2sws = aligned_alloc(64, _050ui22);
+        _050ui22 = GetByteSize(64, _emruyp0[_tk63n2q], sizeof(float *));
+        *_e9ftaxp = aligned_alloc(64, _050ui22);
+        *_6fokzix = aligned_alloc(64, _050ui22);
+        *_z39pecn = aligned_alloc(64, _050ui22);
+        *_t997e4u = aligned_alloc(64, _050ui22);
+        *_d1vn8lf = aligned_alloc(64, _050ui22);
+        *_4xkss0k = aligned_alloc(64, _050ui22);
     }
-    _et1ghr0 = (4 * sizeof(unsigned int)) ;
-    unsigned long long _b2serev;
-    unsigned short int *_9s3w563 = ((void *)0), *_mofmmwi = ((void *)0), *_in9dl5t = ((void *)0), *_gsq7ait = ((void *)0);
-    unsigned long long *_4spfdrw = ((void *)0), *_mqvindh = ((void *)0), *_kdq95g3 = ((void *)0), *_v23gxj0 = ((void *)0);
-    float *_j49yd82 = ((void *)0), *_gqtoamd = ((void *)0);
-    _9s3w563 = malloc(_z3nx39r->_jp61lfc *sizeof(unsigned short int)); __builtin___memset_chk (_9s3w563, 0, _z3nx39r->_jp61lfc *sizeof(unsigned short int), __builtin_object_size (_9s3w563, 0));
-    _4spfdrw = malloc(_z3nx39r->_jp61lfc *sizeof(unsigned long long)); __builtin___memset_chk (_4spfdrw, 0, _z3nx39r->_jp61lfc *sizeof(unsigned long long), __builtin_object_size (_4spfdrw, 0));
-    _j49yd82 = malloc((3*_z3nx39r->_jp61lfc) *sizeof(float)); __builtin___memset_chk (_j49yd82, 0,(3*_z3nx39r->_jp61lfc) *sizeof(float), __builtin_object_size (_j49yd82, 0));
-    if (_z3nx39r->_urvqt3g > 0u)
-    { _mofmmwi = malloc(_z3nx39r->_jp61lfc *sizeof(unsigned short int)); __builtin___memset_chk (_mofmmwi, 0, _z3nx39r->_jp61lfc *sizeof(unsigned short int), __builtin_object_size (_mofmmwi, 0));
-        _mqvindh = malloc(_z3nx39r->_jp61lfc *sizeof(unsigned long long)); __builtin___memset_chk (_mqvindh, 0, _z3nx39r->_jp61lfc *sizeof(unsigned long long), __builtin_object_size (_mqvindh, 0));
-        _in9dl5t = malloc(_z3nx39r->_urvqt3g *sizeof(unsigned short int)); __builtin___memset_chk (_in9dl5t, 0, _z3nx39r->_urvqt3g *sizeof(unsigned short int), __builtin_object_size (_in9dl5t, 0));
-        _kdq95g3 = malloc(_z3nx39r->_urvqt3g *sizeof(unsigned long long)); __builtin___memset_chk (_kdq95g3, 0, _z3nx39r->_urvqt3g *sizeof(unsigned long long), __builtin_object_size (_kdq95g3, 0));
-        _gsq7ait = malloc(_z3nx39r->_urvqt3g *sizeof(unsigned short int)); __builtin___memset_chk (_gsq7ait, 0, _z3nx39r->_urvqt3g *sizeof(unsigned short int), __builtin_object_size (_gsq7ait, 0));
-        _v23gxj0 = malloc(_z3nx39r->_urvqt3g *sizeof(unsigned long long)); __builtin___memset_chk (_v23gxj0, 0, _z3nx39r->_urvqt3g *sizeof(unsigned long long), __builtin_object_size (_v23gxj0, 0));
-        _gqtoamd = malloc((3*_z3nx39r->_urvqt3g) *sizeof(float)); __builtin___memset_chk (_gqtoamd, 0,(3*_z3nx39r->_urvqt3g) *sizeof(float), __builtin_object_size (_gqtoamd, 0));
+    _r1yxr2d = (4 * sizeof(unsigned int)) ;
+    unsigned long long _9lzs34j;
+    unsigned short int *_02g3yu6 = ((void *)0), *_ui3do70 = ((void *)0), *_h4a3yjt = ((void *)0), *_u7fbmen = ((void *)0);
+    unsigned long long *_bh6nqqb = ((void *)0), *_0rmhrcn = ((void *)0), *_sosx43w = ((void *)0), *_fsqg8x8 = ((void *)0);
+    float *_8sryo4r = ((void *)0), *_6ub7l8v = ((void *)0);
+    _02g3yu6 = malloc(_s3kkv9r->_otn9uze *sizeof(unsigned short int)); __builtin___memset_chk (_02g3yu6, 0, _s3kkv9r->_otn9uze *sizeof(unsigned short int), __builtin_object_size (_02g3yu6, 0));
+    _bh6nqqb = malloc(_s3kkv9r->_otn9uze *sizeof(unsigned long long)); __builtin___memset_chk (_bh6nqqb, 0, _s3kkv9r->_otn9uze *sizeof(unsigned long long), __builtin_object_size (_bh6nqqb, 0));
+    _8sryo4r = malloc((3*_s3kkv9r->_otn9uze) *sizeof(float)); __builtin___memset_chk (_8sryo4r, 0,(3*_s3kkv9r->_otn9uze) *sizeof(float), __builtin_object_size (_8sryo4r, 0));
+    if (_s3kkv9r->_y25m8kb > 0u)
+    { _ui3do70 = malloc(_s3kkv9r->_otn9uze *sizeof(unsigned short int)); __builtin___memset_chk (_ui3do70, 0, _s3kkv9r->_otn9uze *sizeof(unsigned short int), __builtin_object_size (_ui3do70, 0));
+        _0rmhrcn = malloc(_s3kkv9r->_otn9uze *sizeof(unsigned long long)); __builtin___memset_chk (_0rmhrcn, 0, _s3kkv9r->_otn9uze *sizeof(unsigned long long), __builtin_object_size (_0rmhrcn, 0));
+        _h4a3yjt = malloc(_s3kkv9r->_y25m8kb *sizeof(unsigned short int)); __builtin___memset_chk (_h4a3yjt, 0, _s3kkv9r->_y25m8kb *sizeof(unsigned short int), __builtin_object_size (_h4a3yjt, 0));
+        _sosx43w = malloc(_s3kkv9r->_y25m8kb *sizeof(unsigned long long)); __builtin___memset_chk (_sosx43w, 0, _s3kkv9r->_y25m8kb *sizeof(unsigned long long), __builtin_object_size (_sosx43w, 0));
+        _u7fbmen = malloc(_s3kkv9r->_y25m8kb *sizeof(unsigned short int)); __builtin___memset_chk (_u7fbmen, 0, _s3kkv9r->_y25m8kb *sizeof(unsigned short int), __builtin_object_size (_u7fbmen, 0));
+        _fsqg8x8 = malloc(_s3kkv9r->_y25m8kb *sizeof(unsigned long long)); __builtin___memset_chk (_fsqg8x8, 0, _s3kkv9r->_y25m8kb *sizeof(unsigned long long), __builtin_object_size (_fsqg8x8, 0));
+        _6ub7l8v = malloc((3*_s3kkv9r->_y25m8kb) *sizeof(float)); __builtin___memset_chk (_6ub7l8v, 0,(3*_s3kkv9r->_y25m8kb) *sizeof(float), __builtin_object_size (_6ub7l8v, 0));
     }
-    MPI_File_read_at(_dvg7oq2, (_et1ghr0 + _dtz91x7[_20n8tte]*sizeof(unsigned short int)), &_9s3w563[_dtz91x7[_20n8tte]], _b6gs8g8[_20n8tte], ((MPI_Datatype)0x4c000204), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc * sizeof(unsigned short int));
-    if (_z3nx39r->_urvqt3g > 0u)
-    { MPI_File_read_at(_dvg7oq2, (_et1ghr0 + _dtz91x7[_20n8tte]*sizeof(unsigned short int)), &_mofmmwi[_dtz91x7[_20n8tte]], _b6gs8g8[_20n8tte], ((MPI_Datatype)0x4c000204), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc * sizeof(unsigned short int));
-        MPI_File_read_at(_dvg7oq2, (_et1ghr0 + _gcsotdh[_20n8tte]*sizeof(unsigned short int)), &_in9dl5t[_gcsotdh[_20n8tte]], _zfflb7w[_20n8tte], ((MPI_Datatype)0x4c000204), &_py6b2kn); _et1ghr0 += (_z3nx39r->_urvqt3g * sizeof(unsigned short int));
-        MPI_File_read_at(_dvg7oq2, (_et1ghr0 + _gcsotdh[_20n8tte]*sizeof(unsigned short int)), &_gsq7ait[_gcsotdh[_20n8tte]], _zfflb7w[_20n8tte], ((MPI_Datatype)0x4c000204), &_py6b2kn); _et1ghr0 += (_z3nx39r->_urvqt3g * sizeof(unsigned short int));
+    MPI_File_read_at(_f445cri, (_r1yxr2d + _npuevjl[_tk63n2q]*sizeof(unsigned short int)), &_02g3yu6[_npuevjl[_tk63n2q]], _6zx1tv1[_tk63n2q], ((MPI_Datatype)0x4c000204), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze * sizeof(unsigned short int));
+    if (_s3kkv9r->_y25m8kb > 0u)
+    { MPI_File_read_at(_f445cri, (_r1yxr2d + _npuevjl[_tk63n2q]*sizeof(unsigned short int)), &_ui3do70[_npuevjl[_tk63n2q]], _6zx1tv1[_tk63n2q], ((MPI_Datatype)0x4c000204), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze * sizeof(unsigned short int));
+        MPI_File_read_at(_f445cri, (_r1yxr2d + _yh1fkj4[_tk63n2q]*sizeof(unsigned short int)), &_h4a3yjt[_yh1fkj4[_tk63n2q]], _emruyp0[_tk63n2q], ((MPI_Datatype)0x4c000204), &_myx444n); _r1yxr2d += (_s3kkv9r->_y25m8kb * sizeof(unsigned short int));
+        MPI_File_read_at(_f445cri, (_r1yxr2d + _yh1fkj4[_tk63n2q]*sizeof(unsigned short int)), &_u7fbmen[_yh1fkj4[_tk63n2q]], _emruyp0[_tk63n2q], ((MPI_Datatype)0x4c000204), &_myx444n); _r1yxr2d += (_s3kkv9r->_y25m8kb * sizeof(unsigned short int));
     }
-    MPI_Allreduce((void *) -1, _9s3w563, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c000204), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
-    if (_z3nx39r->_urvqt3g > 0u)
-    { MPI_Allreduce((void *) -1, _mofmmwi, _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c000204), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
-        MPI_Allreduce((void *) -1, _in9dl5t, _z3nx39r->_urvqt3g, ((MPI_Datatype)0x4c000204), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
-        MPI_Allreduce((void *) -1, _gsq7ait, _z3nx39r->_urvqt3g, ((MPI_Datatype)0x4c000204), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
+    MPI_Allreduce((void *) -1, _02g3yu6, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c000204), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
+    if (_s3kkv9r->_y25m8kb > 0u)
+    { MPI_Allreduce((void *) -1, _ui3do70, _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c000204), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
+        MPI_Allreduce((void *) -1, _h4a3yjt, _s3kkv9r->_y25m8kb, ((MPI_Datatype)0x4c000204), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
+        MPI_Allreduce((void *) -1, _u7fbmen, _s3kkv9r->_y25m8kb, ((MPI_Datatype)0x4c000204), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
     }
-    for (i = 1u; i < _z3nx39r->_jp61lfc; i++)
-    { _4spfdrw[i] = _4spfdrw[i-1] + (_z3nx39r->_jp61lfc*sizeof(unsigned short int) + _9s3w563[i-1]*6*sizeof(float));
+    for (i = 1u; i < _s3kkv9r->_otn9uze; i++)
+    { _bh6nqqb[i] = _bh6nqqb[i-1] + (_s3kkv9r->_otn9uze*sizeof(unsigned short int) + _02g3yu6[i-1]*6*sizeof(float));
     }
-    if (_z3nx39r->_urvqt3g > 0u)
-    { for (i = 1u; i < _z3nx39r->_jp61lfc; i++)
-        { _mqvindh[i] = _mqvindh[i-1] + (_z3nx39r->_urvqt3g*sizeof(unsigned short int) + _mofmmwi[i-1]*6*sizeof(float));
+    if (_s3kkv9r->_y25m8kb > 0u)
+    { for (i = 1u; i < _s3kkv9r->_otn9uze; i++)
+        { _0rmhrcn[i] = _0rmhrcn[i-1] + (_s3kkv9r->_y25m8kb*sizeof(unsigned short int) + _ui3do70[i-1]*6*sizeof(float));
         }
-        for (i = 1u; i < _z3nx39r->_urvqt3g; i++)
-        { _kdq95g3[i] = _kdq95g3[i-1] + (_z3nx39r->_urvqt3g*sizeof(unsigned short int) + _in9dl5t[i-1]*9*sizeof(float));
-            _v23gxj0[i] = _v23gxj0[i-1] + (_z3nx39r->_jp61lfc*sizeof(unsigned short int) + _gsq7ait[i-1]*6*sizeof(float));
-        }
-    }
-    MPI_File_read_at(_dvg7oq2, (_et1ghr0 + _dtz91x7[_20n8tte]*sizeof(float)), &_j49yd82[0*_z3nx39r->_jp61lfc +_dtz91x7[_20n8tte]], _b6gs8g8[_20n8tte], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc * sizeof(float));
-    MPI_File_read_at(_dvg7oq2, (_et1ghr0 + _dtz91x7[_20n8tte]*sizeof(float)), &_j49yd82[1*_z3nx39r->_jp61lfc +_dtz91x7[_20n8tte]], _b6gs8g8[_20n8tte], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc * sizeof(float));
-    MPI_File_read_at(_dvg7oq2, (_et1ghr0 + _dtz91x7[_20n8tte]*sizeof(float)), &_j49yd82[2*_z3nx39r->_jp61lfc +_dtz91x7[_20n8tte]], _b6gs8g8[_20n8tte], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_jp61lfc * sizeof(float));
-    MPI_Allreduce((void *) -1, _j49yd82, (3*_z3nx39r->_jp61lfc), ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
-    if (_z3nx39r->_urvqt3g > 0u)
-    { MPI_File_read_at(_dvg7oq2, (_et1ghr0 + _gcsotdh[_20n8tte]*sizeof(float)), &_gqtoamd[0*_z3nx39r->_urvqt3g +_gcsotdh[_20n8tte]], _zfflb7w[_20n8tte], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_urvqt3g * sizeof(float));
-        MPI_File_read_at(_dvg7oq2, (_et1ghr0 + _gcsotdh[_20n8tte]*sizeof(float)), &_gqtoamd[1*_z3nx39r->_urvqt3g +_gcsotdh[_20n8tte]], _zfflb7w[_20n8tte], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_urvqt3g * sizeof(float));
-        MPI_File_read_at(_dvg7oq2, (_et1ghr0 + _gcsotdh[_20n8tte]*sizeof(float)), &_gqtoamd[2*_z3nx39r->_urvqt3g +_gcsotdh[_20n8tte]], _zfflb7w[_20n8tte], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _et1ghr0 += (_z3nx39r->_urvqt3g * sizeof(float));
-        MPI_Allreduce((void *) -1, _gqtoamd, (3*_z3nx39r->_urvqt3g), ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
-    }
-    for (i = 0u; i < _b6gs8g8[_20n8tte]; i++)
-    { _iob0nlw[i] = _9s3w563[_xo100vh[i]];
-        _3n3bzt9[i*16 +5] = _j49yd82[_xo100vh[i] +0*_z3nx39r->_jp61lfc]; _3n3bzt9[i*16 +6] = _j49yd82[_xo100vh[i] +1*_z3nx39r->_jp61lfc]; _3n3bzt9[i*16 +7] = _j49yd82[_xo100vh[i] +2*_z3nx39r->_jp61lfc];
-    }
-    if (_z3nx39r->_urvqt3g > 0u)
-    { for (i = 0u; i < _b6gs8g8[_20n8tte]; i++)
-        { _iymyrsv[i] = _mofmmwi[_xo100vh[i]]; }
-        for (i = 0u; i < _zfflb7w[_20n8tte]; i++)
-        { _btkf6xd[i] = _in9dl5t[_g1ved32[i]]; _9f77lu8[i] = _gsq7ait[_g1ved32[i]];
-            _m7pyxdw[i*16 +5] = _gqtoamd[_g1ved32[i] +0*_z3nx39r->_urvqt3g]; _m7pyxdw[i*16 +6] = _gqtoamd[_g1ved32[i] +1*_z3nx39r->_urvqt3g]; _m7pyxdw[i*16 +7] = _gqtoamd[_g1ved32[i] +2*_z3nx39r->_urvqt3g];
+        for (i = 1u; i < _s3kkv9r->_y25m8kb; i++)
+        { _sosx43w[i] = _sosx43w[i-1] + (_s3kkv9r->_y25m8kb*sizeof(unsigned short int) + _h4a3yjt[i-1]*9*sizeof(float));
+            _fsqg8x8[i] = _fsqg8x8[i-1] + (_s3kkv9r->_otn9uze*sizeof(unsigned short int) + _u7fbmen[i-1]*6*sizeof(float));
         }
     }
-    for (i = 0u; i < _b6gs8g8[_20n8tte]; i++)
-    { _b2serev = 0;
-        _39ayq6w = GetByteSize(64, _z3nx39r->_jp61lfc, sizeof(unsigned short int));
-        (*_3b9so0u)[i] = aligned_alloc(64, _39ayq6w);
-        _39ayq6w = GetByteSize(64, 2*_iob0nlw[i], sizeof(float));
-        (*_0dtirc9)[i] = aligned_alloc(64, _39ayq6w);
-        (*_qk4ltah)[i] = aligned_alloc(64, _39ayq6w);
-        (*_h61iaoi)[i] = aligned_alloc(64, _39ayq6w);
-        MPI_File_read_at(_dvg7oq2, (_et1ghr0 +_4spfdrw[_xo100vh[i]] +_b2serev), (*_3b9so0u)[i], _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c000204), &_py6b2kn); _b2serev += _z3nx39r->_jp61lfc *sizeof(unsigned short int);
-        MPI_File_read_at(_dvg7oq2, (_et1ghr0 +_4spfdrw[_xo100vh[i]] +_b2serev), (*_0dtirc9)[i], 2*_iob0nlw[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_iob0nlw[i]*2*sizeof(float));
-        MPI_File_read_at(_dvg7oq2, (_et1ghr0 +_4spfdrw[_xo100vh[i]] +_b2serev), (*_qk4ltah)[i], 2*_iob0nlw[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_iob0nlw[i]*2*sizeof(float));
-        MPI_File_read_at(_dvg7oq2, (_et1ghr0 +_4spfdrw[_xo100vh[i]] +_b2serev), (*_h61iaoi)[i], 2*_iob0nlw[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_iob0nlw[i]*2*sizeof(float));
+    MPI_File_read_at(_f445cri, (_r1yxr2d + _npuevjl[_tk63n2q]*sizeof(float)), &_8sryo4r[0*_s3kkv9r->_otn9uze +_npuevjl[_tk63n2q]], _6zx1tv1[_tk63n2q], ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze * sizeof(float));
+    MPI_File_read_at(_f445cri, (_r1yxr2d + _npuevjl[_tk63n2q]*sizeof(float)), &_8sryo4r[1*_s3kkv9r->_otn9uze +_npuevjl[_tk63n2q]], _6zx1tv1[_tk63n2q], ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze * sizeof(float));
+    MPI_File_read_at(_f445cri, (_r1yxr2d + _npuevjl[_tk63n2q]*sizeof(float)), &_8sryo4r[2*_s3kkv9r->_otn9uze +_npuevjl[_tk63n2q]], _6zx1tv1[_tk63n2q], ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_otn9uze * sizeof(float));
+    MPI_Allreduce((void *) -1, _8sryo4r, (3*_s3kkv9r->_otn9uze), ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
+    if (_s3kkv9r->_y25m8kb > 0u)
+    { MPI_File_read_at(_f445cri, (_r1yxr2d + _yh1fkj4[_tk63n2q]*sizeof(float)), &_6ub7l8v[0*_s3kkv9r->_y25m8kb +_yh1fkj4[_tk63n2q]], _emruyp0[_tk63n2q], ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_y25m8kb * sizeof(float));
+        MPI_File_read_at(_f445cri, (_r1yxr2d + _yh1fkj4[_tk63n2q]*sizeof(float)), &_6ub7l8v[1*_s3kkv9r->_y25m8kb +_yh1fkj4[_tk63n2q]], _emruyp0[_tk63n2q], ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_y25m8kb * sizeof(float));
+        MPI_File_read_at(_f445cri, (_r1yxr2d + _yh1fkj4[_tk63n2q]*sizeof(float)), &_6ub7l8v[2*_s3kkv9r->_y25m8kb +_yh1fkj4[_tk63n2q]], _emruyp0[_tk63n2q], ((MPI_Datatype)0x4c00040a), &_myx444n); _r1yxr2d += (_s3kkv9r->_y25m8kb * sizeof(float));
+        MPI_Allreduce((void *) -1, _6ub7l8v, (3*_s3kkv9r->_y25m8kb), ((MPI_Datatype)0x4c00040a), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
     }
-    _et1ghr0 += (_4spfdrw[_z3nx39r->_jp61lfc-1] + _z3nx39r->_jp61lfc*sizeof(unsigned short int) + 6*_9s3w563[_z3nx39r->_jp61lfc-1]*sizeof(float) );
-    if (_z3nx39r->_urvqt3g > 0u)
-    { for (i = 0u; i < _b6gs8g8[_20n8tte]; i++)
-        { _b2serev = 0;
-            _39ayq6w = GetByteSize(64, _z3nx39r->_urvqt3g, sizeof(unsigned short int));
-            (*_1ajo091)[i] = aligned_alloc(64, _39ayq6w);
-            _39ayq6w = GetByteSize(64, 3*_iymyrsv[i], sizeof(float));
-            (*_nf74t60)[i] = aligned_alloc(64, _39ayq6w);
-            (*_mrunjdu)[i] = aligned_alloc(64, _39ayq6w);
-            MPI_File_read_at(_dvg7oq2, (_et1ghr0 +_mqvindh[_xo100vh[i]] +_b2serev), (*_1ajo091)[i], _z3nx39r->_urvqt3g, ((MPI_Datatype)0x4c000204), &_py6b2kn); _b2serev += _z3nx39r->_urvqt3g *sizeof(unsigned short int);
-            MPI_File_read_at(_dvg7oq2, (_et1ghr0 +_mqvindh[_xo100vh[i]] +_b2serev), (*_nf74t60)[i], 3*_iymyrsv[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_iymyrsv[i]*3*sizeof(float));
-            MPI_File_read_at(_dvg7oq2, (_et1ghr0 +_mqvindh[_xo100vh[i]] +_b2serev), (*_mrunjdu)[i], 3*_iymyrsv[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_iymyrsv[i]*3*sizeof(float));
+    for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++)
+    { _hthsjr0[i] = _02g3yu6[_5izolnn[i]];
+        _vwvm4w3[i*16 +5] = _8sryo4r[_5izolnn[i] +0*_s3kkv9r->_otn9uze]; _vwvm4w3[i*16 +6] = _8sryo4r[_5izolnn[i] +1*_s3kkv9r->_otn9uze]; _vwvm4w3[i*16 +7] = _8sryo4r[_5izolnn[i] +2*_s3kkv9r->_otn9uze];
+    }
+    if (_s3kkv9r->_y25m8kb > 0u)
+    { for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++)
+        { _pmlvak9[i] = _ui3do70[_5izolnn[i]]; }
+        for (i = 0u; i < _emruyp0[_tk63n2q]; i++)
+        { _vk0ucc1[i] = _h4a3yjt[_laym0wb[i]]; _vshkoec[i] = _u7fbmen[_laym0wb[i]];
+            _dntcagr[i*16 +5] = _6ub7l8v[_laym0wb[i] +0*_s3kkv9r->_y25m8kb]; _dntcagr[i*16 +6] = _6ub7l8v[_laym0wb[i] +1*_s3kkv9r->_y25m8kb]; _dntcagr[i*16 +7] = _6ub7l8v[_laym0wb[i] +2*_s3kkv9r->_y25m8kb];
         }
-        _et1ghr0 += (_mqvindh[_z3nx39r->_jp61lfc-1] + _z3nx39r->_urvqt3g*sizeof(unsigned short int) + 6*_mofmmwi[_z3nx39r->_jp61lfc-1]*sizeof(float) );
-        for (i = 0u; i < _zfflb7w[_20n8tte]; i++)
-        { _b2serev = 0;
-            _39ayq6w = GetByteSize(64, _z3nx39r->_urvqt3g, sizeof(unsigned short int));
-            (*_86lthet)[i] = aligned_alloc(64, _39ayq6w);
-            _39ayq6w = GetByteSize(64, 3*_btkf6xd[i], sizeof(float));
-            (*_jbc2sws)[i] = aligned_alloc(64, _39ayq6w);
-            (*_4xkss0k)[i] = aligned_alloc(64, _39ayq6w);
-            (*_t997e4u)[i] = aligned_alloc(64, _39ayq6w);
-            MPI_File_read_at(_dvg7oq2, (_et1ghr0 +_kdq95g3[_g1ved32[i]] +_b2serev), (*_86lthet)[i], _z3nx39r->_urvqt3g, ((MPI_Datatype)0x4c000204), &_py6b2kn); _b2serev += _z3nx39r->_urvqt3g *sizeof(unsigned short int);
-            MPI_File_read_at(_dvg7oq2, (_et1ghr0 +_kdq95g3[_g1ved32[i]] +_b2serev), (*_jbc2sws)[i], 3*_btkf6xd[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_btkf6xd[i]*3*sizeof(float));
-            MPI_File_read_at(_dvg7oq2, (_et1ghr0 +_kdq95g3[_g1ved32[i]] +_b2serev), (*_4xkss0k)[i], 3*_btkf6xd[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_btkf6xd[i]*3*sizeof(float));
-            MPI_File_read_at(_dvg7oq2, (_et1ghr0 +_kdq95g3[_g1ved32[i]] +_b2serev), (*_t997e4u)[i], 3*_btkf6xd[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_btkf6xd[i]*3*sizeof(float));
+    }
+    for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++)
+    { _9lzs34j = 0;
+        _050ui22 = GetByteSize(64, _s3kkv9r->_otn9uze, sizeof(unsigned short int));
+        (*_k2wbxan)[i] = aligned_alloc(64, _050ui22);
+        _050ui22 = GetByteSize(64, 2*_hthsjr0[i], sizeof(float));
+        (*_0isb5iq)[i] = aligned_alloc(64, _050ui22);
+        (*_zzf8s2z)[i] = aligned_alloc(64, _050ui22);
+        (*_3jczucq)[i] = aligned_alloc(64, _050ui22);
+        MPI_File_read_at(_f445cri, (_r1yxr2d +_bh6nqqb[_5izolnn[i]] +_9lzs34j), (*_k2wbxan)[i], _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c000204), &_myx444n); _9lzs34j += _s3kkv9r->_otn9uze *sizeof(unsigned short int);
+        MPI_File_read_at(_f445cri, (_r1yxr2d +_bh6nqqb[_5izolnn[i]] +_9lzs34j), (*_0isb5iq)[i], 2*_hthsjr0[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_hthsjr0[i]*2*sizeof(float));
+        MPI_File_read_at(_f445cri, (_r1yxr2d +_bh6nqqb[_5izolnn[i]] +_9lzs34j), (*_zzf8s2z)[i], 2*_hthsjr0[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_hthsjr0[i]*2*sizeof(float));
+        MPI_File_read_at(_f445cri, (_r1yxr2d +_bh6nqqb[_5izolnn[i]] +_9lzs34j), (*_3jczucq)[i], 2*_hthsjr0[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_hthsjr0[i]*2*sizeof(float));
+    }
+    _r1yxr2d += (_bh6nqqb[_s3kkv9r->_otn9uze-1] + _s3kkv9r->_otn9uze*sizeof(unsigned short int) + 6*_02g3yu6[_s3kkv9r->_otn9uze-1]*sizeof(float) );
+    if (_s3kkv9r->_y25m8kb > 0u)
+    { for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++)
+        { _9lzs34j = 0;
+            _050ui22 = GetByteSize(64, _s3kkv9r->_y25m8kb, sizeof(unsigned short int));
+            (*_n14eb87)[i] = aligned_alloc(64, _050ui22);
+            _050ui22 = GetByteSize(64, 3*_pmlvak9[i], sizeof(float));
+            (*_sh3tow4)[i] = aligned_alloc(64, _050ui22);
+            (*_jbc2sws)[i] = aligned_alloc(64, _050ui22);
+            MPI_File_read_at(_f445cri, (_r1yxr2d +_0rmhrcn[_5izolnn[i]] +_9lzs34j), (*_n14eb87)[i], _s3kkv9r->_y25m8kb, ((MPI_Datatype)0x4c000204), &_myx444n); _9lzs34j += _s3kkv9r->_y25m8kb *sizeof(unsigned short int);
+            MPI_File_read_at(_f445cri, (_r1yxr2d +_0rmhrcn[_5izolnn[i]] +_9lzs34j), (*_sh3tow4)[i], 3*_pmlvak9[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_pmlvak9[i]*3*sizeof(float));
+            MPI_File_read_at(_f445cri, (_r1yxr2d +_0rmhrcn[_5izolnn[i]] +_9lzs34j), (*_jbc2sws)[i], 3*_pmlvak9[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_pmlvak9[i]*3*sizeof(float));
         }
-        _et1ghr0 += (_kdq95g3[_z3nx39r->_urvqt3g-1] + _z3nx39r->_urvqt3g*sizeof(unsigned short int) + 9*_in9dl5t[_z3nx39r->_urvqt3g-1]*sizeof(float) );
-        for (i = 0u; i < _zfflb7w[_20n8tte]; i++)
-        { _b2serev = 0;
-            _39ayq6w = GetByteSize(64, _z3nx39r->_jp61lfc, sizeof(unsigned short int));
-            (*_op767j2)[i] = aligned_alloc(64, _39ayq6w);
-            _39ayq6w = GetByteSize(64, 2*_9f77lu8[i], sizeof(float));
-            (*_ge2j51b)[i] = aligned_alloc(64, _39ayq6w);
-            (*_sh3tow4)[i] = aligned_alloc(64, _39ayq6w);
-            (*_pqvl00e)[i] = aligned_alloc(64, _39ayq6w);
-            MPI_File_read_at(_dvg7oq2, (_et1ghr0 +_v23gxj0[_g1ved32[i]] +_b2serev), (*_op767j2)[i], _z3nx39r->_jp61lfc, ((MPI_Datatype)0x4c000204), &_py6b2kn); _b2serev += _z3nx39r->_jp61lfc *sizeof(unsigned short int);
-            MPI_File_read_at(_dvg7oq2, (_et1ghr0 +_v23gxj0[_g1ved32[i]] +_b2serev), (*_ge2j51b)[i], 2*_9f77lu8[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_9f77lu8[i]*2*sizeof(float));
-            MPI_File_read_at(_dvg7oq2, (_et1ghr0 +_v23gxj0[_g1ved32[i]] +_b2serev), (*_sh3tow4)[i], 2*_9f77lu8[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_9f77lu8[i]*2*sizeof(float));
-            MPI_File_read_at(_dvg7oq2, (_et1ghr0 +_v23gxj0[_g1ved32[i]] +_b2serev), (*_pqvl00e)[i], 2*_9f77lu8[i], ((MPI_Datatype)0x4c00040a), &_py6b2kn); _b2serev += (_9f77lu8[i]*2*sizeof(float));
+        _r1yxr2d += (_0rmhrcn[_s3kkv9r->_otn9uze-1] + _s3kkv9r->_y25m8kb*sizeof(unsigned short int) + 6*_ui3do70[_s3kkv9r->_otn9uze-1]*sizeof(float) );
+        for (i = 0u; i < _emruyp0[_tk63n2q]; i++)
+        { _9lzs34j = 0;
+            _050ui22 = GetByteSize(64, _s3kkv9r->_y25m8kb, sizeof(unsigned short int));
+            (*_va1nkbt)[i] = aligned_alloc(64, _050ui22);
+            _050ui22 = GetByteSize(64, 3*_vk0ucc1[i], sizeof(float));
+            (*_e9ftaxp)[i] = aligned_alloc(64, _050ui22);
+            (*_6fokzix)[i] = aligned_alloc(64, _050ui22);
+            (*_z39pecn)[i] = aligned_alloc(64, _050ui22);
+            MPI_File_read_at(_f445cri, (_r1yxr2d +_sosx43w[_laym0wb[i]] +_9lzs34j), (*_va1nkbt)[i], _s3kkv9r->_y25m8kb, ((MPI_Datatype)0x4c000204), &_myx444n); _9lzs34j += _s3kkv9r->_y25m8kb *sizeof(unsigned short int);
+            MPI_File_read_at(_f445cri, (_r1yxr2d +_sosx43w[_laym0wb[i]] +_9lzs34j), (*_e9ftaxp)[i], 3*_vk0ucc1[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_vk0ucc1[i]*3*sizeof(float));
+            MPI_File_read_at(_f445cri, (_r1yxr2d +_sosx43w[_laym0wb[i]] +_9lzs34j), (*_6fokzix)[i], 3*_vk0ucc1[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_vk0ucc1[i]*3*sizeof(float));
+            MPI_File_read_at(_f445cri, (_r1yxr2d +_sosx43w[_laym0wb[i]] +_9lzs34j), (*_z39pecn)[i], 3*_vk0ucc1[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_vk0ucc1[i]*3*sizeof(float));
+        }
+        _r1yxr2d += (_sosx43w[_s3kkv9r->_y25m8kb-1] + _s3kkv9r->_y25m8kb*sizeof(unsigned short int) + 9*_h4a3yjt[_s3kkv9r->_y25m8kb-1]*sizeof(float) );
+        for (i = 0u; i < _emruyp0[_tk63n2q]; i++)
+        { _9lzs34j = 0;
+            _050ui22 = GetByteSize(64, _s3kkv9r->_otn9uze, sizeof(unsigned short int));
+            (*_eurxhw0)[i] = aligned_alloc(64, _050ui22);
+            _050ui22 = GetByteSize(64, 2*_vshkoec[i], sizeof(float));
+            (*_t997e4u)[i] = aligned_alloc(64, _050ui22);
+            (*_d1vn8lf)[i] = aligned_alloc(64, _050ui22);
+            (*_4xkss0k)[i] = aligned_alloc(64, _050ui22);
+            MPI_File_read_at(_f445cri, (_r1yxr2d +_fsqg8x8[_laym0wb[i]] +_9lzs34j), (*_eurxhw0)[i], _s3kkv9r->_otn9uze, ((MPI_Datatype)0x4c000204), &_myx444n); _9lzs34j += _s3kkv9r->_otn9uze *sizeof(unsigned short int);
+            MPI_File_read_at(_f445cri, (_r1yxr2d +_fsqg8x8[_laym0wb[i]] +_9lzs34j), (*_t997e4u)[i], 2*_vshkoec[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_vshkoec[i]*2*sizeof(float));
+            MPI_File_read_at(_f445cri, (_r1yxr2d +_fsqg8x8[_laym0wb[i]] +_9lzs34j), (*_d1vn8lf)[i], 2*_vshkoec[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_vshkoec[i]*2*sizeof(float));
+            MPI_File_read_at(_f445cri, (_r1yxr2d +_fsqg8x8[_laym0wb[i]] +_9lzs34j), (*_4xkss0k)[i], 2*_vshkoec[i], ((MPI_Datatype)0x4c00040a), &_myx444n); _9lzs34j += (_vshkoec[i]*2*sizeof(float));
         }
     }
     MPI_Barrier( ((MPI_Comm)0x44000000) );
-    MPI_File_close(&_dvg7oq2);
-    free(_9s3w563); free(_mofmmwi); free(_in9dl5t); free(_gsq7ait); free(_4spfdrw); free(_mqvindh); free(_kdq95g3); free(_v23gxj0); free(_j49yd82); free(_gqtoamd);
-    for (i = 0u; i < _b6gs8g8[_20n8tte]; i++)
+    MPI_File_close(&_f445cri);
+    free(_02g3yu6); free(_ui3do70); free(_h4a3yjt); free(_u7fbmen); free(_bh6nqqb); free(_0rmhrcn); free(_sosx43w); free(_fsqg8x8); free(_8sryo4r); free(_6ub7l8v);
+    for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++)
     {
-        _mzwffhh[i*16 +1] = ( ((fabsf(_3n3bzt9[i*16 +5])) > (fabsf(_3n3bzt9[i*16 +6]))) *(fabsf(_3n3bzt9[i*16 +5])) + ((fabsf(_3n3bzt9[i*16 +5])) <= (fabsf(_3n3bzt9[i*16 +6]))) *(fabsf(_3n3bzt9[i*16 +6])) );
-        _mzwffhh[i*16 +1] = ( ((_mzwffhh[i*16 +1]) > (fabsf(_3n3bzt9[i*16 +7]))) *(_mzwffhh[i*16 +1]) + ((_mzwffhh[i*16 +1]) <= (fabsf(_3n3bzt9[i*16 +7]))) *(fabsf(_3n3bzt9[i*16 +7])) );
-        ReAssignElemVals(_5zja8dz, _z3nx39r, i, _6zjq7w7, _3n3bzt9, _mzwffhh, 1);
+        _wyx9trf[i*16 +1] = ( ((fabsf(_vwvm4w3[i*16 +5])) > (fabsf(_vwvm4w3[i*16 +6]))) *(fabsf(_vwvm4w3[i*16 +5])) + ((fabsf(_vwvm4w3[i*16 +5])) <= (fabsf(_vwvm4w3[i*16 +6]))) *(fabsf(_vwvm4w3[i*16 +6])) );
+        _wyx9trf[i*16 +1] = ( ((_wyx9trf[i*16 +1]) > (fabsf(_vwvm4w3[i*16 +7]))) *(_wyx9trf[i*16 +1]) + ((_wyx9trf[i*16 +1]) <= (fabsf(_vwvm4w3[i*16 +7]))) *(fabsf(_vwvm4w3[i*16 +7])) );
+        ReAssignElemVals(_j3trp0j, _s3kkv9r, i, _mgvu4is, _vwvm4w3, _wyx9trf, 1);
     }
-    unsigned int _aragdx5[4], _o7vbgr8[4], _p7bd4w1[4], _vmefozt[4];
-    __builtin___memset_chk (_aragdx5, 0, 4*sizeof(unsigned int), __builtin_object_size (_aragdx5, 0));
-    __builtin___memset_chk (_o7vbgr8, 0, 4*sizeof(unsigned int), __builtin_object_size (_o7vbgr8, 0));
-    __builtin___memset_chk (_p7bd4w1, 0, 4*sizeof(unsigned int), __builtin_object_size (_p7bd4w1, 0));
-    __builtin___memset_chk (_vmefozt, 0, 4*sizeof(unsigned int), __builtin_object_size (_vmefozt, 0));
-    for (i = 0u; i < _b6gs8g8[_20n8tte]; i++)
-    { _aragdx5[0] += _iob0nlw[i]; _vmefozt[0] = (_vmefozt[0] >= _iob0nlw[i])*_vmefozt[0] + (_vmefozt[0] < _iob0nlw[i])*_iob0nlw[i];
+    unsigned int _jp61lfc[4], _r7vgrf1[4], _6zjq7w7[4], _e4ex6u8[4];
+    __builtin___memset_chk (_jp61lfc, 0, 4*sizeof(unsigned int), __builtin_object_size (_jp61lfc, 0));
+    __builtin___memset_chk (_r7vgrf1, 0, 4*sizeof(unsigned int), __builtin_object_size (_r7vgrf1, 0));
+    __builtin___memset_chk (_6zjq7w7, 0, 4*sizeof(unsigned int), __builtin_object_size (_6zjq7w7, 0));
+    __builtin___memset_chk (_e4ex6u8, 0, 4*sizeof(unsigned int), __builtin_object_size (_e4ex6u8, 0));
+    for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++)
+    { _jp61lfc[0] += _hthsjr0[i]; _e4ex6u8[0] = (_e4ex6u8[0] >= _hthsjr0[i])*_e4ex6u8[0] + (_e4ex6u8[0] < _hthsjr0[i])*_hthsjr0[i];
     }
-    if (_z3nx39r->_urvqt3g > 0u)
-    { for (i = 0u; i < _b6gs8g8[_20n8tte]; i++)
-        { _aragdx5[1] += _iymyrsv[i]; _vmefozt[1] = (_vmefozt[1] >= _iymyrsv[i])*_vmefozt[1] + (_vmefozt[1] < _iymyrsv[i])*_iymyrsv[i];
+    if (_s3kkv9r->_y25m8kb > 0u)
+    { for (i = 0u; i < _6zx1tv1[_tk63n2q]; i++)
+        { _jp61lfc[1] += _pmlvak9[i]; _e4ex6u8[1] = (_e4ex6u8[1] >= _pmlvak9[i])*_e4ex6u8[1] + (_e4ex6u8[1] < _pmlvak9[i])*_pmlvak9[i];
         }
-        for (i = 0u; i < _zfflb7w[_20n8tte]; i++)
-        { _aragdx5[2] += _btkf6xd[i]; _vmefozt[2] = (_vmefozt[2] >= _btkf6xd[i])*_vmefozt[2] + (_vmefozt[2] < _btkf6xd[i])*_btkf6xd[i];
-            _aragdx5[3] += _9f77lu8[i]; _vmefozt[3] = (_vmefozt[3] >= _9f77lu8[i])*_vmefozt[3] + (_vmefozt[3] < _9f77lu8[i])*_9f77lu8[i];
+        for (i = 0u; i < _emruyp0[_tk63n2q]; i++)
+        { _jp61lfc[2] += _vk0ucc1[i]; _e4ex6u8[2] = (_e4ex6u8[2] >= _vk0ucc1[i])*_e4ex6u8[2] + (_e4ex6u8[2] < _vk0ucc1[i])*_vk0ucc1[i];
+            _jp61lfc[3] += _vshkoec[i]; _e4ex6u8[3] = (_e4ex6u8[3] >= _vshkoec[i])*_e4ex6u8[3] + (_e4ex6u8[3] < _vshkoec[i])*_vshkoec[i];
         }
     }
-    MPI_Allreduce((void *) -1, _vmefozt, 4, ((MPI_Datatype)0x4c000406), (MPI_Op)(0x58000001), ((MPI_Comm)0x44000000));
-    _z3nx39r->_l9ue421 = ( ((_vmefozt[0]) > (_vmefozt[3])) *(_vmefozt[0]) + ((_vmefozt[0]) <= (_vmefozt[3])) *(_vmefozt[3]) );
-    _z3nx39r->_2h2p39y = ( ((_vmefozt[1]) > (_vmefozt[2])) *(_vmefozt[1]) + ((_vmefozt[1]) <= (_vmefozt[2])) *(_vmefozt[2]) );
-    _aragdx5[0] = _aragdx5[0]/_b6gs8g8[_20n8tte];
-    _aragdx5[1] = _aragdx5[1]/_b6gs8g8[_20n8tte];
-    _aragdx5[2] = (_zfflb7w[_20n8tte] > 0u) ? (_aragdx5[2]/_zfflb7w[_20n8tte]) : 0u;
-    _aragdx5[3] = (_zfflb7w[_20n8tte] > 0u) ? (_aragdx5[3]/_zfflb7w[_20n8tte]) : 0u;
-    __builtin___memcpy_chk (_o7vbgr8, _aragdx5, 4*sizeof(unsigned int), __builtin_object_size (_o7vbgr8, 0));
-    __builtin___memcpy_chk (_p7bd4w1, _aragdx5, 4*sizeof(unsigned int), __builtin_object_size (_p7bd4w1, 0));
-    MPI_Allreduce((void *) -1, _o7vbgr8, 4, ((MPI_Datatype)0x4c000406), (MPI_Op)(0x58000002), ((MPI_Comm)0x44000000));
-    MPI_Allreduce((void *) -1, _p7bd4w1, 4, ((MPI_Datatype)0x4c000406), (MPI_Op)(0x58000001), ((MPI_Comm)0x44000000));
-    MPI_Allreduce((void *) -1, _aragdx5, 4, ((MPI_Datatype)0x4c000406), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
-    _aragdx5[0] /= _avt8k06; _aragdx5[1] /= _avt8k06; _aragdx5[2] /= _avt8k06; _aragdx5[3] /= _avt8k06;
-    if (_20n8tte == 0)
+    MPI_Allreduce((void *) -1, _e4ex6u8, 4, ((MPI_Datatype)0x4c000406), (MPI_Op)(0x58000001), ((MPI_Comm)0x44000000));
+    _s3kkv9r->_d7x48wz = ( ((_e4ex6u8[0]) > (_e4ex6u8[3])) *(_e4ex6u8[0]) + ((_e4ex6u8[0]) <= (_e4ex6u8[3])) *(_e4ex6u8[3]) );
+    _s3kkv9r->_mygty3a = ( ((_e4ex6u8[1]) > (_e4ex6u8[2])) *(_e4ex6u8[1]) + ((_e4ex6u8[1]) <= (_e4ex6u8[2])) *(_e4ex6u8[2]) );
+    _jp61lfc[0] = _jp61lfc[0]/_6zx1tv1[_tk63n2q];
+    _jp61lfc[1] = _jp61lfc[1]/_6zx1tv1[_tk63n2q];
+    _jp61lfc[2] = (_emruyp0[_tk63n2q] > 0u) ? (_jp61lfc[2]/_emruyp0[_tk63n2q]) : 0u;
+    _jp61lfc[3] = (_emruyp0[_tk63n2q] > 0u) ? (_jp61lfc[3]/_emruyp0[_tk63n2q]) : 0u;
+    __builtin___memcpy_chk (_r7vgrf1, _jp61lfc, 4*sizeof(unsigned int), __builtin_object_size (_r7vgrf1, 0));
+    __builtin___memcpy_chk (_6zjq7w7, _jp61lfc, 4*sizeof(unsigned int), __builtin_object_size (_6zjq7w7, 0));
+    MPI_Allreduce((void *) -1, _r7vgrf1, 4, ((MPI_Datatype)0x4c000406), (MPI_Op)(0x58000002), ((MPI_Comm)0x44000000));
+    MPI_Allreduce((void *) -1, _6zjq7w7, 4, ((MPI_Datatype)0x4c000406), (MPI_Op)(0x58000001), ((MPI_Comm)0x44000000));
+    MPI_Allreduce((void *) -1, _jp61lfc, 4, ((MPI_Datatype)0x4c000406), (MPI_Op)(0x58000003), ((MPI_Comm)0x44000000));
+    _jp61lfc[0] /= _b6gs8g8; _jp61lfc[1] /= _b6gs8g8; _jp61lfc[2] /= _b6gs8g8; _jp61lfc[3] /= _b6gs8g8;
+    if (_tk63n2q == 0)
     { fprintf(__stdoutp,"Kh_lengths (average and range) across RANKs\n");
-        fprintf(__stdoutp,"Minimum:         %u\n", _o7vbgr8[0]);
-        fprintf(__stdoutp,"Average:         %u\n", _aragdx5[0]);
-        fprintf(__stdoutp,"Maximum:         %u\n", _p7bd4w1[0]);
+        fprintf(__stdoutp,"Minimum:         %u\n", _r7vgrf1[0]);
+        fprintf(__stdoutp,"Average:         %u\n", _jp61lfc[0]);
+        fprintf(__stdoutp,"Maximum:         %u\n", _6zjq7w7[0]);
     }
     return;
 }
-void _8ozcywd(float _g87oi0e, unsigned int _pj8t22c, const float *restrict _dhgzz0j, unsigned int _qy8yb7w, const unsigned int *restrict _06ftlo4, const float *restrict _wkxxjve, unsigned int ***restrict _iua08ek, unsigned int ***restrict _yce4qgm, unsigned int *restrict _iblejgu)
+void _18hafey(float _kb4ehou, unsigned int _o31yhxs, const float *restrict _v78hu7f, unsigned int _mda9oek, const unsigned int *restrict _qw4c6lb, const float *restrict _nbhnal3, unsigned int ***restrict _l9ue421, unsigned int ***restrict _t4q9bc2, unsigned int *restrict _vfua9bq)
 {
-    float _3oeuvty = 3.0f;
-    float _6ub7l8v = 0.666f;
-    float _1zocfi4 = 1.0f/_6ub7l8v;
-    long int _39ayq6w;
-    _39ayq6w = GetByteSize(64, _qy8yb7w, sizeof(unsigned int *));
-    *_iua08ek = aligned_alloc(64, _39ayq6w);
-    _39ayq6w = GetByteSize(64, 16, sizeof(unsigned int));
-    for (int i = 0u; i < _qy8yb7w; i++)
-    { (*_iua08ek)[i] = aligned_alloc(64, _39ayq6w); __builtin___memset_chk ((*_iua08ek)[i], 0, _39ayq6w, __builtin_object_size ((*_iua08ek)[i], 0));
+    float _gqtoamd = 3.0f;
+    float _nwywrra = 0.666f;
+    float _tatj9a3 = 1.0f/_nwywrra;
+    long int _050ui22;
+    _050ui22 = GetByteSize(64, _mda9oek, sizeof(unsigned int *));
+    *_l9ue421 = aligned_alloc(64, _050ui22);
+    _050ui22 = GetByteSize(64, 16, sizeof(unsigned int));
+    for (int i = 0u; i < _mda9oek; i++)
+    { (*_l9ue421)[i] = aligned_alloc(64, _050ui22); __builtin___memset_chk ((*_l9ue421)[i], 0, _050ui22, __builtin_object_size ((*_l9ue421)[i], 0));
     }
-    _39ayq6w = GetByteSize(64, _qy8yb7w*4, sizeof(unsigned int *));
-    *_yce4qgm = aligned_alloc(64, _39ayq6w);
-    _39ayq6w = GetByteSize(64, 8, sizeof(unsigned int));
-    for (int i = 0u; i < (_qy8yb7w*4); i++)
-    { (*_yce4qgm)[i] = aligned_alloc(64, _39ayq6w); __builtin___memset_chk ((*_yce4qgm)[i], 0, _39ayq6w, __builtin_object_size ((*_yce4qgm)[i], 0));
+    _050ui22 = GetByteSize(64, _mda9oek*4, sizeof(unsigned int *));
+    *_t4q9bc2 = aligned_alloc(64, _050ui22);
+    _050ui22 = GetByteSize(64, 8, sizeof(unsigned int));
+    for (int i = 0u; i < (_mda9oek*4); i++)
+    { (*_t4q9bc2)[i] = aligned_alloc(64, _050ui22); __builtin___memset_chk ((*_t4q9bc2)[i], 0, _050ui22, __builtin_object_size ((*_t4q9bc2)[i], 0));
     }
-    unsigned int i, j, k, _cw2lbm2, _qc6dr08, _katqyds, _egok01t, _otn9uze, _8h0imjy;
-    float _9el8hl8, _o6l1f90;
-    unsigned int _w2maiet[2][4];
-    float _5bwikot[3], _pt5r5rc[3], _glqj5sx[3], _ljefy3z[6];
-    unsigned int *_nzrf5a7 = malloc(_pj8t22c *sizeof(unsigned int));
-    unsigned int **_pwh0mx1 = malloc(_pj8t22c *sizeof(unsigned int *));
-    __builtin___memset_chk (_nzrf5a7, 0, _pj8t22c*sizeof(unsigned int), __builtin_object_size (_nzrf5a7, 0));
-    for (i = 0u; i < _qy8yb7w; i++) { _nzrf5a7[_06ftlo4[i*8 +3]] += 1u; }
-    for (i = 0u; i < _pj8t22c; i++) { _pwh0mx1[i] = malloc(_nzrf5a7[i]*sizeof(unsigned int)); }
-    __builtin___memset_chk (_nzrf5a7, 0, _pj8t22c*sizeof(unsigned int), __builtin_object_size (_nzrf5a7, 0));
-    for (i = 0u; i < _qy8yb7w; i++)
-    { _pwh0mx1[_06ftlo4[i*8 +3]][_nzrf5a7[_06ftlo4[i*8 +3]]] = i;
-        _nzrf5a7[_06ftlo4[i*8 +3]] += 1u;
+    unsigned int i, j, k, _i4w6ozx, _7qqyzqi, _50b8y5d, _fftouhy, _v4zwl3z, _jg2y8rg;
+    float _2zcfzw0, _y36ddfg;
+    unsigned int _hx6zdcu[2][4];
+    float _ljefy3z[3], _wrb7f6f[3], _jssuuqo[3], _h61iaoi[6];
+    unsigned int *_lu6k7p9 = malloc(_o31yhxs *sizeof(unsigned int));
+    unsigned int **_xd356wa = malloc(_o31yhxs *sizeof(unsigned int *));
+    __builtin___memset_chk (_lu6k7p9, 0, _o31yhxs*sizeof(unsigned int), __builtin_object_size (_lu6k7p9, 0));
+    for (i = 0u; i < _mda9oek; i++) { _lu6k7p9[_qw4c6lb[i*8 +3]] += 1u; }
+    for (i = 0u; i < _o31yhxs; i++) { _xd356wa[i] = malloc(_lu6k7p9[i]*sizeof(unsigned int)); }
+    __builtin___memset_chk (_lu6k7p9, 0, _o31yhxs*sizeof(unsigned int), __builtin_object_size (_lu6k7p9, 0));
+    for (i = 0u; i < _mda9oek; i++)
+    { _xd356wa[_qw4c6lb[i*8 +3]][_lu6k7p9[_qw4c6lb[i*8 +3]]] = i;
+        _lu6k7p9[_qw4c6lb[i*8 +3]] += 1u;
     }
-    for (i = 0u; i < _pj8t22c; i++)
-    { float _kibu4fm[3], _ffqot8h[4] = {3.40282347e+38F, -3.40282347e+38F, 3.40282347e+38F, -3.40282347e+38F};
-        unsigned int *_ryf0992 = malloc(_nzrf5a7[i]* sizeof(unsigned int)); __builtin___memset_chk (_ryf0992, 0, _nzrf5a7[i]* sizeof(unsigned int), __builtin_object_size (_ryf0992, 0));
-        unsigned int *_qdbxvh7 = malloc(_nzrf5a7[i]* sizeof(unsigned int)); __builtin___memset_chk (_qdbxvh7, 0, _nzrf5a7[i]* sizeof(unsigned int), __builtin_object_size (_qdbxvh7, 0));
-        unsigned int *_8p6fvdh = malloc(_nzrf5a7[i]* sizeof(unsigned int)); __builtin___memset_chk (_8p6fvdh, 0, _nzrf5a7[i]* sizeof(unsigned int), __builtin_object_size (_8p6fvdh, 0));
-        unsigned int **_1btr23q = malloc(_nzrf5a7[i] *sizeof(unsigned int *));
-        float **_8kzruin = malloc(_nzrf5a7[i] *sizeof(float *));
-        for (j = 0u; j < _nzrf5a7[i]; j++)
-        { _39ayq6w = GetByteSize(64, 16, sizeof(unsigned int));
-            _1btr23q[j] = aligned_alloc(64, _39ayq6w); __builtin___memset_chk (_1btr23q[j], 0, _39ayq6w, __builtin_object_size (_1btr23q[j], 0));
-            _39ayq6w = GetByteSize(64, 16, sizeof(float));
-            _8kzruin[j] = aligned_alloc(64, _39ayq6w); __builtin___memset_chk (_8kzruin[j], 0, _39ayq6w, __builtin_object_size (_8kzruin[j], 0));
+    for (i = 0u; i < _o31yhxs; i++)
+    { float _0i9g5dz[3], _ukwqvr1[4] = {3.40282347e+38F, -3.40282347e+38F, 3.40282347e+38F, -3.40282347e+38F};
+        unsigned int *_yt91qe3 = malloc(_lu6k7p9[i]* sizeof(unsigned int)); __builtin___memset_chk (_yt91qe3, 0, _lu6k7p9[i]* sizeof(unsigned int), __builtin_object_size (_yt91qe3, 0));
+        unsigned int *_pj8t22c = malloc(_lu6k7p9[i]* sizeof(unsigned int)); __builtin___memset_chk (_pj8t22c, 0, _lu6k7p9[i]* sizeof(unsigned int), __builtin_object_size (_pj8t22c, 0));
+        unsigned int *_jcmrsez = malloc(_lu6k7p9[i]* sizeof(unsigned int)); __builtin___memset_chk (_jcmrsez, 0, _lu6k7p9[i]* sizeof(unsigned int), __builtin_object_size (_jcmrsez, 0));
+        unsigned int **_2h2p39y = malloc(_lu6k7p9[i] *sizeof(unsigned int *));
+        float **_ldalmje = malloc(_lu6k7p9[i] *sizeof(float *));
+        for (j = 0u; j < _lu6k7p9[i]; j++)
+        { _050ui22 = GetByteSize(64, 16, sizeof(unsigned int));
+            _2h2p39y[j] = aligned_alloc(64, _050ui22); __builtin___memset_chk (_2h2p39y[j], 0, _050ui22, __builtin_object_size (_2h2p39y[j], 0));
+            _050ui22 = GetByteSize(64, 16, sizeof(float));
+            _ldalmje[j] = aligned_alloc(64, _050ui22); __builtin___memset_chk (_ldalmje[j], 0, _050ui22, __builtin_object_size (_ldalmje[j], 0));
         }
-        __builtin___memcpy_chk (_5bwikot, &_dhgzz0j[i*8 +3], 3*sizeof(float), __builtin_object_size (_5bwikot, 0));
-        GetStkAndDipVect(_5bwikot, _pt5r5rc, _glqj5sx);
-        _ljefy3z[0] = 3.40282347e+38F; _ljefy3z[1] = 0.0f; _ljefy3z[2] = -3.40282347e+38F;
-        _ljefy3z[3] = 3.40282347e+38F; _ljefy3z[4] = 0.0f; _ljefy3z[5] = -3.40282347e+38F;
-        for (j = 0; j < _nzrf5a7[i]; j++)
-        { _kibu4fm[0] = _wkxxjve[ _pwh0mx1[i][j]*16 +0] - _dhgzz0j[i*8 +0];
-            _kibu4fm[1] = _wkxxjve[ _pwh0mx1[i][j]*16 +1] - _dhgzz0j[i*8 +1];
-            _kibu4fm[2] = _wkxxjve[ _pwh0mx1[i][j]*16 +2] - _dhgzz0j[i*8 +2];
-            _8kzruin[j][8] = _5bwikot[0]*_kibu4fm[0] + _5bwikot[1]*_kibu4fm[1] + _5bwikot[2]*_kibu4fm[2];
-            _8kzruin[j][9] = _pt5r5rc[0]*_kibu4fm[0] + _pt5r5rc[1]*_kibu4fm[1] + _pt5r5rc[2]*_kibu4fm[2];
-            _8kzruin[j][10]= _glqj5sx[0]*_kibu4fm[0] + _glqj5sx[1]*_kibu4fm[1] + _glqj5sx[2]*_kibu4fm[2];
-            _ffqot8h[0] = ( ((_ffqot8h[0]) < (_8kzruin[j][9])) *(_ffqot8h[0]) + ((_ffqot8h[0]) >= (_8kzruin[j][9])) *(_8kzruin[j][9]) ); _ffqot8h[1] = ( ((_ffqot8h[1]) > (_8kzruin[j][9])) *(_ffqot8h[1]) + ((_ffqot8h[1]) <= (_8kzruin[j][9])) *(_8kzruin[j][9]) );
-            _ffqot8h[2] = ( ((_ffqot8h[2]) < (_8kzruin[j][10])) *(_ffqot8h[2]) + ((_ffqot8h[2]) >= (_8kzruin[j][10])) *(_8kzruin[j][10]) ); _ffqot8h[3] = ( ((_ffqot8h[3]) > (_8kzruin[j][10])) *(_ffqot8h[3]) + ((_ffqot8h[3]) <= (_8kzruin[j][10])) *(_8kzruin[j][10]) );
+        __builtin___memcpy_chk (_ljefy3z, &_v78hu7f[i*8 +3], 3*sizeof(float), __builtin_object_size (_ljefy3z, 0));
+        GetStkAndDipVect(_ljefy3z, _wrb7f6f, _jssuuqo);
+        _h61iaoi[0] = 3.40282347e+38F; _h61iaoi[1] = 0.0f; _h61iaoi[2] = -3.40282347e+38F;
+        _h61iaoi[3] = 3.40282347e+38F; _h61iaoi[4] = 0.0f; _h61iaoi[5] = -3.40282347e+38F;
+        for (j = 0; j < _lu6k7p9[i]; j++)
+        { _0i9g5dz[0] = _nbhnal3[ _xd356wa[i][j]*16 +0] - _v78hu7f[i*8 +0];
+            _0i9g5dz[1] = _nbhnal3[ _xd356wa[i][j]*16 +1] - _v78hu7f[i*8 +1];
+            _0i9g5dz[2] = _nbhnal3[ _xd356wa[i][j]*16 +2] - _v78hu7f[i*8 +2];
+            _ldalmje[j][8] = _ljefy3z[0]*_0i9g5dz[0] + _ljefy3z[1]*_0i9g5dz[1] + _ljefy3z[2]*_0i9g5dz[2];
+            _ldalmje[j][9] = _wrb7f6f[0]*_0i9g5dz[0] + _wrb7f6f[1]*_0i9g5dz[1] + _wrb7f6f[2]*_0i9g5dz[2];
+            _ldalmje[j][10]= _jssuuqo[0]*_0i9g5dz[0] + _jssuuqo[1]*_0i9g5dz[1] + _jssuuqo[2]*_0i9g5dz[2];
+            _ukwqvr1[0] = ( ((_ukwqvr1[0]) < (_ldalmje[j][9])) *(_ukwqvr1[0]) + ((_ukwqvr1[0]) >= (_ldalmje[j][9])) *(_ldalmje[j][9]) ); _ukwqvr1[1] = ( ((_ukwqvr1[1]) > (_ldalmje[j][9])) *(_ukwqvr1[1]) + ((_ukwqvr1[1]) <= (_ldalmje[j][9])) *(_ldalmje[j][9]) );
+            _ukwqvr1[2] = ( ((_ukwqvr1[2]) < (_ldalmje[j][10])) *(_ukwqvr1[2]) + ((_ukwqvr1[2]) >= (_ldalmje[j][10])) *(_ldalmje[j][10]) ); _ukwqvr1[3] = ( ((_ukwqvr1[3]) > (_ldalmje[j][10])) *(_ukwqvr1[3]) + ((_ukwqvr1[3]) <= (_ldalmje[j][10])) *(_ldalmje[j][10]) );
         }
-        _ljefy3z[0] = ( ((_ljefy3z[0]) < (_ffqot8h[0])) *(_ljefy3z[0]) + ((_ljefy3z[0]) >= (_ffqot8h[0])) *(_ffqot8h[0]) ); _ljefy3z[2] = ( ((_ljefy3z[2]) > (_ffqot8h[1])) *(_ljefy3z[2]) + ((_ljefy3z[2]) <= (_ffqot8h[1])) *(_ffqot8h[1]) );
-        _ljefy3z[3] = ( ((_ljefy3z[3]) < (_ffqot8h[2])) *(_ljefy3z[3]) + ((_ljefy3z[3]) >= (_ffqot8h[2])) *(_ffqot8h[2]) ); _ljefy3z[5] = ( ((_ljefy3z[5]) > (_ffqot8h[3])) *(_ljefy3z[5]) + ((_ljefy3z[5]) <= (_ffqot8h[3])) *(_ffqot8h[3]) );
-        _9el8hl8 = ( (((_ljefy3z[2] -_ljefy3z[0])) > ((_ljefy3z[5] -_ljefy3z[3]))) *((_ljefy3z[2] -_ljefy3z[0])) + (((_ljefy3z[2] -_ljefy3z[0])) <= ((_ljefy3z[5] -_ljefy3z[3]))) *((_ljefy3z[5] -_ljefy3z[3])) );
-        _8kzruin[0][0] = _ljefy3z[0]; _8kzruin[0][1] = _ljefy3z[2];
-        _8kzruin[0][2] = _ljefy3z[3]; _8kzruin[0][3] = _ljefy3z[5];
-        _qc6dr08 = 0u;
-        _otn9uze = 0u;
-        _cw2lbm2 = 1u;
-        while (0.5f*_9el8hl8 >= _3oeuvty*_g87oi0e)
-        { _qc6dr08 += 1u;
-            _9el8hl8 *= 0.5f;
-            _katqyds = 0u;
-            for (j = 0u; j < _cw2lbm2; j++)
-            { _ljefy3z[0] = _8kzruin[j][0]; _ljefy3z[2] = _8kzruin[j][1]; _ljefy3z[1] = 0.5f*(_ljefy3z[0] +_ljefy3z[2]);
-                _ljefy3z[3] = _8kzruin[j][2]; _ljefy3z[5] = _8kzruin[j][3]; _ljefy3z[4] = 0.5f*(_ljefy3z[3] +_ljefy3z[5]);
-                _egok01t = 0u;
-                __builtin___memset_chk (_8p6fvdh, 0, _nzrf5a7[i]* sizeof(unsigned int), __builtin_object_size (_8p6fvdh, 0));
-                _w2maiet[0][0] = 0u; _w2maiet[0][1] = 0u; _w2maiet[0][2] = 0u; _w2maiet[0][3] = 0u;
-                _w2maiet[1][0] = 0u; _w2maiet[1][1] = 0u; _w2maiet[1][2] = 0u; _w2maiet[1][3] = 0u;
-                for (k = 0u; k < _nzrf5a7[i]; k++)
-                { _8h0imjy = (_1btr23q[k][_qc6dr08-1] == _ryf0992[j])*1u + (_1btr23q[k][_qc6dr08-1] != _ryf0992[j])*0u;
-                    _8p6fvdh[_egok01t] = (_8h0imjy == 1u)*k + (_8h0imjy != 1u)*_8p6fvdh[_egok01t];
-                    _egok01t = (_8h0imjy == 1u)*(_egok01t+1u) + (_8h0imjy != 1u)*_egok01t;
+        _h61iaoi[0] = ( ((_h61iaoi[0]) < (_ukwqvr1[0])) *(_h61iaoi[0]) + ((_h61iaoi[0]) >= (_ukwqvr1[0])) *(_ukwqvr1[0]) ); _h61iaoi[2] = ( ((_h61iaoi[2]) > (_ukwqvr1[1])) *(_h61iaoi[2]) + ((_h61iaoi[2]) <= (_ukwqvr1[1])) *(_ukwqvr1[1]) );
+        _h61iaoi[3] = ( ((_h61iaoi[3]) < (_ukwqvr1[2])) *(_h61iaoi[3]) + ((_h61iaoi[3]) >= (_ukwqvr1[2])) *(_ukwqvr1[2]) ); _h61iaoi[5] = ( ((_h61iaoi[5]) > (_ukwqvr1[3])) *(_h61iaoi[5]) + ((_h61iaoi[5]) <= (_ukwqvr1[3])) *(_ukwqvr1[3]) );
+        _2zcfzw0 = ( (((_h61iaoi[2] -_h61iaoi[0])) > ((_h61iaoi[5] -_h61iaoi[3]))) *((_h61iaoi[2] -_h61iaoi[0])) + (((_h61iaoi[2] -_h61iaoi[0])) <= ((_h61iaoi[5] -_h61iaoi[3]))) *((_h61iaoi[5] -_h61iaoi[3])) );
+        _ldalmje[0][0] = _h61iaoi[0]; _ldalmje[0][1] = _h61iaoi[2];
+        _ldalmje[0][2] = _h61iaoi[3]; _ldalmje[0][3] = _h61iaoi[5];
+        _7qqyzqi = 0u;
+        _v4zwl3z = 0u;
+        _i4w6ozx = 1u;
+        while (0.5f*_2zcfzw0 >= _gqtoamd*_kb4ehou)
+        { _7qqyzqi += 1u;
+            _2zcfzw0 *= 0.5f;
+            _50b8y5d = 0u;
+            for (j = 0u; j < _i4w6ozx; j++)
+            { _h61iaoi[0] = _ldalmje[j][0]; _h61iaoi[2] = _ldalmje[j][1]; _h61iaoi[1] = 0.5f*(_h61iaoi[0] +_h61iaoi[2]);
+                _h61iaoi[3] = _ldalmje[j][2]; _h61iaoi[5] = _ldalmje[j][3]; _h61iaoi[4] = 0.5f*(_h61iaoi[3] +_h61iaoi[5]);
+                _fftouhy = 0u;
+                __builtin___memset_chk (_jcmrsez, 0, _lu6k7p9[i]* sizeof(unsigned int), __builtin_object_size (_jcmrsez, 0));
+                _hx6zdcu[0][0] = 0u; _hx6zdcu[0][1] = 0u; _hx6zdcu[0][2] = 0u; _hx6zdcu[0][3] = 0u;
+                _hx6zdcu[1][0] = 0u; _hx6zdcu[1][1] = 0u; _hx6zdcu[1][2] = 0u; _hx6zdcu[1][3] = 0u;
+                for (k = 0u; k < _lu6k7p9[i]; k++)
+                { _jg2y8rg = (_2h2p39y[k][_7qqyzqi-1] == _yt91qe3[j])*1u + (_2h2p39y[k][_7qqyzqi-1] != _yt91qe3[j])*0u;
+                    _jcmrsez[_fftouhy] = (_jg2y8rg == 1u)*k + (_jg2y8rg != 1u)*_jcmrsez[_fftouhy];
+                    _fftouhy = (_jg2y8rg == 1u)*(_fftouhy+1u) + (_jg2y8rg != 1u)*_fftouhy;
                 }
-                _o6l1f90 = (_ljefy3z[2]-_ljefy3z[0]+_g87oi0e)/(_ljefy3z[5]-_ljefy3z[3]+_g87oi0e);
-                if (_o6l1f90 >= _1zocfi4)
-                { for (k = 0u; k < _egok01t; k++)
-                    { if (_8kzruin[_8p6fvdh[k]][9] < _ljefy3z[1])
-                        { if (_w2maiet[0][0] == 0u)
-                            { _otn9uze += 1u;
-                                _w2maiet[0][0] = 1u; _w2maiet[1][0] = _otn9uze;
-                                _8kzruin[_katqyds][4] = _ljefy3z[0]; _8kzruin[_katqyds][5] = _ljefy3z[1];
-                                _8kzruin[_katqyds][6] = _ljefy3z[3]; _8kzruin[_katqyds][7] = _ljefy3z[5];
-                                _qdbxvh7[_katqyds] = _otn9uze; _katqyds += 1u;
-                                (*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][0] += 1u;
-                                (*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][(*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][0]] = (_otn9uze + *_iblejgu);
+                _y36ddfg = (_h61iaoi[2]-_h61iaoi[0]+_kb4ehou)/(_h61iaoi[5]-_h61iaoi[3]+_kb4ehou);
+                if (_y36ddfg >= _tatj9a3)
+                { for (k = 0u; k < _fftouhy; k++)
+                    { if (_ldalmje[_jcmrsez[k]][9] < _h61iaoi[1])
+                        { if (_hx6zdcu[0][0] == 0u)
+                            { _v4zwl3z += 1u;
+                                _hx6zdcu[0][0] = 1u; _hx6zdcu[1][0] = _v4zwl3z;
+                                _ldalmje[_50b8y5d][4] = _h61iaoi[0]; _ldalmje[_50b8y5d][5] = _h61iaoi[1];
+                                _ldalmje[_50b8y5d][6] = _h61iaoi[3]; _ldalmje[_50b8y5d][7] = _h61iaoi[5];
+                                _pj8t22c[_50b8y5d] = _v4zwl3z; _50b8y5d += 1u;
+                                (*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][0] += 1u;
+                                (*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][(*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][0]] = (_v4zwl3z + *_vfua9bq);
                             }
-                            _1btr23q[_8p6fvdh[k]][_qc6dr08] = _w2maiet[1][0];
+                            _2h2p39y[_jcmrsez[k]][_7qqyzqi] = _hx6zdcu[1][0];
                         }
-                        else if (_8kzruin[_8p6fvdh[k]][9] >= _ljefy3z[1])
-                        { if (_w2maiet[0][1] == 0u)
-                            { _otn9uze += 1u;
-                                _w2maiet[0][1] = 1u; _w2maiet[1][1] = _otn9uze;
-                                _8kzruin[_katqyds][4] = _ljefy3z[1]; _8kzruin[_katqyds][5] = _ljefy3z[2];
-                                _8kzruin[_katqyds][6] = _ljefy3z[3]; _8kzruin[_katqyds][7] = _ljefy3z[5];
-                                _qdbxvh7[_katqyds] = _otn9uze; _katqyds += 1u;
-                                (*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][0] += 1u;
-                                (*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][(*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][0]] = (_otn9uze + *_iblejgu);
+                        else if (_ldalmje[_jcmrsez[k]][9] >= _h61iaoi[1])
+                        { if (_hx6zdcu[0][1] == 0u)
+                            { _v4zwl3z += 1u;
+                                _hx6zdcu[0][1] = 1u; _hx6zdcu[1][1] = _v4zwl3z;
+                                _ldalmje[_50b8y5d][4] = _h61iaoi[1]; _ldalmje[_50b8y5d][5] = _h61iaoi[2];
+                                _ldalmje[_50b8y5d][6] = _h61iaoi[3]; _ldalmje[_50b8y5d][7] = _h61iaoi[5];
+                                _pj8t22c[_50b8y5d] = _v4zwl3z; _50b8y5d += 1u;
+                                (*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][0] += 1u;
+                                (*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][(*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][0]] = (_v4zwl3z + *_vfua9bq);
                             }
-                            _1btr23q[_8p6fvdh[k]][_qc6dr08] = _w2maiet[1][1];
+                            _2h2p39y[_jcmrsez[k]][_7qqyzqi] = _hx6zdcu[1][1];
                 } } }
-                else if (_o6l1f90 <= _6ub7l8v)
-                { for (k = 0u; k < _egok01t; k++)
-                    { if (_8kzruin[_8p6fvdh[k]][10] < _ljefy3z[4])
-                        { if (_w2maiet[0][0] == 0u)
-                            { _otn9uze += 1u;
-                                _w2maiet[0][0] = 1u; _w2maiet[1][0] = _otn9uze;
-                                _8kzruin[_katqyds][4] = _ljefy3z[0]; _8kzruin[_katqyds][5] = _ljefy3z[2];
-                                _8kzruin[_katqyds][6] = _ljefy3z[3]; _8kzruin[_katqyds][7] = _ljefy3z[4];
-                                _qdbxvh7[_katqyds] = _otn9uze; _katqyds += 1u;
-                                (*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][0] += 1u;
-                                (*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][(*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][0]] = (_otn9uze + *_iblejgu);
+                else if (_y36ddfg <= _nwywrra)
+                { for (k = 0u; k < _fftouhy; k++)
+                    { if (_ldalmje[_jcmrsez[k]][10] < _h61iaoi[4])
+                        { if (_hx6zdcu[0][0] == 0u)
+                            { _v4zwl3z += 1u;
+                                _hx6zdcu[0][0] = 1u; _hx6zdcu[1][0] = _v4zwl3z;
+                                _ldalmje[_50b8y5d][4] = _h61iaoi[0]; _ldalmje[_50b8y5d][5] = _h61iaoi[2];
+                                _ldalmje[_50b8y5d][6] = _h61iaoi[3]; _ldalmje[_50b8y5d][7] = _h61iaoi[4];
+                                _pj8t22c[_50b8y5d] = _v4zwl3z; _50b8y5d += 1u;
+                                (*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][0] += 1u;
+                                (*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][(*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][0]] = (_v4zwl3z + *_vfua9bq);
                                                                    }
-                            _1btr23q[_8p6fvdh[k]][_qc6dr08] = _w2maiet[1][0];
+                            _2h2p39y[_jcmrsez[k]][_7qqyzqi] = _hx6zdcu[1][0];
                         }
-                        else if (_8kzruin[_8p6fvdh[k]][10] >= _ljefy3z[4])
-                        { if (_w2maiet[0][1] == 0u)
-                            { _otn9uze += 1u;
-                                _w2maiet[0][1] = 1u; _w2maiet[1][1] = _otn9uze;
-                                _8kzruin[_katqyds][4] = _ljefy3z[0]; _8kzruin[_katqyds][5] = _ljefy3z[2];
-                                _8kzruin[_katqyds][6] = _ljefy3z[4]; _8kzruin[_katqyds][7] = _ljefy3z[5];
-                                _qdbxvh7[_katqyds] = _otn9uze; _katqyds += 1u;
-                                (*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][0] += 1u;
-                                (*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][(*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][0]] = (_otn9uze + *_iblejgu);
+                        else if (_ldalmje[_jcmrsez[k]][10] >= _h61iaoi[4])
+                        { if (_hx6zdcu[0][1] == 0u)
+                            { _v4zwl3z += 1u;
+                                _hx6zdcu[0][1] = 1u; _hx6zdcu[1][1] = _v4zwl3z;
+                                _ldalmje[_50b8y5d][4] = _h61iaoi[0]; _ldalmje[_50b8y5d][5] = _h61iaoi[2];
+                                _ldalmje[_50b8y5d][6] = _h61iaoi[4]; _ldalmje[_50b8y5d][7] = _h61iaoi[5];
+                                _pj8t22c[_50b8y5d] = _v4zwl3z; _50b8y5d += 1u;
+                                (*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][0] += 1u;
+                                (*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][(*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][0]] = (_v4zwl3z + *_vfua9bq);
                             }
-                            _1btr23q[_8p6fvdh[k]][_qc6dr08] = _w2maiet[1][1];
+                            _2h2p39y[_jcmrsez[k]][_7qqyzqi] = _hx6zdcu[1][1];
                 } } }
                 else
-                { for (k = 0u; k < _egok01t; k++)
-                    { if ( (_8kzruin[_8p6fvdh[k]][9] >= _ljefy3z[1]) && (_8kzruin[_8p6fvdh[k]][10] >= _ljefy3z[4]) )
-                        { if (_w2maiet[0][0] == 0u)
-                            { _otn9uze += 1u;
-                                _w2maiet[0][0] = 1u; _w2maiet[1][0] = _otn9uze;
-                                _8kzruin[_katqyds][4] = _ljefy3z[1]; _8kzruin[_katqyds][5] = _ljefy3z[2];
-                                _8kzruin[_katqyds][6] = _ljefy3z[4]; _8kzruin[_katqyds][7] = _ljefy3z[5];
-                                _qdbxvh7[_katqyds] = _otn9uze; _katqyds += 1u;
-                                (*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][0] +=1u;
-                                (*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][(*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][0]] = (_otn9uze + *_iblejgu);
+                { for (k = 0u; k < _fftouhy; k++)
+                    { if ( (_ldalmje[_jcmrsez[k]][9] >= _h61iaoi[1]) && (_ldalmje[_jcmrsez[k]][10] >= _h61iaoi[4]) )
+                        { if (_hx6zdcu[0][0] == 0u)
+                            { _v4zwl3z += 1u;
+                                _hx6zdcu[0][0] = 1u; _hx6zdcu[1][0] = _v4zwl3z;
+                                _ldalmje[_50b8y5d][4] = _h61iaoi[1]; _ldalmje[_50b8y5d][5] = _h61iaoi[2];
+                                _ldalmje[_50b8y5d][6] = _h61iaoi[4]; _ldalmje[_50b8y5d][7] = _h61iaoi[5];
+                                _pj8t22c[_50b8y5d] = _v4zwl3z; _50b8y5d += 1u;
+                                (*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][0] +=1u;
+                                (*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][(*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][0]] = (_v4zwl3z + *_vfua9bq);
                             }
-                            _1btr23q[_8p6fvdh[k]][_qc6dr08] = _w2maiet[1][0];
+                            _2h2p39y[_jcmrsez[k]][_7qqyzqi] = _hx6zdcu[1][0];
                         }
-                        else if ( (_8kzruin[_8p6fvdh[k]][9] < _ljefy3z[1]) && (_8kzruin[_8p6fvdh[k]][10] >= _ljefy3z[4]) )
-                        { if (_w2maiet[0][1] == 0u)
-                            { _otn9uze += 1u;
-                                _w2maiet[0][1] = 1u; _w2maiet[1][1] = _otn9uze;
-                                _8kzruin[_katqyds][4] = _ljefy3z[0]; _8kzruin[_katqyds][5] = _ljefy3z[1];
-                                _8kzruin[_katqyds][6] = _ljefy3z[4]; _8kzruin[_katqyds][7] = _ljefy3z[5];
-                                _qdbxvh7[_katqyds] = _otn9uze; _katqyds += 1u;
-                                (*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][0] +=1u;
-                                (*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][(*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][0]] = (_otn9uze + *_iblejgu);
+                        else if ( (_ldalmje[_jcmrsez[k]][9] < _h61iaoi[1]) && (_ldalmje[_jcmrsez[k]][10] >= _h61iaoi[4]) )
+                        { if (_hx6zdcu[0][1] == 0u)
+                            { _v4zwl3z += 1u;
+                                _hx6zdcu[0][1] = 1u; _hx6zdcu[1][1] = _v4zwl3z;
+                                _ldalmje[_50b8y5d][4] = _h61iaoi[0]; _ldalmje[_50b8y5d][5] = _h61iaoi[1];
+                                _ldalmje[_50b8y5d][6] = _h61iaoi[4]; _ldalmje[_50b8y5d][7] = _h61iaoi[5];
+                                _pj8t22c[_50b8y5d] = _v4zwl3z; _50b8y5d += 1u;
+                                (*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][0] +=1u;
+                                (*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][(*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][0]] = (_v4zwl3z + *_vfua9bq);
                             }
-                            _1btr23q[_8p6fvdh[k]][_qc6dr08] = _w2maiet[1][1];
+                            _2h2p39y[_jcmrsez[k]][_7qqyzqi] = _hx6zdcu[1][1];
                         }
-                        else if ( (_8kzruin[_8p6fvdh[k]][9] < _ljefy3z[1]) && (_8kzruin[_8p6fvdh[k]][10] < _ljefy3z[4]) )
-                        { if (_w2maiet[0][2] == 0u)
-                            { _otn9uze += 1u;
-                                _w2maiet[0][2] = 1u; _w2maiet[1][2] = _otn9uze;
-                                _8kzruin[_katqyds][4] = _ljefy3z[0]; _8kzruin[_katqyds][5] = _ljefy3z[1];
-                                _8kzruin[_katqyds][6] = _ljefy3z[3]; _8kzruin[_katqyds][7] = _ljefy3z[4];
-                                _qdbxvh7[_katqyds] = _otn9uze; _katqyds += 1u;
-                                (*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][0] +=1u;
-                                (*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][(*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][0]] = (_otn9uze + *_iblejgu);
+                        else if ( (_ldalmje[_jcmrsez[k]][9] < _h61iaoi[1]) && (_ldalmje[_jcmrsez[k]][10] < _h61iaoi[4]) )
+                        { if (_hx6zdcu[0][2] == 0u)
+                            { _v4zwl3z += 1u;
+                                _hx6zdcu[0][2] = 1u; _hx6zdcu[1][2] = _v4zwl3z;
+                                _ldalmje[_50b8y5d][4] = _h61iaoi[0]; _ldalmje[_50b8y5d][5] = _h61iaoi[1];
+                                _ldalmje[_50b8y5d][6] = _h61iaoi[3]; _ldalmje[_50b8y5d][7] = _h61iaoi[4];
+                                _pj8t22c[_50b8y5d] = _v4zwl3z; _50b8y5d += 1u;
+                                (*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][0] +=1u;
+                                (*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][(*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][0]] = (_v4zwl3z + *_vfua9bq);
                             }
-                            _1btr23q[_8p6fvdh[k]][_qc6dr08] = _w2maiet[1][2];
+                            _2h2p39y[_jcmrsez[k]][_7qqyzqi] = _hx6zdcu[1][2];
                         }
-                        else if ( (_8kzruin[_8p6fvdh[k]][9] >= _ljefy3z[1]) && (_8kzruin[_8p6fvdh[k]][10] < _ljefy3z[4]) )
-                        { if (_w2maiet[0][3] == 0u)
-                            { _otn9uze += 1u;
-                                _w2maiet[0][3] = 1u; _w2maiet[1][3] = _otn9uze;
-                                _8kzruin[_katqyds][4] = _ljefy3z[1]; _8kzruin[_katqyds][5] = _ljefy3z[2];
-                                _8kzruin[_katqyds][6] = _ljefy3z[3]; _8kzruin[_katqyds][7] = _ljefy3z[4];
-                                _qdbxvh7[_katqyds] = _otn9uze; _katqyds += 1u;
-                                (*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][0] +=1u;
-                                (*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][(*_yce4qgm)[(_ryf0992[j]+ *_iblejgu)][0]] = (_otn9uze + *_iblejgu);
+                        else if ( (_ldalmje[_jcmrsez[k]][9] >= _h61iaoi[1]) && (_ldalmje[_jcmrsez[k]][10] < _h61iaoi[4]) )
+                        { if (_hx6zdcu[0][3] == 0u)
+                            { _v4zwl3z += 1u;
+                                _hx6zdcu[0][3] = 1u; _hx6zdcu[1][3] = _v4zwl3z;
+                                _ldalmje[_50b8y5d][4] = _h61iaoi[1]; _ldalmje[_50b8y5d][5] = _h61iaoi[2];
+                                _ldalmje[_50b8y5d][6] = _h61iaoi[3]; _ldalmje[_50b8y5d][7] = _h61iaoi[4];
+                                _pj8t22c[_50b8y5d] = _v4zwl3z; _50b8y5d += 1u;
+                                (*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][0] +=1u;
+                                (*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][(*_t4q9bc2)[(_yt91qe3[j]+ *_vfua9bq)][0]] = (_v4zwl3z + *_vfua9bq);
                             }
-                            _1btr23q[_8p6fvdh[k]][_qc6dr08] = _w2maiet[1][3];
+                            _2h2p39y[_jcmrsez[k]][_7qqyzqi] = _hx6zdcu[1][3];
                 } } }
             }
-            __builtin___memcpy_chk (_ryf0992, _qdbxvh7, _katqyds* sizeof(unsigned int), __builtin_object_size (_ryf0992, 0));
-            for (j = 0u; j < _katqyds; j++) { __builtin___memcpy_chk (&_8kzruin[j][0], &_8kzruin[j][4], 4* sizeof(float), __builtin_object_size (&_8kzruin[j][0], 0)); }
-            _cw2lbm2 = _katqyds;
+            __builtin___memcpy_chk (_yt91qe3, _pj8t22c, _50b8y5d* sizeof(unsigned int), __builtin_object_size (_yt91qe3, 0));
+            for (j = 0u; j < _50b8y5d; j++) { __builtin___memcpy_chk (&_ldalmje[j][0], &_ldalmje[j][4], 4* sizeof(float), __builtin_object_size (&_ldalmje[j][0], 0)); }
+            _i4w6ozx = _50b8y5d;
         }
-        _otn9uze += 1u;
-        _qc6dr08 += 2u;
-        for (j = 0; j < _nzrf5a7[i]; j++ )
-        { _1btr23q[j][_qc6dr08 -1] = (_otn9uze +j);
-            (*_iua08ek)[_pwh0mx1[i][j]][0] = _qc6dr08;
-            for (k = 0; k < _qc6dr08; k++)
-            { (*_iua08ek)[_pwh0mx1[i][j]][(16 -_qc6dr08 +k)] = (_1btr23q[j][k] + *_iblejgu);
+        _v4zwl3z += 1u;
+        _7qqyzqi += 2u;
+        for (j = 0; j < _lu6k7p9[i]; j++ )
+        { _2h2p39y[j][_7qqyzqi -1] = (_v4zwl3z +j);
+            (*_l9ue421)[_xd356wa[i][j]][0] = _7qqyzqi;
+            for (k = 0; k < _7qqyzqi; k++)
+            { (*_l9ue421)[_xd356wa[i][j]][(16 -_7qqyzqi +k)] = (_2h2p39y[j][k] + *_vfua9bq);
         } }
-        *_iblejgu += (_otn9uze + _nzrf5a7[i]);
-        for (j = 0; j < _nzrf5a7[i]; j++) { free(_1btr23q[j]); free(_8kzruin[j]); }
-        free(_ryf0992); free(_qdbxvh7); free(_8p6fvdh); free(_1btr23q); free(_8kzruin);
+        *_vfua9bq += (_v4zwl3z + _lu6k7p9[i]);
+        for (j = 0; j < _lu6k7p9[i]; j++) { free(_2h2p39y[j]); free(_ldalmje[j]); }
+        free(_yt91qe3); free(_pj8t22c); free(_jcmrsez); free(_2h2p39y); free(_ldalmje);
     }
-    for (i = 0u; i < _pj8t22c; i++) { free(_pwh0mx1[i]); }
-    free(_nzrf5a7); free(_pwh0mx1);
+    for (i = 0u; i < _o31yhxs; i++) { free(_xd356wa[i]); }
+    free(_lu6k7p9); free(_xd356wa);
 }
-void _qjiujv6(unsigned int _qy8yb7w, const unsigned int *restrict _06ftlo4, const float *restrict _wkxxjve, const float *restrict _ypntrfz, unsigned int **restrict _1btr23q, unsigned int _iblejgu, float ***restrict _t8qzpky)
+void _h75lxo6(unsigned int _mda9oek, const unsigned int *restrict _qw4c6lb, const float *restrict _nbhnal3, const float *restrict _r1dwwo8, unsigned int **restrict _2h2p39y, unsigned int _vfua9bq, float ***restrict _vlnknd6)
 {
-    long int _39ayq6w;
-    _39ayq6w = GetByteSize(64, _iblejgu, sizeof(float *));
-    *_t8qzpky = aligned_alloc(64, _39ayq6w);
-    _39ayq6w = GetByteSize(64, 21, sizeof(float));
-    for (int i = 0; i < _iblejgu; i++)
-    { (*_t8qzpky)[i] = aligned_alloc(64, _39ayq6w); __builtin___memset_chk ((*_t8qzpky)[i], 0, _39ayq6w, __builtin_object_size ((*_t8qzpky)[i], 0));
+    long int _050ui22;
+    _050ui22 = GetByteSize(64, _vfua9bq, sizeof(float *));
+    *_vlnknd6 = aligned_alloc(64, _050ui22);
+    _050ui22 = GetByteSize(64, 21, sizeof(float));
+    for (int i = 0; i < _vfua9bq; i++)
+    { (*_vlnknd6)[i] = aligned_alloc(64, _050ui22); __builtin___memset_chk ((*_vlnknd6)[i], 0, _050ui22, __builtin_object_size ((*_vlnknd6)[i], 0));
     }
     int i, j;
-    unsigned int _8h0imjy, _jcmrsez;
-    float _flse45b, _g34iq7z, _1a6xvaj, _2k8xpnm, _jqy3ods, _vwvm4w3;
-    float _2c9t199[3], _dxj37c9[3], _h42m44g[3], _v3z6bz8[3], _kc4lorx[3], _5bwikot[3], _pt5r5rc[3], _glqj5sx[3], _r1dwwo8[3], _nbhnal3[3], _nvg3kk0[3];
-    for (i = 0u; i < _qy8yb7w; i++)
-    { _8h0imjy= _1btr23q[i][0];
-        for (j = 0u; j < _8h0imjy; j++)
-        { _jcmrsez = _1btr23q[i][16 -_8h0imjy +j];
-            (*_t8qzpky)[_jcmrsez][0] += _wkxxjve[i*16 +0]; (*_t8qzpky)[_jcmrsez][1] += _wkxxjve[i*16 +1]; (*_t8qzpky)[_jcmrsez][2] += _wkxxjve[i*16 +2];
-            (*_t8qzpky)[_jcmrsez][3] += _wkxxjve[i*16 +15]; (*_t8qzpky)[_jcmrsez][4] += 1.0f;
-            (*_t8qzpky)[_jcmrsez][6] += _wkxxjve[i*16 +6]; (*_t8qzpky)[_jcmrsez][7] += _wkxxjve[i*16 +7]; (*_t8qzpky)[_jcmrsez][8] += _wkxxjve[i*16 +8];
+    unsigned int _jg2y8rg, _ybxkpm2;
+    float _q52wspo, _fv177ud, _9p3jpxg, _h30153s, _flse45b, _1vsmado;
+    float _e3nwxuj[3], _3ac6pe6[3], _3lbqgu3[3], _obyghgk[3], _dan085r[3], _ljefy3z[3], _wrb7f6f[3], _jssuuqo[3], _t26ys44[3], _5gdej31[3], _2ljk4q5[3];
+    for (i = 0u; i < _mda9oek; i++)
+    { _jg2y8rg= _2h2p39y[i][0];
+        for (j = 0u; j < _jg2y8rg; j++)
+        { _ybxkpm2 = _2h2p39y[i][16 -_jg2y8rg +j];
+            (*_vlnknd6)[_ybxkpm2][0] += _nbhnal3[i*16 +0]; (*_vlnknd6)[_ybxkpm2][1] += _nbhnal3[i*16 +1]; (*_vlnknd6)[_ybxkpm2][2] += _nbhnal3[i*16 +2];
+            (*_vlnknd6)[_ybxkpm2][3] += _nbhnal3[i*16 +15]; (*_vlnknd6)[_ybxkpm2][4] += 1.0f;
+            (*_vlnknd6)[_ybxkpm2][6] += _nbhnal3[i*16 +6]; (*_vlnknd6)[_ybxkpm2][7] += _nbhnal3[i*16 +7]; (*_vlnknd6)[_ybxkpm2][8] += _nbhnal3[i*16 +8];
     } }
-    for (i = 0u; i < _iblejgu; i++)
-    { (*_t8qzpky)[i][0] /= (*_t8qzpky)[i][4]; (*_t8qzpky)[i][1] /= (*_t8qzpky)[i][4]; (*_t8qzpky)[i][2] /= (*_t8qzpky)[i][4];
-        NrmlzeVect( &(*_t8qzpky)[i][6] );
-        (*_t8qzpky)[i][5] = -3.40282347e+38F;
-        (*_t8qzpky)[i][9] = 3.40282347e+38F; (*_t8qzpky)[i][10] = -3.40282347e+38F;
-        (*_t8qzpky)[i][11] = 3.40282347e+38F; (*_t8qzpky)[i][12] = -3.40282347e+38F;
+    for (i = 0u; i < _vfua9bq; i++)
+    { (*_vlnknd6)[i][0] /= (*_vlnknd6)[i][4]; (*_vlnknd6)[i][1] /= (*_vlnknd6)[i][4]; (*_vlnknd6)[i][2] /= (*_vlnknd6)[i][4];
+        NrmlzeVect( &(*_vlnknd6)[i][6] );
+        (*_vlnknd6)[i][5] = -3.40282347e+38F;
+        (*_vlnknd6)[i][9] = 3.40282347e+38F; (*_vlnknd6)[i][10] = -3.40282347e+38F;
+        (*_vlnknd6)[i][11] = 3.40282347e+38F; (*_vlnknd6)[i][12] = -3.40282347e+38F;
     }
-    for (i = 0u; i < _qy8yb7w; i++)
-    { __builtin___memcpy_chk (_2c9t199, &_ypntrfz[_06ftlo4[i*8 +0]*4 +0], 3*sizeof(float), __builtin_object_size (_2c9t199, 0));
-        __builtin___memcpy_chk (_dxj37c9, &_ypntrfz[_06ftlo4[i*8 +1]*4 +0], 3*sizeof(float), __builtin_object_size (_dxj37c9, 0));
-        __builtin___memcpy_chk (_h42m44g, &_ypntrfz[_06ftlo4[i*8 +2]*4 +0], 3*sizeof(float), __builtin_object_size (_h42m44g, 0));
-        _8h0imjy = _1btr23q[i][0];
-        for (j = 0u; j < _8h0imjy; j++)
-        { _jcmrsez = _1btr23q[i][16 -_8h0imjy +j];
-            __builtin___memcpy_chk (_kc4lorx, &(*_t8qzpky)[_jcmrsez][0], 3*sizeof(float), __builtin_object_size (_kc4lorx, 0));
-            __builtin___memcpy_chk (_5bwikot, &(*_t8qzpky)[_jcmrsez][6], 3*sizeof(float), __builtin_object_size (_5bwikot, 0));
-            GetStkAndDipVect(_5bwikot, _pt5r5rc, _glqj5sx);
-            SubtractVect3(_r1dwwo8, _2c9t199, _kc4lorx);
-            _nbhnal3[0] = _pt5r5rc[0]*_r1dwwo8[0] + _pt5r5rc[1]*_r1dwwo8[1] + _pt5r5rc[2]*_r1dwwo8[2];
-            _nbhnal3[1] = _glqj5sx[0]*_r1dwwo8[0] + _glqj5sx[1]*_r1dwwo8[1] + _glqj5sx[2]*_r1dwwo8[2];
-            (*_t8qzpky)[_jcmrsez][9] = ( (((*_t8qzpky)[_jcmrsez][9]) < (_nbhnal3[0])) *((*_t8qzpky)[_jcmrsez][9]) + (((*_t8qzpky)[_jcmrsez][9]) >= (_nbhnal3[0])) *(_nbhnal3[0]) );
-            (*_t8qzpky)[_jcmrsez][10] = ( (((*_t8qzpky)[_jcmrsez][10]) > (_nbhnal3[0])) *((*_t8qzpky)[_jcmrsez][10]) + (((*_t8qzpky)[_jcmrsez][10]) <= (_nbhnal3[0])) *(_nbhnal3[0]) );
-            (*_t8qzpky)[_jcmrsez][11] = ( (((*_t8qzpky)[_jcmrsez][11]) < (_nbhnal3[1])) *((*_t8qzpky)[_jcmrsez][11]) + (((*_t8qzpky)[_jcmrsez][11]) >= (_nbhnal3[1])) *(_nbhnal3[1]) );
-            (*_t8qzpky)[_jcmrsez][12] = ( (((*_t8qzpky)[_jcmrsez][12]) > (_nbhnal3[1])) *((*_t8qzpky)[_jcmrsez][12]) + (((*_t8qzpky)[_jcmrsez][12]) <= (_nbhnal3[1])) *(_nbhnal3[1]) );
-            SubtractVect3(_r1dwwo8, _dxj37c9, _kc4lorx);
-            _nbhnal3[0] = _pt5r5rc[0]*_r1dwwo8[0] + _pt5r5rc[1]*_r1dwwo8[1] + _pt5r5rc[2]*_r1dwwo8[2];
-            _nbhnal3[1] = _glqj5sx[0]*_r1dwwo8[0] + _glqj5sx[1]*_r1dwwo8[1] + _glqj5sx[2]*_r1dwwo8[2];
-            (*_t8qzpky)[_jcmrsez][9] = ( (((*_t8qzpky)[_jcmrsez][9]) < (_nbhnal3[0])) *((*_t8qzpky)[_jcmrsez][9]) + (((*_t8qzpky)[_jcmrsez][9]) >= (_nbhnal3[0])) *(_nbhnal3[0]) );
-            (*_t8qzpky)[_jcmrsez][10] = ( (((*_t8qzpky)[_jcmrsez][10]) > (_nbhnal3[0])) *((*_t8qzpky)[_jcmrsez][10]) + (((*_t8qzpky)[_jcmrsez][10]) <= (_nbhnal3[0])) *(_nbhnal3[0]) );
-            (*_t8qzpky)[_jcmrsez][11] = ( (((*_t8qzpky)[_jcmrsez][11]) < (_nbhnal3[1])) *((*_t8qzpky)[_jcmrsez][11]) + (((*_t8qzpky)[_jcmrsez][11]) >= (_nbhnal3[1])) *(_nbhnal3[1]) );
-            (*_t8qzpky)[_jcmrsez][12] = ( (((*_t8qzpky)[_jcmrsez][12]) > (_nbhnal3[1])) *((*_t8qzpky)[_jcmrsez][12]) + (((*_t8qzpky)[_jcmrsez][12]) <= (_nbhnal3[1])) *(_nbhnal3[1]) );
-            SubtractVect3(_r1dwwo8, _h42m44g, _kc4lorx);
-            _nbhnal3[0] = _pt5r5rc[0]*_r1dwwo8[0] + _pt5r5rc[1]*_r1dwwo8[1] + _pt5r5rc[2]*_r1dwwo8[2];
-            _nbhnal3[1] = _glqj5sx[0]*_r1dwwo8[0] + _glqj5sx[1]*_r1dwwo8[1] + _glqj5sx[2]*_r1dwwo8[2];
-            (*_t8qzpky)[_jcmrsez][9] = ( (((*_t8qzpky)[_jcmrsez][9]) < (_nbhnal3[0])) *((*_t8qzpky)[_jcmrsez][9]) + (((*_t8qzpky)[_jcmrsez][9]) >= (_nbhnal3[0])) *(_nbhnal3[0]) );
-            (*_t8qzpky)[_jcmrsez][10] = ( (((*_t8qzpky)[_jcmrsez][10]) > (_nbhnal3[0])) *((*_t8qzpky)[_jcmrsez][10]) + (((*_t8qzpky)[_jcmrsez][10]) <= (_nbhnal3[0])) *(_nbhnal3[0]) );
-            (*_t8qzpky)[_jcmrsez][11] = ( (((*_t8qzpky)[_jcmrsez][11]) < (_nbhnal3[1])) *((*_t8qzpky)[_jcmrsez][11]) + (((*_t8qzpky)[_jcmrsez][11]) >= (_nbhnal3[1])) *(_nbhnal3[1]) );
-            (*_t8qzpky)[_jcmrsez][12] = ( (((*_t8qzpky)[_jcmrsez][12]) > (_nbhnal3[1])) *((*_t8qzpky)[_jcmrsez][12]) + (((*_t8qzpky)[_jcmrsez][12]) <= (_nbhnal3[1])) *(_nbhnal3[1]) );
+    for (i = 0u; i < _mda9oek; i++)
+    { __builtin___memcpy_chk (_e3nwxuj, &_r1dwwo8[_qw4c6lb[i*8 +0]*4 +0], 3*sizeof(float), __builtin_object_size (_e3nwxuj, 0));
+        __builtin___memcpy_chk (_3ac6pe6, &_r1dwwo8[_qw4c6lb[i*8 +1]*4 +0], 3*sizeof(float), __builtin_object_size (_3ac6pe6, 0));
+        __builtin___memcpy_chk (_3lbqgu3, &_r1dwwo8[_qw4c6lb[i*8 +2]*4 +0], 3*sizeof(float), __builtin_object_size (_3lbqgu3, 0));
+        _jg2y8rg = _2h2p39y[i][0];
+        for (j = 0u; j < _jg2y8rg; j++)
+        { _ybxkpm2 = _2h2p39y[i][16 -_jg2y8rg +j];
+            __builtin___memcpy_chk (_dan085r, &(*_vlnknd6)[_ybxkpm2][0], 3*sizeof(float), __builtin_object_size (_dan085r, 0));
+            __builtin___memcpy_chk (_ljefy3z, &(*_vlnknd6)[_ybxkpm2][6], 3*sizeof(float), __builtin_object_size (_ljefy3z, 0));
+            GetStkAndDipVect(_ljefy3z, _wrb7f6f, _jssuuqo);
+            SubtractVect3(_t26ys44, _e3nwxuj, _dan085r);
+            _5gdej31[0] = _wrb7f6f[0]*_t26ys44[0] + _wrb7f6f[1]*_t26ys44[1] + _wrb7f6f[2]*_t26ys44[2];
+            _5gdej31[1] = _jssuuqo[0]*_t26ys44[0] + _jssuuqo[1]*_t26ys44[1] + _jssuuqo[2]*_t26ys44[2];
+            (*_vlnknd6)[_ybxkpm2][9] = ( (((*_vlnknd6)[_ybxkpm2][9]) < (_5gdej31[0])) *((*_vlnknd6)[_ybxkpm2][9]) + (((*_vlnknd6)[_ybxkpm2][9]) >= (_5gdej31[0])) *(_5gdej31[0]) );
+            (*_vlnknd6)[_ybxkpm2][10] = ( (((*_vlnknd6)[_ybxkpm2][10]) > (_5gdej31[0])) *((*_vlnknd6)[_ybxkpm2][10]) + (((*_vlnknd6)[_ybxkpm2][10]) <= (_5gdej31[0])) *(_5gdej31[0]) );
+            (*_vlnknd6)[_ybxkpm2][11] = ( (((*_vlnknd6)[_ybxkpm2][11]) < (_5gdej31[1])) *((*_vlnknd6)[_ybxkpm2][11]) + (((*_vlnknd6)[_ybxkpm2][11]) >= (_5gdej31[1])) *(_5gdej31[1]) );
+            (*_vlnknd6)[_ybxkpm2][12] = ( (((*_vlnknd6)[_ybxkpm2][12]) > (_5gdej31[1])) *((*_vlnknd6)[_ybxkpm2][12]) + (((*_vlnknd6)[_ybxkpm2][12]) <= (_5gdej31[1])) *(_5gdej31[1]) );
+            SubtractVect3(_t26ys44, _3ac6pe6, _dan085r);
+            _5gdej31[0] = _wrb7f6f[0]*_t26ys44[0] + _wrb7f6f[1]*_t26ys44[1] + _wrb7f6f[2]*_t26ys44[2];
+            _5gdej31[1] = _jssuuqo[0]*_t26ys44[0] + _jssuuqo[1]*_t26ys44[1] + _jssuuqo[2]*_t26ys44[2];
+            (*_vlnknd6)[_ybxkpm2][9] = ( (((*_vlnknd6)[_ybxkpm2][9]) < (_5gdej31[0])) *((*_vlnknd6)[_ybxkpm2][9]) + (((*_vlnknd6)[_ybxkpm2][9]) >= (_5gdej31[0])) *(_5gdej31[0]) );
+            (*_vlnknd6)[_ybxkpm2][10] = ( (((*_vlnknd6)[_ybxkpm2][10]) > (_5gdej31[0])) *((*_vlnknd6)[_ybxkpm2][10]) + (((*_vlnknd6)[_ybxkpm2][10]) <= (_5gdej31[0])) *(_5gdej31[0]) );
+            (*_vlnknd6)[_ybxkpm2][11] = ( (((*_vlnknd6)[_ybxkpm2][11]) < (_5gdej31[1])) *((*_vlnknd6)[_ybxkpm2][11]) + (((*_vlnknd6)[_ybxkpm2][11]) >= (_5gdej31[1])) *(_5gdej31[1]) );
+            (*_vlnknd6)[_ybxkpm2][12] = ( (((*_vlnknd6)[_ybxkpm2][12]) > (_5gdej31[1])) *((*_vlnknd6)[_ybxkpm2][12]) + (((*_vlnknd6)[_ybxkpm2][12]) <= (_5gdej31[1])) *(_5gdej31[1]) );
+            SubtractVect3(_t26ys44, _3lbqgu3, _dan085r);
+            _5gdej31[0] = _wrb7f6f[0]*_t26ys44[0] + _wrb7f6f[1]*_t26ys44[1] + _wrb7f6f[2]*_t26ys44[2];
+            _5gdej31[1] = _jssuuqo[0]*_t26ys44[0] + _jssuuqo[1]*_t26ys44[1] + _jssuuqo[2]*_t26ys44[2];
+            (*_vlnknd6)[_ybxkpm2][9] = ( (((*_vlnknd6)[_ybxkpm2][9]) < (_5gdej31[0])) *((*_vlnknd6)[_ybxkpm2][9]) + (((*_vlnknd6)[_ybxkpm2][9]) >= (_5gdej31[0])) *(_5gdej31[0]) );
+            (*_vlnknd6)[_ybxkpm2][10] = ( (((*_vlnknd6)[_ybxkpm2][10]) > (_5gdej31[0])) *((*_vlnknd6)[_ybxkpm2][10]) + (((*_vlnknd6)[_ybxkpm2][10]) <= (_5gdej31[0])) *(_5gdej31[0]) );
+            (*_vlnknd6)[_ybxkpm2][11] = ( (((*_vlnknd6)[_ybxkpm2][11]) < (_5gdej31[1])) *((*_vlnknd6)[_ybxkpm2][11]) + (((*_vlnknd6)[_ybxkpm2][11]) >= (_5gdej31[1])) *(_5gdej31[1]) );
+            (*_vlnknd6)[_ybxkpm2][12] = ( (((*_vlnknd6)[_ybxkpm2][12]) > (_5gdej31[1])) *((*_vlnknd6)[_ybxkpm2][12]) + (((*_vlnknd6)[_ybxkpm2][12]) <= (_5gdej31[1])) *(_5gdej31[1]) );
     } }
-    for (i = 0u; i < _iblejgu; i++)
-    { _2c9t199[0] = (*_t8qzpky)[i][9]; _2c9t199[1] = (*_t8qzpky)[i][11]; _2c9t199[2] = 0.0f;
-        _dxj37c9[0] = (*_t8qzpky)[i][10]; _dxj37c9[1] = (*_t8qzpky)[i][11]; _dxj37c9[2] = 0.0f;
-        _h42m44g[0] = (*_t8qzpky)[i][10]; _h42m44g[1] = (*_t8qzpky)[i][12]; _h42m44g[2] = 0.0f;
-        _v3z6bz8[0] = (*_t8qzpky)[i][9]; _v3z6bz8[1] = (*_t8qzpky)[i][12]; _v3z6bz8[2] = 0.0f;
-        _flse45b = fabsf(_dxj37c9[0]-_2c9t199[0])/fabsf(_h42m44g[1]-_dxj37c9[1]);
-        _g34iq7z = sqrtf((*_t8qzpky)[i][3]/_flse45b);
-        _1a6xvaj = (*_t8qzpky)[i][3]/_g34iq7z;
-        _2k8xpnm = fabsf(_dxj37c9[0]-_2c9t199[0])/_1a6xvaj;
-        _jqy3ods = fabsf(_h42m44g[1]-_dxj37c9[1])/_g34iq7z;
-        _2c9t199[0] /= _2k8xpnm; _2c9t199[1] /= _jqy3ods;
-        _dxj37c9[0] /= _2k8xpnm; _dxj37c9[1] /= _jqy3ods;
-        _h42m44g[0] /= _2k8xpnm; _h42m44g[1] /= _jqy3ods;
-        _v3z6bz8[0] /= _2k8xpnm; _v3z6bz8[1] /= _jqy3ods;
-        __builtin___memcpy_chk (_5bwikot, &(*_t8qzpky)[i][6], 3*sizeof(float), __builtin_object_size (_5bwikot, 0));
-        GetStkAndDipVect(_5bwikot, _pt5r5rc, _glqj5sx);
-        _r1dwwo8[0] = _pt5r5rc[0]*_2c9t199[0] + _glqj5sx[0]*_2c9t199[1] + _5bwikot[0]*_2c9t199[2] + (*_t8qzpky)[i][0];
-        _r1dwwo8[1] = _pt5r5rc[1]*_2c9t199[0] + _glqj5sx[1]*_2c9t199[1] + _5bwikot[1]*_2c9t199[2] + (*_t8qzpky)[i][1];
-        _r1dwwo8[2] = _pt5r5rc[2]*_2c9t199[0] + _glqj5sx[2]*_2c9t199[1] + _5bwikot[2]*_2c9t199[2] + (*_t8qzpky)[i][2];
-        _r1dwwo8[2] = ( ((_r1dwwo8[2]) < (-0.0f)) *(_r1dwwo8[2]) + ((_r1dwwo8[2]) >= (-0.0f)) *(-0.0f) );
-        __builtin___memcpy_chk (&(*_t8qzpky)[i][9], _r1dwwo8, 3*sizeof(float), __builtin_object_size (&(*_t8qzpky)[i][9], 0));
-        _r1dwwo8[0] = _pt5r5rc[0]*_dxj37c9[0] + _glqj5sx[0]*_dxj37c9[1] + _5bwikot[0]*_dxj37c9[2] + (*_t8qzpky)[i][0];
-        _r1dwwo8[1] = _pt5r5rc[1]*_dxj37c9[0] + _glqj5sx[1]*_dxj37c9[1] + _5bwikot[1]*_dxj37c9[2] + (*_t8qzpky)[i][1];
-        _r1dwwo8[2] = _pt5r5rc[2]*_dxj37c9[0] + _glqj5sx[2]*_dxj37c9[1] + _5bwikot[2]*_dxj37c9[2] + (*_t8qzpky)[i][2];
-        _r1dwwo8[2] = ( ((_r1dwwo8[2]) < (-0.0f)) *(_r1dwwo8[2]) + ((_r1dwwo8[2]) >= (-0.0f)) *(-0.0f) );
-        __builtin___memcpy_chk (&(*_t8qzpky)[i][12], _r1dwwo8, 3*sizeof(float), __builtin_object_size (&(*_t8qzpky)[i][12], 0));
-        _r1dwwo8[0] = _pt5r5rc[0]*_h42m44g[0] + _glqj5sx[0]*_h42m44g[1] + _5bwikot[0]*_h42m44g[2] + (*_t8qzpky)[i][0];
-        _r1dwwo8[1] = _pt5r5rc[1]*_h42m44g[0] + _glqj5sx[1]*_h42m44g[1] + _5bwikot[1]*_h42m44g[2] + (*_t8qzpky)[i][1];
-        _r1dwwo8[2] = _pt5r5rc[2]*_h42m44g[0] + _glqj5sx[2]*_h42m44g[1] + _5bwikot[2]*_h42m44g[2] + (*_t8qzpky)[i][2];
-        _r1dwwo8[2] = ( ((_r1dwwo8[2]) < (-0.0f)) *(_r1dwwo8[2]) + ((_r1dwwo8[2]) >= (-0.0f)) *(-0.0f) );
-        __builtin___memcpy_chk (&(*_t8qzpky)[i][15], _r1dwwo8, 3*sizeof(float), __builtin_object_size (&(*_t8qzpky)[i][15], 0));
-        _r1dwwo8[0] = _pt5r5rc[0]*_v3z6bz8[0] + _glqj5sx[0]*_v3z6bz8[1] + _5bwikot[0]*_v3z6bz8[2] + (*_t8qzpky)[i][0];
-        _r1dwwo8[1] = _pt5r5rc[1]*_v3z6bz8[0] + _glqj5sx[1]*_v3z6bz8[1] + _5bwikot[1]*_v3z6bz8[2] + (*_t8qzpky)[i][1];
-        _r1dwwo8[2] = _pt5r5rc[2]*_v3z6bz8[0] + _glqj5sx[2]*_v3z6bz8[1] + _5bwikot[2]*_v3z6bz8[2] + (*_t8qzpky)[i][2];
-        _r1dwwo8[2] = ( ((_r1dwwo8[2]) < (-0.0f)) *(_r1dwwo8[2]) + ((_r1dwwo8[2]) >= (-0.0f)) *(-0.0f) );
-        __builtin___memcpy_chk (&(*_t8qzpky)[i][18], _r1dwwo8, 3*sizeof(float), __builtin_object_size (&(*_t8qzpky)[i][18], 0));
-        SubtractVect3(_nvg3kk0, &(*_t8qzpky)[i][0], &(*_t8qzpky)[i][9]); _vwvm4w3 = VectorLength(_nvg3kk0);
-        (*_t8qzpky)[i][5] = ( ((_vwvm4w3) > ((*_t8qzpky)[i][5])) *(_vwvm4w3) + ((_vwvm4w3) <= ((*_t8qzpky)[i][5])) *((*_t8qzpky)[i][5]) );
-        SubtractVect3(_nvg3kk0, &(*_t8qzpky)[i][0], &(*_t8qzpky)[i][12]); _vwvm4w3 = VectorLength(_nvg3kk0);
-        (*_t8qzpky)[i][5] = ( ((_vwvm4w3) > ((*_t8qzpky)[i][5])) *(_vwvm4w3) + ((_vwvm4w3) <= ((*_t8qzpky)[i][5])) *((*_t8qzpky)[i][5]) );
-        SubtractVect3(_nvg3kk0, &(*_t8qzpky)[i][0], &(*_t8qzpky)[i][15]); _vwvm4w3 = VectorLength(_nvg3kk0);
-        (*_t8qzpky)[i][5] = ( ((_vwvm4w3) > ((*_t8qzpky)[i][5])) *(_vwvm4w3) + ((_vwvm4w3) <= ((*_t8qzpky)[i][5])) *((*_t8qzpky)[i][5]) );
-        SubtractVect3(_nvg3kk0, &(*_t8qzpky)[i][0], &(*_t8qzpky)[i][18]); _vwvm4w3 = VectorLength(_nvg3kk0);
-        (*_t8qzpky)[i][5] = ( ((_vwvm4w3) > ((*_t8qzpky)[i][5])) *(_vwvm4w3) + ((_vwvm4w3) <= ((*_t8qzpky)[i][5])) *((*_t8qzpky)[i][5]) );
+    for (i = 0u; i < _vfua9bq; i++)
+    { _e3nwxuj[0] = (*_vlnknd6)[i][9]; _e3nwxuj[1] = (*_vlnknd6)[i][11]; _e3nwxuj[2] = 0.0f;
+        _3ac6pe6[0] = (*_vlnknd6)[i][10]; _3ac6pe6[1] = (*_vlnknd6)[i][11]; _3ac6pe6[2] = 0.0f;
+        _3lbqgu3[0] = (*_vlnknd6)[i][10]; _3lbqgu3[1] = (*_vlnknd6)[i][12]; _3lbqgu3[2] = 0.0f;
+        _obyghgk[0] = (*_vlnknd6)[i][9]; _obyghgk[1] = (*_vlnknd6)[i][12]; _obyghgk[2] = 0.0f;
+        _q52wspo = fabsf(_3ac6pe6[0]-_e3nwxuj[0])/fabsf(_3lbqgu3[1]-_3ac6pe6[1]);
+        _fv177ud = sqrtf((*_vlnknd6)[i][3]/_q52wspo);
+        _9p3jpxg = (*_vlnknd6)[i][3]/_fv177ud;
+        _h30153s = fabsf(_3ac6pe6[0]-_e3nwxuj[0])/_9p3jpxg;
+        _flse45b = fabsf(_3lbqgu3[1]-_3ac6pe6[1])/_fv177ud;
+        _e3nwxuj[0] /= _h30153s; _e3nwxuj[1] /= _flse45b;
+        _3ac6pe6[0] /= _h30153s; _3ac6pe6[1] /= _flse45b;
+        _3lbqgu3[0] /= _h30153s; _3lbqgu3[1] /= _flse45b;
+        _obyghgk[0] /= _h30153s; _obyghgk[1] /= _flse45b;
+        __builtin___memcpy_chk (_ljefy3z, &(*_vlnknd6)[i][6], 3*sizeof(float), __builtin_object_size (_ljefy3z, 0));
+        GetStkAndDipVect(_ljefy3z, _wrb7f6f, _jssuuqo);
+        _t26ys44[0] = _wrb7f6f[0]*_e3nwxuj[0] + _jssuuqo[0]*_e3nwxuj[1] + _ljefy3z[0]*_e3nwxuj[2] + (*_vlnknd6)[i][0];
+        _t26ys44[1] = _wrb7f6f[1]*_e3nwxuj[0] + _jssuuqo[1]*_e3nwxuj[1] + _ljefy3z[1]*_e3nwxuj[2] + (*_vlnknd6)[i][1];
+        _t26ys44[2] = _wrb7f6f[2]*_e3nwxuj[0] + _jssuuqo[2]*_e3nwxuj[1] + _ljefy3z[2]*_e3nwxuj[2] + (*_vlnknd6)[i][2];
+        _t26ys44[2] = ( ((_t26ys44[2]) < (-0.0f)) *(_t26ys44[2]) + ((_t26ys44[2]) >= (-0.0f)) *(-0.0f) );
+        __builtin___memcpy_chk (&(*_vlnknd6)[i][9], _t26ys44, 3*sizeof(float), __builtin_object_size (&(*_vlnknd6)[i][9], 0));
+        _t26ys44[0] = _wrb7f6f[0]*_3ac6pe6[0] + _jssuuqo[0]*_3ac6pe6[1] + _ljefy3z[0]*_3ac6pe6[2] + (*_vlnknd6)[i][0];
+        _t26ys44[1] = _wrb7f6f[1]*_3ac6pe6[0] + _jssuuqo[1]*_3ac6pe6[1] + _ljefy3z[1]*_3ac6pe6[2] + (*_vlnknd6)[i][1];
+        _t26ys44[2] = _wrb7f6f[2]*_3ac6pe6[0] + _jssuuqo[2]*_3ac6pe6[1] + _ljefy3z[2]*_3ac6pe6[2] + (*_vlnknd6)[i][2];
+        _t26ys44[2] = ( ((_t26ys44[2]) < (-0.0f)) *(_t26ys44[2]) + ((_t26ys44[2]) >= (-0.0f)) *(-0.0f) );
+        __builtin___memcpy_chk (&(*_vlnknd6)[i][12], _t26ys44, 3*sizeof(float), __builtin_object_size (&(*_vlnknd6)[i][12], 0));
+        _t26ys44[0] = _wrb7f6f[0]*_3lbqgu3[0] + _jssuuqo[0]*_3lbqgu3[1] + _ljefy3z[0]*_3lbqgu3[2] + (*_vlnknd6)[i][0];
+        _t26ys44[1] = _wrb7f6f[1]*_3lbqgu3[0] + _jssuuqo[1]*_3lbqgu3[1] + _ljefy3z[1]*_3lbqgu3[2] + (*_vlnknd6)[i][1];
+        _t26ys44[2] = _wrb7f6f[2]*_3lbqgu3[0] + _jssuuqo[2]*_3lbqgu3[1] + _ljefy3z[2]*_3lbqgu3[2] + (*_vlnknd6)[i][2];
+        _t26ys44[2] = ( ((_t26ys44[2]) < (-0.0f)) *(_t26ys44[2]) + ((_t26ys44[2]) >= (-0.0f)) *(-0.0f) );
+        __builtin___memcpy_chk (&(*_vlnknd6)[i][15], _t26ys44, 3*sizeof(float), __builtin_object_size (&(*_vlnknd6)[i][15], 0));
+        _t26ys44[0] = _wrb7f6f[0]*_obyghgk[0] + _jssuuqo[0]*_obyghgk[1] + _ljefy3z[0]*_obyghgk[2] + (*_vlnknd6)[i][0];
+        _t26ys44[1] = _wrb7f6f[1]*_obyghgk[0] + _jssuuqo[1]*_obyghgk[1] + _ljefy3z[1]*_obyghgk[2] + (*_vlnknd6)[i][1];
+        _t26ys44[2] = _wrb7f6f[2]*_obyghgk[0] + _jssuuqo[2]*_obyghgk[1] + _ljefy3z[2]*_obyghgk[2] + (*_vlnknd6)[i][2];
+        _t26ys44[2] = ( ((_t26ys44[2]) < (-0.0f)) *(_t26ys44[2]) + ((_t26ys44[2]) >= (-0.0f)) *(-0.0f) );
+        __builtin___memcpy_chk (&(*_vlnknd6)[i][18], _t26ys44, 3*sizeof(float), __builtin_object_size (&(*_vlnknd6)[i][18], 0));
+        SubtractVect3(_2ljk4q5, &(*_vlnknd6)[i][0], &(*_vlnknd6)[i][9]); _1vsmado = VectorLength(_2ljk4q5);
+        (*_vlnknd6)[i][5] = ( ((_1vsmado) > ((*_vlnknd6)[i][5])) *(_1vsmado) + ((_1vsmado) <= ((*_vlnknd6)[i][5])) *((*_vlnknd6)[i][5]) );
+        SubtractVect3(_2ljk4q5, &(*_vlnknd6)[i][0], &(*_vlnknd6)[i][12]); _1vsmado = VectorLength(_2ljk4q5);
+        (*_vlnknd6)[i][5] = ( ((_1vsmado) > ((*_vlnknd6)[i][5])) *(_1vsmado) + ((_1vsmado) <= ((*_vlnknd6)[i][5])) *((*_vlnknd6)[i][5]) );
+        SubtractVect3(_2ljk4q5, &(*_vlnknd6)[i][0], &(*_vlnknd6)[i][15]); _1vsmado = VectorLength(_2ljk4q5);
+        (*_vlnknd6)[i][5] = ( ((_1vsmado) > ((*_vlnknd6)[i][5])) *(_1vsmado) + ((_1vsmado) <= ((*_vlnknd6)[i][5])) *((*_vlnknd6)[i][5]) );
+        SubtractVect3(_2ljk4q5, &(*_vlnknd6)[i][0], &(*_vlnknd6)[i][18]); _1vsmado = VectorLength(_2ljk4q5);
+        (*_vlnknd6)[i][5] = ( ((_1vsmado) > ((*_vlnknd6)[i][5])) *(_1vsmado) + ((_1vsmado) <= ((*_vlnknd6)[i][5])) *((*_vlnknd6)[i][5]) );
     }
     return;
 }
-void _ja2m0w1(const char *restrict _8dalfyo, unsigned int _e4ex6u8, const float *restrict _31yrujo, unsigned int **restrict _r7vgrf1, unsigned int _jq6fx7x, float **restrict _cb1kjtg, unsigned int _p2tixc7, const float *restrict _69ugnek, unsigned int **restrict _xd356wa, unsigned int _lu6k7p9, float **restrict _s9bp4m1)
+void _j4t0sek(const char *restrict _slwf90k, unsigned int _2vpgstq, const float *restrict _q01tee1, unsigned int **restrict _qc6dr08, unsigned int _qsq0p82, float **restrict _zh13cd5, unsigned int _04k0lth, const float *restrict _o6l1f90, unsigned int **restrict _1zlbori, unsigned int _6parsg7, float **restrict _s3jonou)
 {
-    int i, _aytxw1v = 16;
-    char _xqt4p50[512];
-    float *_d31k9qm = ((void *)0), *_2zcfzw0 = ((void *)0);
-    __builtin___strcpy_chk (_xqt4p50, _8dalfyo, __builtin_object_size (_xqt4p50, 2 > 1 ? 1 : 0)); __builtin___strcat_chk (_xqt4p50, ".brch", __builtin_object_size (_xqt4p50, 2 > 1 ? 1 : 0));
-    FILE *_kshy8nb;
-    _d31k9qm = malloc(3*_e4ex6u8*sizeof(float));
-    for (i = 0; i < _e4ex6u8; i++) { __builtin___memcpy_chk (&_d31k9qm[i*3 +0], &_31yrujo[i*16 +0],3*sizeof(float), __builtin_object_size (&_d31k9qm[i*3 +0], 0)); }
-    if (_p2tixc7 > 0u)
-    { _2zcfzw0 = malloc(3*_p2tixc7*sizeof(float));
-        for (i = 0; i < _p2tixc7; i++) { __builtin___memcpy_chk (&_2zcfzw0[i*3 +0], &_69ugnek[i*16 +0],3*sizeof(float), __builtin_object_size (&_2zcfzw0[i*3 +0], 0)); }
+    int i, _gcsotdh = 16;
+    char _z049enu[512];
+    float *_zkwdeek = ((void *)0), *_p2u4dtb = ((void *)0);
+    __builtin___strcpy_chk (_z049enu, _slwf90k, __builtin_object_size (_z049enu, 2 > 1 ? 1 : 0)); __builtin___strcat_chk (_z049enu, ".brch", __builtin_object_size (_z049enu, 2 > 1 ? 1 : 0));
+    FILE *_e7eobjl;
+    _zkwdeek = malloc(3*_2vpgstq*sizeof(float));
+    for (i = 0; i < _2vpgstq; i++) { __builtin___memcpy_chk (&_zkwdeek[i*3 +0], &_q01tee1[i*16 +0],3*sizeof(float), __builtin_object_size (&_zkwdeek[i*3 +0], 0)); }
+    if (_04k0lth > 0u)
+    { _p2u4dtb = malloc(3*_04k0lth*sizeof(float));
+        for (i = 0; i < _04k0lth; i++) { __builtin___memcpy_chk (&_p2u4dtb[i*3 +0], &_o6l1f90[i*16 +0],3*sizeof(float), __builtin_object_size (&_p2u4dtb[i*3 +0], 0)); }
     }
-    if ((_kshy8nb = fopen(_xqt4p50,"wb")) == ((void *)0)) { printf("Error -cant open BranchInfo file for writing   %s\n", _xqt4p50); exit(10); }
-    int _dyk0x65 = (int)202511;
-    fwrite( &_dyk0x65, sizeof(int), 1, _kshy8nb);
-    fwrite( &_e4ex6u8, sizeof(unsigned int), 1, _kshy8nb);
-    fwrite( &_jq6fx7x, sizeof(unsigned int), 1, _kshy8nb);
-    for (i = 0; i < _e4ex6u8; i++) { fwrite(_r7vgrf1[i], sizeof(unsigned int), _aytxw1v, _kshy8nb); }
-    for (i = 0; i < _jq6fx7x; i++) { fwrite(_cb1kjtg[i], sizeof(float), 21, _kshy8nb); }
-    fwrite(_d31k9qm, sizeof(float), 3*_e4ex6u8, _kshy8nb);
-    if (_p2tixc7 > 0u)
-    { fwrite( &_p2tixc7, sizeof(unsigned int), 1, _kshy8nb);
-        fwrite( &_lu6k7p9, sizeof(unsigned int), 1, _kshy8nb);
-        for (i = 0; i < _p2tixc7; i++) { fwrite(_xd356wa[i], sizeof(unsigned int), _aytxw1v, _kshy8nb); }
-        for (i = 0; i < _lu6k7p9; i++) { fwrite(_s9bp4m1[i], sizeof(float), 21, _kshy8nb); }
-        fwrite(_2zcfzw0, sizeof(float), 3*_p2tixc7, _kshy8nb);
+    if ((_e7eobjl = fopen(_z049enu,"wb")) == ((void *)0)) { printf("Error -cant open BranchInfo file for writing   %s\n", _z049enu); exit(10); }
+    int _c54wsqt = (int)202511;
+    fwrite( &_c54wsqt, sizeof(int), 1, _e7eobjl);
+    fwrite( &_2vpgstq, sizeof(unsigned int), 1, _e7eobjl);
+    fwrite( &_qsq0p82, sizeof(unsigned int), 1, _e7eobjl);
+    for (i = 0; i < _2vpgstq; i++) { fwrite(_qc6dr08[i], sizeof(unsigned int), _gcsotdh, _e7eobjl); }
+    for (i = 0; i < _qsq0p82; i++) { fwrite(_zh13cd5[i], sizeof(float), 21, _e7eobjl); }
+    fwrite(_zkwdeek, sizeof(float), 3*_2vpgstq, _e7eobjl);
+    if (_04k0lth > 0u)
+    { fwrite( &_04k0lth, sizeof(unsigned int), 1, _e7eobjl);
+        fwrite( &_6parsg7, sizeof(unsigned int), 1, _e7eobjl);
+        for (i = 0; i < _04k0lth; i++) { fwrite(_1zlbori[i], sizeof(unsigned int), _gcsotdh, _e7eobjl); }
+        for (i = 0; i < _6parsg7; i++) { fwrite(_s3jonou[i], sizeof(float), 21, _e7eobjl); }
+        fwrite(_p2u4dtb, sizeof(float), 3*_04k0lth, _e7eobjl);
     }
-    fclose(_kshy8nb);
-    free(_d31k9qm); free(_2zcfzw0);
+    fclose(_e7eobjl);
+    free(_zkwdeek); free(_p2u4dtb);
     return;
 }
