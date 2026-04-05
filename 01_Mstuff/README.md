@@ -11,5 +11,5 @@ in the _MATLAB_ command window and then press enter.
 
 ![screenshot o MATLAB guis and command window](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/MCQsimGUIs.png)
 
-[!IMPORTANT]
+>[!IMPORTANT]
 Some of these MATLAB GUIs (e.g., B_) require access to the statistics toolbox for a PCA step that is part of the fault roughenss i.e., fractal strength distribution step. Expect to get error messages if those toolboxes are not installed. 
