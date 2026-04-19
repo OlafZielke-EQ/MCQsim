@@ -27,7 +27,7 @@ SRCS = MCQsim25_Main.c \
        MCQsim_StrainHS.c \
        MCQsim_StrainFS.c
 
-CFLAGS  = -Wno-unused-function -O3
+CFLAGS  = -Wall -O3
 LDFLAGS = -lm
 
 UNAME := $(shell uname -s)
@@ -61,20 +61,20 @@ mac:
 	mpicc -I$(OPENBLAS_PREFIX)/include \
 	      -L$(OPENBLAS_PREFIX)/lib \
 	      -lopenblas -lmpich -lm \
-	      -Wno-unused-function -O3 \
+	      -Wall -O3 \
 	      -o $(TARGET) $(SRCS)
 	@rm -rf $(TARGET).dSYM
 	@echo "Built: $(TARGET) [macOS]"
 
 linux:
 	mpicc -lopenblas -lmpich -lm \
-	      -Wno-unused-function -O3 \
+	      -Wall -O3 \
 	      -o $(TARGET) $(SRCS)
 	@echo "Built: $(TARGET) [Linux]"
 
 hpc:
 	mpicc -lopenblas -lmpich -lm \
-	      -Wno-unused-function -O3 \
+	      -Wall -O3 \
 	      -o $(TARGET) $(SRCS)
 	@echo "Built: $(TARGET) [HPC]"
 	@echo "Run:   mpirun -np <N> ./$(TARGET)"
