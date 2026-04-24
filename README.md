@@ -19,7 +19,7 @@ Following are a few example outputs, generated with MCQsim for a "toy example" l
 
 |   M7.05 normal faulting EQ (slip)      | M7.05 normal faulting EQ (rate)  |
 | -------------------------------------  | ------------- |
-| ![animated GIF of toy example rupture slip](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/M7p5_0to4mSlipcrop.gif) | ![animated GIF of toy example rupture rate](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/M7p5_0to2msRatecrop.gif) |
+| ![animated GIF of toy example rupture slip](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/M7p05_0to4mSlipcrop.gif) | ![animated GIF of toy example rupture rate](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/M7p05_0to2msRatecrop.gif) |
 
 
 ![screenshot of toy example catalog and derivatives](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/ExampleCatalogOutput.png)
