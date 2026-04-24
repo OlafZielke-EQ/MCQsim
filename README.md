@@ -15,7 +15,7 @@ The most recent version of _MCQsim_, provided here, employs _QuadTree_ and _H-ma
 ## SAMPLE OUTPUTS
 ### Single event and earthquake catalogs
 
-Following are a few example outputs, generated with MCQsim for a "toy example" listric normal fault that features geometric roughness and heterogeneous strength distribution. We present animated GIFs of the single-event quasi-dynamic evolution of a **M**6.85 event (top, slip and slip-rate) that was followed ~80 years later by a of a **M**7.05 event (bottom). We further present the earthquake catalog and catalog derivates for the same fault.
+Following are a few example outputs, generated with MCQsim for a "toy example" listric normal fault that features geometric roughness and heterogeneous strength distribution. We present animated GIFs of the single-event quasi-dynamic evolution of a **M**6.85 event (top, slip and slip-rate) that was followed ~80 years later by a of a **M**7.05 event (bottom). We further present the earthquake catalog and catalog derivates for another toy example listric fault.
 
 
 |   M6.85 normal faulting EQ (slip)      | M6.85 normal faulting EQ (rate)  |
