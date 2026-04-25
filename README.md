@@ -10,9 +10,8 @@ The most recent version of _MCQsim_, provided here, employs _QuadTree_ and _H-ma
 
 > Zielke, O., and P.M. Mai (2025). Does Subsurface Fault Geometry Affect Aleatory Variability in Modeled Strike-Slip Fault Behavior?. Bull. Seismol. Soc. Am. XX(Y), 1-17, doi:10.1785/0120240152. [*.pdf](https://pubs.geoscienceworld.org/ssa/bssa/article/doi/10.1785/0120240152/651209/Does-Subsurface-Fault-Geometry-Affect-Aleatory)
 
-
-
-![## DOCUMENTATION pdf](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/MCQsim25_Documentation_v1.pdf)
+[## DOCUMENTATION pdf
+Here is a short MCQsim25 manual ![.pdf](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/MCQsim25_Documentation_v1.pdf)
 
 
 **Contact:** olaf.zielke@kaust.edu.sa
