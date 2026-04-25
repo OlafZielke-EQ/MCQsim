@@ -12,7 +12,7 @@ The most recent version of _MCQsim_, provided here, employs _QuadTree_ and _H-ma
 
 
 
-![## DOCUMENTATION pdf] (https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/MCQsim25_Documentation_v1.pdf)
+![## DOCUMENTATION pdf](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/MCQsim25_Documentation_v1.pdf)
 
 
 **Contact:** olaf.zielke@kaust.edu.sa
