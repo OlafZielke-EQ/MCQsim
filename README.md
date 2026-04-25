@@ -14,7 +14,7 @@ The most recent version of _MCQsim_, provided here, employs _QuadTree_ and _H-ma
 
 
 ## DOCUMENTATION
-Here is a short MCQsim25 manual [MCQsim25_Documentation_v1.pdf](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/MCQsim25_Documentation_v1.pdf)
+Here is a short MCQsim25 manual, focussing primarily on the input GUIs for model preparation. Also provided are some additional explanation on how the code handles tectonic loading, post-seismic relaxation, etc. [MCQsim25_Documentation_v1.pdf](https://github.com/OlafZielke-EQ/MCQsim/blob/main/pagematerial/MCQsim25_Documentation_v1.pdf)
 
 
 
